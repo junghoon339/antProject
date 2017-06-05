@@ -1,11 +1,11 @@
 package com.ant.calendar.dto;
 
 public class CalendarDTO {
-	private int userNo;
-	private String userCalendarStartdate;
-	private String userCalendarEnddate;
-	private String userCalendarTime;
-	private String userCalendarContent;
+	private int userNo; //회원번호
+	private String userCalendarStartdate; //시작일
+	private String userCalendarEnddate; //종료일
+	private String userCalendarTime; //시간
+	private String userCalendarContent; //내용
 	
 	public CalendarDTO(){}
 	public CalendarDTO(int userNo, String userCalendarStartdate, String userCalendarEnddate, String userCalendarTime,
