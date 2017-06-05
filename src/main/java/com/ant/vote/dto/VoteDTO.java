@@ -2,8 +2,6 @@ package com.ant.vote.dto;
 
 public class VoteDTO {
 	private int voteNo;
-	private int userNo;
-	private int projectNo;
 	private int projectUserNo;
 	private String voteTilte;
 	private String voteAddDate;
@@ -14,8 +12,6 @@ public class VoteDTO {
 	public VoteDTO(int voteNo, int userNo, int projectNo, int projectUserNo, String voteTilte, String voteAddDate,
 			String voteEndDate, String voteState) {
 		this.voteNo = voteNo;
-		this.userNo = userNo;
-		this.projectNo = projectNo;
 		this.projectUserNo = projectUserNo;
 		this.voteTilte = voteTilte;
 		this.voteAddDate = voteAddDate;
@@ -29,22 +25,6 @@ public class VoteDTO {
 
 	public void setVoteNo(int voteNo) {
 		this.voteNo = voteNo;
-	}
-
-	public int getUserNo() {
-		return userNo;
-	}
-
-	public void setUserNo(int userNo) {
-		this.userNo = userNo;
-	}
-
-	public int getProjectNo() {
-		return projectNo;
-	}
-
-	public void setProjectNo(int projectNo) {
-		this.projectNo = projectNo;
 	}
 
 	public int getProjectUserNo() {
