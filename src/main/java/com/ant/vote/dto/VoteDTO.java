@@ -9,7 +9,7 @@ public class VoteDTO {
 	private String voteState;
 
 	public VoteDTO(){}
-	public VoteDTO(int voteNo, int userNo, int projectNo, int projectUserNo, String voteTilte, String voteAddDate,
+	public VoteDTO(int voteNo, int userNo, int projectUserNo, String voteTilte, String voteAddDate,
 			String voteEndDate, String voteState) {
 		this.voteNo = voteNo;
 		this.projectUserNo = projectUserNo;
