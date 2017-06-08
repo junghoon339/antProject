@@ -1,11 +1,19 @@
 package com.ant.todo.dto;
 
 public class TodoDTO {
+	private int todoNo;
 	private int userNo;
 	private int projectNo;
 	private int todoLocation;
 	private String todoContent;
 	
+	
+	public int getTodoNo() {
+		return todoNo;
+	}
+	public void setTodoNo(int todoNo) {
+		this.todoNo = todoNo;
+	}
 	public int getUserNo() {
 		return userNo;
 	}
