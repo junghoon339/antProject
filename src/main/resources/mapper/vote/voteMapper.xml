@@ -1,3 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="mapper.calendar.voteMapper"></mapper>
+<mapper namespace="voteMapper">
+
+	<resultMap type="voteDTO" id="voteDTOMap">
+		<id column="vote_no" property="voteNo" />
+		<result column="project_user_no" property="projectUserNo" />
+		<result column="vote_title" property="voteTilte" />
+		<result column="vote_adddate" property="voteAddDate" />
+		<result column="vote_enddate" property="voteEndDate" />
+		<result column="vote_state" property="voteState" />
+	</resultMap>
+
+	<select id="select" parameterType="int" resultMap="voteDTOMap">
+		select * from vote where vote_state = #{_parameter}
+	</select>
+</mapper>

@@ -17,7 +17,7 @@ public class VoteDAOImpl implements VoteDAO {
 	
 	@Override
 	public List<VoteDTO> selectVoteList(int voteState) {
-		return session.selectList("voteMapper.select");
+		return session.selectList("voteMapper.select", voteState);
 	}
 	
 	@Override
