@@ -21,5 +21,8 @@ public class UserController {
 		return "user/joinOk";
 	}
 	
-	
+	@RequestMapping("/main")
+	public String afterLogin(){
+		return "user/chat";
+	}
 }

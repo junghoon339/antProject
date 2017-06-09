@@ -15,5 +15,5 @@ public interface AuthorityDAO {
 	 * id에 해당하는 권한 검색
 	 * 권한은 0개 이상을 가질 수 있다
 	 */
-	List<AuthorityDTO> selectAuthorityByUserName(String userName);
+	List<AuthorityDTO> selectAuthorityByUserNo(int userNo);
 }
