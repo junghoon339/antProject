@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<!-- 파일업로드를 위한 bean설정 -->
+	<bean id="multipartResolver"
+		class="org.springframework.web.multipart.commons.CommonsMultipartResolver"></bean>
+
+	<!-- 다운로드가 가능하기 위해서 ViewResolver등록하기,, 기존의 .jsp로 자동이동되는것을 막기위함! 다운로드할때는 
+		페이지이동하면 안되므로! -->
+	<bean class="org.springframework.web.servlet.view.BeanNameViewResolver">
+		<property name="order" value="1" />
+	</bean> <!-- viewResolver가 두개이므로 우선순위를 주어서 처리해야함! 우선순위가 낮은것이 특별한경우,, -->
+
+</beans>

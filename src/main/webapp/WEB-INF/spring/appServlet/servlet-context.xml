@@ -24,7 +24,7 @@
 		<beans:property name="order" value="2"/>
 	</beans:bean>
 	
-	<context:component-scan base-package="com.ant" />
-	
-	
+	<context:component-scan base-package="com.ant.controller" />
+	<context:component-scan base-package="com.ant.*.controller" />
+
 </beans:beans>
