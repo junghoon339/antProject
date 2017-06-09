@@ -18,7 +18,7 @@ drop table project_calendar;
 drop table project_user;
 drop table project;
 drop table ant_user;
-
+drop table authorities;
 
 
 
@@ -33,6 +33,11 @@ CREATE TABLE ant_user
 );
 CREATE SEQUENCE seq_user_no;
 
+
+
+SELECT * FROM ANT_USER;
+
+DROP TABLE ant_user CASCADE CONSTRAINTS;
 drop table ant_user;
 select * tab;
 
@@ -206,11 +211,14 @@ create sequence seq_survey_detail_no;
 SELECT * FROM authorities;
 
 
+
 CREATE TABLE authorities
 ( 
-	authorities_no 	NUMBER	CONSTRAINT authorities_no_pk PRIMARY KEY,
-	user_no			NUMBER   CONSTRAINT authorities_user_no_fk REFERENCES ant_user(user_no) ON DELETE CASCADE,
-	authorities_authority		VARCHAR2(50) NOT NULL
+	no 	NUMBER	CONSTRAINT pk_authorities PRIMARY KEY,
+	user_no			NUMBER   CONSTRAINT fk_user_authorities REFERENCES ant_user(user_no) ON DELETE CASCADE,
+	authority		VARCHAR2(50) NOT NULL
 );
-create sequence seq_authorities__no;
+
+create sequence seq_authorities_no;
+
 
