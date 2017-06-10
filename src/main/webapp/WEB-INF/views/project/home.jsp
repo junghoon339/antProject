@@ -20,11 +20,36 @@
 <script type="text/javascript">
 	$(document).ready(function() {
 		tabModule.init();
+		
+		$("#plusImg").click(function(){
+	        $('div.modal').modal();
+	    })
+	    
+/* 		$(document).on("click","#addMember",function(){
+			//input추가
+		}); */
+	    
+	    $("#projectForm").submit(function(){
+	    	alert("Submitted");
+	    });
+	    $("#insertProjectBtn").click(function(){
+	    	alert("팀플생성버튼눌림");
+	    	$("#projectForm").submit();
+	    });  
+		
 	});
+	
+	
+	
+	
 </script>
+<style type="text/css">
+ .form-control {width:30%;}
+
+</style>
 </head>
 <body>
-
+	<!-- header -->
 	<jsp:include page="header.jsp" flush="false"/>
 
 
@@ -39,8 +64,6 @@
 			</ul>
 			<ul class="tab-content">
 				<li>
-
-
 					<section id="bs-pricing-six"
 						class="bs-pricing-four roomy-50 bg-white fix">
 						<div class="container">
@@ -94,8 +117,8 @@
 								</div>
 								<div class="col-md-3"><!-- 플러스아이콘 -->
 									<div class="bs bs-pricing">
-										<div class="cotent">
-											<a href="#"><img src="${pageContext.request.contextPath}/resources/img/plus.png"></a>
+										<div class="cotent" id="plusImg">
+											<img src="${pageContext.request.contextPath}/resources/img/plus.png">
 										</div>
 									</div>
 								</div>		
@@ -107,27 +130,74 @@
 				</li>
 				<li>
 					<!--TAB CONTENT-->
-					<h4>Content222222</h4>
+					<h4>완료된 팀플안에 들어갈 내용..</h4>
 				</li>
 				<li>
 					<!--TAB CONTENT-->
-					<h4>Content3333333</h4>
+					<h4>My TimeTable에 들어갈 내용..</h4>
 				</li>
 				<li>
 					<!--TAB CONTENT-->
-					<h4>Content444444444</h4>
+					<h4>My Calendar에 들어갈 내용..</h4>
 				</li>
 			</ul>
 		</div>
 	</div>
 	
+	<!-- Modal -->
+	<div class="modal fade" id="myModal" tabindex="-1" role="dialog"
+		aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+					<h4 class="modal-title" id="myModalLabel">새로운 팀플 만들기</h4>
+				</div>
+				<div class="modal-body">
+					<div class="container" style="margin-top:30px;">
+						<div class="row">
+							<div class="">
+						        <form id="projectForm" class="form-horizontal col-sm-7 col-sm-offset-1" action="${pageContext.request.contextPath}/project/insertProject" method="post">
+									<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" >
+						        	*새로운 조별과제를 만드는 분이 자동으로 조장으로 지정됩니다.<p></p>
+									팀플명 : <input class="form-control" type="text" name="projectName" /><p></p>
+									과목명 : <input class="form-control" type="text" name="projectSubject"/><p></p>
+									교수님 : <input class="form-control" type="text" name="projectTeacher"/><p></p>
+					                시작날짜:
+					            	<div class="input-group registration-date-time">
+					            		<input class="form-control" name="projectStartdate" id="reg|istration-date" type="date">
+					            	</div><p></p>
+						            종료날짜 :
+						            <div class="input-group registration-date-time">
+					            		<input class="form-control" name="projectEnddate" id="registration-date" type="date">
+					            	</div><p></p>
+					            	
+						            팀원ID : <input class="form-control"type="text" name=""/><p></p>
+						            <span id="addMember">+</span>				            
+						        </form>
+							</div>
+						</div>
+					</div>
+
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-danger" id="insertProjectBtn">팀플생성</button>
+					<button type="button" class="btn btn-default" data-dismiss="modal">취소</button>
+				</div>
+			</div>
+		</div>
+	</div>
 	
 	
+	<!-- footer -->
 	<jsp:include page="footer.jsp" flush="false"/>
 	
 </body>
 
-<!-- 합쳐지고 최소화된 최신 자바스크립트 -->
 <script	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
-
+<!-- 달력js -->
+<script src="http://momentjs.com/downloads/moment-with-locales.js"></script>
+<script src="http://momentjs.com/downloads/moment-timezone-with-data.js"></script>
 </html>

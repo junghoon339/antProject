@@ -20,7 +20,7 @@ $(function(){
     })
     
 	
-	$(document).on("click","#plus",function(){
+	$(document).on("click","#addMember",function(){
 		//input추가
 	});
     
@@ -83,7 +83,7 @@ $(function(){
 					            	</div><p></p>
 					            	
 						            팀원ID : <input class="form-control"type="text" name=""/><p></p>
-						            <span id="plus">+</span>				            
+						            <span id="addMember">+</span>				            
 						        </form>
 							</div>
 						</div>
