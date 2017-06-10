@@ -10,19 +10,20 @@
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
 
-<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/header.css" />
-<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/sidebar.css" />
-
-</head>
+<link rel="stylesheet" type="text/css"
+	href="${pageContext.request.contextPath}/resources/css/header.css" />
+<link rel="stylesheet" type="text/css"
+	href="${pageContext.request.contextPath}/resources/css/sidebar.css" />
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+</head>
 
 
 <body>
 	<header>
 		<jsp:include page="header.jsp" flush="false" />
 	</header>
-		<jsp:include page="sidebar.jsp" />
-		<div id="burger"></div>
+	<jsp:include page="sidebar.jsp" />
+	<div id="burger"></div>
 	<section>
 		<div class="container">
 			<div class="row">
@@ -52,11 +53,11 @@
 
 
 
-
 	<footer>
 		<jsp:include page="footer.jsp" flush="false" />
 	</footer>
 
 </body>
-<script	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
 </html>

@@ -55,7 +55,7 @@
 											<!-- <ul>
 												<li><b>5 GB</b> Space</li>
 											</ul> -->
-											<a href="teamMain.jsp" class="btn btn-danger">Enter</a>
+											<a href="${pageContext.request.contextPath}/user/teamMain" class="btn btn-danger">Enter</a>
 										</div>
 									</div>
 								</div>

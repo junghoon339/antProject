@@ -28,7 +28,7 @@ public class UserServiceImpl implements UserService {
 		String encodedPassword = passwordEncoder.encode(userDTO.getUserPassword());
 		userDTO.setUserPassword(encodedPassword);
 		userDAO.insertUser(userDTO);
-		
+
 		UserDTO dbDTO = userDAO.selectUserById(userDTO.getUserId());
 		
 		// 권한등록
