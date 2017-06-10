@@ -16,7 +16,7 @@ import com.ant.storage.service.StorageService;
 import com.ant.user.dto.UserDTO;
 
 @Controller
-/*@RequestMapping()*/
+@RequestMapping("/storage")
 public class StorageController {
 	
 	@Autowired
