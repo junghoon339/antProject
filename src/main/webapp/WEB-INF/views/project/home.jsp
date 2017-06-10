@@ -167,7 +167,7 @@
 									교수님 : <input class="form-control" type="text" name="projectTeacher"/><p></p>
 					                시작날짜:
 					            	<div class="input-group registration-date-time">
-					            		<input class="form-control" name="projectStartdate" id="reg|istration-date" type="date">
+					           		<input class="form-control" name="projectStartdate" id="reg|istration-date" type="date">
 					            	</div><p></p>
 						            종료날짜 :
 						            <div class="input-group registration-date-time">
