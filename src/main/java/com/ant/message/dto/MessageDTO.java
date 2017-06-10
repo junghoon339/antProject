@@ -5,8 +5,8 @@ public class MessageDTO {
 	private int userNoMessageSender;
 	private int userNoMessagereceiver;
 	private String messageContent;
-	private String messageSendtime;
-	private String messageReceiver;
+	private String messageSendTime;
+	private String messageReceiveTime;
 	
 	public MessageDTO(){
 		
@@ -44,20 +44,21 @@ public class MessageDTO {
 		this.messageContent = messageContent;
 	}
 
-	public String getMessageSendtime() {
-		return messageSendtime;
+	public String getMessageSendTime() {
+		return messageSendTime;
 	}
 
-	public void setMessageSendtime(String messageSendtime) {
-		this.messageSendtime = messageSendtime;
+	public void setMessageSendTime(String messageSendTime) {
+		this.messageSendTime = messageSendTime;
 	}
 
-	public String getMessageReceiver() {
-		return messageReceiver;
+	public String getMessageReceiveTime() {
+		return messageReceiveTime;
 	}
 
-	public void setMessageReceiver(String messageReceiver) {
-		this.messageReceiver = messageReceiver;
+	public void setMessageReceiveTime(String messageReceiveTime) {
+		this.messageReceiveTime = messageReceiveTime;
 	}
+
 	
 }

@@ -8,7 +8,7 @@ public interface TodoDAO {
 	/**
 	 * to do 전체 불러오기
 	 * */
-	public List<TodoDTO> todoSelectAll();
+	public List<TodoDTO> todoSelectAll(int projectNo);
 	
 	/**
 	 * to do 삽입하기
@@ -16,7 +16,7 @@ public interface TodoDAO {
 	public int todoInsert(TodoDTO todoDTO);
 	
 	/**
-	 * to do 수정하기(이동하기, 내용수정하기)
+	 * to do 수정하기(이동하기)
 	 * */
 	public int todoUpdate(TodoDTO todoDTO);
 	
@@ -24,4 +24,14 @@ public interface TodoDAO {
 	 * to do 삭제하기
 	 * */
 	public int todoDelete(int todoNo);
+	
+	/**
+	 * to do 하나 불러오기
+	 * */
+	public TodoDTO selectByTodoNo(int todoNo);
+	
+	/**
+	 * to do 수정하기(내용수정)
+	 * */
+	public int todoUpdateText(TodoDTO todoDTO);
 }

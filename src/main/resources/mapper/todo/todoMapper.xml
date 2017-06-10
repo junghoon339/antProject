@@ -1,3 +1,56 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="mapper.todo.todoMapper"></mapper>
+<mapper namespace="mapper.todo.todoMapper">
+	<resultMap type="todoDTO" id="todoDTOMap">
+		<id property="todoNo" column="todo_no"/>
+		<result property="userNo" column="user_no"/>
+		<result property="projectNo" column="project_no"/>
+		<result property="todoLocation" column="todo_location"/>
+		<result property="todoContent" column="todo_content"/>
+		
+		<association property="userDTO" javaType="userDTO">
+			<id property="userNo" column="user_no"/>
+			<result property="userName" column="user_name"/>
+			<result property="userId" column="user_id"/>
+			<result property="userPassword" column="user_password"/>
+			<result property="userSchool" column="user_schoool"/>
+			<result property="userMajor" column="user_major"/>
+		</association>
+	</resultMap>
+	
+	<resultMap type="todoDTO" id="todoDTOMapBySelectOne">
+		<id property="todoNo" column="todo_no"/>
+		<result property="userNo" column="user_no"/>
+		<result property="projectNo" column="project_no"/>
+		<result property="todoLocation" column="todo_location"/>
+		<result property="todoContent" column="todo_content"/>
+	</resultMap>
+	<sql id="todoColumn">
+		t.todo_no,t.project_no,t.todo_location,t.todo_content,t.user_no
+	</sql>
+	
+	<insert id="todoInsert" parameterType="todoDTO">
+		insert into todo values(seq_todo_no.nextval,#{userNo},#{projectNo},#{todoLocation},#{todoContent})
+	</insert>
+	
+	
+	<select id="todoSelectAll" parameterType="int" resultMap="todoDTOMap">
+		select <include refid="todoColumn"/>,a.user_name from todo t join ant_user a on t.user_no=a.user_no where project_no=#{_parameter}
+	</select>
+	
+	<update id="todoUpdate" parameterType="todoDTO">
+		update todo set todo_location=#{todoLocation} where todo_no=#{todoNo}
+	</update>
+	
+	<select id="selectByTodoNo" parameterType="int" resultMap="todoDTOMapBySelectOne">
+		select <include refid="todoColumn"/> from todo t where todo_no=#{_parameter}
+	</select>
+	
+	<update id="todoUpdateText" parameterType="todoDTO">
+		update todo set todo_content=#{todoContent} where todo_no=#{todoNo}
+	</update>
+	
+	<delete id="todoDelete" parameterType="int">
+		delete from todo where todo_no=#{_parameter}
+	</delete>
+</mapper>

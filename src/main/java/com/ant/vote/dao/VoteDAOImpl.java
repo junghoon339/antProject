@@ -17,42 +17,67 @@ public class VoteDAOImpl implements VoteDAO {
 	
 	@Override
 	public List<VoteDTO> selectVoteList(int voteState) {
-		return session.selectList("voteMapper.select");
+		List<VoteDTO> list = session.selectList("voteMapper.voteSelect", voteState);
+		return list;
+		
 	}
 	
 	@Override
-	public int insertVote(VoteDTO voteDTO){
-		return session.insert("voteMapper.insert", voteDTO);
+	public List<VoteDTO> selectVoteListByVoteNo(int voteNo) {
+		List<VoteDTO> list = session.selectList("voteMapper.voteSelectByVoteNo", voteNo);
+		return list;
 	}
-	
+
+	@Override
+	public int insertVote(VoteDTO voteDTO) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
 	@Override
 	public int updateVote(int voteNo) {
-		return session.update("voteMapper.update", voteNo);
+		// TODO Auto-generated method stub
+		return 0;
 	}
-	
+
 	@Override
-	public int deleteVote(int voteNo){
-		return session.delete("voteMapper.delete", voteNo);
+	public int deleteVote(int voteNo) {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 
 	@Override
 	public int insertVoteDetail(VoteDetailDTO voteDetailDTO) {
-		return session.insert("voteDetailMapper.insert", voteDetailDTO);
+		// TODO Auto-generated method stub
+		return 0;
 	}
 
 	@Override
 	public int updateVoteDetail(int voteDetailNo) {
-		return session.update("voteDetailMapper.update", voteDetailNo);
+		// TODO Auto-generated method stub
+		return 0;
 	}
 
 	@Override
 	public int deleteVoteDetail(int voteDetailNo) {
-		return session.delete("voteDetailMapper.delete", voteDetailNo);
+		// TODO Auto-generated method stub
+		return 0;
 	}
 
 	@Override
 	public List<VoteDetailDTO> selectVoteDetail() {
-		return session.selectList("voteDetailMapper.select");
+		// TODO Auto-generated method stub
+		return null;
 	}
 
+	@Override
+	public int selectVoteUserCount(int voteNo) {
+		return session.selectOne("voteMapper.voteDetailUserCount", voteNo);
+	}
+
+	@Override
+	public int selectVoteState(int userNo) {
+		return session.selectOne("voteMapper.voteDetailState", userNo);
+	}
+	
 }

@@ -53,21 +53,21 @@
 							<li><a href="#"><img src="images/flags/GB.png" />
 									English(UK)</a></li>
 							<li><a href="#"><img src="images/flags/FR.png" />
-									FranÃ§ais</a></li>
+									Fran�짠ais</a></li>
 							<li><a href="#"><img src="images/flags/RO.png" />
-									RomÃ¢nÄ</a></li>
+									Rom�짖n��</a></li>
 							<li><a href="#"><img src="images/flags/IT.png" />
 									Italiano</a></li>
 
 							<li class="divider"></li>
 							<li><a href="#"><img src="images/flags/ES.png" />
-									EspaÃ±ol <span class="label label-default">soon</span></a></li>
+									Espa�짹ol <span class="label label-default">soon</span></a></li>
 							<li><a href="#"><img src="images/flags/BR.png" />
-									PortuguÃªs <span class="label label-default">soon</span></a></li>
-							<li><a href="#"><img src="images/flags/JP.png" /> æ¥æ¬èª <span
+									Portugu�짧s <span class="label label-default">soon</span></a></li>
+							<li><a href="#"><img src="images/flags/JP.png" /> 챈�짜챈�짭챔짧� <span
 									class="label label-default">soon</span></a></li>
 							<li><a href="#"><img src="images/flags/TR.png" />
-									TÃ¼rkÃ§e <span class="label label-default">soon</span></a></li>
+									T�쩌rk�짠e <span class="label label-default">soon</span></a></li>
 
 						</ul></li>
 
@@ -262,5 +262,6 @@
 
 		});
 	</script>
+
 </body>
 </html>

@@ -10,6 +10,7 @@ import com.ant.user.dto.AuthorityDTO;
 
 @Repository
 public class AuthorityDAOImpl implements AuthorityDAO {
+	
 	@Autowired
 	private SqlSession sqlSession;
 

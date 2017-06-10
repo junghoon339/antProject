@@ -191,9 +191,9 @@ header .stuts span {
     width: 0;
 }
 .albums {
-    margin: 40px auto 0;
+    margin: 20px auto 0;
     overflow: hidden;
-    width: 840px;
+    width: 1200px;
 }
 .album {
     border: 3px dashed #ccc;
@@ -201,7 +201,7 @@ header .stuts span {
     margin: 10px;
     min-height: 100px;
     padding: 10px;
-    width: 220px;
+    width: 300px;
 
     /* CSS3 transition rules */
     -webkit-transition: all 1.0s ease;
@@ -215,7 +215,7 @@ header .stuts span {
     margin: 15px;
     opacity: 1;
     position: relative;
-    width: 75px;
+    width: 100px;
 
     -khtml-user-drag: element;
     -webkit-user-drag: element;
@@ -276,9 +276,9 @@ header .stuts span {
 .note {
   color: #333;
   position: relative;
-  width: 200px;
+  width: 100px;
   margin: 0 auto;
-  padding: 20px;
+  padding: 10px;
   font-family: Satisfy;
   font-size: 10px;
   box-shadow: 0 10px 10px 2px rgba(0,0,0,0.3);
@@ -286,12 +286,12 @@ header .stuts span {
 
 .note .author {
   display: block;
-  margin: 40px 0 0 0;
+  margin: 10px 10px 0 0;
   text-align: right;
 }
 
 .yellow {
-  background: #eae672;
+  background: #fffa56;
   border-left-width: 0px;
   -webkit-transform: rotate(2deg);
   -moz-transform: rotate(2deg);
@@ -353,4 +353,12 @@ header .stuts span {
 
 a{
 	text-decoration:none;
+}
+
+.invalid {
+	background: rgba(0, 0, 0, 0) url("https://s19.postimg.org/olmaj1p8z/invalid.png") no-repeat scroll 2px 0px;
+	color: red;
+	line-height: 50px;
+	padding-left: 100px;
+
 }

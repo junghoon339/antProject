@@ -6,23 +6,29 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>투표상세</title>
-
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script>
+	$(function(){
+		$("input type[checkbox]").select(function(){
+			
+		})
+	})
+</script>
 <style>
-#tableCaption {
-	
-}
 </style>
 </head>
 <body>
 	<%@include file="header.jsp"%>
-	
 	<div class="col-xs-6 col-md-6">
 	
-		<div class="well">Q. ${title}</div>
+		<div class="well">Q. ${voteTitle}</div>
 		<p>
 		<div>
 			<hr>
-			1. ${option1}길을 잃엇다~1
+			<!-- ★★★★★★★★★★★★★★★★★★★★ -->
+			<c:forEach items="${voteJoinList}" var="voteJoinList" varStatus="voteJoinStatus">
+			 ${voteJoinList.voteDetailColumn}
 			<p>
 			
 			<div class="col-xs-1 col-md-6">
@@ -40,6 +46,8 @@
 				</div>
 			</div>
 			<p>
+			</c:forEach>
+			<!-- ★★★★★★★★★★★★★★★★★★★★ -->
 				2. ${option2}어딜가야 할가~<br>
 			<p>
 			<div class="col-xs-1 col-md-6">
