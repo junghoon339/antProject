@@ -1,13 +1,22 @@
 package com.ant.todo.dto;
 
+import com.ant.user.dto.UserDTO;
+
 public class TodoDTO {
 	private int todoNo;
 	private int userNo;
 	private int projectNo;
 	private int todoLocation;
 	private String todoContent;
+	private UserDTO userDTO;
 	
 	
+	public UserDTO getUserDTO() {
+		return userDTO;
+	}
+	public void setUserDTO(UserDTO userDTO) {
+		this.userDTO = userDTO;
+	}
 	public int getTodoNo() {
 		return todoNo;
 	}

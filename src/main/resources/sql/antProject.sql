@@ -214,3 +214,4 @@ CREATE TABLE authorities
 );
 create sequence seq_authorities__no;
 
+select * from todo;
