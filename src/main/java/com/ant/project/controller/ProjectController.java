@@ -14,10 +14,13 @@ public class ProjectController {
 	@Autowired
 	private ProjectService ProjectService;
 	
+	@RequestMapping("/home")
+	public void home(){}
+	
 	@RequestMapping("/insertProject")
 	public String insertProject(ProjectDTO projectDTO){
-		ProjectService.insertProject(projectDTO);
-		return "home";
+		//ProjectService.insertProject(projectDTO);
+		return "newProject";
 	}
 	
 	
