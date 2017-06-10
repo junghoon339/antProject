@@ -1,5 +1,7 @@
 package com.ant.project.dto;
 
+import java.util.List;
+
 public class ProjectDTO {
 	private int projectNo; //프로젝트번호
 	private String projectName; //프로젝트명
@@ -8,6 +10,8 @@ public class ProjectDTO {
 	private String projectSubject; //과목명
 	private String projectTeacher; //교수명
 	private int projectState; //프로젝트상태(0-진행중, 1-마감투표중, 2-완료)
+
+	private List<String> invitedUser; //조장이 초대한 팀원들의 아이디를 담는 list
 
 	public ProjectDTO() {}
 

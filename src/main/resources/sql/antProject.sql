@@ -18,33 +18,38 @@ drop table project_calendar;
 drop table project_user;
 drop table project;
 drop table ant_user;
-
+drop table authorities;
 
 
 
 CREATE TABLE ant_user
 (
    user_no      NUMBER   CONSTRAINT user_no_pk PRIMARY KEY,
-   user_id      VARCHAR(100)   NOT NULL,
-   user_name    VARCHAR(100)   NOT NULL,
-   user_password   VARCHAR(100)   NOT NULL,
-   user_school   VARCHAR(100)   NOT NULL,
-   user_major   VARCHAR(100)   NOT NULL
+   user_id      varchar2(100)   NOT NULL,
+   user_name    varchar2(100)   NOT NULL,
+   user_password   varchar2(100)   NOT NULL,
+   user_school   varchar2(100)   NOT NULL,
+   user_major   varchar2(100)   NOT NULL
 );
 CREATE SEQUENCE seq_user_no;
 
+
+
+SELECT * FROM ANT_USER;
+
+DROP TABLE ant_user CASCADE CONSTRAINTS;
 drop table ant_user;
 select * tab;
 
 
 CREATE TABLE project(
    project_no            NUMBER CONSTRAINT project_no_pk PRIMARY KEY,
-   project_name          VARCHAR(50) NOT NULL,
-   project_startdate     VARCHAR(50) NOT NULL,
-   project_enddate       VARCHAR(50) NOT NULL,
-   project_subject       VARCHAR(30) NOT NULL,
-   project_teacher       VARCHAR(20) NOT NULL,
-   project_state         NUMBER DEFAULT 0 --프로젝트상태(0-진행중, 1-마감투표중, 2-완료)
+   project_name          varchar2(50) NOT NULL,
+   project_startdate     varchar2(50) NOT NULL,
+   project_enddate       varchar2(50) NOT NULL,
+   project_subject       varchar2(30) NOT NULL,
+   project_teacher       varchar2(20) NOT NULL,
+   project_state         NUMBER DEFAULT 0
 );
 create sequence seq_project_no;
 
@@ -53,7 +58,7 @@ CREATE TABLE project_user(
    project_user_no       NUMBER CONSTRAINT project_user_no_pk PRIMARY KEY,
    project_no            NUMBER CONSTRAINT project_user_project_no_fk references project(project_no) on delete cascade,
    user_no               NUMBER CONSTRAINT project_user_no_fk references ant_user(user_no) on delete cascade,
-   project_user_role     VARCHAR(30) 
+   project_user_role     varchar2(30) 
 );
 create sequence seq_project_user_no;
 
@@ -62,7 +67,7 @@ create table todo(
   user_no number constraint todo_user_no_fk references ant_user(user_no) on delete cascade,
   project_no number constraint todo_project_no_fk references project(project_no) on delete cascade,
   todo_location number default 0, --0:todo,1:doing,2:done
-  todo_content varchar2(100) not null 
+  todo_content varchar22(100) not null 
 );
 create sequence seq_todo_no;
 
@@ -70,10 +75,10 @@ create sequence seq_todo_no;
 CREATE TABLE vote
 (
    vote_no number constraint vote_no_pk primary key,
-   vote_title varchar2(50) not null,
+   vote_title varchar22(50) not null,
    vote_adddate date default sysdate,
-   vote_enddate date not null,
-   vote_state number default 0, -- 0은 진행중, 1은 완료
+   vote_enddate date ,
+   vote_state number default 0,
    project_user_no number constraint vote_project_user_no_fk references project_user(project_user_no) on delete cascade
 );
 create sequence seq_vote_no;
@@ -84,50 +89,45 @@ CREATE TABLE vote_detail
    vote_detail_no number constraint vote_detail_no_po primary key,
    vote_no number constraint vote_detail_vote_no_fk references vote(vote_no) on delete cascade,
    user_no number constraint vote_detail_user_no_fk references ant_user(user_no) on delete cascade,
-   vote_detail_column number not null
+   vote_detail_column varchar2(100) not null
 );
 create sequence seq_vote_detail_no;
 
 
 drop table user_calendar;
--- user_calendar테이블 생성
--- user_no 별칭 : user_user_no_fk
 CREATE TABLE user_calendar
 (
    user_calendar_no      NUMBER  CONSTRAINT user_calendar_no_pk primary key,
    user_no               NUMBER CONSTRAINT user_calendar_user_no_fk references ant_user(user_no) on delete cascade ,
-   user_calendar_startdate  VARCHAR(20) NOT NULL ,
-   user_calendar_enddate  VARCHAR(20)  NULL ,
-   user_calendar_time    VARCHAR(20)  NULL ,
-   user_calendar_content  VARCHAR(50)  NULL 
+   user_calendar_startdate  varchar2(20) NOT NULL ,
+   user_calendar_enddate  varchar2(20)  NULL ,
+   user_calendar_time    varchar2(20)  NULL ,
+   user_calendar_content  varchar2(50)  NULL 
 );
 create sequence seq_user_calendar_no;
 
--- project_calendar테이블 생성
--- user_no 별칭 : project_user_no_fk 
+
 CREATE TABLE project_calendar
 (
    project_calendar_no   NUMBER CONSTRAINT project_calendar_no_pk primary key,
    project_no            NUMBER CONSTRAINT calendar_project_no_fk references project(project_no) on delete cascade,
    user_no               NUMBER CONSTRAINT project_calendar_user_no_fk references ant_user(user_no) on delete cascade ,
-   project_calendar_startdate  VARCHAR(20)  NOT NULL ,
-   project_calendar_enddate  VARCHAR(20)  NULL ,
-   project_calendar_time  VARCHAR(20)  NULL ,
-   project_calendar_content  VARCHAR(20)  NULL 
+   project_calendar_startdate  varchar2(20)  NOT NULL ,
+   project_calendar_enddate  varchar2(20)  NULL ,
+   project_calendar_time  varchar2(20)  NULL ,
+   project_calendar_content  varchar2(20)  NULL 
 );
 create sequence seq_project_calendar_no;
 
--- timetable테이블 생성
--- user_no 별칭 : timetable_user_no_fk
 CREATE TABLE timetable
 (
    timetable_no          NUMBER CONSTRAINT timetable_no_pk primary key ,
    user_no               NUMBER CONSTRAINT timetable_user_no_fk references ant_user(user_no) on delete cascade ,
-   timetable_subject     VARCHAR(20)  NOT NULL ,
-   timetable_day         number  default 0 , --0은 월요일
+   timetable_subject     varchar2(20)  NOT NULL ,
+   timetable_day         number  default 0 , 
    timetable_class       number  NOT NULL ,
-   timetable_location    VARCHAR(20)  NULL ,
-   timetable_teacher     VARCHAR(20)  NULL 
+   timetable_location    varchar2(20)  NULL ,
+   timetable_teacher     varchar2(20)  NULL 
 );
 create sequence seq_timetable_no ;
 
@@ -137,7 +137,7 @@ CREATE TABLE chat
 (
    chat_no      NUMBER CONSTRAINT chat_no_pk PRIMARY KEY,
    project_no   NUMBER CONSTRAINT project_no_fk REFERENCES project(project_no) ON DELETE CASCADE,
-   chat_path   VARCHAR2(500)
+   chat_path   varchar22(500)
 );
 CREATE SEQUENCE seq_chat_no;
 
@@ -148,9 +148,10 @@ CREATE TABLE message
 (
    message_no number constraint message_no_pk primary key,
    user_no_message_receiver number constraint message_user_no_receiver_fk references ant_user(user_no) on delete cascade,
-   message_content VARCHAR(100),
-   message_sendtime      VARCHAR(20)  NOT NULL ,
-   message_receivetime   VARCHAR(20)  NOT NULL ,
+   message_content varchar2(500),
+   message_sendtime date default sysdate ,
+   message_receivetime date ,
+   message_state number default 0,
    user_no_message_sender number constraint message_user_no_sender_fk references ant_user(user_no) on delete cascade
 );
 create sequence seq_message_no; 
@@ -161,10 +162,13 @@ CREATE TABLE storage
 (
    storage_no number constraint storage_no_pk primary key,
    project_no number constraint storage_project_no_fk references project(project_no) on delete cascade,
-   storage_filename VARCHAR(20),
-   storage_filepath VARCHAR(500),
-   storage_filesize VARCHAR(50),
+   storage_title varchar2(100) not null,
+   storage_content varchar2(200) not null,
+   storage_filename varchar2(20),
+   storage_filepath varchar2(500),
+   storage_filesize varchar2(50),
    storage_readnum number default 0,
+   storage_writeday date default sysdate,
    user_no number constraint storage_user_no_fk references ant_user(user_no) on delete cascade 
 );
 create sequence seq_storage_no;
@@ -175,7 +179,7 @@ CREATE TABLE survey
    project_no            NUMBER  CONSTRAINT survey_project_no_fk REFERENCES project(project_no) on delete cascade,
    survey_startdate      DATE NOT NULL  ,
    survey_enddate        DATE  NOT NULL ,
-   survey_state          NUMBER  DEFAULT 0   -- 0:진행중  1:종료
+   survey_state          NUMBER  DEFAULT 0
 );
 create sequence seq_survey_no;
 
@@ -184,7 +188,7 @@ CREATE TABLE survey_user
    survey_user_no        NUMBER  CONSTRAINT survey_user_no_pk PRIMARY KEY,
    survey_no             NUMBER  CONSTRAINT survey_user_survey_no_fk REFERENCES survey(survey_no) on delete cascade,
    user_no               NUMBER  CONSTRAINT survey_user_user_no_fk REFERENCES ant_user(user_no) on delete cascade,
-   survey_user_state     NUMBER  DEFAULT 0   -- 0:미참여  1:참여
+   survey_user_state     NUMBER  DEFAULT 0 
 );
 create sequence seq_survey_user_no;
 
@@ -192,10 +196,25 @@ CREATE TABLE survey_detail
 (
    survey_detail_no      NUMBER  CONSTRAINT survey_detail_no_pk PRIMARY KEY,
    survey_no             NUMBER  CONSTRAINT survey_detail_survey_no_fk REFERENCES survey(survey_no)on delete cascade,
-   survey_detail_username  VARCHAR(50)  NOT NULL ,
+   survey_detail_username  varchar2(50)  NOT NULL ,
    survey_detail_userscore  NUMBER  DEFAULT 0 ,
    survey_user_no        NUMBER  CONSTRAINT survey_detail_user_no_fk REFERENCES survey_user(survey_user_no) on delete cascade
 );
 create sequence seq_survey_detail_no;
 
+
+SELECT * FROM authorities;
+
+
+
+CREATE TABLE authorities
+( 
+	no 	NUMBER	CONSTRAINT pk_authorities PRIMARY KEY,
+	user_no			NUMBER   CONSTRAINT fk_user_authorities REFERENCES ant_user(user_no) ON DELETE CASCADE,
+	authority		VARCHAR2(50) NOT NULL
+);
+
+select * from todo;
+
+create sequence seq_authorities_no;
 

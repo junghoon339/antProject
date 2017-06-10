@@ -12,6 +12,16 @@ public class UserDTO {
 		super();
 	}
 
+	public UserDTO(String userId, String userName, String userPassword, String userSchool,
+			String userMajor) {
+		super();
+		this.userId = userId;
+		this.userName = userName;
+		this.userPassword = userPassword;
+		this.userSchool = userSchool;
+		this.userMajor = userMajor;
+	}
+	
 	public UserDTO(int userNo, String userId, String userName, String userPassword, String userSchool,
 			String userMajor) {
 		super();
