@@ -5,13 +5,56 @@
 	<resultMap type="voteDTO" id="voteDTOMap">
 		<id column="vote_no" property="voteNo" />
 		<result column="project_user_no" property="projectUserNo" />
-		<result column="vote_title" property="voteTilte" />
+		<result column="vote_title" property="voteTitle" />
 		<result column="vote_adddate" property="voteAddDate" />
 		<result column="vote_enddate" property="voteEndDate" />
 		<result column="vote_state" property="voteState" />
 	</resultMap>
 
-	<select id="select" parameterType="int" resultMap="voteDTOMap">
-		select * from vote where vote_state = #{_parameter}
+	<sql id="voteColumn">
+		vote_no, project_user_no, vote_title, vote_adddate,
+		vote_enddate, vote_state
+	</sql>
+
+	<!-- <resultMap type="voteDetailDTO" id="voteDetailDTOMap"> <id column="vote_detail_no" 
+		property="voteDetailNo" /> <result column="vote_no" property="voteNo" /> 
+		<result column="user_no" property="userNo" /> <result column="vote_detail_column" 
+		property="voteDetailColumn" /> </resultMap> -->
+
+	<resultMap type="voteDTO" id="collectionMap">
+		<id column="vote_no" property="voteNo" />
+		<result column="project_user_no" property="projectUserNo" />
+		<result column="vote_title" property="voteTitle" />
+		<result column="vote_adddate" property="voteAddDate" />
+		<result column="vote_enddate" property="voteEndDate" />
+		<result column="vote_state" property="voteState" />
+		<collection property="details" ofType="voteDetailDTO">
+			<id column="vote_detail_no" property="voteDetailNo" />
+			<result column="vote_no" property="voteNo" />
+			<result column="user_no" property="userNo" />
+			<result column="vote_detail_column" property="voteDetailColumn" />
+		</collection>
+	</resultMap>
+
+	<select id="voteSelect" parameterType="int" resultMap="voteDTOMap">
+		select
+		<include refid="voteColumn" />
+		from vote where vote_state = #{_parameter}
+	</select>
+
+	<select id="voteSelectByVoteNo" parameterType="int" resultMap="collectionMap">
+		SELECT v.vote_no, v.vote_title, d.vote_detail_column
+		FROM vote v JOIN vote_detail d
+		ON v.vote_no = #{_parameter} 
+		AND v.vote_no = d.vote_no 
+		AND d.user_no is null
+	</select>
+
+	<select id="voteDetailUserCount" parameterType="int" resultType="int">
+		select count(user_no) from vote_detail where vote_no = #{_parameter}
+	</select>
+
+	<select id="voteDetailState" parameterType="int" resultType="int">
+		select count(user_no) from vote_detail where user_no = #{_parameter}
 	</select>
 </mapper>

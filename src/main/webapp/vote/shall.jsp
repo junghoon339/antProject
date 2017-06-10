@@ -724,7 +724,7 @@ header {
                     <ul>
                         <li class="active"><a href="#"><i class="fa fa-home" aria-hidden="true"></i><span class="hidden-xs hidden-sm">Home</span></a></li>
                         <li><a href="#"><i class="fa fa-tasks" aria-hidden="true"></i><span class="hidden-xs hidden-sm">Workflow</span></a></li>
-                        <li><a href="${pageContext.request.contextPath}/vote/"><i class="fa fa-bar-chart" aria-hidden="true"></i><span class="hidden-xs hidden-sm">dStatistics</span></a></li>
+                        <li><a href="${pageContext.request.contextPath}/vote/CreateForm"><i class="fa fa-bar-chart" aria-hidden="true"></i><span class="hidden-xs hidden-sm">dStatistics</span></a></li>
                         <li><a href="#"><i class="fa fa-user" aria-hidden="true"></i><span class="hidden-xs hidden-sm">Calender</span></a></li>
                         <li><a href="#"><i class="fa fa-calendar" aria-hidden="true"></i><span class="hidden-xs hidden-sm">Users</span></a></li>
                         <li><a href="#"><i class="fa fa-cog" aria-hidden="true"></i><span class="hidden-xs hidden-sm">Setting</span></a></li>

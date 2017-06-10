@@ -9,67 +9,71 @@
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script>
-	$(function(){
-		$("input type[checkbox]").select(function(){
+	
+	$(function() {
+
+		$(document).on('click', '#radio', (function() {
 			
-		})
+			if ( $(this).attr('checked') ) {
+				 $(this).attr('checked', false); 
+			} else {
+				$(this).attr('checked', true); 
+			}
+		}))
 	})
 </script>
 <style>
+table{
+	width:100%;
+}
+td{
+	/* border:red 2px solid; */
+	height:40px;
+}
+.btn span.glyphicon {    			
+	opacity: 0;				
+}
+.btn.active span.glyphicon {				
+	opacity: 1;				
+}
 </style>
 </head>
 <body>
 	<%@include file="header.jsp"%>
-	<div class="col-xs-6 col-md-6">
-	
-		<div class="well">Q. ${title}</div>
+	<div class="col-xs-10 col-md-6">
+		<div class="well">Q. ${voteTitle}</div>
 		<p>
 		<div>
 			<hr>
-			1. ${option1}길을 잃엇다~1
-			<p>
-			
-			<div class="col-xs-1 col-md-6">
-				<div class="funkyradio">
-					<div class="funkyradio-warning">
-						<input type="checkbox" name="checkbox" id="checkbox5" checked />
-					</div>
-				</div>
-			</div>
-			<div class="progress progress-striped">
-				<div class="progress-bar progress-bar-success" role="progressbar"
-					aria-valuenow="10" aria-valuemin="0" aria-valuemax="100"
-					style="width: 80%">
-					<span class="sr-only">80%</span>
-				</div>
-			</div>
-			<p>
-				2. ${option2}어딜가야 할가~<br>
-			<p>
-			<div class="col-xs-1 col-md-6">
-				<div class="funkyradio">
-					<div class="funkyradio-warning">
-						<input type="checkbox" name="checkbox" id="checkbox5" checked />
-					</div>
-				</div>
-			</div>
-			<div class="progress progress-striped">
-				<div class="progress-bar progress-bar-success" role="progressbar"
-					aria-valuenow="10" aria-valuemin="0" aria-valuemax="100"
-					style="width: 35%">
-					<span class="sr-only">80%</span>
-				</div>
-			</div>
-			<hr>
-			<p>
+			<!-- ★★★★★★★★★★★★★★★★★★★★ -->
+			<c:forEach items="${voteDetail}" var="voteDetailList" varStatus="voteDetailStatus">
+				<table>
+					<tr>
+						<td rowspan="2" width="10%" align="center">
+						<input type="radio" name="voteChk" id="radio" value="${voteDetailList.voteDetailColumn}" >
+						</td>
+						<td width="80%" valign="bottom">${voteDetailList.voteDetailColumn}</td>
+						<td width="20px"></td>
+					</tr>
+					<tr>
+						<td  valign="middle" align="center">
+							<div class="progress progress-striped">
+								<div class="progress-bar progress-bar-success"
+									role="progressbar" aria-valuenow="1" aria-valuemin="0"
+									aria-valuemax="100" style="width: 40%">
+								</div>
+							</div>
+						</td>
+						<td valign="top">10%</td>
+					</tr>
+				</table>
+			</c:forEach>
+			<!-- ★★★★★★★★★★★★★★★★★★★★ -->
+			<br>
 				<!-- if로 투표를 참여했었는지 안했었는지..확인 -->
-				<a href="#" class="btn btn-lg btn-danger"><span class="glyphicon glyphicon-check"></span> 투표하기</a> 
+				<a href="#" class="btn btn-lg btn-danger" id="vote"><span class="glyphicon glyphicon-check"></span> 투표하기</a> 
 				<a href="#" class="btn btn-lg btn-danger"><span class="glyphicon glyphicon-minus-sign"></span> 투표종료</a>
 		</div>
-		
-
-
-
 	</div>
 </body>
 </html>

@@ -1,24 +1,35 @@
 package com.ant.vote.dto;
 
+import java.util.List;
+
 public class VoteDTO {
 	private int voteNo;
 	private int projectUserNo;
-	private String voteTilte;
+	private String voteTitle;
 	private String voteAddDate;
 	private String voteEndDate;
 	private String voteState;
 
+	private List<VoteDetailDTO> details;
+	
 	public VoteDTO(){}
-	public VoteDTO(int voteNo, int userNo, int projectUserNo, String voteTilte, String voteAddDate,
+	public VoteDTO(int voteNo, int userNo, int projectUserNo, String voteTitle, String voteAddDate,
 			String voteEndDate, String voteState) {
 		this.voteNo = voteNo;
 		this.projectUserNo = projectUserNo;
-		this.voteTilte = voteTilte;
+		this.voteTitle = voteTitle;
 		this.voteAddDate = voteAddDate;
 		this.voteEndDate = voteEndDate;
 		this.voteState = voteState;
 	}
-
+	
+	public List<VoteDetailDTO> getDetails() {
+		return details;
+	}
+	public void setDetails(List<VoteDetailDTO> details) {
+		this.details = details;
+	}
+	
 	public int getVoteNo() {
 		return voteNo;
 	}
@@ -35,12 +46,12 @@ public class VoteDTO {
 		this.projectUserNo = projectUserNo;
 	}
 
-	public String getVoteTilte() {
-		return voteTilte;
+	public String getVoteTitle() {
+		return voteTitle;
 	}
 
-	public void setVoteTilte(String voteTilte) {
-		this.voteTilte = voteTilte;
+	public void setVoteTitle(String voteTitle) {
+		this.voteTitle = voteTitle;
 	}
 
 	public String getVoteAddDate() {

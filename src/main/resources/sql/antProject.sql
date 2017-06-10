@@ -44,7 +44,7 @@ CREATE TABLE project(
    project_enddate       varchar2(50) NOT NULL,
    project_subject       varchar2(30) NOT NULL,
    project_teacher       varchar2(20) NOT NULL,
-   project_state         NUMBER DEFAULT 0 --ÇÁ·ÎÁ§Æ®»óÅÂ(0-ÁøÇàÁß, 1-¸¶°¨ÅõÇ¥Áß, 2-¿Ï·á)
+   project_state         NUMBER DEFAULT 0 --ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ï¿½ï¿½(0-ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½, 1-ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ç¥ï¿½ï¿½, 2-ï¿½Ï·ï¿½)
 );
 create sequence seq_project_no;
 
@@ -72,8 +72,8 @@ CREATE TABLE vote
    vote_no number constraint vote_no_pk primary key,
    vote_title varchar22(50) not null,
    vote_adddate date default sysdate,
-   vote_enddate date not null,
-   vote_state number default 0, -- 0Àº ÁøÇàÁß, 1Àº ¿Ï·á
+   vote_enddate date ,
+   vote_state number default 0, -- 0ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½, 1ï¿½ï¿½ ï¿½Ï·ï¿½
    project_user_no number constraint vote_project_user_no_fk references project_user(project_user_no) on delete cascade
 );
 create sequence seq_vote_no;
@@ -84,14 +84,14 @@ CREATE TABLE vote_detail
    vote_detail_no number constraint vote_detail_no_po primary key,
    vote_no number constraint vote_detail_vote_no_fk references vote(vote_no) on delete cascade,
    user_no number constraint vote_detail_user_no_fk references ant_user(user_no) on delete cascade,
-   vote_detail_column number not null
+   vote_detail_column varchar2(100) not null
 );
 create sequence seq_vote_detail_no;
 
 
 drop table user_calendar;
--- user_calendarÅ×ÀÌºí »ý¼º
--- user_no º°Äª : user_user_no_fk
+-- user_calendarï¿½ï¿½ï¿½Ìºï¿½ ï¿½ï¿½ï¿½ï¿½
+-- user_no ï¿½ï¿½Äª : user_user_no_fk
 CREATE TABLE user_calendar
 (
    user_calendar_no      NUMBER  CONSTRAINT user_calendar_no_pk primary key,
@@ -103,8 +103,8 @@ CREATE TABLE user_calendar
 );
 create sequence seq_user_calendar_no;
 
--- project_calendarÅ×ÀÌºí »ý¼º
--- user_no º°Äª : project_user_no_fk 
+-- project_calendarï¿½ï¿½ï¿½Ìºï¿½ ï¿½ï¿½ï¿½ï¿½
+-- user_no ï¿½ï¿½Äª : project_user_no_fk 
 CREATE TABLE project_calendar
 (
    project_calendar_no   NUMBER CONSTRAINT project_calendar_no_pk primary key,
@@ -117,14 +117,14 @@ CREATE TABLE project_calendar
 );
 create sequence seq_project_calendar_no;
 
--- timetableÅ×ÀÌºí »ý¼º
--- user_no º°Äª : timetable_user_no_fk
+-- timetableï¿½ï¿½ï¿½Ìºï¿½ ï¿½ï¿½ï¿½ï¿½
+-- user_no ï¿½ï¿½Äª : timetable_user_no_fk
 CREATE TABLE timetable
 (
    timetable_no          NUMBER CONSTRAINT timetable_no_pk primary key ,
    user_no               NUMBER CONSTRAINT timetable_user_no_fk references ant_user(user_no) on delete cascade ,
    timetable_subject     varchar2(20)  NOT NULL ,
-   timetable_day         number  default 0 , --0Àº ¿ù¿äÀÏ
+   timetable_day         number  default 0 , --0ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
    timetable_class       number  NOT NULL ,
    timetable_location    varchar2(20)  NULL ,
    timetable_teacher     varchar2(20)  NULL 
@@ -151,7 +151,7 @@ CREATE TABLE message
    message_content varchar2(500),
    message_sendtime date default sysdate ,
    message_receivetime date ,
-   message_state number default 0, --0Àº ¸ðµÎ º¸¿©ÁÖ±â, 1Àº º¸³½»ç¶÷ ¾Èº¸ÀÌ±â(º¸³½»ç¶÷ÀÌ»èÁ¦), 2´Â ¹ÞÀº»ç¶÷¾Èº¸ÀÌ±â(¹ÞÀº»ç¶÷ÀÌ»èÁ¦), 3Àº µÑ´Ù ¾Èº¸ÀÌ±â(µÑ´Ù»èÁ¦)
+   message_state number default 0, --0ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ö±ï¿½, 1ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Èºï¿½ï¿½Ì±ï¿½(ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ì»ï¿½ï¿½ï¿½), 2ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Èºï¿½ï¿½Ì±ï¿½(ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ì»ï¿½ï¿½ï¿½), 3ï¿½ï¿½ ï¿½Ñ´ï¿½ ï¿½Èºï¿½ï¿½Ì±ï¿½(ï¿½Ñ´Ù»ï¿½ï¿½ï¿½)
    user_no_message_sender number constraint message_user_no_sender_fk references ant_user(user_no) on delete cascade
 );
 create sequence seq_message_no; 
@@ -179,7 +179,7 @@ CREATE TABLE survey
    project_no            NUMBER  CONSTRAINT survey_project_no_fk REFERENCES project(project_no) on delete cascade,
    survey_startdate      DATE NOT NULL  ,
    survey_enddate        DATE  NOT NULL ,
-   survey_state          NUMBER  DEFAULT 0   -- 0:ÁøÇàÁß  1:Á¾·á
+   survey_state          NUMBER  DEFAULT 0   -- 0:ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½  1:ï¿½ï¿½ï¿½ï¿½
 );
 create sequence seq_survey_no;
 
@@ -188,7 +188,7 @@ CREATE TABLE survey_user
    survey_user_no        NUMBER  CONSTRAINT survey_user_no_pk PRIMARY KEY,
    survey_no             NUMBER  CONSTRAINT survey_user_survey_no_fk REFERENCES survey(survey_no) on delete cascade,
    user_no               NUMBER  CONSTRAINT survey_user_user_no_fk REFERENCES ant_user(user_no) on delete cascade,
-   survey_user_state     NUMBER  DEFAULT 0   -- 0:¹ÌÂü¿©  1:Âü¿©
+   survey_user_state     NUMBER  DEFAULT 0   -- 0:ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½  1:ï¿½ï¿½ï¿½ï¿½
 );
 create sequence seq_survey_user_no;
 
@@ -213,4 +213,3 @@ CREATE TABLE authorities
 	authorities_authority		VARCHAR2(50) NOT NULL
 );
 create sequence seq_authorities__no;
-

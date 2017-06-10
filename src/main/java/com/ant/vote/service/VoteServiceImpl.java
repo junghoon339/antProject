@@ -19,6 +19,11 @@ public class VoteServiceImpl implements VoteService {
 	public List<VoteDTO> selectVoteList(int voteState) {
 		return voteDAO.selectVoteList(voteState);
 	}
+	
+	@Override
+	public List<VoteDTO> selectVoteListByVoteNo(int voteNo) {
+		return voteDAO.selectVoteListByVoteNo(voteNo);
+	}
 
 	@Override
 	public int insertVote(VoteDTO voteDTO) {
@@ -61,5 +66,15 @@ public class VoteServiceImpl implements VoteService {
 		// TODO Auto-generated method stub
 		return null;
 	}
-	
+
+	@Override
+	public int selectVoteUserCount(int voteNo) {
+		return voteDAO.selectVoteUserCount(voteNo);
+	}
+
+	@Override
+	public int selectVoteState(int userNo) {
+		return voteDAO.selectVoteState(userNo);
+	}
+
 }

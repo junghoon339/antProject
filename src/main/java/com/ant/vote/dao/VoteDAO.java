@@ -15,6 +15,11 @@ public interface VoteDAO {
 	public List<VoteDTO> selectVoteList(int voteState);
 	
 	/**
+	 * 투표번호에 해당하는 투표목록 출력
+	 * */
+	public List<VoteDTO> selectVoteListByVoteNo(int voteNo);
+	
+	/**
 	 * 투표 등록하기(INSERT)
 	 * insert into vote values( #{voteNo}, #{userNo}, #{projectUserNo}, #{voteTitle}, sysdate, #{voteEndDate}, 0 )
 	 * */
@@ -51,5 +56,15 @@ public interface VoteDAO {
 	 * 투표 참여자 검색하기(INSERT)
 	 * */
 	public List<VoteDetailDTO> selectVoteDetail();
+	
+	/**
+	 * 투표 참여인원 검색하기
+	 * */
+	public int selectVoteUserCount(int voteNo);
+	
+	/**
+	 * 투표 참여여부 검색하기
+	 * */
+	public int selectVoteState(int userNo);
 	
 }
