@@ -12,6 +12,7 @@
 			/WEB-INF/spring/appServlet/security-context.xml
 			/WEB-INF/spring/appServlet/updown-servlet.xml
 			/WEB-INF/spring/appServlet/db-transaction.xml
+			/WEB-INF/spring/appServlet/ws-config.xml
 		</param-value>
 	</context-param>
 

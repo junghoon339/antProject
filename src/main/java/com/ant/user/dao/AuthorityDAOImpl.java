@@ -10,20 +10,20 @@ import com.ant.user.dto.AuthorityDTO;
 
 @Repository
 public class AuthorityDAOImpl implements AuthorityDAO {
+	
 	@Autowired
 	private SqlSession sqlSession;
 
 	@Override
 	public int insertAuthority(AuthorityDTO authority) {
-		// TODO Auto-generated method stub
-		return 0;
+		
+		return sqlSession.insert("AuthorityMapper.insertAuthority", authority);
 	}
 
 	@Override
-	public List<AuthorityDTO> selectAuthorityByUserName(String userName) {
+	public List<AuthorityDTO> selectAuthorityByUserNo(int userNo) {
 		
-		
-		return sqlSession.selectList("AuthorityMapper.selectAuthorityByUserName", userName);
+		return sqlSession.selectList("AuthorityMapper.selectAuthorityByUserNo", userNo);
 	}
 	
 

@@ -2,13 +2,13 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="UserMapper">
 	<resultMap type="userDTO" id="userMap">
+		<id column="user_no" property="userNo"/>
 		<result column="user_id" property="userId" />
 		<result column="user_name" property="userName" />
 		<result column="user_password" property="userPassword" />
 		<result column="user_school" property="userSchool" />
 		<result column="user_major" property="userMajor" />
 	</resultMap>
-
 
 	<insert id="insertUser" parameterType="userDTO">
 		INSERT INTO ant_user

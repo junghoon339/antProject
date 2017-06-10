@@ -18,7 +18,7 @@ drop table project_calendar;
 drop table project_user;
 drop table project;
 drop table ant_user;
-
+drop table authorities;
 
 
 
@@ -33,6 +33,11 @@ CREATE TABLE ant_user
 );
 CREATE SEQUENCE seq_user_no;
 
+
+
+SELECT * FROM ANT_USER;
+
+DROP TABLE ant_user CASCADE CONSTRAINTS;
 drop table ant_user;
 select * tab;
 
@@ -44,7 +49,7 @@ CREATE TABLE project(
    project_enddate       varchar2(50) NOT NULL,
    project_subject       varchar2(30) NOT NULL,
    project_teacher       varchar2(20) NOT NULL,
-   project_state         NUMBER DEFAULT 0 --프로젝트상태(0-진행중, 1-마감투표중, 2-완료)
+   project_state         NUMBER DEFAULT 0
 );
 create sequence seq_project_no;
 
@@ -72,8 +77,8 @@ CREATE TABLE vote
    vote_no number constraint vote_no_pk primary key,
    vote_title varchar22(50) not null,
    vote_adddate date default sysdate,
-   vote_enddate date not null,
-   vote_state number default 0, -- 0은 진행중, 1은 완료
+   vote_enddate date ,
+   vote_state number default 0,
    project_user_no number constraint vote_project_user_no_fk references project_user(project_user_no) on delete cascade
 );
 create sequence seq_vote_no;
@@ -84,14 +89,12 @@ CREATE TABLE vote_detail
    vote_detail_no number constraint vote_detail_no_po primary key,
    vote_no number constraint vote_detail_vote_no_fk references vote(vote_no) on delete cascade,
    user_no number constraint vote_detail_user_no_fk references ant_user(user_no) on delete cascade,
-   vote_detail_column number not null
+   vote_detail_column varchar2(100) not null
 );
 create sequence seq_vote_detail_no;
 
 
 drop table user_calendar;
--- user_calendar테이블 생성
--- user_no 별칭 : user_user_no_fk
 CREATE TABLE user_calendar
 (
    user_calendar_no      NUMBER  CONSTRAINT user_calendar_no_pk primary key,
@@ -103,8 +106,7 @@ CREATE TABLE user_calendar
 );
 create sequence seq_user_calendar_no;
 
--- project_calendar테이블 생성
--- user_no 별칭 : project_user_no_fk 
+
 CREATE TABLE project_calendar
 (
    project_calendar_no   NUMBER CONSTRAINT project_calendar_no_pk primary key,
@@ -117,14 +119,12 @@ CREATE TABLE project_calendar
 );
 create sequence seq_project_calendar_no;
 
--- timetable테이블 생성
--- user_no 별칭 : timetable_user_no_fk
 CREATE TABLE timetable
 (
    timetable_no          NUMBER CONSTRAINT timetable_no_pk primary key ,
    user_no               NUMBER CONSTRAINT timetable_user_no_fk references ant_user(user_no) on delete cascade ,
    timetable_subject     varchar2(20)  NOT NULL ,
-   timetable_day         number  default 0 , --0은 월요일
+   timetable_day         number  default 0 , 
    timetable_class       number  NOT NULL ,
    timetable_location    varchar2(20)  NULL ,
    timetable_teacher     varchar2(20)  NULL 
@@ -151,7 +151,7 @@ CREATE TABLE message
    message_content varchar2(500),
    message_sendtime date default sysdate ,
    message_receivetime date ,
-   message_state number default 0, --0은 모두 보여주기, 1은 보낸사람 안보이기(보낸사람이삭제), 2는 받은사람안보이기(받은사람이삭제), 3은 둘다 안보이기(둘다삭제)
+   message_state number default 0,
    user_no_message_sender number constraint message_user_no_sender_fk references ant_user(user_no) on delete cascade
 );
 create sequence seq_message_no; 
@@ -179,7 +179,7 @@ CREATE TABLE survey
    project_no            NUMBER  CONSTRAINT survey_project_no_fk REFERENCES project(project_no) on delete cascade,
    survey_startdate      DATE NOT NULL  ,
    survey_enddate        DATE  NOT NULL ,
-   survey_state          NUMBER  DEFAULT 0   -- 0:진행중  1:종료
+   survey_state          NUMBER  DEFAULT 0
 );
 create sequence seq_survey_no;
 
@@ -188,7 +188,7 @@ CREATE TABLE survey_user
    survey_user_no        NUMBER  CONSTRAINT survey_user_no_pk PRIMARY KEY,
    survey_no             NUMBER  CONSTRAINT survey_user_survey_no_fk REFERENCES survey(survey_no) on delete cascade,
    user_no               NUMBER  CONSTRAINT survey_user_user_no_fk REFERENCES ant_user(user_no) on delete cascade,
-   survey_user_state     NUMBER  DEFAULT 0   -- 0:미참여  1:참여
+   survey_user_state     NUMBER  DEFAULT 0 
 );
 create sequence seq_survey_user_no;
 
@@ -206,12 +206,15 @@ create sequence seq_survey_detail_no;
 SELECT * FROM authorities;
 
 
+
 CREATE TABLE authorities
 ( 
-	authorities_no 	NUMBER	CONSTRAINT authorities_no_pk PRIMARY KEY,
-	user_no			NUMBER   CONSTRAINT authorities_user_no_fk REFERENCES ant_user(user_no) ON DELETE CASCADE,
-	authorities_authority		VARCHAR2(50) NOT NULL
+	no 	NUMBER	CONSTRAINT pk_authorities PRIMARY KEY,
+	user_no			NUMBER   CONSTRAINT fk_user_authorities REFERENCES ant_user(user_no) ON DELETE CASCADE,
+	authority		VARCHAR2(50) NOT NULL
 );
-create sequence seq_authorities__no;
 
 select * from todo;
+
+create sequence seq_authorities_no;
+

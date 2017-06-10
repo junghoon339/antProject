@@ -1,3 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="mapper.project.projectMapper"></mapper>
+<mapper namespace="projectMapper">
+
+	<!-- 새로운조별과제방 삽입 -->
+	<insert id="insertProject" parameterType="projectDTO">
+		insert into project(project_no,project_name,project_startdate,project_enddate,project_subject,project_teacher,project_state)
+		values(seq_project_no.nextval,#{projectName},#{projectStartdate},#{projectEnddate},#{projectSubject},#{projectTeacher},0)
+	</insert>
+
+	<!-- 팀플방에 조장등록 -->
+	
+	
+	
+	<!-- 팀플방에 조원등록 -->
+
+
+
+</mapper>

@@ -37,7 +37,6 @@ public class UserAuthenticationProvider implements AuthenticationProvider {
 			return null;
 		}
 		
-		System.out.println(1);
 		// 1. 인수로 받은 user정보를 가지고 DB에 존재 하는지 체크
 		String userId = auth.getName();
 		
@@ -46,31 +45,34 @@ public class UserAuthenticationProvider implements AuthenticationProvider {
 		if (userDTO == null) { // ID가 없는경우
 			throw new UsernameNotFoundException(userId + "는 없는 회원입니다.");
 		}
-		System.out.println(2);
+		
+		int userNo = userDTO.getUserNo();
+		
+		
 		// 2. 존재하면 비밀번호 비교
 		String password = (String) auth.getCredentials();
-
+		
 		if (!passwordEncoder.matches(password, userDTO.getUserPassword())) {
 			throw new BadCredentialsException("패스워드 오류 입니다.");
 		}
-		System.out.println(3);
+		
+		
 		// 인증에 성공한 이후
 		// 3. 모두 일치하면 Authentication을 만들어서 리턴
-		List<AuthorityDTO> list = authorityDAO.selectAuthorityByUserName(userId);
+		List<AuthorityDTO> list = authorityDAO.selectAuthorityByUserNo(userNo);
 		
 		if (list.isEmpty()) {
 			// 아무 권한이 없으면
 			throw new UsernameNotFoundException(userId + "는 아무 권한이 없습니다.");
 		}
 		
-		System.out.println(4);
 		// DB에서 가지고 온 권한을 GrantedAuthority로 변환해야 함
 		List<SimpleGrantedAuthority> authList = new ArrayList<>();
 
 		for (AuthorityDTO authority : list) {
 			authList.add(new SimpleGrantedAuthority(authority.getAuthority()));
 		}
-		System.out.println(5);
+		
 		return new UsernamePasswordAuthenticationToken(userDTO, null, authList);
 	}
 
