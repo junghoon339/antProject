@@ -1,3 +1,76 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="mapper.storage.storageMapper"></mapper>
+<mapper namespace="mapper.storage.storageMapper">
+
+	<resultMap type="StorageDTO" id="storageMap">
+		<id column="storage_no" property="storageNo"/>	
+		<result column="project_no" property="projectNo"/>
+		<result column="storage_filename" property="fileName"/>
+		<result column="storage_filepath" property="filePath"/>
+		<result column="storage_filesize" property="fileSize"/>
+		<result column="storage_readnum" property="readNum"/>
+		<result column="storage_writeday" property="writeDay"/>
+		<result column="user_no" property="userNo"/>
+		<result column="storage_title" property="storageTitle"/>
+		<result column="storage_content" property="storageContent"/>
+		<association property="userDTO" javaType="UserDTO">
+			<id column="user_no" property="userNo"/>
+			<result column="user_id" property="userId"/>
+			<result column="user_name" property="userName"/>
+			<result column="user_password" property="userPassword"/>
+			<result column="user_school" property="userSchool"/>
+			<result column="user_major" property="userMajor"/>
+		</association>
+	</resultMap>
+	
+	<resultMap type="UserDTO" id="userMap">
+		<id column="user_no" property="userNo"/>
+		<result column="user_id" property="userId"/>
+		<result column="user_name" property="userName"/>
+		<result column="user_password" property="userPassword"/>
+		<result column="user_school" property="userSchool"/>
+		<result column="user_major" property="userMajor"/>
+	</resultMap>
+
+	
+	<sql id="selectAllculmn">
+		s.storage_no,s.project_no,s.storage_filename,s.storage_filepath,s.storage_filesize,s.storage_readnum,s.storage_writeday,s.user_no,s.storage_title,s.storage_content,a.user_name	
+	</sql>
+	
+	<!-- 모든 자료 리스트 -->
+	<select id="selectAll"  resultMap="storageMap" parameterType="int">
+		select <include refid="selectAllculmn"></include>
+		from storage s,ant_user a  
+		where s.project_no=#{projectNo}
+	</select>
+	
+	<!-- 상세보기 -->
+	<select id="selectByStorageNum" parameterType="int" resultMap="storageMap">
+		select <include refid="selectAllculmn"></include>
+		from storage s,ant_user a  
+		where storage_no=#{_parameter}
+	</select>
+	
+	<!-- 조회수 증가 -->
+	<update id="readNumUpdate" parameterType="int">
+		update storage set storage_readnum = storage_readnum+1 where storage_no=#{_parameter}
+	</update>
+	
+	<!-- 삭제 -->
+	<delete id="deleteByStorageNum" parameterType="map">
+		delete from storage where storage_no=#{storageNo} and user_no=#{userNo}
+	</delete>
+	
+	<!-- 게시판 글 쓸 때 이름 넣어주기 -->
+	<select id="selectUserByUserNo" parameterType="int" resultMap="userMap">
+		select user_no,user_id,user_name,user_password
+		 from ant_user 
+		 where user_no=#{_parameter}
+	</select>
+	
+	<!-- 자료 등록하기 -->
+	<insert id="insert" parameterType="StorageDTO">
+		insert into storage values(seq_storage_no.nextval,1,#{storageTitle},#{storageContent},#{fileName},#{filePath},#{fileSize},0,sysdate,#{userNo})
+	</insert>
+	
+</mapper>
