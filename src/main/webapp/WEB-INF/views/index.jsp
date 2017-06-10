@@ -130,15 +130,15 @@
 												<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" >
 												<div class="form-group">
 													<input type="text" name="userId" id="userId"
-														tabindex="1" class="form-control" placeholder="Email Address"
+														 class="form-control" placeholder="Email Address"
 														value="">
 												</div>
 												<div class="form-group">
 													<input type="password" name="userPassword" id="userPassword"
-														tabindex="2" class="form-control" placeholder="Password">
+														 class="form-control" placeholder="Password">
 												</div>
 												<div class="form-group text-center">
-													<input type="checkbox" tabindex="3" class=""
+													<input type="checkbox"  class=""
 														name="remember" id="remember"> <label
 														for="remember"> Remember Me</label>
 												</div>
@@ -146,7 +146,7 @@
 													<div class="row">
 														<div class="col-sm-6 col-sm-offset-3">
 															<input type="submit" name="login-submit"
-																id="login-submit" tabindex="4"
+																id="login-submit" 
 																class="form-control btn btn-login" value="Log In">
 														</div>
 													</div>
@@ -155,7 +155,7 @@
 													<div class="row">
 														<div class="col-lg-12">
 															<div class="text-center">
-																<a href="https://phpoll.com/recover" tabindex="5"
+																<a href="https://phpoll.com/recover" 
 																	class="forgot-password">Forgot Password?</a>
 															</div>
 														</div>
@@ -167,38 +167,38 @@
 												role="form" style="display: none;">
 												<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" >
 												<div class="form-group">
-													<input type="email" name="userId" id="email" tabindex="1"
+													<input type="email" name="userId" id="email" 
 														class="form-control" placeholder="Email Address" value="">
 												</div>
 												<div class="form-group">
 													<input type="password" name="userPassword" id="password"
-														tabindex="2" class="form-control" placeholder="Password">
+														 class="form-control" placeholder="Password">
 												</div>
 												<div class="form-group">
 													<input type="password" name="confirmPassword"
-														id="confirm-password" tabindex="2" class="form-control"
+														id="confirm-password" class="form-control"
 														placeholder="Confirm Password">
 												</div>
 												<div class="form-group">
 													<input type="text" name="userName" id="username"
-														tabindex="1" class="form-control" placeholder="Username"
+														 class="form-control" placeholder="Username"
 														value="">
 												</div>
 												<div class="form-group">
 													<input type="text" name="userSchool" id="school"
-														tabindex="1" class="form-control" placeholder="University"
+														 class="form-control" placeholder="University"
 														value="">
 												</div>
 												<div class="form-group">
 													<input type="text" name="userMajor" id="major"
-														tabindex="1" class="form-control" placeholder="Major"
+														 class="form-control" placeholder="Major"
 														value="">
 												</div>
 												<div class="form-group">
 													<div class="row">
 														<div class="col-sm-6 col-sm-offset-3">
 															<input type="submit" name="register-submit"
-																id="register-submit" tabindex="4"
+																id="register-submit" 
 																class="form-control btn btn-register"
 																value="Register Now">
 														</div>

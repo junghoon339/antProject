@@ -17,7 +17,6 @@ public class UserController {
 	@RequestMapping("/join")
 	public String join(UserDTO userDTO){
 		service.insertUser(userDTO);
-		
 		return "user/joinOk";
 	}
 	
