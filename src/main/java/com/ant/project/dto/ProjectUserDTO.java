@@ -7,7 +7,11 @@ public class ProjectUserDTO {
 	private String projectUserRole;	//ÆÀ¿ø¿ªÇÒ
 
 	public ProjectUserDTO() {}
-
+	public ProjectUserDTO(int projectNo, int userNo) {
+		super();
+		this.projectNo = projectNo;
+		this.userNo = userNo;
+	}
 	public ProjectUserDTO(int projectUserNo, int projectNo, int userNo, String projectUserRole) {
 		super();
 		this.projectUserNo = projectUserNo;
@@ -15,40 +19,33 @@ public class ProjectUserDTO {
 		this.userNo = userNo;
 		this.projectUserRole = projectUserRole;
 	}
-
 	public int getProjectUserNo() {
 		return projectUserNo;
 	}
-
 	public void setProjectUserNo(int projectUserNo) {
 		this.projectUserNo = projectUserNo;
 	}
-
 	public int getProjectNo() {
 		return projectNo;
 	}
-
 	public void setProjectNo(int projectNo) {
 		this.projectNo = projectNo;
 	}
-
 	public int getUserNo() {
 		return userNo;
 	}
-
 	public void setUserNo(int userNo) {
 		this.userNo = userNo;
 	}
-
 	public String getProjectUserRole() {
 		return projectUserRole;
 	}
-
 	public void setProjectUserRole(String projectUserRole) {
 		this.projectUserRole = projectUserRole;
 	}
+
 	
-	
+
 	
 	
 }
