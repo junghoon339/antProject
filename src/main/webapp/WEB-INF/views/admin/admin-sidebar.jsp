@@ -43,9 +43,9 @@
 		<nav class="navbar navbar-inverse navbar-fixed-top"	id="sidebar-wrapper" role="navigation">
 			<ul class="nav sidebar-nav">
 				<li class="sidebar-brand"><a href="#"> Brand </a></li>
-				<li><a href="#">팀시간표</a></li>
-				<li><a href="#">팀캘린더</a></li>
-				<li><a href="${pageContext.request.contextPath}/storage/storageTable/1">자료실</a></li>
+				<li><a href="${pageContext.request.contextPath }/admin/user">회원관리</a></li>
+				<li><a href="${pageContext.request.contextPath }/admin/adminProject">프로젝트관리</a></li>
+				<li><a href="#">공지사항관리</a></li>
 				<li><a href="#">to do board</a></li>
 				<li class="dropdown"><a href="#" class="dropdown-toggle"
 					data-toggle="dropdown">팀플정보 <span class="caret"></span></a>

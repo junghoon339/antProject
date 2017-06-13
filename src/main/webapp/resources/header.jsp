@@ -5,6 +5,19 @@
 <%@ page import="org.springframework.security.core.Authentication"%>
 <%@ page import="com.ant.user.dto.UserDTO"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%
+	Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+
+	Object principal = auth.getPrincipal();
+	String name = "";
+	int no = 0;
+	String id = "";
+	if (principal != null && principal instanceof UserDTO) {
+		no = ((UserDTO) principal).getUserNo();
+		id = ((UserDTO) principal).getUserId();
+		name = ((UserDTO) principal).getUserName();
+	}
+%>
 
 <nav class="navbar navbar-findcond navbar-fixed-top">
 	<div class="container">
@@ -24,7 +37,7 @@
 						class="fa fa-fw fa-bell-o"></i> 쪽지함 <span class="badge">10</span></a>
 						<li class="dropdown"><a href="#" class="dropdown-stoggle"
 					data-toggle="dropdown" role="button" aria-expanded="false"> <i
-						class="fa fa-fw fa-bell-o"></i> ${userDTO.userName}님 ㅎㅇ <span class="badge">10</span></a>
+						class="fa fa-fw fa-bell-o"></i> <%=name%>님 ㅎㅇ <span class="badge">10</span></a>
 					<ul class="dropdown-menu" role="menu">
 						<li><a href="#"><i class="fa fa-fw fa-tag"></i> <span
 								class="badge">Music</span>ab<span class="badge">Video</span>

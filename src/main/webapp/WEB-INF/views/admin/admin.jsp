@@ -20,18 +20,15 @@
 
 <body>
 	<header>
-		<jsp:include page="header.jsp" flush="false" />
+		 <jsp:include page="/WEB-INF/views/project/header.jsp" flush="false" /> 
 	</header>
-	<jsp:include page="sidebar.jsp" />
+	<jsp:include page="/WEB-INF/views/admin/admin-sidebar.jsp" />
 	<div id="burger"></div>
-
-
 	<section>
 		<div class="container">
 			<div class="row">
 				<div class="col-lg-8 col-lg-offset-2">
 					<h1>Fancy Toggle Sidebar Navigation</h1>
-					${userDTO.userId}
 					<p>Bacon ipsum dolor sit amet tri-tip shoulder tenderloin
 						shankle. Bresaola tail pancetta ball tip doner meatloaf corned
 						beef. Kevin pastrami tri-tip prosciutto ham hock pork belly bacon
@@ -57,7 +54,7 @@
 
 
 	<footer>
-		<jsp:include page="footer.jsp" flush="false" />
+		<jsp:include page="/WEB-INF/views/project/footer.jsp" flush="false" />
 	</footer>
 
 </body>

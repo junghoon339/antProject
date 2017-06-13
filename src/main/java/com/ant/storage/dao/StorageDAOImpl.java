@@ -18,9 +18,7 @@ public class StorageDAOImpl implements StorageDAO {
 
 	@Override
 	public List<StorageDTO> selectAll(int projectNo) {
-		System.out.println("projectNo:" + projectNo);
 		List<StorageDTO> list = session.selectList("mapper.storage.storageMapper.selectAll", projectNo);
-		System.out.println(list.size());
 		return list;
 	}
 
@@ -48,9 +46,8 @@ public class StorageDAOImpl implements StorageDAO {
 	}
 
 	@Override
-	public int update(int storageNo, int userNo, StorageDTO storageDTO) {
-		// TODO Auto-generated method stub
-		return 0;
+	public int update(StorageDTO storageDTO) {
+		return session.update("mapper.storage.storageMapper.update", storageDTO);
 	}
 
 	@Override

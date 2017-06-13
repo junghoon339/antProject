@@ -7,6 +7,7 @@ drop table survey;
 drop table timetable;
 drop table message;
 drop table user_calendar;
+drop table vote_selector;
 drop table vote_detail;
 drop table vote;
 drop table chat;
@@ -75,11 +76,12 @@ create sequence seq_todo_no;
 CREATE TABLE vote
 (
    vote_no number constraint vote_no_pk primary key,
-   vote_title varchar2(50) not null,
+   user_no number constraint vote_user_no_fk references ant_user(user_no) on delete cascade,
+   project_no number constraint vote_project_no_fk references project(project_no) on delete cascade,
+   vote_title varchar2(200) not null,
    vote_adddate date default sysdate,
    vote_enddate date ,
-   vote_state number default 0,
-   project_user_no number constraint vote_project_user_no_fk references project_user(project_user_no) on delete cascade
+   vote_state number default 0
 );
 create sequence seq_vote_no;
 
@@ -88,10 +90,20 @@ CREATE TABLE vote_detail
 (
    vote_detail_no number constraint vote_detail_no_po primary key,
    vote_no number constraint vote_detail_vote_no_fk references vote(vote_no) on delete cascade,
-   user_no number constraint vote_detail_user_no_fk references ant_user(user_no) on delete cascade,
-   vote_detail_column varchar2(100) not null
+   vote_detail_column varchar2(200) not null
 );
 create sequence seq_vote_detail_no;
+
+
+CREATE TABLE vote_selector
+(
+	vote_selector_no  number constraint vote_selector_no_po primary key,
+	user_no number constraint selector_user_no_fk references ant_user(user_no) on delete cascade,
+	vote_detail_no number constraint selector_vote_detail_no_fk 
+	references vote_detail(vote_detail_no) 
+	on delete cascade
+);
+create sequence seq_vote_selector_no;
 
 
 drop table user_calendar;

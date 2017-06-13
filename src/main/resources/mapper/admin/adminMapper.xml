@@ -1,3 +1,84 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="mapper.admin.adminMapper"></mapper>
+<mapper namespace="mapper.admin.adminMapper">
+	<resultMap type="userDTO" id="userDTOMap">
+		<id column="user_no" property="userNo"/>
+		<result column="user_id" property="userId"/>
+		<result column="user_name" property="userName"/>
+		<result column="user_password" property="userPassword"/>
+		<result column="user_school" property="userSchool"/>
+		<result column="user_major" property="userMajor"/>
+		<result column="doing" property="doingProject"/>
+		<result column="done" property="doneProject"/>
+	</resultMap>
+	
+	<resultMap type="projectDTO" id="projectDTOMap">
+		<id column="project_no" property="projectNo"/>
+		<result column="project_name" property="projectName"/>
+		<result column="project_startdate" property="projectStartdate"/>
+		<result column="project_enddate" property="projectEnddate"/>
+		<result column="project_subject" property="projectSubject"/>
+		<result column="project_teacher" property="projectTeacher"/>
+		<result column="project_state" property="projectState"/>
+	</resultMap>
+	<!-- <resultMap type="userDTO" id="userDTOMap">
+		<id column="user_no" property="userNo"/>
+		<result column="user_id" property="userId"/>
+		<result column="user_name" property="userName"/>
+		<result column="user_password" property="userPassword"/>
+		<result column="user_school" property="userSchool"/>
+		<result column="user_major" property="userMajor"/>
+		<collection property="listProjectUserDTO" ofType="projectUserDTO">
+			<id column="project_user_no" property="projectUserNo"/>
+			<result column="project_no" property="projectNo"/>
+			<result column="project_user_role" property="projectUserRole"/>
+			<association property="projectDTO" javaType="projectDTO">
+				<id column="project_no" property="projectNo"/>
+				<result column="project_state" property="projectState"/>
+			</association>
+		</collection>
+	</resultMap> -->
+	<!-- <select id="userSelectAll" parameterType="map" resultMap="userDTOMap">
+		select user_no,user_id,user_name,user_school,user_major,project_state from (select rownum as rnum,a.* from (select au.user_no,user_id,user_name,user_school,user_major,p.project_state from ant_user au left join project_user pu on au.USER_no=pu.user_no left join project p on pu.project_no=p.project_no)a)b where b.rnum>=#{startRow} and b.rnum&lt;=#{endRow}
+	</select> -->
+	
+	<select id="userSelectAll" parameterType="map" resultMap="userDTOMap">
+		select b.rnum,user_no,user_id,user_name,user_school,user_major,doing,done from (select rownum rnum,a.*, (select count(p.project_no) from project p join project_user pu on p.project_no=pu.project_no where pu.user_no=a.user_no and p.project_state=0) as doing, (select count(p.project_no) from project p join project_user pu on p.project_no=pu.project_no where pu.user_no=a.user_no and p.project_state=1) as done from (select * from ant_user)a)b where b.rnum>=#{startRow} and b.rnum&lt;=#{endRow}
+	</select>
+	
+	<select id="userTotalCount" resultType="int">
+		select count(user_no) from ant_user
+	</select>
+	
+	<delete id="userDelete" parameterType="int">
+		delete from ant_user where user_no=#{_parameter}
+	</delete>
+	
+	<select id="projectSelectAll" parameterType="map" resultMap="projectDTOMap">
+		select * from (select rownum as rnum, a.* from(select * from project where project_state=#{projectState})a)b where b.rnum>=#{startRow} and b.rnum&lt;=#{endRow}
+	</select>
+	
+	<select id="projectTotalCount" parameterType="int" resultType="int">
+		select count(project_no) from project where project_state=#{_paramter}
+	</select>
+	
+	<delete id="projectDelete" parameterType="int">
+		delete from project where project_no=#{_parameter}
+	</delete>
+	
+	<select id="projectSelectAllByProjectName" parameterType="map" resultMap="projectDTOMap">
+		select * from (select rownum as rnum, a.* from(select * from project where project_state=#{projectState} and project_name like '%'||#{searchText}||'%')a)b where b.rnum>=#{startRow} and b.rnum&lt;=#{endRow}
+	</select>
+	
+	<select id="projectTotalCountByProjectName" parameterType="map" resultType="int">
+		select count(project_no) from project where project_state=#{projectState} and project_name like '%'||#{projectName}||'%'
+	</select>
+	
+	<select id="projectSelectAllBySubject" parameterType="map" resultMap="projectDTOMap">
+		select * from (select rownum as rnum, a.* from(select * from project where project_state=#{projectState} and project_subject like '%'||#{searchText}||'%')a)b where b.rnum>=#{startRow} and b.rnum&lt;=#{endRow}
+	</select>
+	
+	<select id="projectTotalCountBySubject" parameterType="map" resultType="int">
+		select count(project_no) from project where project_state=#{projectState} and project_subject like '%'||#{projectSubject}||'%'
+	</select>
+</mapper>
