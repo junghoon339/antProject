@@ -29,6 +29,13 @@
 /* 		$(document).on("click","#addMember",function(){
 			//input추가
 		}); */
+		
+		$("#addBtn").click(function() {
+			var addInputbox =
+				"<input class='' type='text'  name='invitedUser' placeholder='초대할 팀원을 입력하세요.'><button type='button' class='btn btn-danger' id='delMemberbtn'>삭제</button></input><p></p>";
+			$("#invitedMemberDiv").append(addInputbox);
+			num = num + 1 ;
+		})
 	    
 	    $("#projectForm").submit(function(){
 	    	alert("Submitted");
@@ -71,7 +78,8 @@
 								<div class="col-md-3">
 									<div class="bs bs-pricing">
 										<div class="cotent">
-											<h3 class="category">WebProgramming</h3>
+											<h3 class="category">WebProgramming
+											</h3>
 											<h1 class="bs-caption">
 												<small>D-</small>11
 											</h1>
@@ -122,6 +130,8 @@
 										</div>
 									</div>
 								</div>		
+								
+								
 							</div><!-- row -->
 						</div>
 					</section>
@@ -168,15 +178,21 @@
 									교수님 : <input class="form-control" type="text" name="projectTeacher"/><p></p>
 					                시작날짜:
 					            	<div class="input-group registration-date-time">
-					            		<input class="form-control" name="projectStartdate" id="reg|istration-date" type="date">
+					           		<input class="form-control" name="projectStartdate" id="reg|istration-date" type="date">
 					            	</div><p></p>
 						            종료날짜 :
 						            <div class="input-group registration-date-time">
 					            		<input class="form-control" name="projectEnddate" id="registration-date" type="date">
 					            	</div><p></p>
-					            	
-						            팀원ID : <input class="form-control"type="text" name=""/><p></p>
-						            <span id="addMember">+</span>				            
+						            
+						            <div id="invitedMemberDiv">
+						            팀원ID : <input class="form-control"type="text" name="invitedUser"/><p></p>
+						            </div>
+						            
+						            <!-- <span id="addMember">+</span> -->
+						            <a href="#" class="btn btn-sm btn-default" id="addBtn">
+										<span class="glyphicon glyphicon-plus">팀원추가</span> 
+									</a> 							            
 						        </form>
 							</div>
 						</div>

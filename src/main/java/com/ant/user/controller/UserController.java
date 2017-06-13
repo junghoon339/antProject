@@ -16,7 +16,6 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.web.csrf.CsrfToken;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
@@ -56,20 +55,21 @@ public class UserController implements Serializable {
 
 	@RequestMapping("/join")
 	public String join(UserDTO userDTO) {
-		service.insertUser(userDTO);
+		service.insertUser(userDTO); 
 		return "user/joinOk";
 	}
-	
-	@RequestMapping("/teamMain")
+
+	@RequestMapping("/teamMain") //user/teamMAIN
 	public String teamMain() {
 
-		return "project/teamMain";
+		return "project/teamMain";///WEB-INF/views/project/teamMain.jsp
 	}
 	
 	@RequestMapping("/chat")
 	public String chat(){
 		return "user/chat";
 	}
+
 
 	///////////////////////////////////
 	@RequestMapping("/main")
@@ -343,4 +343,5 @@ public class UserController implements Serializable {
 		attributes.put(name, value);
 	}
 	/////////////////////////////////////////////////////////////////
+
 }

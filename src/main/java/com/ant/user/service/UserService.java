@@ -38,6 +38,6 @@ public interface UserService {
 	 * @param id
 	 * @return
 	 */
-	public int selectUserById(String id);
+	public UserDTO selectUserById(String id);
 	
 }

@@ -4,14 +4,32 @@
 
 	<!-- 새로운 조별과제방 삽입 -->
 	<insert id="insertProject" parameterType="projectDTO">
-		insert into project(project_no,project_name,project_startdate,project_enddate,project_subject,project_teacher,project_state)
-		values(seq_project_no.nextval,#{projectName},#{projectStartdate},#{projectEnddate},#{projectSubject},#{projectTeacher},0)
+		INSERT into project(project_no,project_name,project_startdate,project_enddate,project_subject,project_teacher,project_state)
+		VALUES(seq_project_no.nextval, #{projectName}, #{projectStartdate}, #{projectEnddate}, #{projectSubject}, #{projectTeacher}, 0)
 	</insert>
 
+	<!-- 방금 생성된 프로젝트번호 검색 -->
+	<select id="selectProjectNo" resultType="int">
+		SELECT max(project_no)
+		FROM project
+	</select>
+
 	<!-- 팀플방에 조장등록 -->
+	<insert id="insertProjectLeader" parameterType="projectUserDTO">
+		INSERT into project_user
+		VALUES(seq_project_user_no.nextval, #{projectNo}, #{userNo}, '조장')
+	</insert>
 	
-	
-	
+	<!-- 초대된 user들의 id를 갖고 userno을 검색 -->
+	<select id="selectUserNoById" parameterType="list" resultType="int">
+		SELECT user_no
+		FROM ant_user
+		WHERE USER_ID IN 
+		<foreach collection="list" item="invitedUserId" open="(" separator="," close=")">
+			#{invitedUserId}
+		</foreach>
+	</select>
+		
 	<!-- 팀플방에 조원등록 -->
 
 
