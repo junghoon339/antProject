@@ -1,7 +1,11 @@
 package com.ant.admin.dao;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import org.apache.ibatis.session.SqlSession;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.ant.message.dto.MessageDTO;
@@ -10,29 +14,39 @@ import com.ant.user.dto.UserDTO;
 
 @Repository
 public class AdminDAOImpl implements AdminDAO {
-
+	
+	@Autowired
+	private SqlSession session;
+	
 	@Override
-	public List<UserDTO> userSelectAll() {
+	public List<UserDTO> userSelectAll(int startRow,int endRow) {
 		// TODO Auto-generated method stub
-		return null;
+		Map<String,Integer> map=new HashMap<>();
+		map.put("startRow", startRow);
+		map.put("endRow", endRow);
+		return session.selectList("mapper.admin.adminMapper.userSelectAll",map);
 	}
 
 	@Override
 	public int userDelete(int userNo) {
 		// TODO Auto-generated method stub
-		return 0;
+		return session.delete("mapper.admin.adminMapper.userDelete", userNo);
 	}
 
 	@Override
-	public List<ProjectDTO> projectSelectAll(int projectState) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<ProjectDTO> projectSelectAll(int projectState,int startRow,int endRow) {
+		Map<String,Integer> map=new HashMap<>();
+		map.put("projectState", projectState);
+		map.put("startRow", startRow);
+		map.put("endRow", endRow);
+
+		return session.selectList("mapper.admin.adminMapper.projectSelectAll",map);
 	}
 
 	@Override
-	public int projectDelete(int projectState, int projectNo) {
+	public int projectDelete(int projectNo) {
 		// TODO Auto-generated method stub
-		return 0;
+		return session.delete("mapper.admin.adminMapper.projectDelete",projectNo);
 	}
 
 	@Override
@@ -63,6 +77,57 @@ public class AdminDAOImpl implements AdminDAO {
 	public int messageDelete(int messageNo) {
 		// TODO Auto-generated method stub
 		return 0;
+	}
+
+	@Override
+	public int userTotalCount() {
+		// TODO Auto-generated method stub
+		return session.selectOne("mapper.admin.adminMapper.userTotalCount");
+	}
+
+	@Override
+	public int projectTotalCount(int projectState) {
+		// TODO Auto-generated method stub
+		return session.selectOne("mapper.admin.adminMapper.projectTotalCount",projectState);
+	}
+
+	@Override
+	public List<ProjectDTO> projectSelectAllByProjectName(int projectState, int startRow, int endRow,
+			String searchText) {
+		Map<String,Object> map=new HashMap<>();
+		map.put("projectState", projectState);
+		map.put("startRow", startRow);
+		map.put("endRow", endRow);
+		map.put("searchText", searchText);
+		return session.selectList("mapper.admin.adminMapper.projectSelectAllByProjectName",map);
+	}
+
+	@Override
+	public List<ProjectDTO> projectSelectAllBySubject(int projectState, int startRow, int endRow, String searchText) {
+		Map<String,Object> map=new HashMap<>();
+		map.put("projectState", projectState);
+		map.put("startRow", startRow);
+		map.put("endRow", endRow);
+		map.put("searchText", searchText);
+		
+		return session.selectList("mapper.admin.adminMapper.projectSelectAllBySubject",map);
+	}
+
+	@Override
+	public int projectTotalCountByProjectName(int projectState, String projectName) {
+		Map<String,Object> map=new HashMap<>();
+		map.put("projectState", projectState);
+		map.put("projectName", projectName);
+		
+		return session.selectOne("mapper.admin.adminMapper.projectTotalCountByProjectName",map);
+	}
+
+	@Override
+	public int projectTotalCountBySubject(int projectState, String projectSubject) {
+		Map<String,Object> map=new HashMap<>();
+		map.put("projectState", projectState);
+		map.put("projectSubject", projectSubject);
+		return session.selectOne("mapper.admin.adminMapper.projectTotalCountBySubject",map);
 	}
 
 }

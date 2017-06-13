@@ -1,5 +1,9 @@
 package com.ant.user.dto;
 
+import java.util.List;
+
+import com.ant.project.dto.ProjectUserDTO;
+
 public class UserDTO {
 	private int userNo;
 	private String userId;
@@ -7,6 +11,10 @@ public class UserDTO {
 	private String userPassword;
 	private String userSchool;
 	private String userMajor;
+	
+	private List<ProjectUserDTO> listProjectUserDTO;//관리자에서 회원관리시 사용
+	private int doingProject;
+	private int doneProject;
 	
 	public UserDTO() {
 		super();
@@ -79,5 +87,31 @@ public class UserDTO {
 
 	public void setUserMajor(String userMajor) {
 		this.userMajor = userMajor;
+	}
+
+	public List<ProjectUserDTO> getListProjectUserDTO() {
+		return listProjectUserDTO;
+	}
+
+	public void setListProjectUserDTO(List<ProjectUserDTO> listProjectUserDTO) {
+		this.listProjectUserDTO = listProjectUserDTO;
+	}
+
+	public int getDoingProject() {
+		return doingProject;
+	}
+
+	public void setDoingProject(int doingProject) {
+		this.doingProject = doingProject;
+	}
+
+	public int getDoneProject() {
+		return doneProject;
+	}
+
+	public void setDoneProject(int doneProject) {
+		this.doneProject = doneProject;
 	}	
+	
+	
 }
