@@ -11,11 +11,13 @@
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script>
 
+var choice = 0; //선택한 라디오 벨류값
+var selectChk = 0; //해당 유저가 체크를 했는지 안했는지 유무.. 0 : X, 1 : O
+var writer = 0; //해당유저가 해당 투표의 글쓴이인지 유무.. 0 : X, 1 : O
+var getchoice = 0;
+
 	$(function() {
-		var choice = 0; //선택한 라디오 벨류값
-		var selectChk = 0; //해당 유저가 체크를 했는지 안했는지 유무.. 0 : X, 1 : O
-		var writer = 0; //해당유저가 해당 투표의 글쓴이인지 유무.. 0 : X, 1 : O
-		var getchoice = 0;
+		
 		$.ajax({
 			url : "${pageContext.request.contextPath}/vote/Detail/Initialized",
 			type : "post",
@@ -39,6 +41,7 @@
 				
 				if((choice=="0"||choice==getchoice)&&$("#vote").text()=="투표하기"){
 					console.log('조건맞음'+choice+", "+getchoice);
+					$("#vote").attr('class','btn btn-lg btn-default');
 					$("#vote").unbind("click");
 				}
 				
@@ -59,6 +62,18 @@
 			
 			choice = $(this).val();
 			
+			if(choice=="0"||choice==getchoice){
+				console.log('기존거 and 없을때');
+				$("#vote").attr('class','btn btn-lg btn-default');
+				$("#vote").off("click");
+			} else {
+				console.log('다른거');
+				$("#vote").attr('class','btn btn-lg btn-danger');
+				$("#vote").on("click", function(){
+					btnEvent(this);
+				});
+			}
+			
 			console.log(choice);
 			if ($(this).attr('checked')) {
 				$(this).attr('checked', false);
@@ -68,46 +83,52 @@
 		}))
 
 		$("#vote").click(function() {
-			console.log("완전 대박! ");
-			console.log($(this).text());
+			btnEvent(this);
+		})
+	})
+	
+	function btnEvent(a){
+		console.log("완전 대박! ");
+		console.log($(a).text());
+		
+		if( $(a).text()=='투표하기'){
+			$.ajax({
+				url : "${pageContext.request.contextPath}/vote/Detail/Handling",
+				type : "post",
+				dataType : "text",
+				data : "userNo=1&voteNo="+${voteNo}+"&column="+choice+"&"+$("#securityInfo").attr("name")+"="+$("#securityInfo").val() , // $("#voteNo").val()
+				success : function(result) {
+					console.log("성공햇지롱2" + result);
+					
+					$(".radio").hide();
+					$(".radioTd").hide();
+					$(".valueTd").attr('width', '90%');
+					$("#vote").text("다시 투표하기");
+				},
+				error : function(err) {
+					alert("오류 발생 : " + err);
+				}
+			});
+		} else if( $(a).text()=='다시 투표하기') {
+			$(".radio").show();
+			$(".radioTd").show();
+			$(".valueTd").attr('width', '80%');
+			$("#vote").text("투표하기");	
+			
+			$(".radio").each(function(index,item){
+				if($(item).val()==getchoice){
+					$(item).prop('checked', true);
+				}
+			})
+
 			if((choice=="0"||choice==getchoice)&&$("#vote").text()=="투표하기"){
 				console.log('조건맞음'+choice+", "+getchoice);
+				$("#vote").attr('class','btn btn-lg btn-default');
 				$("#vote").unbind("click");
 				return;
 			}
-			if( $(this).text()=='투표하기'){
-				$.ajax({
-					url : "${pageContext.request.contextPath}/vote/Detail/Handling",
-					type : "post",
-					dataType : "text",
-					data : "userNo=1&voteNo="+${voteNo}+"&column="+choice+"&"+$("#securityInfo").attr("name")+"="+$("#securityInfo").val() , // $("#voteNo").val()
-					success : function(result) {
-						console.log("성공햇지롱2" + result);
-						
-						$(".radio").hide();
-						$(".radioTd").hide();
-						$(".valueTd").attr('width', '90%');
-						$("#vote").text("다시 투표하기");
-					},
-					error : function(err) {
-						alert("오류 발생 : " + err);
-					}
-				});
-			} else if( $(this).text()=='다시 투표하기') {
-				$(".radio").show();
-				$(".radioTd").show();
-				$(".valueTd").attr('width', '80%');
-				$("#vote").text("투표하기");	
-				
-				
-				$(".radio").each(function(index,item){
-					if($(item).val()==getchoice){
-						$(item).prop('checked', true);
-					}
-				})
-			}
-		})
-	})
+		}
+	}
 </script>
 <style>
 table {
