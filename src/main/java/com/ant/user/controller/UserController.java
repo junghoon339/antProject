@@ -22,23 +22,25 @@ public class UserController implements Serializable {
 
 	@RequestMapping("/join")
 	public String join(UserDTO userDTO) {
-		service.insertUser(userDTO);
+		service.insertUser(userDTO); 
 		return "user/joinOk";
 	}
 
 	@RequestMapping("/main")
-	public String afterLogin(HttpSession session) {
+	public String afterLogin() {
 		return "project/home";
 	}	
 	
-	@RequestMapping("/teamMain")
+	@RequestMapping("/teamMain") //user/teamMAIN
 	public String teamMain() {
 
-		return "project/teamMain";
+		return "project/teamMain";///WEB-INF/views/project/teamMain.jsp
 	}
 	
 	@RequestMapping("/chat")
 	public String chat(){
 		return "user/chat";
 	}
+	
+	
 }
