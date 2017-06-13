@@ -6,6 +6,9 @@
 		http://www.springframework.org/schema/websocket http://www.springframework.org/schema/websocket/spring-websocket-4.3.xsd">
     <websocket:handlers>
         <websocket:mapping handler="echoHandler" path="/user/chat"/>
+        <websocket:handshake-interceptors>
+        	<bean class="com.ant.chat.websocket.HandshakeInterceptor"/>
+        </websocket:handshake-interceptors>
         <websocket:sockjs/>
     </websocket:handlers>
     

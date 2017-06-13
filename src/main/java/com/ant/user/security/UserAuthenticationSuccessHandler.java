@@ -28,7 +28,7 @@ public class UserAuthenticationSuccessHandler implements AuthenticationSuccessHa
 			throws IOException, ServletException {
 		UserDTO userDTO = (UserDTO)auth.getPrincipal();
 		req.getSession().setAttribute("userDTO", userDTO);
+		req.getSession().setAttribute("projectNo", 1);
 		req.getRequestDispatcher("/user/main").forward(req, res);
 	}
-
 }
