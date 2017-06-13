@@ -252,7 +252,7 @@ public class UserController implements Serializable {
 		UserCalendarDTO schedule = new UserCalendarDTO();
 
 		schedule.setEvent_name(event.getText());
-		
+		System.out.println("event_name : "+event.getText());
 		UserDTO userDTO = (UserDTO) session.getAttribute("userDTO");
 		schedule.setUser_no(userDTO.getUserNo());
 		System.out.println("user_no"+userDTO.getUserNo());
