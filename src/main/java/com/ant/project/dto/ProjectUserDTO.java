@@ -6,6 +6,8 @@ public class ProjectUserDTO {
 	private int userNo;	//회원번호
 	private String projectUserRole;	//팀원역할
 
+	private ProjectDTO projectDTO; //관리자의 회원관리에서 사용
+	
 	public ProjectUserDTO() {}
 	public ProjectUserDTO(int projectNo, int userNo) {
 		super();
@@ -44,8 +46,12 @@ public class ProjectUserDTO {
 		this.projectUserRole = projectUserRole;
 	}
 
-	
+	public ProjectDTO getProjectDTO() {
+		return projectDTO;
+	}
 
-	
-	
+	public void setProjectDTO(ProjectDTO projectDTO) {
+		this.projectDTO = projectDTO;
+	}
+		
 }

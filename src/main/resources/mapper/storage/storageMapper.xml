@@ -34,7 +34,7 @@
 
 	
 	<sql id="selectAllculmn">
-		s.storage_no,s.project_no,s.storage_filename,s.storage_filepath,s.storage_filesize,s.storage_readnum,s.storage_writeday,s.user_no,s.storage_title,s.storage_content,a.user_name	
+		s.storage_no,s.project_no,s.storage_filename,s.storage_filepath,s.storage_filesize,s.storage_readnum,s.storage_writeday,s.user_no,s.storage_title,s.storage_content,a.user_name,a.user_no	
 	</sql>
 	
 	<!-- 모든 자료 리스트 -->
@@ -72,5 +72,10 @@
 	<insert id="insert" parameterType="StorageDTO">
 		insert into storage values(seq_storage_no.nextval,1,#{storageTitle},#{storageContent},#{fileName},#{filePath},#{fileSize},0,sysdate,#{userNo})
 	</insert>
+	
+	<!-- 자료 수정 -->
+	<update id="update" parameterType="StorageDTO">
+		update storage set storage_title=#{storageTitle}, storage_content=#{storageContent}, storage_filename=#{fileName}, storage_filepath=#{filePath}, storage_filesize=#{fileSize}, storage_writeday=sysdate where storage_no=#{storageNo}
+	</update>
 	
 </mapper>

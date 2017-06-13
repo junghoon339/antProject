@@ -4,26 +4,30 @@
 
 	<resultMap type="voteDTO" id="voteDTOMap">
 		<id column="vote_no" property="voteNo" />
-		<result column="project_user_no" property="projectUserNo" />
+		<result column="user_no" property="userNo" />
+		<result column="project_no" property="projectNo" />
 		<result column="vote_title" property="voteTitle" />
 		<result column="vote_adddate" property="voteAddDate" />
 		<result column="vote_enddate" property="voteEndDate" />
 		<result column="vote_state" property="voteState" />
 	</resultMap>
 
-	<sql id="voteColumn">
-		vote_no, project_user_no, vote_title, vote_adddate,
-		vote_enddate, vote_state
-	</sql>
+	<resultMap type="voteDetailDTO" id="voteDetailDTOMap">
+		<id column="vote_detail_no" property="voteDetailNo" />
+		<result column="vote_no" property="voteNo" />
+		<result column="vote_detail_column" property="voteDetailColumn" />
+	</resultMap>
+	
+	<resultMap type="voteSelectorDTO" id="voteSelectorDTOMap">
+		<id column="vote_selector_no" property="voteSelectorNo" />
+		<result column="user_no" property="userNo" />
+		<result column="vote_detail_no" property="voteDetailNo" />
+	</resultMap>
 
-	<!-- <resultMap type="voteDetailDTO" id="voteDetailDTOMap"> <id column="vote_detail_no" 
-		property="voteDetailNo" /> <result column="vote_no" property="voteNo" /> 
-		<result column="user_no" property="userNo" /> <result column="vote_detail_column" 
-		property="voteDetailColumn" /> </resultMap> -->
-
-	<resultMap type="voteDTO" id="collectionMap">
+	<resultMap type="voteDTO" id="collectionVoteMap">
 		<id column="vote_no" property="voteNo" />
-		<result column="project_user_no" property="projectUserNo" />
+		<result column="user_no" property="userNo" />
+		<result column="project_no" property="projectNo" />
 		<result column="vote_title" property="voteTitle" />
 		<result column="vote_adddate" property="voteAddDate" />
 		<result column="vote_enddate" property="voteEndDate" />
@@ -31,30 +35,113 @@
 		<collection property="details" ofType="voteDetailDTO">
 			<id column="vote_detail_no" property="voteDetailNo" />
 			<result column="vote_no" property="voteNo" />
-			<result column="user_no" property="userNo" />
 			<result column="vote_detail_column" property="voteDetailColumn" />
 		</collection>
 	</resultMap>
-
+	
+	<resultMap type="voteDetailDTO" id="collectionVoteDetailMap">
+		<id column="vote_detail_no" property="voteDetailNo" />
+		<result column="vote_no" property="voteNo" />
+		<result column="vote_detail_column" property="voteDetailColumn" />
+		<collection property="selectors" ofType="voteSelectorDTO">
+			<id column="vote_selector_no" property="voteSelectorNo" />
+			<result column="user_no" property="userNo" />
+			<result column="vote_detail_no" property="voteDetailNo" />
+		</collection>
+	</resultMap>
+	
+	<!-- 
+		투표목록을 가져오는 쿼리문
+		parameter 0 : 미참여 / 1 : 참여 
+	  -->
 	<select id="voteSelect" parameterType="int" resultMap="voteDTOMap">
-		select
-		<include refid="voteColumn" />
+		select vote_no, project_no, vote_title, vote_adddate, vote_enddate, vote_state
 		from vote where vote_state = #{_parameter}
 	</select>
 
-	<select id="voteSelectByVoteNo" parameterType="int" resultMap="collectionMap">
-		SELECT v.vote_no, v.vote_title, d.vote_detail_column
-		FROM vote v JOIN vote_detail d
-		ON v.vote_no = #{_parameter} 
-		AND v.vote_no = d.vote_no 
-		AND d.user_no is null
+
+	<!--
+		해당 투표목록에 해당하는 컬럼을 가져오는 쿼리문
+	-->
+	<select id="voteSelectByVoteNo" parameterType="int" resultMap="collectionVoteMap">
+		SELECT v.vote_no, v.vote_title, d.vote_detail_no, d.vote_detail_column, v.user_no
+		FROM vote v JOIN
+		vote_detail d
+		ON v.vote_no = #{_parameter}
+		AND v.vote_no = d.vote_no
 	</select>
 
-	<select id="voteDetailUserCount" parameterType="int" resultType="int">
-		select count(user_no) from vote_detail where vote_no = #{_parameter}
+
+	<!--
+		생성된 투표의 최대 숫자를 가져오는 쿼리문
+		(Vote를 생성과정에서, 항목(DetailDTO)를 같이 생성할 때 사용 
+	-->
+	<select id="voteMaxNo" resultType="int">
+		select max(vote_no) from vote
 	</select>
 
-	<select id="voteDetailState" parameterType="int" resultType="int">
-		select count(user_no) from vote_detail where user_no = #{_parameter}
+	<!--
+		해당 투표에 참여한 사람의 수를 구하는 쿼리문 
+	-->
+
+
+	<!--
+		해당 유저가 투표에 참여했는지 안했는지 여부를 확인하는 쿼리문
+	-->
+	<select id="voteSelectCheck" parameterType="map" resultMap="collectionVoteDetailMap">
+		SELECT d.vote_detail_no, d.vote_no, s.user_no, s.vote_selector_no, d.vote_detail_column
+		FROM vote_detail d JOIN vote_selector s 
+		ON d.vote_detail_no = s.vote_detail_no 
+		AND d.vote_no = #{voteNo} 
+		AND s.user_no = #{userNo}
 	</select>
+
+	<!--
+		투표를 생성하는 쿼리문
+	-->
+	<insert id="voteInsert" parameterType="VoteDTO">
+		insert into vote 
+		values(seq_vote_no.nextval, #{userNo}, #{projectNo}, #{voteTitle}, to_date(#{voteAddDate}, 'mm/dd/yyyy'), to_date(#{voteEndDate}, 'mm/dd/yyyy'), #{voteState})
+	</insert>
+
+	<!--
+		투표 항목을 생성하는 쿼리문
+	-->
+	<insert id="voteDetailInsert" parameterType="VoteDetailDTO">
+		insert into
+		vote_detail
+		values(seq_vote_detail_no.nextval, #{voteNo}, #{voteDetailColumn})
+	</insert>
+	
+	<!--
+		해당 투표에대한 항목을 가져오는 쿼리문
+	-->
+	<select id="voteDetailSelect" parameterType="int" resultMap="voteDetailDTOMap">
+		select * 
+		from vote_detail 
+		where vote_no = #{_parameter} order by vote_detail_no
+	</select>
+	
+	<!--
+		투표 항목을 선택한 사람을 추가하는 쿼리문
+	-->
+	<insert id="voteSelectorInsert" parameterType="voteSelectorDTO">
+		insert into vote_selector
+		values(seq_vote_selector_no.nextval, #{userNo}, #{voteDetailNo})
+	</insert>
+	
+	<!--
+		투표 항목을 선택한 사람을 수정 쿼리문
+	-->
+	<!-- <update id="">
+	
+	</update> -->
+	
+	<!--
+		투표 항목을 선택한 사람을 삭제하는 쿼리문
+	-->
+	<!-- <delete id="">
+	
+	</delete> -->
+
 </mapper>

@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.ant.vote.dao.VoteDAO;
 import com.ant.vote.dto.VoteDTO;
 import com.ant.vote.dto.VoteDetailDTO;
+import com.ant.vote.dto.VoteSelectorDTO;
 
 @Service
 public class VoteServiceImpl implements VoteService {
@@ -21,14 +22,14 @@ public class VoteServiceImpl implements VoteService {
 	}
 	
 	@Override
-	public List<VoteDTO> selectVoteListByVoteNo(int voteNo) {
+	public VoteDTO selectVoteListByVoteNo(int voteNo) {
 		return voteDAO.selectVoteListByVoteNo(voteNo);
 	}
 
 	@Override
 	public int insertVote(VoteDTO voteDTO) {
-		// TODO Auto-generated method stub
-		return 0;
+		System.out.println("[ 서비스 ] 접근 전..");
+		return voteDAO.insertVote(voteDTO);
 	}
 
 	@Override
@@ -45,8 +46,8 @@ public class VoteServiceImpl implements VoteService {
 
 	@Override
 	public int insertVoteDetail(VoteDetailDTO voteDetailDTO) {
-		// TODO Auto-generated method stub
-		return 0;
+		System.out.println("[ 서비스 ] 접근 전..");
+		return voteDAO.insertVoteDetail(voteDetailDTO);
 	}
 
 	@Override
@@ -68,13 +69,31 @@ public class VoteServiceImpl implements VoteService {
 	}
 
 	@Override
-	public int selectVoteUserCount(int voteNo) {
-		return voteDAO.selectVoteUserCount(voteNo);
+	public VoteDetailDTO selectVoteDetail(int userNo, int voteNo) {
+		System.out.println("디테일이니셜라이즈드, 서비스 -> 다오 접근 userNo : "+userNo+", voteNo : "+voteNo);
+		return voteDAO.selectVoteDetail(userNo, voteNo);
+	}
+	
+	@Override
+	public int voteMaxNo(){
+		return voteDAO.voteMaxNo();
 	}
 
 	@Override
-	public int selectVoteState(int userNo) {
-		return voteDAO.selectVoteState(userNo);
+	public int voteSelectorInsert(VoteSelectorDTO voteSelectorDTO) {
+		return voteDAO.voteSelectorInsert(voteSelectorDTO);
 	}
 
+	@Override
+	public int voteSelectorUpdate(VoteSelectorDTO voteSelectorDTO) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int voteSelectorDelete(int voteSelectNo) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+	
 }

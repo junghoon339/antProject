@@ -7,6 +7,7 @@ drop table survey;
 drop table timetable;
 drop table message;
 drop table user_calendar;
+drop table vote_selector;
 drop table vote_detail;
 drop table vote;
 drop table chat;
@@ -20,7 +21,8 @@ drop table project;
 drop table ant_user;
 drop table authorities;
 
-
+select * from tab;
+SELECT event_id, event_name, start_date, end_date FROM user_calendar
 
 CREATE TABLE ant_user
 (
@@ -31,7 +33,6 @@ CREATE TABLE ant_user
    user_school   varchar2(100)   NOT NULL,
    user_major   varchar2(100)   NOT NULL
 );
-CREATE SEQUENCE seq_user_no;
 
 
 
@@ -67,7 +68,7 @@ create table todo(
   user_no number constraint todo_user_no_fk references ant_user(user_no) on delete cascade,
   project_no number constraint todo_project_no_fk references project(project_no) on delete cascade,
   todo_location number default 0, --0:todo,1:doing,2:done
-  todo_content varchar22(100) not null 
+  todo_content varchar2(100) not null 
 );
 create sequence seq_todo_no;
 
@@ -75,11 +76,12 @@ create sequence seq_todo_no;
 CREATE TABLE vote
 (
    vote_no number constraint vote_no_pk primary key,
-   vote_title varchar22(50) not null,
+   user_no number constraint vote_user_no_fk references ant_user(user_no) on delete cascade,
+   project_no number constraint vote_project_no_fk references project(project_no) on delete cascade,
+   vote_title varchar2(200) not null,
    vote_adddate date default sysdate,
    vote_enddate date ,
-   vote_state number default 0,
-   project_user_no number constraint vote_project_user_no_fk references project_user(project_user_no) on delete cascade
+   vote_state number default 0
 );
 create sequence seq_vote_no;
 
@@ -88,24 +90,52 @@ CREATE TABLE vote_detail
 (
    vote_detail_no number constraint vote_detail_no_po primary key,
    vote_no number constraint vote_detail_vote_no_fk references vote(vote_no) on delete cascade,
-   user_no number constraint vote_detail_user_no_fk references ant_user(user_no) on delete cascade,
-   vote_detail_column varchar2(100) not null
+   vote_detail_column varchar2(200) not null
 );
 create sequence seq_vote_detail_no;
 
 
+CREATE TABLE vote_selector
+(
+	vote_selector_no  number constraint vote_selector_no_po primary key,
+	user_no number constraint selector_user_no_fk references ant_user(user_no) on delete cascade,
+	vote_detail_no number constraint selector_vote_detail_no_fk 
+	references vote_detail(vote_detail_no) 
+	on delete cascade
+);
+create sequence seq_vote_selector_no;
+
+
 drop table user_calendar;
+
+select * from user_calendar;
+select * from ANT_USER;
 CREATE TABLE user_calendar
 (
-   user_calendar_no      NUMBER  CONSTRAINT user_calendar_no_pk primary key,
-   user_no               NUMBER CONSTRAINT user_calendar_user_no_fk references ant_user(user_no) on delete cascade ,
-   user_calendar_startdate  varchar2(20) NOT NULL ,
-   user_calendar_enddate  varchar2(20)  NULL ,
-   user_calendar_time    varchar2(20)  NULL ,
-   user_calendar_content  varchar2(50)  NULL 
+	event_id NUMBER  CONSTRAINT user_calendar_no_pk primary key,
+	user_no NUMBER  CONSTRAINT user_calendar_user_no_fk references ant_user(user_no) on delete cascade ,
+	event_name varchar2(127) NOT NULL,
+	start_date date not null,
+	end_date date not null
 );
-create sequence seq_user_calendar_no;
 
+select * from ANT_USER where user_no=41;
+
+insert
+into user_calendar 
+values(seq_event_id.nextval, 41, '테스트용',
+to_date('2016-12-24 05:00:00', 'YYYY-MM-DD HH24:MI:SS'),
+to_date('2016-12-25 09:00:00', 'YYYY-MM-DD HH24:MI:SS'));
+
+create sequence seq_user_calendar 
+start with 1
+minvalue 0
+maxvalue 9223372036854775806;
+
+
+
+
+select * from ant_user;
 
 CREATE TABLE project_calendar
 (
@@ -137,7 +167,7 @@ CREATE TABLE chat
 (
    chat_no      NUMBER CONSTRAINT chat_no_pk PRIMARY KEY,
    project_no   NUMBER CONSTRAINT project_no_fk REFERENCES project(project_no) ON DELETE CASCADE,
-   chat_path   varchar22(500)
+   chat_path   varchar2(500)
 );
 CREATE SEQUENCE seq_chat_no;
 

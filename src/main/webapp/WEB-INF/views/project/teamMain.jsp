@@ -24,6 +24,8 @@
 	</header>
 	<jsp:include page="sidebar.jsp" />
 	<div id="burger"></div>
+
+
 	<section>
 		<div class="container">
 			<div class="row">
