@@ -9,8 +9,5 @@ import com.ant.chat.service.ChatService;
 @Controller
 @RequestMapping("/chat")
 public class ChatController {
-	@Autowired
-	ChatService service;
-	
 	
 }
