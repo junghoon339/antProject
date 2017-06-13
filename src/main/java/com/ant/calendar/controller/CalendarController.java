@@ -1,4 +1,4 @@
-package com.ant.calendar.controller;
+/*package com.ant.calendar.controller;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -65,7 +65,7 @@ public class CalendarController {
 
 		planner.data.dataprocessor.setURL("events");
 		
-		planner.parse(schedulerService.getEvent());
+		planner.parse(schedulerService.getEvent(userNo));
 		
 		model.addAttribute("schedule", planner.render());
 	
@@ -293,4 +293,4 @@ public class CalendarController {
 		attributes.put(name, value);
 	}
 
-}
+}*/

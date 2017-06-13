@@ -17,13 +17,14 @@ public class CalendarServiceImpl implements CalendarService{
 	private CalendarDAO eventManagerDao;
 
 	@Override
-	public List<DHXEv> getEvent() {
+	public List<DHXEv> getEvent(int userNo) {
 		System.out.println("service");
-		return eventManagerDao.getEvent();
+		return eventManagerDao.getEvent(userNo);
 	}
 
 	@Override
 	public void updateEvent(UserCalendarDTO schedule) {
+		System.out.println("updateEvent 서비스->다오 접근"+schedule);
 		eventManagerDao.updateEvent(schedule);
 	}
 

@@ -22,20 +22,20 @@ public class CalendarDAOImpl implements CalendarDAO {
 	private SqlSession sqlSession;
 	
 	@Override
-	public List<DHXEv> getEvent() {
+	public List<DHXEv> getEvent(int userNo) {
 		System.out.println("select等窜");
 		DHXEventsManager.date_format = "yyyy-MM-dd HH:mm:ss";
 		List evs = new ArrayList();
 		
-		List<UserCalendarDTO> resultset = sqlSession.selectList("userCalendarMapper.getEvent");
+		List<UserCalendarDTO> resultset = sqlSession.selectList("userCalendarMapper.getEvent", userNo);
 		
 		for(int i = 0; i < resultset.size(); i++){
 			DHXEvent e = new DHXEvent();
 			e.setId(resultset.get(i).getEvent_id());
-			//e.setId(resultset.get(i).getUser_no());
 			e.setText(resultset.get(i).getEvent_name());
 			e.setStart_date(resultset.get(i).getStart_date());
 			e.setEnd_date(resultset.get(i).getEnd_date());
+			
 			evs.add(e);
 		}
 		DHXEventsManager.date_format = "MM/dd/yyyy HH:mm";
@@ -45,12 +45,13 @@ public class CalendarDAOImpl implements CalendarDAO {
 
 	@Override
 	public void updateEvent(UserCalendarDTO schedule) {
+		System.out.println("update 促坷->技记 立辟");
 		sqlSession.update("userCalendarMapper.updateEvent", schedule);
 	}
 
 	@Override
 	public void insertEvent(UserCalendarDTO schedule) {
-		System.out.println("促坷->技记 立辟");
+		System.out.println("insert 促坷->技记 立辟");
 		sqlSession.insert("userCalendarMapper.insertEvent", schedule);
 	}
 

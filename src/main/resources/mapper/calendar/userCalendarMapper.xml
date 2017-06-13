@@ -14,6 +14,7 @@
 <!-- 일정 보기 -->
 <select id="getEvent" resultMap="userCalender">
 	SELECT event_id, event_name, start_date, end_date FROM user_calendar
+	WHERE user_no=#{_parameter}
 </select>
 
 
@@ -24,7 +25,7 @@
  		user_calendar (event_id, user_no, event_name, start_date, end_date) 
  	VALUES (
  		SEQ_user_calendar.NEXTVAL,
- 		41,
+ 		#{user_no},
  		#{event_name},
  		TO_DATE(#{start_date}, 'YYYY-MM-DD HH24:MI:SS'),
  		TO_DATE(#{end_date}, 'YYYY-MM-DD HH24:MI:SS')

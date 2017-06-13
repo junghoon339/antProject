@@ -12,6 +12,7 @@ import java.util.Iterator;
 import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.web.csrf.CsrfToken;
@@ -75,8 +76,13 @@ public class UserController implements Serializable {
 	@RequestMapping("/main")
 	public ModelAndView afterLogin(HttpServletRequest request)throws Exception {
        //4개의 tab에 들어갈 데이터 준비...
-		
+		System.out.println("select뿌려라!!!");
 		String contextPath = request.getContextPath();
+		HttpSession session = request.getSession();
+		
+		UserDTO userDTO = (UserDTO) session.getAttribute("userDTO");
+		int userNo = userDTO.getUserNo();
+		
 		//calendar영역
 		DHXPlanner planner = new DHXPlanner(contextPath+"/resources/codebase/", DHXSkin.TERRACE);
 		planner.localizations.set("cr");
@@ -98,7 +104,7 @@ public class UserController implements Serializable {
 		  System.out.println("token:" + token);
 	
 		planner.data.dataprocessor.setURL(contextPath+"/user/events?"+token.getParameterName()+"="+token.getToken());
-		planner.parse(schedulerService.getEvent());
+		planner.parse(schedulerService.getEvent(userNo));
 		
 		ModelAndView mv = new ModelAndView();
 		mv.addObject("schedule", planner.render());
@@ -108,7 +114,6 @@ public class UserController implements Serializable {
 	
 	@RequestMapping("/events")
 	@ResponseBody
-	 
 	public String events(HttpServletRequest request) throws Exception {
 		System.out.println("1. event접근");
 		String value = request.getParameter("ids");
@@ -140,7 +145,7 @@ public class UserController implements Serializable {
 		from = null;
 		to = null;
 		dynFilter = Boolean.valueOf(true);
-
+		HttpSession session = request.getSession();
 		String st = request
 				.getParameter((new StringBuilder()).append(prefix).append("!nativeeditor_status").toString());
 		DHXStatus status = DHXStatus.UNKNOWN;
@@ -187,7 +192,7 @@ public class UserController implements Serializable {
 				}
 			}
 
-			status = saveEvent(ev, status);
+			status = saveEvent(ev, status, session);
 		} else {
 			status = DHXStatus.ERROR;
 		}
@@ -224,7 +229,7 @@ public class UserController implements Serializable {
 		return new DHXEvent();
 	}
 
-	public DHXStatus saveEvent(DHXEv event, DHXStatus status) {
+	public DHXStatus saveEvent(DHXEv event, DHXStatus status, HttpSession session) {
 		System.out.println("5. saveEvent접근");
 		if (event.getStart_date().getHours() == 0) {
 			Calendar calendar = Calendar.getInstance();
@@ -247,25 +252,23 @@ public class UserController implements Serializable {
 		UserCalendarDTO schedule = new UserCalendarDTO();
 
 		schedule.setEvent_name(event.getText());
-		System.out.println("여긴되나"+event.getText());
-		/*UserDTO userDTO = (UserDTO) session.getAttribute("userDTO");
+		
+		UserDTO userDTO = (UserDTO) session.getAttribute("userDTO");
 		schedule.setUser_no(userDTO.getUserNo());
-		System.out.println("user_no : "+userDTO.getUserNo());*/
-		schedule.setUser_no(user_no);
-		System.out.println("user_no : "+user_no);
+		System.out.println("user_no"+userDTO.getUserNo());
+		
 		schedule.setStart_date(start_date);
-		System.out.println("start_date"+start_date);
 		schedule.setEnd_date(end_date);
-		System.out.println("end_date"+end_date);
-		//schedule.setEvent_id(event.getId());
-		System.out.println("에러?:"+event.getId());
+		/*schedule.setEvent_id(event.getId());
+		System.out.println("에러?:"+event.getId());*/
 	
 
 		if (status == DHXStatus.UPDATE) {
+			System.out.println("컨트롤러->서비스 접근");
 			schedulerService.updateEvent(schedule);
 
 		} else if (status == DHXStatus.INSERT) {
-			System.out.println("컨트롤러->서비스 접근");
+			System.out.println("insert 컨트롤러->서비스 접근");
 			schedulerService.insertEvent(schedule);
 			event.setId(schedule.getEvent_id());
 

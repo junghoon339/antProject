@@ -8,7 +8,7 @@ import com.dhtmlx.planner.DHXEv;
 
 public interface CalendarDAO {
 
-	List<DHXEv> getEvent();
+	List<DHXEv> getEvent(int userNo);
 
 	void updateEvent(UserCalendarDTO schedule);
 
@@ -19,4 +19,5 @@ public interface CalendarDAO {
 	void insertEvent(ProjectCalendarDTO schedule);
 
 	void deleteEvent(Integer id);
+
 }

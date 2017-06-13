@@ -6,18 +6,7 @@
 <%@ page import="com.ant.user.dto.UserDTO"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
-<%-- <%
-	Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-	String id = (String)session.getAttribute("userId");
-	Object principal = auth.getPrincipal();
-	String name = "";
-	int no = 0;
-	if (principal != null && principal instanceof UserDTO) {
-		no = ((UserDTO) principal).getUserNo();
-		id = ((UserDTO) principal).getUserId();
-		name = ((UserDTO) principal).getUserName();
-	}
-%> --%>
+
 
 <nav class="navbar navbar-findcond navbar-fixed-top">
 	<div class="container">

@@ -7,7 +7,7 @@ import com.ant.calendar.dto.UserCalendarDTO;
 import com.dhtmlx.planner.DHXEv;
 
 public interface CalendarService {
-	List<DHXEv> getEvent();
+	List<DHXEv> getEvent(int userNo);
 
 	void updateEvent(UserCalendarDTO schedule);
 

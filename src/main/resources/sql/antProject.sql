@@ -97,7 +97,7 @@ create sequence seq_vote_detail_no;
 drop table user_calendar;
 
 select * from user_calendar;
-
+select * from ANT_USER;
 CREATE TABLE user_calendar
 (
 	event_id NUMBER  CONSTRAINT user_calendar_no_pk primary key,
