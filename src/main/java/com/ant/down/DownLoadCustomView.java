@@ -24,7 +24,7 @@ public class DownLoadCustomView extends AbstractView{ //AbstractView绰 servlet鞍
 	protected void renderMergedOutputModel(Map<String, Object> map,
 		HttpServletRequest request, HttpServletResponse response) throws Exception {
 		
-		File file = (File) map.get("fname");//颇老按眉....
+		File file = (File) map.get("fName");//颇老按眉....
 		
 		response.setContentType("application/download;charset-UTF-8");
 		response.setContentLength((int)file.length());

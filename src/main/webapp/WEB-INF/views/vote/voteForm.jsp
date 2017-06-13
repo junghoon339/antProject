@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>투표메이니</title>
+<title>투표메인</title>
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <style>
@@ -59,7 +59,8 @@ td {
 
 		<div id="doing" class="List" >
 				<c:forEach items="${doingList}" var="doingList" varStatus="doingStatus">
-				<form id="doingForm" action="${pageContext.request.contextPath}/vote/Detail">
+				<form id="doingForm" action="${pageContext.request.contextPath}/vote/Detail" method="post">
+				<input type=hidden id="securityInfo" name="${_csrf.parameterName}" value="${_csrf.token}">
 					<input type="hidden" name="voteNo" value="${doingList.voteNo}" />
 					<table class="obj">
 						<tr>
@@ -90,6 +91,7 @@ td {
 		
 				<c:forEach items="${doneList}" var="doneList" varStatus="doneStatus">
 				<form id="doneForm" action="${pageContext.request.contextPath}/vote/Detail">
+				<input type=hidden id="securityInfo" name="${_csrf.parameterName}" value="${_csrf.token}">
 				<input type="hidden" name="voteNo" value="${doneList.voteNo}" />
 				<table class="obj">
 					<tr>

@@ -3,8 +3,6 @@ package com.ant.calendar.dao;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.annotation.Resource;
-
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;

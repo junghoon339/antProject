@@ -4,7 +4,7 @@
 
 	<!-- 새로운 조별과제방 삽입 -->
 	<insert id="insertProject" parameterType="projectDTO">
-		INSERT into project(project_no,project_name,project_startdate,project_enddate,project_subject,project_teacher,project_state)
+		INSERT INTO project(project_no,project_name,project_startdate,project_enddate,project_subject,project_teacher,project_state)
 		VALUES(seq_project_no.nextval, #{projectName}, #{projectStartdate}, #{projectEnddate}, #{projectSubject}, #{projectTeacher}, 0)
 	</insert>
 
@@ -16,7 +16,7 @@
 
 	<!-- 팀플방에 조장등록 -->
 	<insert id="insertProjectLeader" parameterType="projectUserDTO">
-		INSERT into project_user
+		INSERT INTO project_user
 		VALUES(seq_project_user_no.nextval, #{projectNo}, #{userNo}, '조장')
 	</insert>
 	
@@ -31,7 +31,29 @@
 	</select>
 		
 	<!-- 팀플방에 조원등록 -->
-
-
+	
+	
+	<resultMap type="projectDTO" id="selectProjectMap">
+		<id column="project_no" property="projectNo"/>		
+		<result column="project_name" property="projectNo"/>		
+		<result column="project_startdate" property="projectNo"/>		
+		<result column="project_enddate" property="projectNo"/>		
+		<result column="project_subject" property="projectNo"/>		
+		<result column="project_state" property="projectNo"/>		
+		<result column="project_user_role" property="projectNo"/>		
+		<collection property="projectUserDTO">
+			<id/>
+		</collection>
+		
+	</resultMap>
+	
+	
+	<!-- 진행중, 완료된 조별과제 검색 -->
+	<select id="selectProjectById" parameterType="map" resultMap="selectProjectMap">
+	SELECT p.project_no, p.project_name,p.project_startdate,p.project_enddate,p.project_subject,p.project_state,pu.project_user_role
+	FROM project p, project_user pu
+	WHERE p.project_no = pu.project_no AND pu.user_no=21;	
+		
+	</select>
 
 </mapper>

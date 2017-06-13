@@ -22,40 +22,33 @@ public class StorageController {
 	private StorageService service;
 
 	private String path = "C:\\antAndGrasshopper\\download";
-
-	@RequestMapping("/")
-	public String index() {
-		return "index";
-	}
-
-	@RequestMapping("/storage/storageTable/{projectNo}")
-	public ModelAndView storageIndex(@PathVariable int projectNo) {
-		System.out.println(projectNo);
-		List<StorageDTO> list = service.selectAll(projectNo);
+	
+	@RequestMapping("/storageTable/{projectNo}")
+	public ModelAndView storageIndex(@PathVariable int projectNo){
+		List<StorageDTO> list =  service.selectAll(projectNo);
 		ModelAndView mv = new ModelAndView();
-		mv.setViewName("storage/storageTable");
-		mv.addObject("list", list);
+		mv.setViewName("storage/test");
+		mv.addObject("list",list);
 		return mv;
 	}
-
-	@RequestMapping("/storage/tableDetail/{storageNo}")
-	public ModelAndView selectByStorageNum(@PathVariable int storageNo) throws Exception {
+	
+	@RequestMapping("/tableDetail/{storageNo}")
+	public ModelAndView selectByStorageNum(@PathVariable int storageNo) throws Exception{
 		StorageDTO dto = service.selectByStorageNum(storageNo, true);
 		ModelAndView mv = new ModelAndView();
 		mv.addObject("dto", dto);
 		mv.setViewName("storage/storageDetail");
 		return mv;
 	}
-
-	@RequestMapping("/storage/delete/{storageNo}/{userNo}/{projectNo}")
-	public String delete(@PathVariable int storageNo, @PathVariable int userNo, @PathVariable int projectNo)
-			throws Exception {
+	
+	@RequestMapping("/delete/{storageNo}/{userNo}/{projectNo}")
+	public String delete(@PathVariable int storageNo, @PathVariable int userNo, @PathVariable int projectNo) throws Exception{
 		service.delete(storageNo, userNo);
 		return "redirect:/storage/storageTable/" + projectNo;
 	}
-
-	@RequestMapping("/storage/insertForm/{userNo}")
-	public ModelAndView insertForm(@PathVariable int userNo) {
+	
+	@RequestMapping("/insertForm/{userNo}")
+	public ModelAndView insertForm(@PathVariable int userNo){
 		UserDTO dto = service.selectUserByUserNo(userNo);
 		ModelAndView mv = new ModelAndView();
 		mv.setViewName("storage/insertForm");
@@ -63,10 +56,8 @@ public class StorageController {
 		return mv;
 	}
 
-	@RequestMapping("/storage/insert")
-	public String insert(StorageDTO storageDTO) throws Exception {
-
-		System.out.println("111111111111111");
+	@RequestMapping("/insert")
+	public String insert(StorageDTO storageDTO) throws Exception{
 		MultipartFile file = storageDTO.getFile();
 		if (file.getSize() > 0) {
 			String fileName = file.getOriginalFilename();
@@ -86,5 +77,43 @@ public class StorageController {
 		}
 		service.insert(storageDTO);
 		return "redirect:/storage/storageTable/1";
+	}
+	
+	@RequestMapping("/updateForm")
+	public ModelAndView updateForm(StorageDTO storageDTO){
+		/*System.out.println(storageDTO.getUserDTO().getUserName());*/ //null
+		ModelAndView mv = new ModelAndView();
+		mv.setViewName("storage/updateForm");
+		mv.addObject("storageDTO", storageDTO);
+		return mv;
+	}
+	
+	@RequestMapping("/update")
+	public String update(StorageDTO storageDTO) throws Exception{
+		MultipartFile file = storageDTO.getFile();
+		if(file.getSize()>0){
+			String fileName = file.getOriginalFilename();
+			long fileSize = file.getSize();
+			storageDTO.setFileName(fileName);
+			storageDTO.setFileSize((int)fileSize);
+			
+			try {
+				file.transferTo(new File(path+"/"+fileName));
+			} catch (IllegalStateException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		service.update(storageDTO);
+		return "redirect:/storage/storageTable/1";
+	}
+	
+	@RequestMapping("/download")
+	public ModelAndView download(String fileName){
+		File file = new File(path+"/"+fileName);
+		return new ModelAndView("downLoadView","fName",file);
 	}
 }

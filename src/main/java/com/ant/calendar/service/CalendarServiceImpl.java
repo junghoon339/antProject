@@ -14,30 +14,30 @@ import com.dhtmlx.planner.DHXEv;
 public class CalendarServiceImpl implements CalendarService{
 	
 	@Autowired
-	private CalendarDAO eventManagerDao;
+	private CalendarDAO calendarDAO;
 
 	@Override
 	public List<DHXEv> getEvent(int userNo) {
 		System.out.println("service");
-		return eventManagerDao.getEvent(userNo);
+		return calendarDAO.getEvent(userNo);
 	}
 
 	@Override
 	public void updateEvent(UserCalendarDTO schedule) {
 		System.out.println("updateEvent 서비스->다오 접근"+schedule);
-		eventManagerDao.updateEvent(schedule);
+		calendarDAO.updateEvent(schedule);
 	}
 
 	@Override
 	public void insertEvent(UserCalendarDTO schedule) {
 		System.out.println("insertEvent 서비스->다오 접근"+schedule);
-		eventManagerDao.insertEvent(schedule);
+		calendarDAO.insertEvent(schedule);
 	}
 
 	@Override
 	public void deleteEvent(Integer id) {
 		System.out.println("deleteEvnet 서비스->다오 접근"+id);
-		eventManagerDao.deleteEvent(id);
+		calendarDAO.deleteEvent(id);
 	}
 
 	@Override

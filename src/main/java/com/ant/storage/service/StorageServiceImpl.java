@@ -56,15 +56,20 @@ public class StorageServiceImpl implements StorageService {
 		return result;
 	}
 
-	@Override
-	public int update(int storageNo, int userNo, StorageDTO storageDTO) throws Exception{
-		// TODO Auto-generated method stub
-		return 0;
-	}
+	
 
 	@Override
 	public UserDTO selectUserByUserNo(int userNo) {
 		return dao.selectUserByUserNo(userNo);
+	}
+
+	@Override
+	public int update(StorageDTO storageDTO) throws Exception {
+			int result = dao.update(storageDTO);
+			if(result==0){
+				throw new Exception("수정되지 않았습니다.");
+			}
+		return 0;
 	}
 
 }

@@ -5,8 +5,6 @@
 <%@ page import="org.springframework.security.core.Authentication"%>
 <%@ page import="com.ant.user.dto.UserDTO"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
-
 
 <nav class="navbar navbar-findcond navbar-fixed-top">
 	<div class="container">
@@ -26,7 +24,7 @@
 						class="fa fa-fw fa-bell-o"></i> 쪽지함 <span class="badge">10</span></a>
 						<li class="dropdown"><a href="#" class="dropdown-stoggle"
 					data-toggle="dropdown" role="button" aria-expanded="false"> <i
-						class="fa fa-fw fa-bell-o"></i> <sec:authentication property="principal.userId"/>님 ㅎㅇ <span class="badge">10</span></a>
+						class="fa fa-fw fa-bell-o"></i> ${userDTO.userName}님 ㅎㅇ <span class="badge">10</span></a>
 					<ul class="dropdown-menu" role="menu">
 						<li><a href="#"><i class="fa fa-fw fa-tag"></i> <span
 								class="badge">Music</span>ab<span class="badge">Video</span>

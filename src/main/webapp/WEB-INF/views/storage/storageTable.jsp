@@ -52,6 +52,10 @@
 </head>
 
 <body>
+<header>
+		<jsp:include page="/WEB-INF/views/project/header.jsp" flush="false" />
+	</header>
+	<jsp:include page="/WEB-INF/views/project/sidebar.jsp" />
 		<!-- start: Header -->
 	<div class="navbar">
 		<div class="navbar-inner">
@@ -443,6 +447,8 @@
 								   </td>
 							</tr>
 							</c:forEach>
+							</tbody>
+							</table>
 							<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
 							
 <!-- íì´ë¸ ìì!!!~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~` -->
