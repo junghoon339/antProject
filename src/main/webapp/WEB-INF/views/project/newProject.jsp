@@ -20,9 +20,12 @@ $(function(){
     })
     
 	
-	$(document).on("click","#addMember",function(){
-		//input추가
-	});
+    
+	$("#addBtn").click(function() {
+		var addInputbox = "<input class='form-control' type='text' name='chk' placeholder='초대할 팀원을 입력하세요.'/><p></p>";
+		$("#invitedMember").append(addInputbox);
+		num = num + 1 ;
+	})
     
     
     $("#projectForm").submit(function(){
@@ -82,13 +85,18 @@ $(function(){
 					            		<input class="form-control" name="projectEnddate" id="registration-date" type="date">
 					            	</div><p></p>
 					            	
+					            	<div id="invitedMember">
 						            팀원ID : <input class="form-control"type="text" name=""/><p></p>
-						            <span id="addMember">+</span>				            
+						            </div>
+						            
+						            <!-- <span id="addMember">+</span> -->
+						            <a href="#" class="btn btn-sm btn-default" id="addBtn">
+										<span class="glyphicon glyphicon-plus">팀원추가</span> 
+									</a> 				            
 						        </form>
 							</div>
 						</div>
 					</div>
-
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-danger">팀플생성</button>

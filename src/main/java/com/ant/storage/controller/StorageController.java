@@ -18,12 +18,10 @@ import com.ant.user.dto.UserDTO;
 @Controller
 @RequestMapping("/storage")
 public class StorageController {
-	
 	@Autowired
 	private StorageService service;
-	
+
 	private String path = "C:\\antAndGrasshopper\\download";
-	
 	
 	@RequestMapping("/storageTable/{projectNo}")
 	public ModelAndView storageIndex(@PathVariable int projectNo){
@@ -46,7 +44,7 @@ public class StorageController {
 	@RequestMapping("/delete/{storageNo}/{userNo}/{projectNo}")
 	public String delete(@PathVariable int storageNo, @PathVariable int userNo, @PathVariable int projectNo) throws Exception{
 		service.delete(storageNo, userNo);
-		return "redirect:/storage/storageTable/"+projectNo;
+		return "redirect:/storage/storageTable/" + projectNo;
 	}
 	
 	@RequestMapping("/insertForm/{userNo}")
@@ -55,20 +53,20 @@ public class StorageController {
 		ModelAndView mv = new ModelAndView();
 		mv.setViewName("storage/insertForm");
 		mv.addObject("userDTO", dto);
-		return mv; 
+		return mv;
 	}
-	
+
 	@RequestMapping("/insert")
 	public String insert(StorageDTO storageDTO) throws Exception{
 		MultipartFile file = storageDTO.getFile();
-		if(file.getSize()>0){
+		if (file.getSize() > 0) {
 			String fileName = file.getOriginalFilename();
 			long fileSize = file.getSize();
 			storageDTO.setFileName(fileName);
-			storageDTO.setFileSize((int)fileSize);
-			
+			storageDTO.setFileSize((int) fileSize);
+
 			try {
-				file.transferTo(new File(path+"/"+fileName));
+				file.transferTo(new File(path + "/" + fileName));
 			} catch (IllegalStateException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

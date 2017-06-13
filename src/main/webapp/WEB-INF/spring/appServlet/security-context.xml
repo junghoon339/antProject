@@ -6,13 +6,14 @@
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.2.xsd">
 
-
 	<sec:http use-expressions="true" auto-config="true">
 		<sec:intercept-url pattern="/admin/project" access="hasRole('ROLE_ADMIN')" />
 		<sec:intercept-url pattern="/user/project" access="isAuthenticated()" />
+		<sec:intercept-url pattern="/**" access="permitAll"/>
 		<sec:form-login login-page="/" login-processing-url="/login"
 			username-parameter="userId" password-parameter="userPassword"
-			default-target-url="/user/main" authentication-failure-handler-ref="userAuthenticationFailureHandler" />
+			authentication-failure-handler-ref="userAuthenticationFailureHandler" 
+			authentication-success-handler-ref="userAuthenticationSuccessHandler"/>
 		<sec:logout invalidate-session="true" delete-cookies="JSESSIONID"
 			logout-url="/user/logout" logout-success-url="/" />
 	</sec:http>
@@ -20,5 +21,4 @@
 	<sec:authentication-manager>
 		<sec:authentication-provider ref="userAuthenticationProvider" />
 	</sec:authentication-manager>
-
 </beans>

@@ -9,7 +9,11 @@ public class ProjectUserDTO {
 	private ProjectDTO projectDTO; //관리자의 회원관리에서 사용
 	
 	public ProjectUserDTO() {}
-
+	public ProjectUserDTO(int projectNo, int userNo) {
+		super();
+		this.projectNo = projectNo;
+		this.userNo = userNo;
+	}
 	public ProjectUserDTO(int projectUserNo, int projectNo, int userNo, String projectUserRole) {
 		super();
 		this.projectUserNo = projectUserNo;
@@ -17,35 +21,27 @@ public class ProjectUserDTO {
 		this.userNo = userNo;
 		this.projectUserRole = projectUserRole;
 	}
-
 	public int getProjectUserNo() {
 		return projectUserNo;
 	}
-
 	public void setProjectUserNo(int projectUserNo) {
 		this.projectUserNo = projectUserNo;
 	}
-
 	public int getProjectNo() {
 		return projectNo;
 	}
-
 	public void setProjectNo(int projectNo) {
 		this.projectNo = projectNo;
 	}
-
 	public int getUserNo() {
 		return userNo;
 	}
-
 	public void setUserNo(int userNo) {
 		this.userNo = userNo;
 	}
-
 	public String getProjectUserRole() {
 		return projectUserRole;
 	}
-
 	public void setProjectUserRole(String projectUserRole) {
 		this.projectUserRole = projectUserRole;
 	}
@@ -57,8 +53,5 @@ public class ProjectUserDTO {
 	public void setProjectDTO(ProjectDTO projectDTO) {
 		this.projectDTO = projectDTO;
 	}
-	
-	
-	
-	
+		
 }

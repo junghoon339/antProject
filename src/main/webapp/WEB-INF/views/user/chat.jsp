@@ -1,25 +1,36 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
-<link rel="stylesheet" type="text/css"
-	href="${pageContext.request.contextPath}/resources/css/chat.css" />
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/chat.css" />
 <script type="text/javascript"
 	src="${pageContext.request.contextPath}/resources/js/jquery-3.2.1.min.js"></script>
+<script type="text/javascript"
+	src="${pageContext.request.contextPath}/resources/js/jquery.timeago.js"></script>	
 <script type="text/javascript"
 	src="${pageContext.request.contextPath}/resources/js/sockjs.js"></script>
 <script type="text/javascript"
 	src="${pageContext.request.contextPath}/resources/js/chat.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
 <script type="text/javascript">
 	$(document).ready(function() {
+		$("abbr.timeago").timeago();
 		$("#btn-chat").click(function() {
 			sendMessage();
 		});
+		
+		$('#btn-input').keyup(function(e) {
+		    if (e.keyCode == 13)
+		    	sendMessage();
+		});
 	});
+	
 	//WebSocket을 지정한 URL로 연결한다
 	//서버랑 연결 -> 에코핸들러가서 출력
 	var sock = new SockJS("${pageContext.request.contextPath}/user/chat");
@@ -30,29 +41,68 @@
 	//WebSocket과 연결을 끊고 싶을 때 실행하는 메소드다
 	sock.onclose = onClose;
 
+	var name = '${userDTO.userName}';
+	// name에 로그인된 사람 이름이 저장	
+	
 	/*     sock.onopen = function() {
 	    sock.send( $("#message").val() +"<br/>");
 	}; */
+	
 	function sendMessage() {
-
 		//WebSocket으로 메시지를 전달한다.
-		sock.send($("#message").val() + "<br/>");
+		
+		sock.send(name+':'+$("#btn-input").val());
+		// var userId = ${session.userId};
+		
+		
+		$('#btn-input').val("");
+		$('#btn-input').focus();
 	}
 
+	
 	// evt 파라미터는 WebSocket이 보내준 데이터다
 	// 변수안에 function을 넣음. 변수 생략 가능
 	function onMessage(evt) {
 		var data = evt.data;
-		$("#data").append(data);
+
+		var seperatorIndex = data.indexOf(':');
+        var userName = data.substring(0, seperatorIndex);
+        var chatMessage = data.substring(seperatorIndex+1);
+		var time = '';
+		if(name===userName) {
+			var myMessage = '<div class="row msg_container base_sent"><div class="col-md-10 col-xs-10">';
+			myMessage += '<div class="messages msg_sent"><p id="data">'+chatMessage+'</p><time datetime="2009-11-13T20:00">'+'${userDTO.userName}'+' • '+$.timeago(new Date())+'</time></div></div>';
+			myMessage += '<div class="col-md-2 col-xs-2 avatar"><img src="http://www.bitrebels.com/wp-content/uploads/2011/02/Original-Facebook-Geek-Profile-Avatar-1.jpg" class="img-responsive"></div></div>';
+		} else {
+			var myMessage = '<div class="row msg_container base_receive"><div class="col-md-2 col-xs-2 avatar">';
+			myMessage += '<img src="http://www.bitrebels.com/wp-content/uploads/2011/02/Original-Facebook-Geek-Profile-Avatar-1.jpg" class=" img-responsive ">';
+			myMessage += '</div><div class="col-md-10 col-xs-10"><div class="messages msg_receive"><p>'+chatMessage+'</p><time datetime="2009-11-13T20:00">'+userName+' • '+$.timeago(new Date())+'</time></div></div></div>';
+		}
+		
+		var myMessage = $("#panel-body").last().append(myMessage);
+		$("#panel-body").scrollTop($("#panel-body")[0].scrollHeight);
 		//sock.close();
 	}
+	
 	// var onClose 변수 생략
 	function onClose(evt) {
 		$("#data").append("Connection Closed!");
 	}
+
 </script>
 </head>
 <body>
+	<div class="container">
+	<h1>txt file nae yong</h1>
+	<hr>
+	<c:import var="chatText" url="/resources/chat/chat_room_no_${projectNo}.txt" />
+	<c:set var="chat" value="${fn:split(chatText, ':')}"/>
+	
+	<c:forEach items="${chat}" var="text">
+		${text}
+	</c:forEach>
+	</div>
+	
 	<div class="container">
 		<div class="row chat-window col-xs-5 col-md-3" id="chat_window_1"
 			style="margin-left: 10px;">
@@ -71,13 +121,14 @@
 								data-id="chat_window_1"></span></a>
 						</div>
 					</div>
+					
 					<!-- 채팅은 이 안에 들어와야 함 -->
-					<div class="panel-body msg_container_base">
+					<div class="panel-body msg_container_base" id="panel-body">
 						<!-- 보내는 놈 = 나 -->
 						<div class="row msg_container base_sent">
 							<div class="col-md-10 col-xs-10">
 								<div class="messages msg_sent">
-									<p>
+									<p id="data">
 										<!-- 여기에 채팅 내용이 들어옵니다. -->
 									</p>
 									<time datetime="2009-11-13T20:00">Timothy • 51 min</time>
@@ -158,5 +209,6 @@
 		<input type="button" id="sendBtn" value="SEND" />
 		<div id="data"></div>
 	-->
+
 </body>
 </html>
