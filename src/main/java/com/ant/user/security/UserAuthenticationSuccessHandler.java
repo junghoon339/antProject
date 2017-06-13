@@ -22,7 +22,6 @@ import com.ant.user.dto.UserDTO;
  */
 @Component // id=memberAuthenticationFailureHandler
 public class UserAuthenticationSuccessHandler implements AuthenticationSuccessHandler{
-
 	@Override
 	public void onAuthenticationSuccess(HttpServletRequest req, HttpServletResponse res, Authentication auth)
 			throws IOException, ServletException {
@@ -30,7 +29,6 @@ public class UserAuthenticationSuccessHandler implements AuthenticationSuccessHa
 		//인증된(로그인된) 회원 userDTO Session에 저장!
 		req.getSession().setAttribute("userDTO", userDTO);
 		req.getSession().setAttribute("projectNo", 1);
-		req.getRequestDispatcher("/user/main").forward(req, res);
 		//req.getRequestDispatcher("/user/main").forward(req, res); //우동이가 지우고 변경!
 		req.getRequestDispatcher("/project/home").forward(req, res); 
 	}

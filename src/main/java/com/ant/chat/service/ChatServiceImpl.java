@@ -53,7 +53,7 @@ public class ChatServiceImpl implements ChatService {
 			FileWriter fileWriter = new FileWriter(fileName, true); 
 			// Always wrap FileWriter in BufferedWriter.
 			bufferedWriter = new BufferedWriter(fileWriter);
-
+			
 			// Note that write() does not automatically
 			// append a newline character.
 			bufferedWriter.append(payload);
