@@ -97,7 +97,7 @@ public class UserController implements Serializable {
 		CsrfToken token = (CsrfToken)request.getAttribute(CsrfToken.class.getName());
 		  System.out.println("token:" + token);
 	
-		planner.data.dataprocessor.setURL("../user/events?"+token.getParameterName()+"="+token.getToken());
+		planner.data.dataprocessor.setURL(contextPath+"/user/events?"+token.getParameterName()+"="+token.getToken());
 		planner.parse(schedulerService.getEvent());
 		
 		ModelAndView mv = new ModelAndView();
