@@ -1,7 +1,8 @@
 package com.ant.user.controller;
 
 import java.io.Serializable;
-import java.security.Principal;
+
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -26,11 +27,9 @@ public class UserController implements Serializable {
 	}
 
 	@RequestMapping("/main")
-	public String afterLogin() {
-
-
+	public String afterLogin(HttpSession session) {
 		return "project/home";
-	}
+	}	
 	
 	@RequestMapping("/teamMain")
 	public String teamMain() {

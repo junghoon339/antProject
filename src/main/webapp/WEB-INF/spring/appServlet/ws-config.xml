@@ -5,7 +5,7 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/websocket http://www.springframework.org/schema/websocket/spring-websocket-4.3.xsd">
     <websocket:handlers>
-        <websocket:mapping handler="echoHandler" path="/user/main"/>
+        <websocket:mapping handler="echoHandler" path="/user/chat"/>
         <websocket:sockjs/>
     </websocket:handlers>
     

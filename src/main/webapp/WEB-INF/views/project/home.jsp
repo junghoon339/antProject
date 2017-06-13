@@ -1,4 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -71,7 +73,8 @@
 								<div class="col-md-3">
 									<div class="bs bs-pricing">
 										<div class="cotent">
-											<h3 class="category">WebProgramming</h3>
+											<h3 class="category">WebProgramming
+											</h3>
 											<h1 class="bs-caption">
 												<small>D-</small>11
 											</h1>

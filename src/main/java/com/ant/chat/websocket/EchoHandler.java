@@ -48,11 +48,19 @@ public class EchoHandler extends TextWebSocketHandler {
         
         //아래와 같이는 최대 2개
         logger.info("From {}, recieved Message : {} ", session.getId(), message.getPayload() );
-                
+         
+        String tempMessage = message.getPayload();
+        int seperatorIndex = tempMessage.indexOf(":");
+        
+        String userName = tempMessage.substring(0, seperatorIndex);
+        String chatMessage = tempMessage.substring(seperatorIndex+1);
+        
         //연결되어있는 모든 클라이언트들에게 메시지를 전송한다
         //2 List
         for(WebSocketSession sess : sessionList){
-            sess.sendMessage(new TextMessage("echo: " + message.getPayload() ));
+        	System.out.println(session.getId()+"이건 현재 세션 session id");
+        	System.out.println(sess.getId()+"이건 리스트에 들어있던 session id");
+        	sess.sendMessage(new TextMessage(chatMessage));
         }
         
         //1 Map

@@ -29,6 +29,7 @@
 			<div class="row">
 				<div class="col-lg-8 col-lg-offset-2">
 					<h1>Fancy Toggle Sidebar Navigation</h1>
+					${userDTO.userId}
 					<p>Bacon ipsum dolor sit amet tri-tip shoulder tenderloin
 						shankle. Bresaola tail pancetta ball tip doner meatloaf corned
 						beef. Kevin pastrami tri-tip prosciutto ham hock pork belly bacon
