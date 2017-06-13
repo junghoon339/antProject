@@ -23,7 +23,7 @@ public interface StorageService{
 		public int delete(int storageNo,int userNo) throws Exception;
 		
 		//자료실에 자료 올린사람만 자료수정
-		public int update(int storageNo,int userNo, StorageDTO storageDTO) throws Exception;
+		public int update(StorageDTO storageDTO) throws Exception;
 		
 		//이름 가져오기
 		public UserDTO selectUserByUserNo(int userNo);

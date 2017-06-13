@@ -7,7 +7,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%
 	Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-
+	
 	Object principal = auth.getPrincipal();
 	String name = "";
 	int no = 0;

@@ -23,7 +23,7 @@ public interface StorageDAO {
 	public int delete(int storageNo,int userNo);
 	
 	//자료실에 자료 올린사람만 자료수정
-	public int update(int storageNo,int userNo, StorageDTO storageDTO);
+	public int update(StorageDTO storageDTO);
 	
 	//이름 가져오기
 	public UserDTO selectUserByUserNo(int userNo);

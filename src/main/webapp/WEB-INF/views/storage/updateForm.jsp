@@ -36,16 +36,7 @@
 	<link rel="shortcut icon" href="img/favicon.ico">
 	<!-- end: Favicon -->
 	
-		<link rel="stylesheet" type="text/css"
-	href="${pageContext.request.contextPath}/resources/css/header.css" />
-<link rel="stylesheet" type="text/css"
-	href="${pageContext.request.contextPath}/resources/css/sidebar.css" />
-<script src="http://code.jquery.com/jquery-latest.min.js"></script>
-		
-		
-<meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
-<title>Insert title here</title>
-<style type="text/css">
+	<style type="text/css">
 	/***
 Bootstrap Line Tabs by @keenthemes
 A component of Metronic Theme - #1 Selling Bootstrap 3 Admin Theme in Themeforest: http://j.mp/metronictheme
@@ -282,13 +273,27 @@ Licensed under MIT
 	background: #8775a7;
 	border-color: #8775a7;
 }
+
+
 	</style>
+		<link rel="stylesheet" type="text/css"
+	href="${pageContext.request.contextPath}/resources/css/header.css" />
+<link rel="stylesheet" type="text/css"
+	href="${pageContext.request.contextPath}/resources/css/sidebar.css" />
+<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+		
+		
+<meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
+<title>Insert title here</title>
 </head>
 <script type="text/javascript">
+	/* sumbit */
 	function submitHidden() {
-		$("#submitForm").attr("action","${pageContext.request.contextPath}/storage/updateForm");
+		$("#submitForm").attr("action","${pageContext.request.contextPath}/storage/update");
 		$("#submitForm").submit();
 	}
+	
+	
 </script>
 <body>
 <header> <jsp:include page="/WEB-INF/views/project/header.jsp"
@@ -305,51 +310,77 @@ Licensed under MIT
 			<div class="col-md-6 margin-bottom-30" >
 				<!-- BEGIN Portlet PORTLET-->
 				<div class="portlet portlet-bordered" style="width:900px ; height:340px; transform:translate(18%, 6%)" >
+					
+					<form action="" method="post" id="submitForm" enctype="multipart/form-data">
 					<div class="portlet-title">
 						<div class="caption caption-red">
 							제목 - 
-							<span class="caption-subject text-uppercase"> ${dto.storageTitle}</span>
-							&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-							<span class="caption-helper">작성일 - ${dto.writeDay}</span>
-							&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-							<span class="caption-helper">작성자 - ${dto.userDTO.userName}</span>
+							<%-- <span class="caption-subject text-uppercase"> ${dto.storageTitle}</span> --%>
+							
+							<input type="text" value="${storageDTO.storageTitle}" name="storageTitle">
+							<%-- <span class="caption-helper">작성일 - ${dto.writeDay}</span> --%>
+							<input type="hidden" value="${storageDTO.writeDay}" name="writeDay">
+							<input type="hidden" value="1" name="userNo">
+							<%-- <span class="caption-helper">작성자 - ${storageDTO.storageNo}</span> --%>
+							<input type="hidden" value="${storageDTO.userDTO.userName}" name="userName">
+							<input type="hidden" value="${storageDTO.storageNo}" name="storageNo">
+							
+							<input type="hidden" id="securityInfo" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+							
 						</div>
 						<div class="actions">
 						<c:if test="${dto.fileName!=null}">
 							<a href="javascript:;">
 								<i class="glyphicon glyphicon-paperclip"></i>
 							</a>
-							<a href="${pageContext.request.contextPath}/storage/download?fileName=${dto.fileName}">
+							<a href="#">
 								${dto.fileName}
 							</a>
 							
 						</c:if>
-							<form id="submitForm" method="post" action="">
-								<input type="hidden" id="securityInfo" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-							
-								<input type="hidden" name="userNO" value="${dto.userDTO.userNo}">
-								<input type="hidden" name="userName" value="${dto.userDTO.userName}">
-								<input type="hidden" name="storageTitle" value="${dto.storageTitle}">
-								<input type="hidden" name="storageNo" value="${dto.storageNo}">
-								<input type="hidden" name="storageContent" value="${dto.storageContent}">
-							</form>
 						
-							<a href="#" class="btn btn-red btn-circle" onclick="submitHidden()">
-								<i class="glyphicon glyphicon-pencil"></i>
-							</a>
-							
-							<a href="${pageContext.request.contextPath}/storage/delete/${dto.storageNo}/${dto.userNo}/${dto.projectNo}" class="btn btn-red btn-circle active" class="btn btn-red btn-circle">
-								<i class="glyphicon glyphicon-trash"></i>
-							</a>
-				
 						</div>
 					</div>
 					<div class="portlet-body">
-						<h4>${dto.storageContent}</h4>
+						<h4><textarea cols="90" rows="12" name="storageContent">${storageDTO.storageContent}</textarea></h4>
+						
 					</div>
 					
+					<!-- file upload -->
+					<div class="input-group">
+    <span class="input-group-btn">
+		<button id="fake-file-button-browse" type="button" class="btn btn-default">
+			<span class="glyphicon glyphicon-file"></span>
+		</button>
+	</span>
+	<input type="file" id="files-input-upload" style="display:none" name="file">
+	<input type="text" id="fake-file-input-name" disabled="disabled" placeholder="File not selected" class="form-control" name="filePath">
+	<span class="input-group-btn">
+		<button type="button" class="btn btn-default" disabled="disabled" id="fake-file-button-upload">
+			<span class="glyphicon glyphicon-upload"></span>
+		</button>
+	</span>
+</div>
+<small class="pull-right">새로운 자료를 등록하세요</small>
+<script type="text/javascript">
+// Fake file upload
+document.getElementById('fake-file-button-browse').addEventListener('click', function() {
+	document.getElementById('files-input-upload').click();
+});
+
+document.getElementById('files-input-upload').addEventListener('change', function() {
+	document.getElementById('fake-file-input-name').value = this.value;
+	
+	document.getElementById('fake-file-button-upload').removeAttribute('disabled');
+});
+</script>
+					<!-- file upload -->
+					<br>
+					<a href="#" class="btn btn-block btn-lg btn-default" onclick="submitHidden()"><span class="glyphicon glyphicon-pencil"></span>수정하기</a>
 					
 				</div>
+				
+					</form>
 				<!-- END Portlet PORTLET-->
 				<hr>
 			</div>
