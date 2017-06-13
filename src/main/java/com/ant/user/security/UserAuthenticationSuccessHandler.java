@@ -27,8 +27,10 @@ public class UserAuthenticationSuccessHandler implements AuthenticationSuccessHa
 	public void onAuthenticationSuccess(HttpServletRequest req, HttpServletResponse res, Authentication auth)
 			throws IOException, ServletException {
 		UserDTO userDTO = (UserDTO)auth.getPrincipal();
+		//인증된(로그인된) 회원 userDTO Session에 저장!
 		req.getSession().setAttribute("userDTO", userDTO);
-		req.getRequestDispatcher("/user/main").forward(req, res);
+		//req.getRequestDispatcher("/user/main").forward(req, res); //우동이가 지우고 변경!
+		req.getRequestDispatcher("/project/home").forward(req, res); 
 	}
 
 }
