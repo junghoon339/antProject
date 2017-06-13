@@ -41,8 +41,9 @@
 		<result column="project_subject" property="projectNo"/>		
 		<result column="project_state" property="projectNo"/>		
 		<result column="project_user_role" property="projectNo"/>		
-		<collection property="projectUserDTO">
-			<id/>
+		<collection property="projectUserDTOs" ofType="projectUserDTO">
+			<id column="project_user_no" property="projectUserNo"/>
+			<result column="project_user_role" property="projectUserRole"/>
 		</collection>
 		
 	</resultMap>
@@ -50,10 +51,10 @@
 	
 	<!-- 진행중, 완료된 조별과제 검색 -->
 	<select id="selectProjectById" parameterType="map" resultMap="selectProjectMap">
-	SELECT p.project_no, p.project_name,p.project_startdate,p.project_enddate,p.project_subject,p.project_state,pu.project_user_role
-	FROM project p, project_user pu
-	WHERE p.project_no = pu.project_no AND pu.user_no=21;	
-		
+		SELECT p.project_no, p.project_name,p.project_startdate,p.project_enddate,p.project_subject,p.project_state,pu.project_user_role
+		FROM project p JOIN project_user pu
+		ON p.project_no = pu.project_no
+		WHERE pu.user_no=2 AND p.project_state=1;	
 	</select>
 
 </mapper>

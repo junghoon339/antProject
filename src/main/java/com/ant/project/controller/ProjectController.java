@@ -33,8 +33,8 @@ public class ProjectController {
 	 */
 	@RequestMapping("/home")
 	public ModelAndView home(HttpServletRequest req){
-		//로그인된 userNo 
-/*		UserDTO userDTO = (UserDTO) req.getSession().getAttribute("userDTO");
+/*		//로그인된 userNo 
+		UserDTO userDTO = (UserDTO) req.getSession().getAttribute("userDTO");
 		int userNo = userDTO.getUserNo();
 		System.out.println("controller에서 받아오는 userNo = " + userNo);
 		
@@ -51,8 +51,8 @@ public class ProjectController {
 		System.out.println("------------------------------------completedProList : "+completedProList);
 		for(ProjectDTO dto :completedProList)
 			System.out.println("/proNo : "+dto.getProjectNo()+"/proName : "+dto.getProjectName()+"/state : "+dto.getProjectState());
-		
 		*/
+
 		ModelAndView mv = new ModelAndView();
 		//mv.addObject("currentProList",currentProList);
 		//mv.addObject("completedProList",completedProList);
