@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"	pageEncoding="UTF-8"%>
-<!DOCTYPE html>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 <html>
 <head>
 <meta charset="utf-8" />
@@ -49,7 +50,6 @@
 </style>
 </head>
 <body>
-	<!-- header -->
 	<jsp:include page="header.jsp" flush="false"/>
 
 
@@ -138,7 +138,8 @@
 				</li>
 				<li>
 					<!--TAB CONTENT-->
-					<h4>My Calendar에 들어갈 내용..</h4>
+					${schedule}
+						
 				</li>
 			</ul>
 		</div>

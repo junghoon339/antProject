@@ -10,6 +10,7 @@
 	<sec:http use-expressions="true" auto-config="true">
 		<sec:intercept-url pattern="/admin/project" access="hasRole('ROLE_ADMIN')" />
 		<sec:intercept-url pattern="/user/project" access="isAuthenticated()" />
+		<sec:intercept-url pattern="/**" access="permitAll"/>
 		<sec:form-login login-page="/" login-processing-url="/login"
 			username-parameter="userId" password-parameter="userPassword"
 			default-target-url="/user/main" authentication-failure-handler-ref="userAuthenticationFailureHandler" />
