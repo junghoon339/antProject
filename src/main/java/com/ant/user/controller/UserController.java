@@ -26,7 +26,8 @@ public class UserController implements Serializable {
 		return "user/joinOk";
 	}
 
-	@RequestMapping("/main")
+//우동이가 삭제하고 이부분을 이제 projectController에서 하도록 하겠습니다!
+/*	@RequestMapping("/main")
 	public String afterLogin() {
 		return "project/home";
 	}	
@@ -35,7 +36,7 @@ public class UserController implements Serializable {
 	public String teamMain() {
 
 		return "project/teamMain";///WEB-INF/views/project/teamMain.jsp
-	}
+	}*/
 	
 	@RequestMapping("/chat")
 	public String chat(){
