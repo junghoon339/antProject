@@ -15,13 +15,11 @@ import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
 
 import com.ant.chat.service.ChatService;
-import com.ant.chat.service.ChatServiceImpl;
 
 public class EchoHandler extends TextWebSocketHandler {
 	@Autowired
 	private ChatService service;
 	private static Logger logger = LoggerFactory.getLogger(EchoHandler.class);
-	
 	
 	// 葛电 技记阑 历厘茄促
 	// 规过1 Map
@@ -104,5 +102,4 @@ public class EchoHandler extends TextWebSocketHandler {
 		}
 		logger.info(" {} Connection Closed ", session.getId());
 	}
-
 }

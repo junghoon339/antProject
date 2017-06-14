@@ -95,12 +95,23 @@
 	<div class="container">
 	<h1>txt file nae yong</h1>
 	<hr>
-	<c:import var="chatText" url="/resources/chat/chat_room_no_${projectNo}.txt" />
-	<c:set var="chat" value="${fn:split(chatText, ':')}"/>
+	<c:import var="chatTextFile" charEncoding="utf-8" url="/resources/chat/chat_room_no_${projectNo}.txt" />
+	<c:set var="newLine" value="\r\n"/>
+	<c:set var="chatLine" value="${fn:split(chatTextFile, newLine)}"/>
 	
-	<c:forEach items="${chat}" var="text">
-		${text}
+	<c:forEach items="${chatLine}" var="text" varStatus="i">
+		${text}<br>
+		<c:out value="${text}"/> <br>
 	</c:forEach>
+	
+	<c:forEach items="${chatTextFile}" var="chatTextFile">
+		${chatTextFile}<br>
+	
+	</c:forEach>
+	
+	
+	
+	
 	</div>
 	
 	<div class="container">
@@ -158,7 +169,8 @@
 								</div>
 							</div>
 						</div>
-
+						
+						
 					</div>
 					<!-- <div class="panel-body msg_container_base"> -->
 

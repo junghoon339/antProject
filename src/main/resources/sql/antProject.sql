@@ -20,8 +20,12 @@ drop table project_user;
 drop table project;
 drop table ant_user;
 drop table authorities;
+DROP TABLE ant_user CASCADE CONSTRAINTS;
+
+
 
 select * from tab;
+
 SELECT event_id, event_name, start_date, end_date FROM user_calendar
 
 CREATE TABLE ant_user
@@ -38,7 +42,6 @@ CREATE TABLE ant_user
 
 SELECT * FROM ANT_USER;
 
-DROP TABLE ant_user CASCADE CONSTRAINTS;
 drop table ant_user;
 select * tab;
 

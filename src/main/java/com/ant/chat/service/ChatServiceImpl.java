@@ -2,10 +2,13 @@ package com.ant.chat.service;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+
+import javax.servlet.jsp.PageContext;
 
 import org.springframework.stereotype.Service;
 
@@ -16,7 +19,7 @@ public class ChatServiceImpl implements ChatService {
 	public void readChat(int projectNo) {
 		// The name of the file to open.
 		String pNo = Integer.toString(projectNo);
-		String fileName = "/chat_room_no_"+pNo+".txt";
+		String fileName = "/chat/chat_room_no_"+pNo+".txt";
 		
 		// This will reference one line at a time
 		String line = null;
@@ -46,8 +49,9 @@ public class ChatServiceImpl implements ChatService {
 	public void writeChat(int projectNo, String payload) {
 		// The name of the file to open.
 		String pNo = Integer.toString(projectNo);
-		String fileName = "/chat_room_no_"+pNo+".txt";
+		String fileName = "/chat/chat_room_no_"+pNo+".txt";
 		BufferedWriter bufferedWriter=null;
+		
 		try {
 			// Assume default encoding.
 			FileWriter fileWriter = new FileWriter(fileName, true); 
@@ -57,7 +61,8 @@ public class ChatServiceImpl implements ChatService {
 			// Note that write() does not automatically
 			// append a newline character.
 			bufferedWriter.append(payload);
-
+			bufferedWriter.newLine();
+			
 			// Always close files.
 			bufferedWriter.close();
 			
