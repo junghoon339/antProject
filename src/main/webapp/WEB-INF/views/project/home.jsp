@@ -144,7 +144,8 @@
 				</li>
 				<li>
 					<!--TAB CONTENT-->
-					<h4>My TimeTable에 들어갈 내용..</h4>
+					<%-- <%@include file="../timetable/template.jsp" %> --%>
+					<%@include file="../timetable/table.jsp" %>
 				</li>
 				<li>
 					<!--TAB CONTENT-->

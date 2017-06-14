@@ -303,14 +303,15 @@ public class ProjectController implements Serializable {
 
 		schedule.setStart_date(start_date);
 		schedule.setEnd_date(end_date);
-		/*
-		 * schedule.setEvent_id(event.getId());
-		 * System.out.println("에러?:"+event.getId());
-		 */
+		
+		/*schedule.setEvent_id(event.getId());*/
+		 System.out.println("event_getId:"+event.getId());
+		 
 
 		if (status == DHXStatus.UPDATE) {
-			System.out.println("컨트롤러->서비스 접근");
+			System.out.println("update 컨트롤러->서비스 접근");
 			calendarService.updateEvent(schedule);
+			event.setId(schedule.getEvent_id());
 
 		} else if (status == DHXStatus.INSERT) {
 			System.out.println("insert 컨트롤러->서비스 접근");
