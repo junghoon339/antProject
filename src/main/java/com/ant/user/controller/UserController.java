@@ -19,8 +19,9 @@ public class UserController {
 		return "user/joinOk";
 	}
 
-//우동이가 삭제하고 이부분을 이제 projectController에서 하도록 하겠습니다!
-/*	@RequestMapping("/main")
+	//우동이가 삭제하고 이부분을 이제 projectController에서 하도록 하겠습니다!
+	/*
+	@RequestMapping("/main")
 	public String afterLogin() {
 		return "project/home";
 	}	
@@ -35,6 +36,4 @@ public class UserController {
 	public String chat(){
 		return "user/chat";
 	}
-
-
 }
