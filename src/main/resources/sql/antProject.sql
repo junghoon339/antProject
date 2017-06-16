@@ -119,6 +119,11 @@ CREATE TABLE user_calendar
 	end_date date not null
 );
 
+create sequence seq_user_calendar 
+start with 1
+minvalue 0
+maxvalue 9223372036854775806;
+
 select * from ANT_USER where user_no=41;
 
 insert
@@ -127,10 +132,6 @@ values(seq_event_id.nextval, 41, '테스트용',
 to_date('2016-12-24 05:00:00', 'YYYY-MM-DD HH24:MI:SS'),
 to_date('2016-12-25 09:00:00', 'YYYY-MM-DD HH24:MI:SS'));
 
-create sequence seq_user_calendar 
-start with 1
-minvalue 0
-maxvalue 9223372036854775806;
 
 
 

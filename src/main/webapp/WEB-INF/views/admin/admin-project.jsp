@@ -136,6 +136,19 @@
 							</tbody>
 						</table>
 
+
+
+
+
+
+
+
+
+
+
+
+
+
 						<div style="text-align:center">
 							<ul class="pagination" >
 								<c:choose>
@@ -171,6 +184,20 @@
 						<input type="hidden" id="totalRow" value="${totalRow }"/>
 						<input type="hidden" id="rowCount" value="${rowCount }"/>
 						<input type="hidden" id="projectState" value=${projectState }/>
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
 						
 						<div>
 							<select class="form-control" id="category">

@@ -38,6 +38,18 @@
 		$("[data-toggle=tooltip]").tooltip();
 	});
 	/* 모달 */
+	
+	/* 검색 */
+	$(document).ready(function(e){
+    $('.search-panel .dropdown-menu').find('a').click(function(e) {
+		e.preventDefault();
+		var param = $(this).attr("href").replace("#","");
+		var concept = $(this).text();
+		$('.search-panel span#search_concept').text(concept);
+		$('.input-group #search_param').val(param);
+	});
+});
+	/* 검색 */
 </script>
 
 
@@ -66,10 +78,24 @@
 	border-top-left-radius: 5px;
 }
 
-/* insert form */
-
-/* insert form */
+/* search form */
+body{
+    margin-top:20px;
+}
+/* search form */
 </style>
+<script type="text/javascript">
+	$(function(){
+		$("#submitBt").click(function(){
+				location.href = "${pageContext.request.contextPath}/storage/storageTable/1?searchText="+$("#searchText").val()+"&categoryNo="+$("#category").val();
+		})
+		
+		if($("#name").val()==null){
+			alert("제목을 입력해주세요");
+		}
+	})
+			
+</script>
 </head>
 <body>
 	<header> <jsp:include page="/WEB-INF/views/project/header.jsp"
@@ -81,9 +107,44 @@
 	<div class="container">
 		<div class="row">
 			<div class="col-lg-8 col-lg-offset-2">
-
-				<h1>자료실</h1>
-				<a class="btn btn-danger" href="#danger" data-toggle="modal"><h4>글쓰기</h4></a>
+				  <div class="col-sm-6"><h1>자료실</h1></div>
+				 <div class="col-sm-6" align="right"><a class="btn btn-danger" href="#danger" data-toggle="modal" ><h4>글쓰기</h4></a></div>
+				
+				
+				
+				<!-- 검색 -->
+					<div class="container" style="width:910px;">
+					    <div class="row">    
+					        <div class="col-xs-8 col-xs-offset-2" >
+							    <div class="input-group">
+					                <div class="input-group-btn search-panel">
+					                    <!-- <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+					                    	<span id="search_concept">검색 옵션</span> <span class="caret"></span>
+					                    </button>
+					                    <ul class="dropdown-menu" role="menu">
+					                      <li><a href="#contains" id="searchByName">이름</a></li>
+					                      <li><a href="#its_equal" id="searchByTitle">제목</a></li>
+					                    </ul> -->
+					                    <select class="btn btn-default dropdown-toggle" data-toggle="dropdown" style="width:80px" id="category">
+									        <option value="-1">선택</option>
+									        <option value="0">이름</option>
+									        <option value="1">제목</option>
+						    			</select>
+					                </div>
+					                <input type="hidden" name="search_param" value="all" id="search_param">         
+					                <input type="text" class="form-control" name="x" placeholder="검색어를 입력하세요." id="searchText">
+					                <span class="input-group-btn">
+					                    <button class="btn btn-default" type="button" id="submitBt"><span class="glyphicon glyphicon-search"></span></button>
+					                </span>
+					            </div>
+					        </div>
+						</div>
+					</div>
+							<!-- 검색 -->
+							
+							
+							
+							
 
 				<!-- Modal -->
 				<div class="modal fade" id="danger" tabindex="-1" role="dialog"
@@ -97,9 +158,14 @@
 									<i class="glyphicon glyphicon-thumbs-up"></i> 자료등록
 								</h1>
 							</div>
+							
+							
+							
+							
+							
+							
+							<!-- 인설트 폼 -->
 							<div class="modal-body">
-								<!-- 인설트 폼 -->
-								
 								<form class="form-horizontal"
 									action="${pageContext.request.contextPath}/storage/insert"
 									method="post" enctype="multipart/form-data">
@@ -115,11 +181,11 @@
 										<!-- Text input-->
 										<div class="form-group">
 											<label class="col-md-4 control-label" for="name"
-												style="text-align: right;">제목</label>
+												style="text-align: right; width:63px" >제목</label>
 											<div class="col-md-4">
 												<input id="name" name="storageTitle" type="text"
 													placeholder="제목을 입력하세요" class="form-control input-md"
-													required="">
+													style="width:465px">
 													
 											</div>
 										</div>
@@ -127,10 +193,10 @@
 
 										<!-- Textarea -->
 										<div class="form-group">
-											<label class="col-md-4 control-label" for="anschrift">내용</label>
+											<label class="col-md-4 control-label" for="anschrift" style="width:63px">내용</label>
 											<div class="col-md-4">
 												<textarea class="form-control" id="anschrift"
-													name="storageContent" style="width: 300px; height: 150px"
+													name="storageContent" style="width: 465px; height: 150px"
 													placeholder="내용을 입력하세요"></textarea>
 											</div>
 										</div>
@@ -168,6 +234,9 @@
 								
 							</div>
 							<!-- 인설트 폼 -->
+							
+							
+							
 							<script type="text/javascript">
 								// Fake file upload
 								document.getElementById('fake-file-button-browse').addEventListener('click', function() {
@@ -234,22 +303,42 @@
 						</tbody>
 
 					</table>
+					
+					
+					
+					
+					<!-- paging~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~` -->
+					<div class="clearfix" style="text-align: center" align="center">
+					<ul class="pagination pull-right" style="margin-right:30%">
 
-					<div class="clearfix"></div>
-					<ul class="pagination pull-right">
-						<li class="disabled"><a href="#"><span
-								class="glyphicon glyphicon-chevron-left"></span></a></li>
-						<li class="active"><a href="#">1</a></li>
-						<li><a href="#">2</a></li>
-						<li><a href="#">3</a></li>
-						<li><a href="#">4</a></li>
-						<li><a href="#">5</a></li>
-						<li><a href="#"><span
-								class="glyphicon glyphicon-chevron-right"></span></a></li>
+						<c:choose>
+							<c:when test="${startPage==1}">
+								<li class="disabled"><a href="#"><span
+										class="glyphicon glyphicon-chevron-left"></span></a></li>
+							</c:when>
+							<c:otherwise>
+								<li><a href="${pageContext.request.contextPath}/storage/storageTable/1?pageNumber=${endPage-pageSu}"><span
+										class="glyphicon glyphicon-chevron-left"></span></a></li>
+							</c:otherwise>
+						</c:choose>	
+						<c:forEach begin="${startPage}" end="${endPage}" var="pageNum" step="1">
+							<li class="active"><a href="${pageContext.request.contextPath}/storage/storageTable/1?pageNumber=${pageNum}&searchText=${searchText}&categoryNo=${categoryNo}">${pageNum}</a></li>
+						</c:forEach>
+						
+						<c:choose>
+								<c:when test="${flag==true}">
+									<li class="disabled"><a href="#"><span
+										class="glyphicon glyphicon-chevron-right"></span></a></li>
+								</c:when>
+								<c:otherwise>
+										<li><a href="${pageContext.request.contextPath}/storage/storageTable/1?pageNumber=${startPage+pageSu}"><span
+										class="glyphicon glyphicon-chevron-right"></span></a></li>
+								</c:otherwise>
+						</c:choose>
 					</ul>
-
 				</div>
-
+				
+					<!-- paging~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~` -->
 			</div>
 		</div>
 	</div>

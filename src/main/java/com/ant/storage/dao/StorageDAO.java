@@ -7,8 +7,14 @@ import com.ant.user.dto.UserDTO;
 
 public interface StorageDAO {
 	
+	// 이름으로 자료 검색
+	public List<StorageDTO> selectByNameSearch(int projectNo, int startRow, int endRow, int categoryNo, String searchText);
+	
+	// 이름으로 자료 검색
+	public List<StorageDTO> selectByTitleSearch(int projectNo, int startRow, int endRow, int categoryNo, String searchText);
+	
 	// 전체 자료 뿌려주기
-	public List<StorageDTO> selectAll(int projectNo);
+	public List<StorageDTO> selectAll(int projectNo, int startRow, int endRow);
 	
 	// 게시글 번호에 따른 상세보기
 	public StorageDTO selectByStorageNum(int strageNo);
@@ -27,4 +33,13 @@ public interface StorageDAO {
 	
 	//이름 가져오기
 	public UserDTO selectUserByUserNo(int userNo);
+	
+	//총 row 갯수
+	public int totalCount(int projectNo);
+	
+	//총 row 갯수 by Name
+	public int totalCountByName(String searchText, int projectNo);
+	
+	//총 row 갯수 by Title
+	public int totalCountByTitle(String searchText, int projectNo);
 }

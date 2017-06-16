@@ -17,8 +17,12 @@ public class StorageDAOImpl implements StorageDAO {
 	private SqlSession session;
 
 	@Override
-	public List<StorageDTO> selectAll(int projectNo) {
-		List<StorageDTO> list = session.selectList("mapper.storage.storageMapper.selectAll", projectNo);
+	public List<StorageDTO> selectAll(int projectNo, int startRow, int endRow) {
+		Map<String,Integer> map=new HashMap<>();
+		map.put("projectNo", projectNo);
+		map.put("startRow", startRow);
+		map.put("endRow", endRow);
+		List<StorageDTO> list = session.selectList("mapper.storage.storageMapper.selectAllpaging", map);
 		return list;
 	}
 
@@ -53,6 +57,54 @@ public class StorageDAOImpl implements StorageDAO {
 	@Override
 	public UserDTO selectUserByUserNo(int userNo) {
 		return session.selectOne("mapper.storage.storageMapper.selectUserByUserNo",userNo);
+	}
+
+	@Override
+	public int totalCount(int projectNo) {
+		
+		return session.selectOne("mapper.storage.storageMapper.totalCount",projectNo);
+	}
+
+	@Override
+	public int totalCountByName(String searchText,int projectNo) {
+		Map<String, Object> map = new HashMap<>();
+		map.put("searchText", searchText);
+		map.put("projectNo", projectNo);
+		int result = session.selectOne("mapper.storage.storageMapper.totalCountByName", map);
+		return result;
+	}
+
+	@Override
+	public int totalCountByTitle(String searchText,int projectNo) {
+		Map<String, Object> map = new HashMap<>();
+		map.put("searchText", searchText);
+		map.put("projectNo", projectNo);
+		int result = session.selectOne("mapper.storage.storageMapper.totalCountByTitle", map);
+		return result;
+	}
+
+	@Override
+	public List<StorageDTO> selectByNameSearch(int projectNo, int startRow, int endRow, int categoryNo,
+			String searchText) {
+		Map<String, Object> map = new HashMap<>();
+		map.put("projectNo", projectNo);
+		map.put("startRow", startRow);
+		map.put("endRow", endRow);
+		map.put("searchText", searchText);
+		List<StorageDTO> list = session.selectList("mapper.storage.storageMapper.selectAllByName",map);
+		return list;
+	}
+
+	@Override
+	public List<StorageDTO> selectByTitleSearch(int projectNo, int startRow, int endRow, int categoryNo,
+			String searchText) {
+		Map<String, Object> map = new HashMap<>();
+		map.put("projectNo", projectNo);
+		map.put("startRow", startRow);
+		map.put("endRow", endRow);
+		map.put("searchText", searchText);
+		List<StorageDTO> list = session.selectList("mapper.storage.storageMapper.selectAllByTitle",map);
+		return list;
 	}
 	
 }

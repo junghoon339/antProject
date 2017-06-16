@@ -37,11 +37,22 @@
 		s.storage_no,s.project_no,s.storage_filename,s.storage_filepath,s.storage_filesize,s.storage_readnum,s.storage_writeday,s.user_no,s.storage_title,s.storage_content,a.user_name,a.user_no	
 	</sql>
 	
-	<!-- 모든 자료 리스트 -->
+	<!-- 모든 자료 리스트
 	<select id="selectAll"  resultMap="storageMap" parameterType="int">
 		select <include refid="selectAllculmn"></include>
 		from storage s,ant_user a  
 		where s.project_no=#{projectNo}
+	</select> -->
+	
+	<!-- 총 row count  -->
+	<select id="totalCount" parameterType="int" resultType="int" >
+		select count(storage_no) from storage where project_no=#{_parameter}
+	</select>
+	<!-- 모든 자료 리스트 paging -->
+	<select id="selectAllpaging"  resultMap="storageMap" parameterType="map">
+		select * from (select rownum as rnum,b.* from (select s.storage_no,s.project_no,s.storage_filename,s.storage_filepath,s.storage_filesize,s.storage_readnum,s.storage_writeday,s.storage_title,s.storage_content,a.user_name,a.user_no	
+    from storage s join ant_user a on s.user_no=a.user_no 
+    where s.project_no=#{projectNo} order by s.STORAGE_WRITEDAY desc)b)c where c.rnum>=#{startRow} and c.rnum&lt;=#{endRow}
 	</select>
 	
 	<!-- 상세보기 -->
@@ -77,5 +88,35 @@
 	<update id="update" parameterType="StorageDTO">
 		update storage set storage_title=#{storageTitle}, storage_content=#{storageContent}, storage_filename=#{fileName}, storage_filepath=#{filePath}, storage_filesize=#{fileSize}, storage_writeday=sysdate where storage_no=#{storageNo}
 	</update>
+	
+	<!-- 검색 검색 검색 검색 검색 검색 검색 검색 검색 검색 검색 검색 검색 검색 검색 검색 검색 검색 검색 검색 검색 검색 -->
+	
+	<!-- 이름으로 리스트 검색 -->
+	<select id="selectAllByName" parameterType="map" resultMap="storageMap">
+		select * from (select rownum as rnum,b.* from (select s.storage_no,s.project_no,s.storage_filename,s.storage_filepath,s.storage_filesize,s.storage_readnum,s.storage_writeday,s.storage_title,s.storage_content,a.user_name,a.user_no	
+    from storage s join ant_user a on s.user_no=a.user_no 
+    where s.project_no=#{projectNo} and a.user_name like'%'||#{searchText}||'%' order by s.STORAGE_WRITEDAY desc)b)c where c.rnum>=#{startRow} and c.rnum&lt;=#{endRow}
+	</select>
+	
+	<!-- 제목으로 리스트 검색 -->
+	<select id="selectAllByTitle" parameterType="map" resultMap="storageMap">
+		select * from (select rownum as rnum,b.* from (select s.storage_no,s.project_no,s.storage_filename,s.storage_filepath,s.storage_filesize,s.storage_readnum,s.storage_writeday,s.storage_title,s.storage_content,a.user_name,a.user_no	
+    from storage s join ant_user a on s.user_no=a.user_no 
+    where s.project_no=#{projectNo} and s.storage_title like'%'||#{searchText}||'%' order by s.STORAGE_WRITEDAY desc)b)c where c.rnum>=#{startRow} and c.rnum&lt;=#{endRow}
+	</select>
+	
+	<!-- 총 row count 이름으로 -->
+	<select id="totalCountByName" parameterType="map" resultType="int" >
+		select count(storage_no)
+    from storage s join ant_user a on s.user_no=a.user_no 
+    where s.project_no=#{projectNo} and a.user_name like'%'||#{searchText}||'%'
+	</select>
+	
+	<!-- 총 row count 제목으로 -->
+	<select id="totalCountByTitle" parameterType="map" resultType="int" >
+		select count(storage_no) 
+    from storage s join ant_user a on s.user_no=a.user_no 
+    where s.project_no=#{projectNo} and s.storage_title like'%'||#{searchText}||'%'
+	</select>
 	
 </mapper>

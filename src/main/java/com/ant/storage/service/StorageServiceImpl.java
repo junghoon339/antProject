@@ -22,8 +22,8 @@ public class StorageServiceImpl implements StorageService {
 	private StorageDAO dao;
 	
 	@Override
-	public List<StorageDTO> selectAll(int projectNo) {
-		return dao.selectAll(projectNo);
+	public List<StorageDTO> selectAll(int projectNo, int startRow, int endRow) {
+		return dao.selectAll(projectNo,startRow,endRow);
 	}
 
 	@Override
@@ -70,6 +70,33 @@ public class StorageServiceImpl implements StorageService {
 				throw new Exception("수정되지 않았습니다.");
 			}
 		return 0;
+	}
+
+	@Override
+	public int totalCount(int projectNo) {
+		return dao.totalCount(projectNo);
+	}
+
+	@Override
+	public List<StorageDTO> selectBySearch(int projectNo, int startRow, int endRow, int categoryNo, String searchText) {
+		List<StorageDTO> list = null;
+		if(categoryNo==0){
+			list = dao.selectByNameSearch(projectNo, startRow, endRow, categoryNo, searchText);
+		}else{
+			list = dao.selectByTitleSearch(projectNo, startRow, endRow, categoryNo, searchText);
+		}
+		return list;
+	}
+
+	@Override
+	public int totalCountBySearch(int categoryNo, String searchText, int projectNo) {
+		int result = 0;
+		if(categoryNo==0){//이름으로 검색
+			 result = dao.totalCountByName(searchText,projectNo);
+		}else{
+			result = dao.totalCountByTitle(searchText,projectNo);
+		}
+		return result;
 	}
 
 }
