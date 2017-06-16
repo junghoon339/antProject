@@ -15,6 +15,7 @@
 <link rel="stylesheet" type="text/css"	href="${pageContext.request.contextPath}/resources/css/main.css" />
 <link rel="stylesheet" type="text/css"	href="${pageContext.request.contextPath}/resources/css/room.css" />
 <link rel="stylesheet" type="text/css"	href="${pageContext.request.contextPath}/resources/css/tabModule.css" />
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/codebase/dhtmlxscheduler.css">
 
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/tabModule.js"></script>
@@ -155,11 +156,13 @@
 
 				</li>
 				<li>
-					<!--TAB CONTENT-->
-					<h4>My TimeTable에 들어갈 내용..</h4>
+					<!--timetable tab-->
+				<%-- <%@include file="../timetable/timetable.jsp" %> --%>
+				<a href="${pageContext.request.contextPath}/user/timetable">시간표이동</a>
+					
 				</li>
 				<li>
-					<!--TAB CONTENT-->
+					<!-- calendar tab-->
 					${schedule}
 						
 				</li>
@@ -179,7 +182,7 @@
 					<h4 class="modal-title" id="myModalLabel">새로운 조별과제 등록</h4>
 				</div>
 				<div class="modal-body">
-					<div class="container" style="margin-top:30px;">
+					<div class="container" style="margin-top:10px;">
 						<div class="row">
 							<div class="">
 						        <form id="projectForm" class="form-horizontal col-sm-7 col-sm-offset-1" action="${pageContext.request.contextPath}/project/insertProject" method="post">

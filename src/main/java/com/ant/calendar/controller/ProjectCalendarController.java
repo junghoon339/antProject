@@ -1,40 +1,30 @@
-package com.ant.project.controller;
+package com.ant.calendar.controller;
 
-import java.io.File;
-import java.io.IOException;
 import java.io.Serializable;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.web.csrf.CsrfToken;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.ant.calendar.dto.ProjectCalendarDTO;
 import com.ant.calendar.dto.UserCalendarDTO;
-import com.ant.calendar.service.UserCalendarService;
+import com.ant.calendar.service.ProjectCalendarService;
 import com.ant.project.dto.ProjectDTO;
-import com.ant.project.dto.ProjectUserDTO;
-import com.ant.project.service.ProjectService;
 import com.ant.user.dto.UserDTO;
 import com.dhtmlx.planner.DHXEv;
 import com.dhtmlx.planner.DHXEvent;
@@ -44,13 +34,11 @@ import com.dhtmlx.planner.DHXSkin;
 import com.dhtmlx.planner.DHXStatus;
 
 @Controller
-@RequestMapping("/project")
-public class ProjectController implements Serializable {
-	@Autowired
-	private ProjectService projectService;
+@RequestMapping("/calendar")
+public class ProjectCalendarController implements Serializable {
 	
 	@Autowired
-	private UserCalendarService calendarService;
+	private ProjectCalendarService calendarService;
 
 	public static String date_format = "MM/dd/yyyy HH:mm";
 	public static String filter_format = "yyyy-MM-dd";
@@ -59,35 +47,48 @@ public class ProjectController implements Serializable {
 	private Date from;
 	private Date to;
 	private Boolean dynFilter;
-	private List<String> chatList;
-	/**
-	 * 홈화면(로그인 성공하면 띄워지는 화면)
-	 * @throws Exception
-	 */
-	@RequestMapping("/home")
+	
+	@RequestMapping("/projectCalendar")
 	public ModelAndView home(HttpServletRequest req) throws Exception {
 		// 로그인된 userNo
-		UserDTO userDTO = (UserDTO) req.getSession().getAttribute("userDTO");
-		int userNo = userDTO.getUserNo();
-		System.out.println("controller에서 받아오는 userID= "+userDTO.getUserId()+"/ userNo= " + userNo);
-
-		// userNo로 진행중프로젝트, 완료된프로젝트 
-		Map<String, List<ProjectDTO>> projectMap = projectService.selectProjectById(userNo);
-		List<ProjectDTO> currentProList = projectMap.get("currentProList");
-		List<ProjectDTO> completedProList = projectMap.get("completedProList");
-		//System.out.println("currentProList: " + currentProList.isEmpty());
-		//System.out.println("completedProList: " + completedProList.isEmpty());
-		
-		
-
+		/*
+		 * UserDTO userDTO = (UserDTO) req.getSession().getAttribute("userDTO");
+		 * int userNo = userDTO.getUserNo();
+		 * System.out.println("controller에서 받아오는 userNo = " + userNo);
+		 * 
+		 * //userNo로 진행중프로젝트, 완료된프로젝트 Map<String, List<ProjectDTO>> projectMap =
+		 * projectService.selectProjectById(userNo); List<ProjectDTO>
+		 * currentProList = projectMap.get("currentProList"); List<ProjectDTO>
+		 * completedProList = projectMap.get("completedProList");
+		 * 
+		 * 
+		 * System.out.
+		 * println("------------------------------------currentProList : "
+		 * +currentProList); for(ProjectDTO dto :currentProList)
+		 * System.out.println("/proNo : "+dto.getProjectNo()+"/proName : "+dto.
+		 * getProjectName()+"/state : "+dto.getProjectState());
+		 * 
+		 * System.out.
+		 * println("------------------------------------completedProList : "
+		 * +completedProList); for(ProjectDTO dto :completedProList)
+		 * System.out.println("/proNo : "+dto.getProjectNo()+"/proName : "+dto.
+		 * getProjectName()+"/state : "+dto.getProjectState());
+		 * 
+		 */
 		// 4개의 tab에 들어갈 데이터 준비...
-		//System.out.println("select뿌려라!!!");
+		System.out.println("select뿌려라!!!");
 		String contextPath = req.getContextPath();
-/*		HttpSession session = req.getSession();
+		HttpSession session = req.getSession();
 
 		UserDTO userDTO = (UserDTO) session.getAttribute("userDTO");
-		int userNo = userDTO.getUserNo();*/
-
+		int userNo = userDTO.getUserNo();
+		System.out.println("userNO : "+userNo);
+		
+		//ProjectDTO projectDTO = (ProjectDTO)session.getAttribute("projectDTO");
+		int projectNo = 1;
+		System.out.println("projectNo : "+projectNo);
+		
+		
 		// calendar영역
 		DHXPlanner planner = new DHXPlanner(contextPath + "/resources/codebase/", DHXSkin.TERRACE);
 		planner.localizations.set("cr");
@@ -106,146 +107,19 @@ public class ProjectController implements Serializable {
 		planner.config.setDayDate("%D");
 
 		CsrfToken token = (CsrfToken) req.getAttribute(CsrfToken.class.getName());
-		//System.out.println("token:" + token);
+		System.out.println("token:" + token);
 
 		planner.data.dataprocessor
-				.setURL(contextPath + "/project/events?" + token.getParameterName() + "=" + token.getToken());
-		planner.parse(calendarService.getEvent(userNo));
+				.setURL(contextPath + "/calendar/events?" + token.getParameterName() + "=" + token.getToken());
+		planner.parse(calendarService.getEvent(projectNo));
 
 		ModelAndView mv = new ModelAndView();
 		mv.addObject("schedule", planner.render());
-		mv.setViewName("project/home");
-		mv.addObject("currentProList",currentProList);
-		mv.addObject("completedProList",completedProList);
+		mv.setViewName("calendar/test");
+		// mv.addObject("currentProList",currentProList);
+		// mv.addObject("completedProList",completedProList);
 		return mv;
 	}
-
-	/**
-	 * 하나의 조별과제 메인화면
-	 */
-	@RequestMapping("/teamMain/{projectNo}")
-	public String teamMain(@PathVariable int projectNo, HttpServletRequest req) {
-		//session에 projectNo저장
-		req.getSession().setAttribute("projectNo", projectNo);
-		
-		//session에 조원,조장 담기
-		UserDTO userDTO = (UserDTO) req.getSession().getAttribute("userDTO");
-		int userNo = userDTO.getUserNo();
-		
-		ProjectUserDTO projectUserDTO = new ProjectUserDTO(projectNo, userNo);
-		String projectUserRole = projectService.selectProjectUserRole(projectUserDTO);
-		
-		req.getSession().setAttribute("projectUserRole", projectUserRole);
-		
-		return "/project/teamMain";
-	}
-
-	/**
-	 * 조별과제 삽입
-	 * @param:projectDTO
-	 */
-	@RequestMapping("/insertProject")
-	public String insertProject(ProjectDTO projectDTO, String[] invitedUser, HttpServletRequest request) {
-
-		// 조장이 될(현재 로그인한) 회원의 번호
-		UserDTO userDTO = (UserDTO) request.getSession().getAttribute("userDTO");
-		int userNo = userDTO.getUserNo();
-
-		// 조별과제방에 초대된 회원들의 id invitedUser배열을 list로 변환
-		List<String> invitedUserIdList = new ArrayList<>();
-		Collections.addAll(invitedUserIdList, invitedUser);
-
-		// 초대된 회원의 번호를 담은 리스트
-		List<Integer> invitedUserNolist = projectService.selectUserNoById(invitedUserIdList);
-
-		// 조별과제방 삽입 service
-		int resultInsPro = projectService.insertProject(projectDTO, invitedUserNolist, userNo);
-
-		return "redirect:/project/home";
-	}
-
-	/**
-	 * 팀플정보 전체 조회
-	 */
-	@RequestMapping("/teamInfo")
-	public ModelAndView teamInfo(HttpServletRequest req){
-		int projectNo = (int) req.getSession().getAttribute("projectNo");
-		ProjectDTO projectDTO = projectService.selectProject(projectNo);
-		
-		ModelAndView mv = new ModelAndView();
-		mv.addObject("projectDTO",projectDTO);
-		mv.setViewName("project/teamInfo");
-		return mv;
-	}
-	
-	/**
-	 * 팀플정보 수정
-	 */
-	@RequestMapping("/updateTeamInfo")
-	public String updateTeamInfo(ProjectDTO projectDTO,HttpServletRequest req){
-		int projectNo = (int) req.getSession().getAttribute("projectNo");	
-		projectDTO.setProjectNo(projectNo);
-		int result = projectService.updateTeamInfo(projectDTO);
-		return "redirect:/project/teamInfo";
-	}
-	
-	/**
-	 * 팀원정보 전체 조회
-	 */
-	@RequestMapping("/projectUserInfo")
-	public ModelAndView projectUserInfo(HttpServletRequest req){
-		int projectNo = (int) req.getSession().getAttribute("projectNo");
-		List<UserDTO> projectUserList = projectService.selectProjectUsers(projectNo);
-		
-		//System.out.println("controller에서 받아오는 팀원리스트 projectUserList"+projectUserList);
-		ModelAndView mv = new ModelAndView();
-		mv.addObject("projectUserList",projectUserList);
-		mv.setViewName("project/projectUserInfo");
-		return mv;
-	}
-	
-	@RequestMapping("/chat")
-	public ModelAndView chat(HttpSession session){
-		int projectNo = (int) session.getAttribute("projectNo");
-		ModelAndView mv = new ModelAndView("chat/chat");
-		
-		try {
-			chatList = FileUtils.readLines(new File("/chat/chat_room_no_" + projectNo + ".txt"), "utf-8");
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-
-		mv.addObject("chatList", chatList);
-		return mv;
-	}
-	
-	/**
-	 * 팀원정보중 맡은임무 수정
-	 */
-	@RequestMapping("/updateProjectUserTask")
-	public String updateProjectUserTask(ProjectUserDTO projectUserDTO, HttpServletRequest req){
-		int projectNo = (int) req.getSession().getAttribute("projectNo");
-		projectUserDTO.setProjectNo(projectNo);
-		
-		int result = projectService.updateProjectUserTask(projectUserDTO);
-		
-		return "redirect:/project/projectUserInfo";
-	}
-	
-	/**
-	 * 팀원 삭제
-	 */
-	@RequestMapping("/deleteProjectUser")
-	public String deleteProjectUser(ProjectUserDTO projectUserDTO, HttpServletRequest req){
-		int projectNo = (int) req.getSession().getAttribute("projectNo");
-		projectUserDTO.setProjectNo(projectNo);
-		
-		//System.out.println("삭제할 팀원의 아이디 : "+ projectUserDTO.getUserNo());
-		//int result = projectService.deleteProjectUser(projectUserDTO);
-		
-		return "redirect:";
-	}
-	
 	
 	@RequestMapping("/events")
 	@ResponseBody
@@ -263,7 +137,7 @@ public class ProjectController implements Serializable {
 
 		} else {
 			value = request.getParameter("id");
-			System.out.println("id:" + value);
+			System.out.println("id: " + value);
 			if (value != null)
 				actions = (new StringBuilder()).append(actions).append(saveOne(request, value, "")).toString();
 		}
@@ -381,14 +255,18 @@ public class ProjectController implements Serializable {
 		String start_date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(event.getStart_date());
 		String end_date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(event.getEnd_date());
 
-		UserCalendarDTO schedule = new UserCalendarDTO();
+		ProjectCalendarDTO schedule = new ProjectCalendarDTO();
 
 		schedule.setEvent_name(event.getText());
 
 		UserDTO userDTO = (UserDTO) session.getAttribute("userDTO");
 		schedule.setUser_no(userDTO.getUserNo());
-		System.out.println("user_no" + userDTO.getUserNo());
-
+		System.out.println("user_no " + userDTO.getUserNo());
+		
+		/*ProjectDTO projectDTO =(ProjectDTO)session.getAttribute("projectDTO");
+		System.out.println("project_no " + projectDTO.getProjectNo());*/
+		schedule.setProject_no(1);
+		
 		schedule.setStart_date(start_date);
 		schedule.setEnd_date(end_date);
 		
@@ -397,12 +275,12 @@ public class ProjectController implements Serializable {
 		 
 
 		if (status == DHXStatus.UPDATE) {
-			System.out.println("update 컨트롤러->서비스 접근");
+			System.out.println("projectCalendar update 컨트롤러->서비스 접근");
 			calendarService.updateEvent(schedule);
 			event.setId(schedule.getEvent_id());
 
 		} else if (status == DHXStatus.INSERT) {
-			System.out.println("insert 컨트롤러->서비스 접근");
+			System.out.println("projectCalendar insert 컨트롤러->서비스 접근");
 			calendarService.insertEvent(schedule);
 			event.setId(schedule.getEvent_id());
 

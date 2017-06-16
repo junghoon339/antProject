@@ -46,6 +46,7 @@ SELECT * FROM ANT_USER;
 drop table ant_user;
 select * tab;
 
+select * from project
 
 CREATE TABLE project(
    project_no            NUMBER CONSTRAINT project_no_pk PRIMARY KEY,
@@ -133,21 +134,27 @@ start with 1
 minvalue 0
 maxvalue 9223372036854775806;
 
-
-
 select * from ant_user;
+
+
+select * from project_calendar
 
 CREATE TABLE project_calendar
 (
-   project_calendar_no   NUMBER CONSTRAINT project_calendar_no_pk primary key,
-   project_no            NUMBER CONSTRAINT calendar_project_no_fk references project(project_no) on delete cascade,
-   user_no               NUMBER CONSTRAINT project_calendar_user_no_fk references ant_user(user_no) on delete cascade ,
-   project_calendar_startdate  varchar2(20)  NOT NULL ,
-   project_calendar_enddate  varchar2(20)  NULL ,
-   project_calendar_time  varchar2(20)  NULL ,
-   project_calendar_content  varchar2(20)  NULL 
+	event_id NUMBER  CONSTRAINT project_event_id_pk primary key,
+	project_no  NUMBER CONSTRAINT calendar_project_no_fk references project(project_no) on delete cascade,
+	user_no NUMBER  CONSTRAINT user_calendar_user_no_fk references ant_user(user_no) on delete cascade ,
+	event_name varchar2(127) NOT NULL,
+	start_date date not null,
+	end_date date not null
 );
-create sequence seq_project_calendar_no;
+
+create sequence seq_project_calendar
+start with 1
+minvalue 0
+maxvalue 9223372036854775806;
+
+
 
 CREATE TABLE timetable
 (

@@ -68,4 +68,9 @@ public class UserController {
 		mv.addObject("chatList", chatList);
 		return mv;
 	}
+	
+	@RequestMapping("/timetable")
+	public String timeUpdate(){
+		return "timetable/timetable";
+	}
 }
