@@ -56,6 +56,7 @@
 						<li><a href="#">팀원정보</a></li>
 					</ul></li>
 				<li><a href="https://www.google.co.kr/">Google</a></li>
+				<li><a href="${pageContext.request.contextPath}/vote/?userNo=1">투표</a></li>
 			</ul>
 		</nav>
 		<!-- /#sidebar-wrapper -->

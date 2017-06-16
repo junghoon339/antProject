@@ -26,6 +26,11 @@ public class VoteDAOImpl implements VoteDAO {
 	}
 
 	@Override
+	public int voteDateUpdate() {
+		return session.update("voteMapper.voteDateUpdate");
+	}
+
+	@Override
 	public VoteDTO selectVoteListByVoteNo(int voteNo) {
 		VoteDTO dto = session.selectOne("voteMapper.voteSelectByVoteNo", voteNo);
 		return dto;
@@ -38,9 +43,13 @@ public class VoteDAOImpl implements VoteDAO {
 	}
 
 	@Override
-	public int updateVote(int voteNo) {
-		// TODO Auto-generated method stub
-		return 0;
+	public int updateVote(int userNo, int voteNo) {
+		Map<String, Integer> map = new HashMap<String, Integer>();
+		map.put("userNo", userNo);
+		map.put("voteNo", voteNo);
+		int result = session.update("voteMapper.voteEndUpdate", map);
+		System.out.println("결과값...>"+result);
+		return result;
 	}
 
 	@Override
@@ -57,7 +66,6 @@ public class VoteDAOImpl implements VoteDAO {
 
 	@Override
 	public int updateVoteDetail(int voteDetailNo) {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
@@ -72,6 +80,21 @@ public class VoteDAOImpl implements VoteDAO {
 		return null;
 	}
 	
+	@Override
+	public int selectVoteDetailCall(int voteNo) {
+		return session.selectOne("voteMapper.voteAllCount", voteNo);
+	}
+	
+	@Override
+	public List<VoteDetailDTO> selectVoteDetailCall(int voteNo,int voteDetailColumn) {
+		Map<String, Integer> map = new HashMap<>();
+		map.put("voteDetailNo", voteDetailColumn);
+		map.put("voteNo", voteNo);
+		System.out.println("voteDetailColumn"+voteDetailColumn+", voteNo"+voteNo);
+		List<VoteDetailDTO> list = session.selectList("voteMapper.voteDetailSelect", map);
+		return list;
+	}
+
 	@Override
 	public VoteDetailDTO selectVoteDetail(int userNo, int voteNo) {
 		Map<String, Integer> map = new HashMap<>();
@@ -102,14 +125,19 @@ public class VoteDAOImpl implements VoteDAO {
 
 	@Override
 	public int voteSelectorUpdate(VoteSelectorDTO voteSelectorDTO) {
-		// TODO Auto-generated method stub
-		return 0;
+		return session.update("voteMapper.voteSelectorUpdate", voteSelectorDTO);
 	}
 
 	@Override
 	public int voteSelectorDelete(int voteSelectNo) {
 		// TODO Auto-generated method stub
 		return 0;
+	}
+
+	@Override
+	public VoteSelectorDTO voteSelectorInsert(int user_no) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 	
 }

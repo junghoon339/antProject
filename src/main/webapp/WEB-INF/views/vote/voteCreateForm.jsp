@@ -9,6 +9,10 @@
 <!-- <link rel="stylesheet" href="/resources/demos/style.css"> -->
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<link rel="stylesheet" type="text/css"
+	href="${pageContext.request.contextPath}/resources/css/header.css" />
+<link rel="stylesheet" type="text/css"
+	href="${pageContext.request.contextPath}/resources/css/sidebar.css" />
 <script>
 	$(function() {
 	
@@ -58,8 +62,17 @@
 </script>
 </head>
 <body>
+<header> 
+		<jsp:include page="/WEB-INF/views/project/header.jsp" flush="false" />
+	</header>
+	<jsp:include page="/WEB-INF/views/project/sidebar.jsp" />
+	<div id="burger"></div>
+	<section>
+	<div class="container">
+		<div class="row">
 <%@include file="header.jsp"%>
-	<div class="col-lg-6">
+
+	<div class="col-lg-9 col-lg-offset-2">
 		<div class="well well-lg">
 			<div class="form-group" style="padding: 12px;">
 				<form action="${pageContext.request.contextPath}/vote/Create" id="createForm" method="post">
@@ -90,5 +103,9 @@
 			</div>
 		</div>
 	</div>
+	</div></div></section>
+	<footer> 
+		<jsp:include page="/WEB-INF/views/project/footer.jsp" flush="false" /> 
+	</footer>
 </body>
 </html>
