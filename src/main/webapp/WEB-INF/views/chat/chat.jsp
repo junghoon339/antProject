@@ -51,20 +51,15 @@
 	//var onMessage = function onMessage //변수
 	sock.onmessage = onMessage;
 
-	//WebSocket과 연결을 끊고 싶을 때 실행하는 메소드다
-	sock.onclose = onClose;
+	// WebSocket과 연결을 끊고 싶을 때 실행하는 메소드다
+	// sock.onclose = onClose;
 
 	var name = '${userDTO.userName}';
 	// name에 로그인된 사람 이름이 저장	
 
-	/*     sock.onopen = function() {
-	    sock.send( $("#message").val() +"<br/>");
-	}; */
-
 	function removeTag(str) {
 		return str.replace(/(<([^>]+)>)/ig, "");
 	}
-
 
 	function getTimeStamp() {
 	  var d = new Date();
@@ -135,13 +130,8 @@
 		var myMessage = $("#panel-body").last().append(myMessage);
 		$("#panel-body").scrollTop($("#panel-body")[0].scrollHeight);
 		$("time.timeago").timeago();
-
-		//sock.close();
 	}
 
-	function onClose(evt) {
-		$("#data").append("Connection Closed!");
-	}
 </script>
 </head>
 <body>

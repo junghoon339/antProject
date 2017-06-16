@@ -55,7 +55,7 @@ public class ProjectController implements Serializable {
 	public static String date_format = "MM/dd/yyyy HH:mm";
 	public static String filter_format = "yyyy-MM-dd";
 	public DHXSecurity security;
-	private HashMap attributes;
+	private HashMap<String, String> attributes;
 	private Date from;
 	private Date to;
 	private Boolean dynFilter;
@@ -210,7 +210,11 @@ public class ProjectController implements Serializable {
 		ModelAndView mv = new ModelAndView("chat/chat");
 		
 		try {
-			chatList = FileUtils.readLines(new File("/chat/chat_room_no_" + projectNo + ".txt"), "utf-8");
+			File file = new File("/chat/chat_room_no_" + projectNo + ".txt");
+			if (!file.exists()){
+				file.createNewFile();
+			}
+			chatList = FileUtils.readLines(file,"utf-8");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -273,7 +277,7 @@ public class ProjectController implements Serializable {
 	private String saveOne(HttpServletRequest request, String id, String prefix) {
 		System.out.println("2. saveOne¡¢±Ÿ");
 		security = new DHXSecurity();
-		attributes = new HashMap();
+		attributes = new HashMap<String, String>();
 		from = null;
 		to = null;
 		dynFilter = Boolean.valueOf(true);
@@ -339,11 +343,11 @@ public class ProjectController implements Serializable {
 			st = "error";
 		String attrs = "";
 
-		Set keys = attributes.keySet();
-		for (Iterator i$ = keys.iterator(); i$.hasNext();) {
-			String key = (String) i$.next();
+		Set<String> keys = attributes.keySet();
+		for (Iterator<String> i$ = keys.iterator(); i$.hasNext();) {
+			String key = i$.next();
 			attrs = (new StringBuilder()).append(attrs).append(" ").append(key).append("=\"")
-					.append((String) attributes.get(key)).append("\"").toString();
+					.append(attributes.get(key)).append("\"").toString();
 		}
 
 		return (new StringBuilder()).append("<action type=\"").append(st).append("\" sid=\"").append(id)
