@@ -5,6 +5,7 @@ import java.util.Map;
 
 import com.ant.project.dto.ProjectDTO;
 import com.ant.project.dto.ProjectUserDTO;
+import com.ant.user.dto.UserDTO;
 
 public interface ProjectDAO {
 	/**
@@ -35,4 +36,28 @@ public interface ProjectDAO {
 	 */
 	public Map<String, List<ProjectDTO>> selectProjectById(int userNo);
 	
+	/**
+	 * 팀플 정보 검색
+	 */
+	public ProjectDTO selectProject(int projectNo);
+	
+	/**
+	 * 팀플 정보 수정
+	 */
+	public int updateTeamInfo(ProjectDTO projectDTO);
+	
+	/**
+	 * 팀원 정보 검색
+	 */
+	public List<UserDTO> selectProjectUsers(int projectNo);
+	
+	/**
+	 * 팀원정보중 맡은임무 수정
+	 */
+	public int updateProjectUserTask(ProjectUserDTO projectUserDTO);
+	
+	/**
+	 * 해당프로젝트의 역할(조원or조장) 검색
+	 */
+	public String selectProjectUserRole(ProjectUserDTO projectUserDTO);
 }

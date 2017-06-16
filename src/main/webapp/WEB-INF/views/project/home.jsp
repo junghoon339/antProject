@@ -37,12 +37,13 @@
 			num = num + 1 ;
 		})
 	    
-	    $("#projectForm").submit(function(){
-	    	alert("Submitted");
-	    });
+ 	    $("#projectForm").submit(function(){
+	    	alert("새로운 조별과제가 등록되었습니다.");
+	    }); 
 	    $("#insertProjectBtn").click(function(){
-	    	alert("팀플생성버튼눌림");
+	    	//alert("팀플생성버튼눌림");
 	    	$("#projectForm").submit();
+	    	
 	    });  
 		
 	});
@@ -64,65 +65,43 @@
 	<div class="demo">
 		<div class="tab tab-horiz">
 			<ul class="tab-legend">
-				<li class="active">진행중인 팀플</li>
-				<li>완료된 팀플</li>
+				<li class="active">진행중 조별과제</li>
+				<li>완료된 조별과제</li>
 				<li>My TimeTable</li>
 				<li>My Calendar</li>
 			</ul>
 			<ul class="tab-content">
-				<li>
-					<section id="bs-pricing-six"
-						class="bs-pricing-four roomy-50 bg-white fix">
+				<li><!-- 진행중 조별과제 -->
+					<section id="bs-pricing-six" class="bs-pricing-four roomy-50 bg-white fix">
 						<div class="container">
 							<div class="row">
-								<div class="col-md-3">
-									<div class="bs bs-pricing">
-										<div class="cotent">
-											<h3 class="category">WebProgramming
-											</h3>
-											<h1 class="bs-caption">
-												<small>D-</small>11
-											</h1>
-											<!-- <ul>
-												<li><b>5 GB</b> Space</li>
-											</ul> -->
-											<a href="${pageContext.request.contextPath}/project/teamMain" class="btn btn-danger">Enter</a>
+								<c:choose>
+									<c:when test="${empty currentProList}"><!-- 진행중인 조별과제가 없으면 -->
+										<div class="col-md-3">
+											<div class="bs bs-pricing">
+												<div class="cotent">
+													진행중인 조별과제가 없습니다.</h4>
+												</div>
+											</div>
 										</div>
-									</div>
-								</div>
-								<div class="col-md-3">
-									<div class="bs bs-pricing">
-										<div class="cotent">
-											<h3 class="category">Hacking</h3>
-											<h1 class="bs-caption">
-												<small>D-</small>15
-											</h1>
-											<a href="#" class="btn btn-danger">Enter</a>
-										</div>
-									</div>
-								</div>
-								<div class="col-md-3">
-									<div class="bs bs-pricing bg-danger">
-										<div class="cotent">
-											<h3 class="category">산업심리학</h3>
-											<h1 class="bs-caption">
-												<small>D-</small>20
-											</h1>
-											<a href="#" class="btn btn-danger">Enter</a>
-										</div>
-									</div>
-								</div>
-								<div class="col-md-3">
-									<div class="bs bs-pricing">
-										<div class="cotent">
-											<h3 class="category">종합설계</h3>
-											<h1 class="bs-caption">
-												<small>D-</small>25
-											</h1>
-											<a href="#" class="btn btn-danger">Enter</a>
-										</div>
-									</div>
-								</div>
+									</c:when>
+									<c:otherwise><!-- 진행중인 조별과제가 있으면 -->
+										<c:forEach items="${currentProList}" var="projectDTO">
+											<div class="col-md-3">
+												<div class="bs bs-pricing">
+													<div class="cotent">
+														<h3 class="category">${projectDTO.projectName}</h3>
+														<h3 class="category">${projectDTO.projectNo}</h3>
+														<h1 class="bs-caption">
+															<small>D-</small>11
+														</h1>
+														<a href="${pageContext.request.contextPath}/project/teamMain/${projectDTO.projectNo}" class="btn btn-danger">Enter</a>
+													</div>
+												</div>
+											</div>
+										</c:forEach>
+									</c:otherwise>								
+								</c:choose>
 								<div class="col-md-3"><!-- 플러스아이콘 -->
 									<div class="bs bs-pricing">
 										<div class="cotent" id="plusImg">
@@ -130,17 +109,50 @@
 										</div>
 									</div>
 								</div>		
-								
-								
 							</div><!-- row -->
 						</div>
 					</section>
 
 
 				</li>
-				<li>
-					<!--TAB CONTENT-->
-					<h4>완료된 팀플안에 들어갈 내용..</h4>
+				<li><!-- 완료된 조별과제 -->
+					<section id="bs-pricing-six" class="bs-pricing-four roomy-50 bg-white fix">
+						<div class="container">
+							<div class="row">
+								<c:choose>
+									<c:when test="${empty completedProList}"><!-- 완료된 조별과제가 없으면 -->
+										<div class="col-md-3">
+											<div class="bs bs-pricing">
+												<div class="cotent">
+													완료된 조별과제가 없습니다.</h4>
+												</div>
+											</div>
+										</div>
+									</c:when>
+									<c:otherwise><!-- 완료된 조별과제가 있으면 -->
+										<c:forEach items="${completedProList}" var="projectDTO">
+											<div class="col-md-3">
+												<div class="bs bs-pricing">
+													<div class="cotent">
+														<h3 class="category">${projectDTO.projectName}</h3>
+														<h1 class="bs-caption">
+															<small>D-</small>11
+														</h1>
+														<a href="${pageContext.request.contextPath}/project/teamMain/${projectDTO.projectNo}" class="btn btn-danger">Enter</a>
+													</div>
+												</div>
+											</div>
+										</c:forEach>
+									</c:otherwise>
+
+								</c:choose>
+
+								
+								
+							</div><!-- row -->
+						</div>
+					</section>
+
 				</li>
 				<li>
 					<!--TAB CONTENT-->
@@ -164,7 +176,7 @@
 					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 						<span aria-hidden="true">&times;</span>
 					</button>
-					<h4 class="modal-title" id="myModalLabel">새로운 팀플 만들기</h4>
+					<h4 class="modal-title" id="myModalLabel">새로운 조별과제 등록</h4>
 				</div>
 				<div class="modal-body">
 					<div class="container" style="margin-top:30px;">
@@ -200,7 +212,7 @@
 
 				</div>
 				<div class="modal-footer">
-					<button type="button" class="btn btn-danger" id="insertProjectBtn">팀플생성</button>
+					<button type="button" class="btn btn-danger" id="insertProjectBtn">등록</button>
 					<button type="button" class="btn btn-default" data-dismiss="modal">취소</button>
 				</div>
 			</div>

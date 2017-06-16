@@ -47,13 +47,12 @@
 				<li><a href="#">팀캘린더</a></li>
 				<li><a href="${pageContext.request.contextPath}/storage/storageTable/1">자료실</a></li>
 				<li><a href="#">to do board</a></li>
-				<li class="dropdown"><a href="#" class="dropdown-toggle"
-					data-toggle="dropdown">팀플정보 <span class="caret"></span></a>
+				<li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">팀플정보 <span class="caret"></span></a>
 					<ul class="dropdown-menu" role="menu">
-						<!--                     <li class="dropdown-header"><a href="#">팀플정보</li>
-                    <li class="dropdown-header"><a href="#">팀원정보</li> -->
-						<li><a href="#">팀플정보</a></li>
-						<li><a href="#">팀원정보</a></li>
+						<!--<li class="dropdown-header"><a href="#">팀플정보</li>
+                  			<li class="dropdown-header"><a href="#">팀원정보</li> -->
+						<li><a href="${pageContext.request.contextPath}/project/teamInfo">팀플정보</a></li>
+						<li><a href="${pageContext.request.contextPath}/project/projectUserInfo">팀원정보</a></li>
 					</ul></li>
 				<li><a href="https://www.google.co.kr/">Google</a></li>
 			</ul>

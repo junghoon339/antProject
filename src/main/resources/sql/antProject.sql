@@ -21,6 +21,7 @@ drop table project;
 drop table ant_user;
 drop table authorities;
 
+
 select * from tab;
 SELECT event_id, event_name, start_date, end_date FROM user_calendar
 
@@ -50,7 +51,7 @@ CREATE TABLE project(
    project_enddate       varchar2(50) NOT NULL,
    project_subject       varchar2(30) NOT NULL,
    project_teacher       varchar2(20) NOT NULL,
-   project_state         NUMBER DEFAULT 0
+   project_state         NUMBER DEFAULT 0 --0:진행중, 1:설문조사진행중(CRUD불가), 2:프로젝트종료(CRUD불가)
 );
 create sequence seq_project_no;
 
@@ -59,7 +60,8 @@ CREATE TABLE project_user(
    project_user_no       NUMBER CONSTRAINT project_user_no_pk PRIMARY KEY,
    project_no            NUMBER CONSTRAINT project_user_project_no_fk references project(project_no) on delete cascade,
    user_no               NUMBER CONSTRAINT project_user_no_fk references ant_user(user_no) on delete cascade,
-   project_user_role     varchar2(30) 
+   project_user_role     varchar2(30)  --조원,조장
+   project_user_task     varchar2(50) --팀플내 각자 맡은 역할   
 );
 create sequence seq_project_user_no;
 
@@ -108,8 +110,7 @@ create sequence seq_vote_selector_no;
 
 drop table user_calendar;
 
-select * from user_calendar;
-select * from ANT_USER;
+
 CREATE TABLE user_calendar
 (
 	event_id NUMBER  CONSTRAINT user_calendar_no_pk primary key,
@@ -119,13 +120,6 @@ CREATE TABLE user_calendar
 	end_date date not null
 );
 
-select * from ANT_USER where user_no=41;
-
-insert
-into user_calendar 
-values(seq_event_id.nextval, 41, '테스트용',
-to_date('2016-12-24 05:00:00', 'YYYY-MM-DD HH24:MI:SS'),
-to_date('2016-12-25 09:00:00', 'YYYY-MM-DD HH24:MI:SS'));
 
 create sequence seq_user_calendar 
 start with 1
