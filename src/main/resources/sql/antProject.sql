@@ -186,8 +186,11 @@ CREATE TABLE message
    user_no_message_sender number constraint message_user_no_sender_fk references ant_user(user_no) on delete cascade
 );
 create sequence seq_message_no; 
-
+commit
 select * from message;
+
+insert into message values(seq_message_no.nextval,(select user_no from ant_user where user_id='13@naver.com'),'쪽지잘되냐',sysdate,null,0,13);
+
 
 CREATE TABLE storage
 (
