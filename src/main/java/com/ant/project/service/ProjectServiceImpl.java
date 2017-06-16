@@ -15,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.ant.project.dao.ProjectDAO;
 import com.ant.project.dto.ProjectDTO;
 import com.ant.project.dto.ProjectUserDTO;
+import com.ant.user.dto.UserDTO;
 
 @Service
 @Transactional(propagation=Propagation.REQUIRED, isolation=Isolation.DEFAULT)
@@ -35,7 +36,7 @@ public class ProjectServiceImpl implements ProjectService {
 		//3.조장 삽입
 		//조장을 조별과제방에 삽입
 		ProjectUserDTO projectUserDTO = new ProjectUserDTO(projectNo, userNo);
-		System.out.println("프로젝트번호"+projectUserDTO.getProjectNo()+" / 조장userNo : "+projectUserDTO.getUserNo());
+		//System.out.println("프로젝트번호"+projectUserDTO.getProjectNo()+" / 조장userNo : "+projectUserDTO.getUserNo());
 		int resultInsLeader = insertProjectLeader(projectUserDTO);
 		
 		//4.초대된 조원에게 쪽지보내기
@@ -62,14 +63,44 @@ public class ProjectServiceImpl implements ProjectService {
 
 	@Override
 	public Map<String, List<ProjectDTO>> selectProjectById(int userNo) {
-		System.out.println("ProjectServiceImpl진입함!! userNo : "+userNo);
+		//System.out.println("ProjectServiceImpl진입함!! userNo : "+userNo);
 		Map<String, List<ProjectDTO>> projectMap = projectDAO.selectProjectById(userNo);
-		System.out.println("ProjectServiceImpl에서 selectProjectById()호출결과!! projectMap : "+projectMap);
+		//System.out.println("ProjectServiceImpl에서 selectProjectById()호출결과!! projectMap : "+projectMap);
 
 		
 		return projectMap;
 	}
 
+	@Override
+	public ProjectDTO selectProject(int projectNo) {
+		ProjectDTO projectDTO = projectDAO.selectProject(projectNo);
+		return projectDTO;
+	}
+	
+	@Override
+	public int updateTeamInfo(ProjectDTO projectDTO) {
+		int result = projectDAO.updateTeamInfo(projectDTO);
+		return result;
+	}
+
+	@Override
+	public List<UserDTO> selectProjectUsers(int projectNo) {
+		List<UserDTO> projectUserList = projectDAO.selectProjectUsers(projectNo);
+		return projectUserList;
+	}
+	
+	@Override
+	public int updateProjectUserTask(ProjectUserDTO projectUserDTO) {
+		int result = projectDAO.updateProjectUserTask(projectUserDTO);
+		
+		return result;
+	}
+
+	@Override
+	public String selectProjectUserRole(ProjectUserDTO projectUserDTO) {
+		String projectUserRole = projectDAO.selectProjectUserRole(projectUserDTO);
+		return projectUserRole;
+	}
 	
 	
 	
