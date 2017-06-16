@@ -222,10 +222,9 @@ public class ProjectController implements Serializable {
 		int projectNo = (int) req.getSession().getAttribute("projectNo");
 		projectUserDTO.setProjectNo(projectNo);
 		
-		//System.out.println("삭제할 팀원의 아이디 : "+ projectUserDTO.getUserNo());
-		//int result = projectService.deleteProjectUser(projectUserDTO);
+		int result = projectService.deleteProjectUser(projectUserDTO);
 		
-		return "redirect:";
+		return "redirect:/project/projectUserInfo";
 	}
 	
 	

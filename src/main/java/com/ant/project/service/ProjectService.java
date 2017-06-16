@@ -54,6 +54,11 @@ public interface ProjectService {
 	public int updateProjectUserTask(ProjectUserDTO projectUserDTO);
 	
 	/**
+	 * 팀원 삭제
+	 */
+	public int deleteProjectUser(ProjectUserDTO projectUserDTO);
+	
+	/**
 	 * 해당프로젝트의 역할(조원or조장) 검색
 	 */
 	public String selectProjectUserRole(ProjectUserDTO projectUserDTO);

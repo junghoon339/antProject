@@ -95,6 +95,12 @@ public class ProjectDAOImpl implements ProjectDAO {
 	}
 
 	@Override
+	public int deleteProjectUser(ProjectUserDTO projectUserDTO) {
+		int result = sqlSession.delete("projectMapper.deleteProjectUser", projectUserDTO);
+		return result;
+	}
+
+	@Override
 	public String selectProjectUserRole(ProjectUserDTO projectUserDTO) {
 		String projectUserRole = sqlSession.selectOne("projectMapper.selectProjectUserRole", projectUserDTO);
 		return projectUserRole;

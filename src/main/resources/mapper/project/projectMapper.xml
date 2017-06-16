@@ -104,7 +104,7 @@
 	<!-- 팀원 삭제 -->
 	<delete id="deleteProjectUser" parameterType="ProjectUserDTO">
 		DELETE FROM project_user
-		WHERE user_no=#{user_no} and project_no=#{project_no};	
+		WHERE user_no=#{userNo} and project_no=#{projectNo}
 	</delete>
 	
 	<!-- 내가 조장,조원인지 검색 -->

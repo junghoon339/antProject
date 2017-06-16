@@ -27,7 +27,6 @@ $(document).ready(function(){
 	        var userName = arr[1];
 	        var projectUserTask = arr[2];
 		
-	        alert(userNo+"/"+userName+"/"+projectUserTask);
 	        $("#userName").html(userName);
 	    	$("#projectUserTask").attr("value",projectUserTask);
 	    	$("#userNo").attr("value",userNo);
@@ -35,16 +34,10 @@ $(document).ready(function(){
 	    
 	    $(document).on("click","#delBtn",function(){
 	    	var delUserNo = parseInt($(this).attr("name"));
-	    	alert("delUserNo:"+delUserNo);
 	    	$("#delUserNo").attr("value",delUserNo);
 	    	
 	    })
-	    
-/* 	    $(document).on("click","#delYesBtn",function(){
-	    	alert("delUserNo : "+delUserNo);
-	    	
-	    	location.href="${pageContext.request.contextPath}/project/projectUserInfo";
-	    }) */
+	   
 	    
 	});
 </script>
@@ -102,8 +95,9 @@ $(document).ready(function(){
 						<a href="#" class="btn btn-sm btn-default" id="addBtn">
 							<span class="glyphicon glyphicon-plus" data-toggle="modal">팀원추가</span> 
 						</a> 
-						<span data-placement="top" data-toggle="tooltip" title="">
-							<button class="btn btn-primary btn-xs" data-title="add" id="add" data-toggle="modal" data-target="#add" name="${projectUserDTO.userNo}">
+						
+						<span data-placement="top" data-toggle="tooltip" title="Edit">
+							<button class="btn btn-primary btn-xs" data-title="Edit" id="editBtn" data-toggle="modal" data-target="#add" name="${projectUserDTO.userNo}/${projectUserDTO.userName}/${projectUserDTO.projectuserRole.projectUserTask}">
 								<span class="glyphicon glyphicon-plus"></span>
 							</button>
 						</span>
@@ -180,7 +174,7 @@ $(document).ready(function(){
 					</div>
 
 
-					<!-- <div class="modal fade" id="add" tabindex="-1" role="dialog" aria-labelledby="add" aria-hidden="true">
+					<div class="modal fade" id="add" tabindex="-1" role="dialog" aria-labelledby="add" aria-hidden="true">
 						<div class="modal-dialog">
 							<div class="modal-content">
 								<div class="modal-header">
@@ -191,8 +185,6 @@ $(document).ready(function(){
 								</div>
 								<div class="modal-body">
 									<div class="form-group">
-									</div>
-									<div class="form-group">
 						           		팀원ID : <input class="form-control"type="text" name="invitedUser"/><p></p>
 									</div>
 								</div>
@@ -201,14 +193,9 @@ $(document).ready(function(){
 										<span class="glyphicon glyphicon-ok-sign"></span> Update
 									</button>
 								</div>
-							</div>/.modal-content
-						</div>/.modal-dialog
+							</div>
+						</div>
 					</div>
- -->
-
-
-
-
 
 
 
