@@ -13,6 +13,9 @@ public class VoteDTO {
 
 	private List<VoteDetailDTO> details;
 	
+	private int userCount;
+	private boolean state;
+	
 	public VoteDTO(){}
 	public VoteDTO(int voteNo, int userNo, int projectNo, String voteTitle, String voteAddDate, String voteEndDate, int voteState) {
 		this.voteNo = voteNo;
@@ -32,6 +35,22 @@ public class VoteDTO {
 		this.voteEndDate = voteEndDate;
 		this.voteState = voteState;
 		this.details = details;
+	}
+	
+	public int getUserCount() {
+		return userCount;
+	}
+	
+	public void setUserCount(int userCount) {
+		this.userCount = userCount;
+	}
+	
+	public boolean isState() {
+		return state;
+	}
+	
+	public void setState(boolean state) {
+		this.state = state;
 	}
 	
 	public List<VoteDetailDTO> getDetails() {

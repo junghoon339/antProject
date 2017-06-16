@@ -10,7 +10,7 @@
 	content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0'
 	name='viewport' />
 <meta name="viewport" content="width=device-width" />
-
+<meta http-equiv="refresh" content="${pageContext.session.maxInactiveInterval}">
 <title>Time Lapse</title>
 
 <link href="${pageContext.request.contextPath}/resources/css/bootstrap.css" rel="stylesheet" />
@@ -138,9 +138,9 @@
 														 class="form-control" placeholder="Password">
 												</div>
 												<div class="form-group text-center">
-													<input type="checkbox"  class=""
-														name="remember" id="remember"> <label
-														for="remember"> Remember Me</label>
+													<!-- <input type="checkbox"  class=""
+														name="remember" id="remember"> --> 
+														<label style="color:red">${errorMessage}</label>
 												</div>
 												<div class="form-group">
 													<div class="row">

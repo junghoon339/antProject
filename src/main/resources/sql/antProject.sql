@@ -18,10 +18,15 @@ drop table project_calendar;
 
 drop table project_user;
 drop table project;
-drop table ant_user;
+
 drop table authorities;
+DROP TABLE ant_user CASCADE CONSTRAINTS;
+
+
+
 
 select * from tab;
+
 SELECT event_id, event_name, start_date, end_date FROM user_calendar
 
 CREATE TABLE ant_user
@@ -38,28 +43,33 @@ CREATE TABLE ant_user
 
 SELECT * FROM ANT_USER;
 
-DROP TABLE ant_user CASCADE CONSTRAINTS;
 drop table ant_user;
 select * tab;
 
+select * from project
 
 CREATE TABLE project(
    project_no            NUMBER CONSTRAINT project_no_pk PRIMARY KEY,
    project_name          varchar2(50) NOT NULL,
-   project_startdate     varchar2(50) NOT NULL,
-   project_enddate       varchar2(50) NOT NULL,
+   project_startdate     date NOT NULL,
+   project_enddate       date NOT NULL,
    project_subject       varchar2(30) NOT NULL,
    project_teacher       varchar2(20) NOT NULL,
-   project_state         NUMBER DEFAULT 0
+   project_state         NUMBER DEFAULT 0 --0:진행중, 1:설문조사진행중(CRUD불가), 2:프로젝트종료(CRUD불가)
 );
 create sequence seq_project_no;
 
+SELECT * FROM ANT_USER;
+
+INSERT INTO PROJECT_USER
+VALUES (seq_project_user_no.nextval, 1, 84, '조원', '하이');
 
 CREATE TABLE project_user(
    project_user_no       NUMBER CONSTRAINT project_user_no_pk PRIMARY KEY,
    project_no            NUMBER CONSTRAINT project_user_project_no_fk references project(project_no) on delete cascade,
    user_no               NUMBER CONSTRAINT project_user_no_fk references ant_user(user_no) on delete cascade,
-   project_user_role     varchar2(30) 
+   project_user_role     varchar2(30),  --조원,조장
+   project_user_task     varchar2(50) --팀플내 각자 맡은 역할   
 );
 create sequence seq_project_user_no;
 
@@ -71,7 +81,6 @@ create table todo(
   todo_content varchar2(100) not null 
 );
 create sequence seq_todo_no;
-
 
 CREATE TABLE vote
 (
@@ -108,8 +117,7 @@ create sequence seq_vote_selector_no;
 
 drop table user_calendar;
 
-select * from user_calendar;
-select * from ANT_USER;
+
 CREATE TABLE user_calendar
 (
 	event_id NUMBER  CONSTRAINT user_calendar_no_pk primary key,
@@ -128,27 +136,32 @@ select * from ANT_USER where user_no=41;
 
 insert
 into user_calendar 
-values(seq_event_id.nextval, 41, '테스트용',
+values(seq_event_id.nextval, 41, '占쌓쏙옙트占쏙옙',
 to_date('2016-12-24 05:00:00', 'YYYY-MM-DD HH24:MI:SS'),
 to_date('2016-12-25 09:00:00', 'YYYY-MM-DD HH24:MI:SS'));
 
 
-
-
-
 select * from ant_user;
+
+
+select * from project_calendar
 
 CREATE TABLE project_calendar
 (
-   project_calendar_no   NUMBER CONSTRAINT project_calendar_no_pk primary key,
-   project_no            NUMBER CONSTRAINT calendar_project_no_fk references project(project_no) on delete cascade,
-   user_no               NUMBER CONSTRAINT project_calendar_user_no_fk references ant_user(user_no) on delete cascade ,
-   project_calendar_startdate  varchar2(20)  NOT NULL ,
-   project_calendar_enddate  varchar2(20)  NULL ,
-   project_calendar_time  varchar2(20)  NULL ,
-   project_calendar_content  varchar2(20)  NULL 
+	event_id NUMBER  CONSTRAINT project_event_id_pk primary key,
+	project_no  NUMBER CONSTRAINT calendar_project_no_fk references project(project_no) on delete cascade,
+	user_no NUMBER  CONSTRAINT user_calendar_user_no_fk references ant_user(user_no) on delete cascade ,
+	event_name varchar2(127) NOT NULL,
+	start_date date not null,
+	end_date date not null
 );
-create sequence seq_project_calendar_no;
+
+create sequence seq_project_calendar
+start with 1
+minvalue 0
+maxvalue 9223372036854775806;
+
+
 
 CREATE TABLE timetable
 (
@@ -250,5 +263,11 @@ CREATE TABLE authorities
 
 select * from todo;
 
-create sequence seq_authorities_no;
+	create sequence seq_authorities_no;
 
+	
+			SELECT d.vote_detail_no, d.vote_no, s.vote_selector_no
+		FROM vote_detail d JOIN vote_selector s 
+		ON d.vote_detail_no = s.vote_detail_no 
+		AND d.vote_no = 4' 
+		AND d.vote_detail_no = '10

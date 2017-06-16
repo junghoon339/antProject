@@ -7,6 +7,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.security.core.Authentication;
+import org.springframework.security.web.DefaultRedirectStrategy;
+import org.springframework.security.web.RedirectStrategy;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.stereotype.Component;
 
@@ -22,14 +24,17 @@ import com.ant.user.dto.UserDTO;
  */
 @Component // id=memberAuthenticationFailureHandler
 public class UserAuthenticationSuccessHandler implements AuthenticationSuccessHandler{
+    private RedirectStrategy redirectStrategy = new DefaultRedirectStrategy();
+   
+
 	@Override
 	public void onAuthenticationSuccess(HttpServletRequest req, HttpServletResponse res, Authentication auth)
 			throws IOException, ServletException {
 		UserDTO userDTO = (UserDTO)auth.getPrincipal();
 		//인증된(로그인된) 회원 userDTO Session에 저장!
 		req.getSession().setAttribute("userDTO", userDTO);
-		req.getSession().setAttribute("projectNo", 1);
 		//req.getRequestDispatcher("/user/main").forward(req, res); //우동이가 지우고 변경!
-		req.getRequestDispatcher("/project/home").forward(req, res); 
+		redirectStrategy.sendRedirect(req,res,"/project/home");
 	}
+	
 }

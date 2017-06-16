@@ -1,0 +1,45 @@
+#ad_wrapper {
+  display: table;
+  width: 100%;
+  text-align: center;
+}
+
+#ad_text {
+  display: table-cell;
+  font-size: 15px;
+  padding: 4px;
+  vertical-align: middle;
+}
+
+img {
+  vertical-align: middle;
+  height:95px;
+  width:auto;
+}
+
+a:visited {color:#330000;text-decoration:none;}
+a:link {color:#330000;text-decoration:none;}
+a:hover {color:#330000;text-decoration:none;}
+
+h2 {
+  margin:3px;
+  margin-bottom:10px;
+  font-size:21px;
+}
+
+@media (min-width:768px) {
+  #ad_text {
+    font-size: 18px;
+    padding: 15px;
+  }
+  
+  h2 {
+    margin:12px;
+    font-size:27px;
+  }
+  
+  img {
+    height:150px;
+  }
+}
+

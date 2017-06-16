@@ -44,18 +44,18 @@
 			<ul class="nav sidebar-nav">
 				<li class="sidebar-brand"><a href="#"> Brand </a></li>
 				<li><a href="#">팀시간표</a></li>
-				<li><a href="#">팀캘린더</a></li>
+				<li><a href="${pageContext.request.contextPath}/calendar/projectCalendar">팀캘린더</a></li>
 				<li><a href="${pageContext.request.contextPath}/storage/storageTable/1">자료실</a></li>
 				<li><a href="#">to do board</a></li>
-				<li class="dropdown"><a href="#" class="dropdown-toggle"
-					data-toggle="dropdown">팀플정보 <span class="caret"></span></a>
+				<li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">팀플정보 <span class="caret"></span></a>
 					<ul class="dropdown-menu" role="menu">
-						<!--                     <li class="dropdown-header"><a href="#">팀플정보</li>
-                    <li class="dropdown-header"><a href="#">팀원정보</li> -->
-						<li><a href="#">팀플정보</a></li>
-						<li><a href="#">팀원정보</a></li>
+						<!--<li class="dropdown-header"><a href="#">팀플정보</li>
+                  			<li class="dropdown-header"><a href="#">팀원정보</li> -->
+						<li><a href="${pageContext.request.contextPath}/project/teamInfo">팀플정보</a></li>
+						<li><a href="${pageContext.request.contextPath}/project/projectUserInfo">팀원정보</a></li>
 					</ul></li>
 				<li><a href="https://www.google.co.kr/">Google</a></li>
+				<li><a href="${pageContext.request.contextPath}/vote/?userNo=1">투표</a></li>
 			</ul>
 		</nav>
 		<!-- /#sidebar-wrapper -->

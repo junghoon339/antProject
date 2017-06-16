@@ -6,5 +6,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 @RequestMapping("/timetable")
 public class TimetableController {
+	
+	@RequestMapping("/main")
+	public void main (){
+	
+	}
 
 }

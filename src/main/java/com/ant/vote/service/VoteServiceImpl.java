@@ -20,7 +20,12 @@ public class VoteServiceImpl implements VoteService {
 	public List<VoteDTO> selectVoteList(int voteState) {
 		return voteDAO.selectVoteList(voteState);
 	}
-	
+
+	@Override
+	public int voteDateUpdate() {
+		return voteDAO.voteDateUpdate();
+	}
+
 	@Override
 	public VoteDTO selectVoteListByVoteNo(int voteNo) {
 		return voteDAO.selectVoteListByVoteNo(voteNo);
@@ -33,15 +38,14 @@ public class VoteServiceImpl implements VoteService {
 	}
 
 	@Override
-	public int updateVote(int voteNo) {
-		// TODO Auto-generated method stub
-		return 0;
+	public int updateVote(int userNo, int voteNo) {
+		
+		return voteDAO.updateVote(userNo, voteNo);
 	}
 
 	@Override
 	public int deleteVote(int voteNo) {
-		// TODO Auto-generated method stub
-		return 0;
+		return voteDAO.deleteVote(voteNo);
 	}
 
 	@Override
@@ -69,6 +73,16 @@ public class VoteServiceImpl implements VoteService {
 	}
 
 	@Override
+	public int selectVoteDetailCall(int voteNo) {
+		return voteDAO.selectVoteDetailCall(voteNo);
+	}
+
+	@Override
+	public List<VoteDetailDTO> selectVoteDetailCall(int voteNo,int voteDetailColumn) {
+		return voteDAO.selectVoteDetailCall(voteNo, voteDetailColumn);
+	}
+
+	@Override
 	public VoteDetailDTO selectVoteDetail(int userNo, int voteNo) {
 		System.out.println("디테일이니셜라이즈드, 서비스 -> 다오 접근 userNo : "+userNo+", voteNo : "+voteNo);
 		return voteDAO.selectVoteDetail(userNo, voteNo);
@@ -86,8 +100,7 @@ public class VoteServiceImpl implements VoteService {
 
 	@Override
 	public int voteSelectorUpdate(VoteSelectorDTO voteSelectorDTO) {
-		// TODO Auto-generated method stub
-		return 0;
+		return voteDAO.voteSelectorUpdate(voteSelectorDTO);
 	}
 
 	@Override
