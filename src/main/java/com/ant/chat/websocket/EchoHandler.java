@@ -54,7 +54,7 @@ public class EchoHandler extends TextWebSocketHandler {
 
 		// 아래와 같이는 최대 2개
 		logger.info("From {}, recieved Message : {} ", session.getId(), message.getPayload());
-
+		
 		// String tempMessage = message.getPayload();
 		// int seperatorIndex = tempMessage.indexOf(":");
 		//
@@ -75,7 +75,7 @@ public class EchoHandler extends TextWebSocketHandler {
 		while (sessionListIterator.hasNext()) {
 			// sessionList를 갖고있는 projectNo가 나옴
 			projectNo = sessionListIterator.next();
-
+			
 			for (WebSocketSession sess : sessionListMap.get(projectNo)) {
 				sess.sendMessage(new TextMessage(message.getPayload()));
 			}
@@ -102,4 +102,6 @@ public class EchoHandler extends TextWebSocketHandler {
 		}
 		logger.info(" {} Connection Closed ", session.getId());
 	}
+	
+	
 }

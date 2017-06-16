@@ -138,9 +138,9 @@
 														 class="form-control" placeholder="Password">
 												</div>
 												<div class="form-group text-center">
-													<input type="checkbox"  class=""
-														name="remember" id="remember"> <label
-														for="remember"> Remember Me</label>
+													<!-- <input type="checkbox"  class=""
+														name="remember" id="remember"> --> 
+														<label style="color:red">${errorMessage}</label>
 												</div>
 												<div class="form-group">
 													<div class="row">

@@ -45,7 +45,7 @@
 						<li><a href="#">절레절레</a></li>
 						<li class="divider"></li>
 						<li><a href="#">꾸꾸까까</a></li>
-						<li><a href="#exit">로그인/로그아웃</a></li>
+						<li><a href="${pageContext.request.contextPath}/user/logout">로그인/로그아웃</a></li>
 					</ul></li>
 			</ul>
 			<!-- 				<form class="navbar-form navbar-right search-form" role="search">

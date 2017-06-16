@@ -31,5 +31,7 @@
 	
 	<context:component-scan base-package="com.ant.controller" />
 	<context:component-scan base-package="com.ant.*.controller" />
-
+	
+	
+	
 </beans:beans>
