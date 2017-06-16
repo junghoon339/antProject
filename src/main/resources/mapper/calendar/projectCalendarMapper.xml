@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="projectCalendarMapper">
+
+<resultMap type="projectCalendarDTO" id="projectCalender">
+	<id column="event_id" property="event_id"/>
+	<result column="user_no" property="user_no"/>
+	<result column="project_no" property="project_no"/>
+	<result column="event_name" property="event_name"/>
+	<result column="start_date" property="start_date"/>
+	<result column="end_date" property="end_date"/>
+</resultMap>
+
+
+<!-- 일정 보기 -->
+<select id="getEvent" resultMap="projectCalender">
+	SELECT event_id, event_name, start_date, end_date FROM project_calendar
+	WHERE project_no=#{_parameter}
+</select>
+
+
+<!-- 일정 등록 -->
+
+<insert id="insertEvent" parameterType="projectCalendarDTO">
+	INSERT INTO 
+ 		project_calendar (event_id, user_no, project_no, event_name, start_date, end_date) 
+ 	VALUES (
+ 		SEQ_project_calendar.NEXTVAL,
+ 		#{user_no},
+ 		#{project_no},
+ 		#{event_name},
+ 		TO_DATE(#{start_date}, 'YYYY-MM-DD HH24:MI:SS'),
+ 		TO_DATE(#{end_date}, 'YYYY-MM-DD HH24:MI:SS')
+ 		)
+   	<selectKey keyProperty="event_id" resultType="Integer">
+ 		SELECT SEQ_project_calendar.NEXTVAL FROM dual
+ 	</selectKey>
+</insert>
+
+
+<!-- 일정 수정 -->
+<update id="updateEvent" parameterType="projectCalendarDTO">
+	UPDATE 
+ 		project_calendar 
+ 	SET 
+ 		event_name=#{event_name}, 
+ 		start_date=TO_DATE(#{start_date}, 'YYYY-MM-DD HH24:MI:SS'),
+ 		end_date=TO_DATE(#{end_date}, 'YYYY-MM-DD HH24:MI:SS')
+ 	WHERE 
+ 		event_id=#{event_id}
+</update>
+
+
+<!-- 일정 삭제 -->
+<delete id="deleteEvent" parameterType="int">
+	DELETE FROM project_calendar WHERE event_id=#{event_id}
+</delete>
+
+
+
+</mapper>

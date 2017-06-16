@@ -43,7 +43,7 @@ public class UserAuthenticationProvider implements AuthenticationProvider {
 		UserDTO userDTO = userDAO.selectUserById(userId);
 		
 		if (userDTO == null) { // ID가 없는경우
-			throw new UsernameNotFoundException(userId + "는 없는 회원입니다.");
+			throw new UsernameNotFoundException("아이디 또는 비밀번호를 다시 확인하세요. \n<br>등록되지 않은 아이디이거나, 아이디 또는 비밀번호를 잘못 입력하셨습니다.");
 		}
 		
 		int userNo = userDTO.getUserNo();
@@ -53,7 +53,7 @@ public class UserAuthenticationProvider implements AuthenticationProvider {
 		String password = (String) auth.getCredentials();
 		
 		if (!passwordEncoder.matches(password, userDTO.getUserPassword())) {
-			throw new BadCredentialsException("패스워드 오류 입니다.");
+			throw new BadCredentialsException("아이디 또는 비밀번호를 다시 확인하세요. \n<br>등록되지 않은 아이디이거나, 아이디 또는 비밀번호를 잘못 입력하셨습니다.");
 		}
 		
 		
@@ -82,65 +82,4 @@ public class UserAuthenticationProvider implements AuthenticationProvider {
 		
 		return UsernamePasswordAuthenticationToken.class.isAssignableFrom(authentication);	
 	}
-	
-	
-	/*@Autowired
-	private MemberDAO memberDAO;
-
-	@Autowired
-	private AuthoritiesDAO authoritiesDAO;
-
-	@Autowired
-	private PasswordEncoder passwordEncoder;
-
-	@Override
-	public Authentication authenticate(Authentication auth) throws AuthenticationException {
-		if(!supports(auth.getClass())){
-			return null;
-		}
-		
-		// 1. 인수로 받은 user정보를 가지고 DB에 존재 하는지 체크
-		String id = auth.getName();
-		Member member = memberDAO.selectMemberById(id);
-
-		if (member == null) { // ID가 없는경우
-			throw new UsernameNotFoundException(id + "는 없는 회원입니다.");
-		}
-
-		// 2. 존재하면 비밀번호 비교
-		String password = (String) auth.getCredentials();
-
-		if (!passwordEncoder.matches(password, member.getPassword())) {
-			throw new BadCredentialsException("패스워드 오류 입니다.");
-		}
-
-		// 인증에 성공한 이후
-		// 3. 모두 일치하면 Authentication을 만들어서 리턴
-		List<Authority> list = authoritiesDAO.selectAuthorityByUserName(id);
-
-		if (list.isEmpty()) {
-			// 아무 권한이 없으면
-			throw new UsernameNotFoundException(id + "는 아무 권한이 없습니다.");
-		}
-
-		// DB에서 가지고 온 권한을 GrantedAuthority로 변환해야 함
-		List<SimpleGrantedAuthority> authList = new ArrayList<>();
-
-		for (Authority authority : list) {
-			authList.add(new SimpleGrantedAuthority(authority.getRole()));
-		}
-
-		return new UsernamePasswordAuthenticationToken(member, null, authList);
-	}
-
-	*//**
-	 * 해당 타입의 Authentication 객체를 이용해서 인증 처리를 할 수 있는지 여부를 리턴해주는 메소드
-	 *//*
-	@Override
-	public boolean supports(Class<?> authentication) {
-		// true = 인증처리 가능하다 false = 인증 할 수 없다
-		
-		return UsernamePasswordAuthenticationToken.class.isAssignableFrom(authentication);	
-	}
-*/
 }

@@ -2,6 +2,36 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="projectMapper">
 
+	<!-- 진행중, 완료된 조별과제 검색결과 담을 resultMap -->
+	<resultMap type="projectDTO" id="selectProjectMap2">
+		<id column="project_no" property="projectNo"/>		
+		<result column="project_name" property="projectName"/>		
+		<result column="project_startdate" property="projectStartdate"/>		
+		<result column="project_enddate" property="projectEnddate"/>		
+		<result column="project_subject" property="projectSubject"/>		
+		<result column="project_teacher" property="projectTeacher"/>		
+		<result column="project_state" property="projectState"/>		
+		<collection property="projectUserDTOs" ofType="projectUserDTO">
+			<id column="project_user_no" property="projectUserNo"/>
+			<result column="project_user_role" property="projectUserRole"/>
+		</collection>
+	</resultMap>
+	
+	<!-- 팀원의 정보를 담을 resultMap -->
+	<resultMap type="userDTO" id="selectProjectUsersMap">
+		<id column="user_no" property="userNo"/>
+		<result column="user_id" property="userId"/>
+		<result column="user_name" property="userName"/>
+		<result column="user_school" property="userSchool"/>
+		<result column="user_major" property="userMajor"/>
+		<association property="projectuserRole" javaType="projectUserDTO">
+			<id column="project_user_no" property="projectUserNo"/>
+			<result column="project_user_role" property="projectUserRole"/>
+			<result column="project_user_task" property="projectUserTask"/>
+		</association>
+	</resultMap>
+
+
 	<!-- 새로운 조별과제방 삽입 -->
 	<insert id="insertProject" parameterType="projectDTO">
 		INSERT INTO project(project_no,project_name,project_startdate,project_enddate,project_subject,project_teacher,project_state)
@@ -16,7 +46,7 @@
 
 	<!-- 팀플방에 조장등록 -->
 	<insert id="insertProjectLeader" parameterType="projectUserDTO">
-		INSERT INTO project_user
+		INSERT INTO project_user(project_user_no,project_no,user_no,project_user_role)
 		VALUES(seq_project_user_no.nextval, #{projectNo}, #{userNo}, '조장')
 	</insert>
 	
@@ -33,27 +63,56 @@
 	<!-- 팀플방에 조원등록 -->
 	
 	
-	<resultMap type="projectDTO" id="selectProjectMap">
-		<id column="project_no" property="projectNo"/>		
-		<result column="project_name" property="projectNo"/>		
-		<result column="project_startdate" property="projectNo"/>		
-		<result column="project_enddate" property="projectNo"/>		
-		<result column="project_subject" property="projectNo"/>		
-		<result column="project_state" property="projectNo"/>		
-		<result column="project_user_role" property="projectNo"/>		
-		<collection property="projectUserDTO">
-			<id/>
-		</collection>
-		
-	</resultMap>
 	
 	
 	<!-- 진행중, 완료된 조별과제 검색 -->
-	<select id="selectProjectById" parameterType="map" resultMap="selectProjectMap">
-	SELECT p.project_no, p.project_name,p.project_startdate,p.project_enddate,p.project_subject,p.project_state,pu.project_user_role
-	FROM project p, project_user pu
-	WHERE p.project_no = pu.project_no AND pu.user_no=21;	
-		
+	<select id="selectProjectById" parameterType="map" resultMap="selectProjectMap2">
+		SELECT p.project_no, p.project_name,p.project_startdate,p.project_enddate,p.project_subject,p.project_state,pu.project_user_role
+		FROM project p JOIN project_user pu
+		ON p.project_no = pu.project_no
+		WHERE pu.user_no=#{userNo} AND p.project_state=#{projectState}
 	</select>
+	
+	<!-- 프로젝트 정보 검색 -->
+	<select id="selectProject" parameterType="int" resultMap="selectProjectMap2">
+		SELECT project_no, project_name, project_startdate, project_enddate, project_subject, project_teacher, project_state
+		FROM project
+		WHERE project_no=#{_parameter}
+	</select>
+	
+	<!-- 프로젝트 정보 수정 -->
+	<update id="updateTeamInfo" parameterType="projectDTO">
+		UPDATE project
+		SET project_name=#{projectName}, project_startdate=#{projectStartdate}, project_enddate=#{projectEnddate}, project_subject=#{projectSubject}, project_teacher=#{projectTeacher}, project_state=#{projectState}
+		WHERE project_no=#{projectNo}
+	</update>
+	
+	<!-- 팀원 정보 검색 -->
+	<select id="selectProjectUsers" parameterType="int" resultMap="selectProjectUsersMap">
+		SELECT a.user_no, a.user_id, a.user_name, a.user_school, a.user_major, pu.project_user_role, pu.project_user_task
+		FROM project_user pu, ant_user a
+		WHERE pu.user_no=a.user_no and pu.project_no=#{_parameter}
+	</select>
+	
+	<!-- 팀원정보중 맡은임무 수정 -->
+	<update id="updateProjectUserTask" parameterType="projectUserDTO">
+		UPDATE project_user
+		SET project_user_task=#{projectUserTask}
+		WHERE user_no=#{userNo} and project_no=#{projectNo}
+	</update>
+	
+	<!-- 팀원 삭제 -->
+	<delete id="deleteProjectUser" parameterType="ProjectUserDTO">
+		DELETE FROM project_user
+		WHERE user_no=#{userNo} and project_no=#{projectNo}
+	</delete>
+	
+	<!-- 내가 조장,조원인지 검색 -->
+	<select id="selectProjectUserRole" parameterType="projectUserDTO" resultType="string">
+		SELECT project_user_role
+		FROM project_user 
+		WHERE project_no=#{projectNo} and user_no=#{userNo}
+	</select>
+
 
 </mapper>

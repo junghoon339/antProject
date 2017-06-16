@@ -20,12 +20,11 @@ import org.springframework.stereotype.Component;
  */
 @Component // id=memberAuthenticationFailureHandler
 public class UserAuthenticationFailureHandler implements AuthenticationFailureHandler{
-
+	  
 	@Override
 	public void onAuthenticationFailure(HttpServletRequest req, HttpServletResponse res, AuthenticationException e)
 			throws IOException, ServletException {
 		req.setAttribute("errorMessage", e.getMessage());
-		req.getRequestDispatcher("/WEB-INF/views/member/loginForm.jsp").forward(req, res);
+		req.getRequestDispatcher("/").forward(req, res);;
 	}
-
 }

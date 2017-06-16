@@ -15,6 +15,7 @@ public class UserDTO {
 	private List<ProjectUserDTO> listProjectUserDTO;//관리자에서 회원관리시 사용
 	private int doingProject;
 	private int doneProject;
+	private ProjectUserDTO projectuserRole; //팀원정보 조회에 사용-우동
 	
 	public UserDTO() {
 		super();
@@ -111,6 +112,14 @@ public class UserDTO {
 
 	public void setDoneProject(int doneProject) {
 		this.doneProject = doneProject;
+	}
+
+	public ProjectUserDTO getProjectuserRole() {
+		return projectuserRole;
+	}
+
+	public void setProjectuserRole(ProjectUserDTO projectuserRole) {
+		this.projectuserRole = projectuserRole;
 	}	
 	
 	

@@ -6,13 +6,9 @@ import com.ant.calendar.dto.ProjectCalendarDTO;
 import com.ant.calendar.dto.UserCalendarDTO;
 import com.dhtmlx.planner.DHXEv;
 
-public interface CalendarDAO {
+public interface ProjectCalendarDAO {
 
-	List<DHXEv> getEvent(int userNo);
-
-	void updateEvent(UserCalendarDTO schedule);
-
-	void insertEvent(UserCalendarDTO schedule);
+	List<DHXEv> getEvent(int projectNo);
 
 	void updateEvent(ProjectCalendarDTO schedule);
 

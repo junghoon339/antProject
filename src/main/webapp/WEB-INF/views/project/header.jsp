@@ -15,7 +15,7 @@
 					class="icon-bar"></span> <span class="icon-bar"></span> <span
 					class="icon-bar"></span>
 			</button>
-			<a class="navbar-brand" href="#">The Ants and Grasshopper</a>
+			<a class="navbar-brand" href="${pageContext.request.contextPath}/project/home">The Ants and Grasshopper</a>
 		</div>
 		<div class="collapse navbar-collapse" id="navbar">
 			<ul class="nav navbar-nav navbar-right">
@@ -45,7 +45,7 @@
 						<li><a href="#">절레절레</a></li>
 						<li class="divider"></li>
 						<li><a href="#">꾸꾸까까</a></li>
-						<li><a href="#exit">로그인/로그아웃</a></li>
+						<li><a href="${pageContext.request.contextPath}/user/logout">로그인/로그아웃</a></li>
 					</ul></li>
 			</ul>
 			<!-- 				<form class="navbar-form navbar-right search-form" role="search">

@@ -12,7 +12,7 @@ public class ProjectDTO {
 	private int projectState; //프로젝트상태(0-진행중, 1-마감투표중, 2-완료)
 
 	//private List<String> invitedUser; //조장이 초대한 팀원들의 아이디를 담는 list
-	private List<ProjectUserDTO> projectUserDTO;
+	private List<ProjectUserDTO> projectUserDTOs;
 	
 	public ProjectDTO() {}
 
@@ -84,13 +84,14 @@ public class ProjectDTO {
 		this.projectState = projectState;
 	}
 
-	public List<ProjectUserDTO> getProjectUserDTO() {
-		return projectUserDTO;
+	public List<ProjectUserDTO> getProjectUserDTOs() {
+		return projectUserDTOs;
 	}
 
-	public void setProjectUserDTO(List<ProjectUserDTO> projectUserDTO) {
-		this.projectUserDTO = projectUserDTO;
+	public void setProjectUserDTOs(List<ProjectUserDTO> projectUserDTOs) {
+		this.projectUserDTOs = projectUserDTOs;
 	}
+
 
 	
 	
