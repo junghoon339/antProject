@@ -200,8 +200,9 @@ public class ProjectController implements Serializable {
 			status = DHXStatus.UPDATE;
 		else if (st.equals("delete") || st.equals("deleted"))
 			status = DHXStatus.DELETE;
-
+		System.out.println("2.saveOne에서 id접근:"+id);
 		DHXEv ev = createEvent(id, status);
+		System.out.println("2.saveOne에서 ev.getId()접근222222:"+ev.getId());
 		attributes.clear();
 
 		if (security.can(status).booleanValue()) {
@@ -303,19 +304,34 @@ public class ProjectController implements Serializable {
 
 		schedule.setStart_date(start_date);
 		schedule.setEnd_date(end_date);
-		/*
-		 * schedule.setEvent_id(event.getId());
-		 * System.out.println("에러?:"+event.getId());
-		 */
+		
+		if(event.getId()!=null){
+			System.out.println("아ㅏㅏㅏㅏㅏㅏ"+event.getId());
+			schedule.setEvent_id(event.getId());
+		}
+		
+		/*Integer i=null;
+		i=schedule.getEvent_id();
+		  System.out.println("iiiiiiiiiiiiiiii:"+i);
+		  
+		  
+		 if(i!=null){
+			 
+			 System.out.println("i가 null 아닐때:"+schedule.getEvent_id());
+		 }
+		  System.out.println("event.getId()zzzzzz:"+event.getId());*/
 
 		if (status == DHXStatus.UPDATE) {
 			System.out.println("컨트롤러->서비스 접근");
 			calendarService.updateEvent(schedule);
-
+			
 		} else if (status == DHXStatus.INSERT) {
 			System.out.println("insert 컨트롤러->서비스 접근");
+			
 			calendarService.insertEvent(schedule);
-			event.setId(schedule.getEvent_id());
+			System.out.println("에러?:"+schedule.getEvent_id());
+			
+			event.setId(schedule.getEvent_id()-1);
 
 		} else if (status == DHXStatus.DELETE) {
 			calendarService.deleteEvent(event.getId());
