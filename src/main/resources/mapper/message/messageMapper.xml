@@ -39,4 +39,12 @@
 	<delete id="messageDelete" parameterType="int">
 		delete from message where message_no=#{_parameter}
 	</delete>
+	
+	<update id="messageDeleteUpdate" parameterType="map">
+		update message set message_state=#{messageState} where message_no=#{messageNo}
+	</update>
+	
+	<select id="selectMessageState" parameterType="int" resultType="int">
+		select message_state from message where message_no=#{_parameter}
+	</select>
 </mapper>

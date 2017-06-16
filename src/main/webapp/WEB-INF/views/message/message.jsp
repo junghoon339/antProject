@@ -74,8 +74,33 @@
 				}
 			});
 			alert(messageNos);
-			location.href="${pageContext.request.contextPath}/message/messageDelete?messageNos="+messageNos;
+			location.href="${pageContext.request.contextPath}/message/messageDelete?messageNos="+messageNos+"&flag=${flag}";
 			
+		});
+		
+		var messageNo="";
+		$(document).on("click","#deleteBtn",function(){
+			messageNo=$(this).attr("name")
+			
+		});
+		
+		
+		$(document).on("click","#deleteYesBtn",function(){
+			alert(messageNo);
+			/* var flag=$("#flag").val();
+			var endPage=$("#endPage").val();
+			var curPage=$("#curPage").val();
+			var totalRow=$("#totalRow").val();
+			var rowCount=$("#rowCount").val();
+			var projectState=$("#projectState").val();
+			
+			if(flag=="true"&&curPage==endPage){	
+				if(totalRow%rowCount==1){
+					curPage=curPage-1;		
+				}
+			} */
+			
+			location.href="${pageContext.request.contextPath}/message/sendCancel?messageNo="+messageNo;
 			
 		});
 	});
@@ -111,11 +136,6 @@
 			});
 	}
 	
-	
-	
-	
-	
-	//메모읽었을때 답장하기 클릭하믄.... insert창 띄어주기..
 </script>
 
 
@@ -274,41 +294,56 @@
 						</thead>
 						<tbody>
 							<c:forEach var="messageDTO" items="${messageList}">
-								<tr>
-									<td><input type="checkbox" class="checkthis" name="messageNoArr" value="${messageDTO.messageNo }" /></td>
-									<td>${messageDTO.userDTO.userId} (${messageDTO.userDTO.userName})</td>
-									<td><a href="javascript:messageSelect(${messageDTO.messageNo });">${messageDTO.messageContent}</a></td>
-									<td>${messageDTO.messageSendTime }</td>
-									
-									<c:if test="${flag==true }">
-										<c:choose>
-											<c:when test="${messageDTO.messageReceiveTime==null }">
-												<td>-</td>
-												<td><p data-placement="top" data-toggle="tooltip"
-														title="Delete">
-												<button class="btn btn-danger btn-xs" data-title="Delete" id="deleteBtn"
-													data-toggle="modal" data-target="#delete" name="${messageDTO.messageNo}">
-													<span class="glyphicon glyphicon-trash"></span>
-												</button>
-										</p></td>
-											</c:when>
-											<c:otherwise>
-												<td>${messageDTO.messageReceiveTime }</td>
-												<td>&nbsp;</td>
-											</c:otherwise>
-										</c:choose>
+								<c:choose>
+									<c:when test="${flag==false}">
+										<!-- 받은쪽지함 -->
+										<c:if test="${messageDTO.messageState!=1 }">
+											<tr>
+												<td><input type="checkbox" class="checkthis" name="messageNoArr" value="${messageDTO.messageNo }" /></td>
+												<td>${messageDTO.userDTO.userId} (${messageDTO.userDTO.userName})</td>
+												<td><a href="javascript:messageSelect(${messageDTO.messageNo });">${messageDTO.messageContent}</a></td>
+												<td>${messageDTO.messageSendTime }</td>
+											</tr>
+										</c:if>
 										
-										
-									</c:if>
-									<%-- <td><p data-placement="top" data-toggle="tooltip"
-														title="Delete">
+									</c:when>
+									<c:otherwise>
+										<!-- 보낸쪽지함 -->
+										<c:if test="${messageDTO.messageState!=2 }">
+											<tr>
+												<td><input type="checkbox" class="checkthis" name="messageNoArr" value="${messageDTO.messageNo }" /></td>
+												<td>${messageDTO.userDTO.userId} (${messageDTO.userDTO.userName})</td>
+												<td><a href="javascript:messageSelect(${messageDTO.messageNo });">${messageDTO.messageContent}</a></td>
+												<td>${messageDTO.messageSendTime }</td>
+												
+												
+												<c:choose>
+													<c:when test="${messageDTO.messageReceiveTime==null }">
+														<td>-</td>
+														<td><p data-placement="top" data-toggle="tooltip"
+																title="Delete">
 														<button class="btn btn-danger btn-xs" data-title="Delete" id="deleteBtn"
-															data-toggle="modal" data-target="#delete" name="${userDTO.userNo}">
+															data-toggle="modal" data-target="#delete" name="${messageDTO.messageNo}">
 															<span class="glyphicon glyphicon-trash"></span>
 														</button>
-													</p></td> --%>
-
-								</tr>
+												</p></td>
+													</c:when>
+													<c:otherwise>
+														<td>${messageDTO.messageReceiveTime }</td>
+														<td>&nbsp;</td>
+													</c:otherwise>
+												</c:choose>
+											</tr>
+										</c:if>
+										
+												
+										
+										
+									</c:otherwise>
+								</c:choose>
+								
+								
+								
 							</c:forEach>
 
 						</tbody>

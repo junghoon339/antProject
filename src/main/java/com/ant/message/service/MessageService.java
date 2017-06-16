@@ -28,5 +28,10 @@ public interface MessageService {
 	/**
 	 * 보낸쪽지,받은쪽지 삭제
 	 * */
-	public int messageDelete(String messageNos);
+	public int messageDelete(String messageNos,boolean flag);
+	
+	/**
+	 * 발송취소
+	 * */
+	public int messageSendCancel(int messageNo);
 }

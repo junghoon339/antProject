@@ -67,15 +67,35 @@ public class MessageServiceImpl implements MessageService{
 	}
 
 	@Override
-	public int messageDelete(String messageNos) {
+	public int messageDelete(String messageNos,boolean flag) {
 		int result=0;
 		StringTokenizer stk =new StringTokenizer(messageNos,";");
 		while(stk.hasMoreTokens()){
 			int messageNo=Integer.parseInt(stk.nextToken());
-			result=messageDAO.messageDelete(messageNo);
+			
+			int messageState=messageDAO.selectMessageState(messageNo);
+			if(messageState==1||messageState==2){
+				result=messageDAO.messageDelete(messageNo);
+			}else{
+				if(flag){ //보낸 메세지 삭제 => 2으로 바꿈
+					result=messageDAO.messageDeleteUpdate(messageNo,2);
+				}else{ //받은메세지 삭제=> 1로바꿀것
+					result=messageDAO.messageDeleteUpdate(messageNo,1);
+				}
+			}
+			
 			if(result==0){
 				//에러뷰
 			}
+		}
+		return result;
+	}
+
+	@Override
+	public int messageSendCancel(int messageNo) {
+		int result=messageDAO.messageDelete(messageNo);
+		if(result==0){
+			//에러발생
 		}
 		return result;
 	}

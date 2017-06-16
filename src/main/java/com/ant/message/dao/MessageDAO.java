@@ -35,4 +35,14 @@ public interface MessageDAO {
 	 * */
 	public int receiveTimeUpdate(int messageNo);
 	
+	/**
+	 * 쪽지 삭제(받은사람 or 보낸사람 한쪽만)
+	 * */
+	public int messageDeleteUpdate(int messageNo,int messageState);
+	
+	/**
+	 * messageState 가져오기
+	 * */
+	public int selectMessageState(int messageNo);
+	
 }

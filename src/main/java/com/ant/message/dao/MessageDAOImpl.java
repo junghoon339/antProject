@@ -1,6 +1,8 @@
 package com.ant.message.dao;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,6 +50,21 @@ public class MessageDAOImpl implements MessageDAO {
 	public int receiveTimeUpdate(int messageNo) {
 		// TODO Auto-generated method stub
 		return sqlSession.update("mapper.messageMapper.receiveTimeUpdate",messageNo);
+	}
+
+	@Override
+	public int messageDeleteUpdate(int messageNo, int messageState) {
+		// TODO Auto-generated method stub
+		Map<String,Integer> map=new HashMap<>();
+		map.put("messageNo", messageNo);
+		map.put("messageState", messageState);
+		return sqlSession.update("mapper.messageMapper.messageDeleteUpdate",map);
+	}
+
+	@Override
+	public int selectMessageState(int messageNo) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne("mapper.messageMapper.selectMessageState",messageNo);
 	}
 
 }

@@ -62,9 +62,16 @@ public class MessageController {
 	}
 	
 	@RequestMapping("/messageDelete")
-	public String messageDelete(String messageNos){
+	public String messageDelete(String messageNos,boolean flag){
 		System.out.println(messageNos);
-		service.messageDelete(messageNos);
+		service.messageDelete(messageNos,flag);
+		return "redirect:/message/main";
+	}
+	
+	@RequestMapping("/sendCancel")
+	public String messageSendCancel(int messageNo){
+		service.messageSendCancel(messageNo);
+		
 		return "redirect:/message/main";
 	}
 }
