@@ -18,7 +18,7 @@ drop table project_calendar;
 
 drop table project_user;
 drop table project;
-drop table ant_user;
+
 drop table authorities;
 DROP TABLE ant_user CASCADE CONSTRAINTS;
 
@@ -58,12 +58,16 @@ CREATE TABLE project(
 );
 create sequence seq_project_no;
 
+SELECT * FROM ANT_USER;
+
+INSERT INTO PROJECT_USER
+VALUES (seq_project_user_no.nextval, 1, 84, '조원', '하이');
 
 CREATE TABLE project_user(
    project_user_no       NUMBER CONSTRAINT project_user_no_pk PRIMARY KEY,
    project_no            NUMBER CONSTRAINT project_user_project_no_fk references project(project_no) on delete cascade,
    user_no               NUMBER CONSTRAINT project_user_no_fk references ant_user(user_no) on delete cascade,
-   project_user_role     varchar2(30)  --조원,조장
+   project_user_role     varchar2(30),  --조원,조장
    project_user_task     varchar2(50) --팀플내 각자 맡은 역할   
 );
 create sequence seq_project_user_no;
@@ -128,7 +132,6 @@ create sequence seq_user_calendar
 start with 1
 minvalue 0
 maxvalue 9223372036854775806;
-
 
 
 

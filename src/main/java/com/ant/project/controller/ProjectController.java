@@ -1,5 +1,7 @@
 package com.ant.project.controller;
 
+import java.io.File;
+import java.io.IOException;
 import java.io.Serializable;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -18,6 +20,7 @@ import java.util.Set;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.web.csrf.CsrfToken;
 import org.springframework.stereotype.Controller;
@@ -56,7 +59,7 @@ public class ProjectController implements Serializable {
 	private Date from;
 	private Date to;
 	private Boolean dynFilter;
-
+	private List<String> chatList;
 	/**
 	 * 홈화면(로그인 성공하면 띄워지는 화면)
 	 * @throws Exception
@@ -198,6 +201,21 @@ public class ProjectController implements Serializable {
 		ModelAndView mv = new ModelAndView();
 		mv.addObject("projectUserList",projectUserList);
 		mv.setViewName("project/projectUserInfo");
+		return mv;
+	}
+	
+	@RequestMapping("/chat")
+	public ModelAndView chat(HttpSession session){
+		int projectNo = (int) session.getAttribute("projectNo");
+		ModelAndView mv = new ModelAndView("chat/chat");
+		
+		try {
+			chatList = FileUtils.readLines(new File("/chat/chat_room_no_" + projectNo + ".txt"), "utf-8");
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		mv.addObject("chatList", chatList);
 		return mv;
 	}
 	

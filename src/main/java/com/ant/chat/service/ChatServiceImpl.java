@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class ChatServiceImpl implements ChatService {
-
+/*
 	@Override
 	public void readChat(int projectNo) {
 		// The name of the file to open.
@@ -44,7 +44,7 @@ public class ChatServiceImpl implements ChatService {
 			// ex.printStackTrace();
 		}
 	}
-
+*/
 	@Override
 	public void writeChat(int projectNo, String payload) {
 		// The name of the file to open.

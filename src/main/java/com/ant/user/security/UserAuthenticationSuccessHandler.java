@@ -33,7 +33,6 @@ public class UserAuthenticationSuccessHandler implements AuthenticationSuccessHa
 		UserDTO userDTO = (UserDTO)auth.getPrincipal();
 		//인증된(로그인된) 회원 userDTO Session에 저장!
 		req.getSession().setAttribute("userDTO", userDTO);
-		req.getSession().setAttribute("projectNo", 1);
 		//req.getRequestDispatcher("/user/main").forward(req, res); //우동이가 지우고 변경!
 		redirectStrategy.sendRedirect(req,res,"/project/home");
 	}
