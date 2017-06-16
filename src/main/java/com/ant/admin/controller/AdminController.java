@@ -51,7 +51,7 @@ public class AdminController {
 		
 		boolean flag=false;//마지막 페이지에 넘어가기 버튼 없애기
 		
-		int lastPageNum=totalRow%rowCount==0 ? totalRow/rowCount : totalRow/rowCount+1;
+		int lastPageNum=totalRow%rowCount==0 ? totalRow/rowCount : totalRow/rowCount+1;	
 		if(lastPageNum<=endPage){
 			endPage=lastPageNum;
 			flag=true;

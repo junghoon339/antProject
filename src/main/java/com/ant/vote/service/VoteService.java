@@ -16,6 +16,11 @@ public interface VoteService {
 	public List<VoteDTO> selectVoteList(int voteState);
 	
 	/**
+	 * 마감시간이 되면 vote_state를 1로 변경 처리하는 메서드
+	 * */
+	public int voteDateUpdate();
+	
+	/**
 	 * 투표번호에 해당하는 투표목록 출력
 	 * */
 	public VoteDTO selectVoteListByVoteNo(int voteNo);
@@ -30,7 +35,7 @@ public interface VoteService {
 	 * 투표 마감하기(UPDATE)
 	 * update vote set voteState=1 where vote_no = #{_parameter}
 	 * */
-	public int updateVote(int voteNo);
+	public int updateVote(int userNo, int voteNo);
 	
 	/**
 	 * 투표 삭제하기(DELETE)
@@ -54,12 +59,22 @@ public interface VoteService {
 	public int deleteVoteDetail(int voteDetailNo);
 	
 	/**
-	 * 투표 참여자 검색하기(INSERT)
+	 * 투표 참여자 검색하기(SELECT)
 	 * */
 	public List<VoteDetailDTO> selectVoteDetail();
 	
 	/**
-	 * 투표 참여자 검색하기(INSERT) : 조건
+	 * 투표 참여자 검색하기(SELECT) : 조건
+	 * */
+	public int selectVoteDetailCall(int voteNo);
+	
+	/**
+	 * 투표 참여자 검색하기(SELECT) : 조건
+	 * */
+	public List<VoteDetailDTO> selectVoteDetailCall(int voteNo,int voteDetailColumn);
+	
+	/**
+	 * 투표 참여자 검색하기(SELECT) : 조건
 	 * */
 	public VoteDetailDTO selectVoteDetail(int userNo, int voteNo);
 	

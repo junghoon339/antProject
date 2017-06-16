@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -23,14 +24,67 @@ public class StorageController {
 
 	private String path = "C:\\antAndGrasshopper\\download";
 	
-	@RequestMapping("/storageTable/{projectNo}")
+	/*@RequestMapping("/storageTable/{projectNo}")
 	public ModelAndView storageIndex(@PathVariable int projectNo){
 		List<StorageDTO> list =  service.selectAll(projectNo);
 		ModelAndView mv = new ModelAndView();
 		mv.setViewName("storage/test");
 		mv.addObject("list",list);
 		return mv;
+	}*/
+	
+	//paging~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~``
+	@RequestMapping("/storageTable/{projectNo}")
+	public ModelAndView storageIndex1(@PathVariable int projectNo, String pageNumber, String searchText,@RequestParam(defaultValue="-1")int categoryNo){
+		
+		if(pageNumber==null){
+			pageNumber="1";
+		}
+		
+		int curPage=Integer.parseInt(pageNumber);
+
+		int rowCount=7; //한 페이지에 뿌려질 레코드수
+		int startRow=(curPage-1)*rowCount+1;
+		int endRow=curPage*rowCount;
+		List<StorageDTO> list = null;
+		int totalRow = 0;
+		if(categoryNo==-1){
+			list =  service.selectAll(projectNo,startRow,endRow);
+			totalRow = service.totalCount(projectNo);
+		}else{
+			list = service.selectBySearch(projectNo, startRow, endRow, categoryNo, searchText);
+			totalRow = service.totalCountBySearch(categoryNo, searchText,projectNo);
+		}
+		
+		
+		int pageSu=5; //뿌려질 페이지 수
+		int startPage=((curPage-1)/pageSu)*pageSu+1;
+		int endPage=startPage+pageSu-1;
+		
+		boolean flag=false;//마지막 페이지에 넘어가기 버튼 없애기
+		int lastPageNum=totalRow%rowCount==0 ? totalRow/rowCount : totalRow/rowCount+1;
+		if(lastPageNum<=endPage){
+			endPage=lastPageNum;
+			flag=true;
+		}
+		
+		ModelAndView mv=new ModelAndView();
+		mv.addObject("list",list);
+		mv.addObject("totalRow",totalRow);
+		mv.addObject("startPage",startPage);
+		mv.addObject("endPage",endPage);
+		mv.addObject("flag",flag);
+		mv.addObject("pageSu",pageSu);	
+		mv.addObject("curPage",curPage);
+		mv.addObject("rowCount",rowCount);
+		
+		mv.addObject("categoryNo",categoryNo);
+		mv.addObject("searchText",searchText);
+		
+		mv.setViewName("storage/test");
+		return mv;
 	}
+	//paging~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~``
 	
 	@RequestMapping("/tableDetail/{storageNo}")
 	public ModelAndView selectByStorageNum(@PathVariable int storageNo) throws Exception{

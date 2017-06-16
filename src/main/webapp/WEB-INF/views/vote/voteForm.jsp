@@ -8,6 +8,11 @@
 <title>투표메인</title>
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<link rel="stylesheet" type="text/css"
+	href="${pageContext.request.contextPath}/resources/css/header.css" />
+<link rel="stylesheet" type="text/css"
+	href="${pageContext.request.contextPath}/resources/css/sidebar.css" />
+
 <style>
 table {
 	width: 100%;
@@ -35,9 +40,9 @@ td {
 </style>
 <script>
 	$(function(){
-
+		
 		$(".obj").mouseenter(function(){
-	        $(this).css("background-color", "#e6e6e6");
+	        $(this).css("background-color", "#fdbfc0");
 	    });
 		
 	    $(".obj").mouseleave(function(){
@@ -51,17 +56,27 @@ td {
 </script>
 </head>
 <body>
+	<header> 
+		<jsp:include page="/WEB-INF/views/project/header.jsp" flush="false" />
+	</header>
+	<jsp:include page="/WEB-INF/views/project/sidebar.jsp" />
+	<div id="burger"></div>
+	<section>
+	<div class="container">
+		<div class="row">
 	<%@include file="header.jsp"%>
-	<div class="col-xs-12 col-md-6">
+	<div class="col-lg-9 col-lg-offset-2">
 		<div class="well">
 			<h4>진행중인 투표</h4>
 		</div>
 
 		<div id="doing" class="List" >
 				<c:forEach items="${doingList}" var="doingList" varStatus="doingStatus">
-				<form id="doingForm" action="${pageContext.request.contextPath}/vote/Detail" method="post">
+				<form class="doingForm" id="doingForm" action="${pageContext.request.contextPath}/vote/Detail" method="post">
 				<input type=hidden id="securityInfo" name="${_csrf.parameterName}" value="${_csrf.token}">
-					<input type="hidden" name="voteNo" value="${doingList.voteNo}" />
+					<input type="hidden" name="voteNo" id="voteNo" value="${doingList.voteNo}" />
+					<input type="hidden" name="userNo" id="userNo" value="${userNo}" />
+					<input type="hidden" name="userCount" value="${doingList.userCount}"/>
 					<table class="obj">
 						<tr>
 							<td rowspan="2" id="q"><h1>Q.</h1></td>
@@ -69,11 +84,11 @@ td {
 						</tr>
 						<tr>
 							<td id="attribute" width="50"><c:choose>
-									<c:when test="${userCount!=0}">${userCount}</c:when>
+									<c:when test="${doingList.userCount!=0}">${doingList.userCount}</c:when>
 									<c:otherwise>0</c:otherwise>
 								</c:choose> 명 참여</td>
 							<td id="attribute"><c:choose>
-									<c:when test="${state==0}">미참여</c:when>
+									<c:when test="${doingList.state==false}">미참여</c:when>
 									<c:otherwise>참여완료</c:otherwise>
 								</c:choose></td>
 						</tr>
@@ -90,9 +105,11 @@ td {
 		<div id="done" class="List">
 		
 				<c:forEach items="${doneList}" var="doneList" varStatus="doneStatus">
-				<form id="doneForm" action="${pageContext.request.contextPath}/vote/Detail">
+				<form class="doneForm" id="doneForm" action="${pageContext.request.contextPath}/vote/Detail">
 				<input type=hidden id="securityInfo" name="${_csrf.parameterName}" value="${_csrf.token}">
 				<input type="hidden" name="voteNo" value="${doneList.voteNo}" />
+				<input type="hidden" name="userNo" id="userNo" value="${userNo}" />
+				<input type="hidden" name="userCount" value="${doneList.userCount}"/>
 				<table class="obj">
 					<tr>
 						<td rowspan="2" id="q"><h1>Q.</h1></td>
@@ -101,21 +118,19 @@ td {
 					<tr>
 						<td id="attribute" width="50">
 						<c:choose>
-						<c:when test="${userCount!=0}">${userCount}</c:when>
-						<c:otherwise>0</c:otherwise>
-						</c:choose>
-						명 참여
-						</td>
+						<c:when test="${doneList.userCount!=0}">${doneList.userCount}</c:when>
+									<c:otherwise>0</c:otherwise>
+						</c:choose>명 참여</td>
 						<td id="attribute">
 						<c:choose>
-						<c:when test="${state==0}">미참여</c:when>
-						<c:otherwise>참여완료</c:otherwise>
+									<c:when test="${doneList	.state==false}">미참여</c:when>
+									<c:otherwise>참여완료</c:otherwise>
 						</c:choose>
 						</td>
 					</tr>
 					<tr>
 						<td></td>
-						<td colspan="2" id="attribute">${doneList.voteEndDate}</td>
+						<td colspan="2" id="attribute">투표 마감 ${doneList.voteEndDate}</td>
 					</tr>
 					</table>
 					</form>
@@ -124,5 +139,17 @@ td {
 		</div>
 		<p>
 	</div>
+	</div></div>
+	</section>
+	<script type="text/javascript">
+	$(function(){
+		if(${deleteResult}==1){
+			alert("삭제가 완료되었습니다.");
+		}
+	})
+	</script>
+	<footer> 
+		<jsp:include page="/WEB-INF/views/project/footer.jsp" flush="false" /> 
+	</footer>
 </body>
 </html>

@@ -25,8 +25,25 @@
 	crossorigin="anonymous"></script>
 
 </head>
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script>
+$(function(){
+	$("#create").click(function(){
+		location.href="${pageContext.request.contextPath}/vote/CreateForm?"+$("#securityInfo").attr("name")+"="+$("#securityInfo").val();
+	})
+	
+	$("#list").click(function(){
+		location.href="${pageContext.request.contextPath}/vote/?userNo=1";
+	})
+})
+</script>
 <body>
-헤더<br>
+<input type=hidden id="securityInfo" name="${_csrf.parameterName}" value="${_csrf.token}"> <input type=hidden id="voteNo" value="${voteNo}" />
+<div align="right">
+<input type="button" value="생성하기"  id="create"/> 
+<input type="button" value="목록보기"  id="list"/><p>
+</div>
 <hr>
 </body>
 </html>

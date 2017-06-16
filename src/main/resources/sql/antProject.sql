@@ -82,7 +82,6 @@ create table todo(
 );
 create sequence seq_todo_no;
 
-
 CREATE TABLE vote
 (
    vote_no number constraint vote_no_pk primary key,
@@ -128,11 +127,19 @@ CREATE TABLE user_calendar
 	end_date date not null
 );
 
-
 create sequence seq_user_calendar 
 start with 1
 minvalue 0
 maxvalue 9223372036854775806;
+
+select * from ANT_USER where user_no=41;
+
+insert
+into user_calendar 
+values(seq_event_id.nextval, 41, '�׽�Ʈ��',
+to_date('2016-12-24 05:00:00', 'YYYY-MM-DD HH24:MI:SS'),
+to_date('2016-12-25 09:00:00', 'YYYY-MM-DD HH24:MI:SS'));
+
 
 select * from ant_user;
 
@@ -253,5 +260,11 @@ CREATE TABLE authorities
 
 select * from todo;
 
-create sequence seq_authorities_no;
+	create sequence seq_authorities_no;
 
+	
+			SELECT d.vote_detail_no, d.vote_no, s.vote_selector_no
+		FROM vote_detail d JOIN vote_selector s 
+		ON d.vote_detail_no = s.vote_detail_no 
+		AND d.vote_no = 4' 
+		AND d.vote_detail_no = '10

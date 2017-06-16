@@ -1,3 +1,50 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="mapper.messageMapper"></mapper>
+<mapper namespace="mapper.messageMapper">
+	<resultMap type="messageDTO" id="messageDTOMap">
+		<id column="message_no" property="messageNo"/>
+		<result column="user_no_message_sender" property="userNoMessageSender"/>
+		<result column="user_no_message_receiver" property="userNoMessagereceiver"/>
+		<result column="message_content" property="messageContent"/>
+		<result column="message_sendtime" property="messageSendTime"/>
+		<result column="message_receivetime" property="messageReceiveTime"/>
+		<result column="message_state" property="messageState"/>
+		<association property="userDTO" javaType="userDTO">
+			<id column="user_no" property="userNo"/>
+			<result column="user_name" property="userName"/>
+			<result column="user_id" property="userId"/>
+		</association>
+	</resultMap>
+
+	<select id="receiveMessageSelectAll" parameterType="int" resultMap="messageDTOMap">
+		select m.*, au.user_name,au.user_id from message m join ant_user au on m.user_no_message_sender=au.user_no where USER_NO_MESSAGE_RECEIVER=#{_parameter}
+	</select>
+	
+	<select id="sendMessageSelectAll" parameterType="int" resultMap="messageDTOMap">
+		select m.*, au.user_name,au.user_id from message m join ant_user au on m.user_no_message_receiver=au.user_no where USER_NO_MESSAGE_sender=#{_parameter}
+	</select>
+	
+	<insert id="messageInsert" parameterType="messageDTO">
+		insert into message values(seq_message_no.nextval,(select user_no from ant_user where user_id=#{messageReceiver}),#{messageContent},sysdate,null,0,#{userNoMessageSender})
+	</insert>
+	
+	<select id="messageDetail" parameterType="int" resultMap="messageDTOMap">
+		select m.*, au.user_name,au.user_id from message m join ant_user au on m.user_no_message_sender=au.user_no where message_no=#{_parameter}
+	</select>
+	
+	<select id="receiveTimeUpdate" parameterType="int">
+		update message set message_receivetime=sysdate where message_no=#{_parameter}
+	</select>
+	
+	<delete id="messageDelete" parameterType="int">
+		delete from message where message_no=#{_parameter}
+	</delete>
+	
+	<update id="messageDeleteUpdate" parameterType="map">
+		update message set message_state=#{messageState} where message_no=#{messageNo}
+	</update>
+	
+	<select id="selectMessageState" parameterType="int" resultType="int">
+		select message_state from message where message_no=#{_parameter}
+	</select>
+</mapper>
