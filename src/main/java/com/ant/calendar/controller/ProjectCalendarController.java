@@ -1,17 +1,14 @@
-package com.ant.project.controller;
+package com.ant.calendar.controller;
 
 import java.io.Serializable;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
@@ -24,10 +21,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.ant.calendar.dto.ProjectCalendarDTO;
 import com.ant.calendar.dto.UserCalendarDTO;
-import com.ant.calendar.service.UserCalendarService;
+import com.ant.calendar.service.ProjectCalendarService;
 import com.ant.project.dto.ProjectDTO;
-import com.ant.project.service.ProjectService;
 import com.ant.user.dto.UserDTO;
 import com.dhtmlx.planner.DHXEv;
 import com.dhtmlx.planner.DHXEvent;
@@ -37,13 +34,11 @@ import com.dhtmlx.planner.DHXSkin;
 import com.dhtmlx.planner.DHXStatus;
 
 @Controller
-@RequestMapping("/project")
-public class ProjectController implements Serializable {
-	@Autowired
-	private ProjectService projectService;
+@RequestMapping("/calendar")
+public class ProjectCalendarController implements Serializable {
 	
 	@Autowired
-	private UserCalendarService calendarService;
+	private ProjectCalendarService calendarService;
 
 	public static String date_format = "MM/dd/yyyy HH:mm";
 	public static String filter_format = "yyyy-MM-dd";
@@ -52,13 +47,8 @@ public class ProjectController implements Serializable {
 	private Date from;
 	private Date to;
 	private Boolean dynFilter;
-
-	/**
-	 * 홈화면(로그인성공하면 띄워지는 화면)
-	 * 
-	 * @throws Exception
-	 */
-	@RequestMapping("/home")
+	
+	@RequestMapping("/projectCalendar")
 	public ModelAndView home(HttpServletRequest req) throws Exception {
 		// 로그인된 userNo
 		/*
@@ -92,7 +82,13 @@ public class ProjectController implements Serializable {
 
 		UserDTO userDTO = (UserDTO) session.getAttribute("userDTO");
 		int userNo = userDTO.getUserNo();
-
+		System.out.println("userNO : "+userNo);
+		
+		//ProjectDTO projectDTO = (ProjectDTO)session.getAttribute("projectDTO");
+		int projectNo = 1;
+		System.out.println("projectNo : "+projectNo);
+		
+		
 		// calendar영역
 		DHXPlanner planner = new DHXPlanner(contextPath + "/resources/codebase/", DHXSkin.TERRACE);
 		planner.localizations.set("cr");
@@ -114,51 +110,17 @@ public class ProjectController implements Serializable {
 		System.out.println("token:" + token);
 
 		planner.data.dataprocessor
-				.setURL(contextPath + "/project/events?" + token.getParameterName() + "=" + token.getToken());
-		planner.parse(calendarService.getEvent(userNo));
+				.setURL(contextPath + "/calendar/events?" + token.getParameterName() + "=" + token.getToken());
+		planner.parse(calendarService.getEvent(projectNo));
 
 		ModelAndView mv = new ModelAndView();
 		mv.addObject("schedule", planner.render());
-		mv.setViewName("project/home");
+		mv.setViewName("calendar/test");
 		// mv.addObject("currentProList",currentProList);
 		// mv.addObject("completedProList",completedProList);
 		return mv;
 	}
-
-	/**
-	 * 하나의 프로젝트메인화면
-	 */
-	@RequestMapping("/teamMain")
-	public String teamMain() {
-		return "project/teamMain";
-	}
-
-	/**
-	 * 조별과제 삽입
-	 * 
-	 * @param:projectDTO
-	 */
-	@RequestMapping("/insertProject")
-	public String insertProject(ProjectDTO projectDTO, String[] invitedUser, HttpServletRequest request) {
-		System.out.println("insertProject Controller호출됨.............");
-
-		// 조장이 될(현재 로그인한) 회원의 번호
-		UserDTO userDTO = (UserDTO) request.getSession().getAttribute("userDTO");
-		int userNo = userDTO.getUserNo();
-
-		// 조별과제방에 초대된 회원들의 id invitedUser배열을 list로 변환
-		List<String> invitedUserIdList = new ArrayList<>();
-		Collections.addAll(invitedUserIdList, invitedUser);
-
-		// 초대된 회원의 번호를 담은 리스트
-		List<Integer> invitedUserNolist = projectService.selectUserNoById(invitedUserIdList);
-
-		// 조별과제방 삽입 service
-		int resultInsPro = projectService.insertProject(projectDTO, invitedUserNolist, userNo);
-
-		return "";
-	}
-
+	
 	@RequestMapping("/events")
 	@ResponseBody
 	public String events(HttpServletRequest request) throws Exception {
@@ -175,7 +137,7 @@ public class ProjectController implements Serializable {
 
 		} else {
 			value = request.getParameter("id");
-			System.out.println("id:" + value);
+			System.out.println("id: " + value);
 			if (value != null)
 				actions = (new StringBuilder()).append(actions).append(saveOne(request, value, "")).toString();
 		}
@@ -293,14 +255,18 @@ public class ProjectController implements Serializable {
 		String start_date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(event.getStart_date());
 		String end_date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(event.getEnd_date());
 
-		UserCalendarDTO schedule = new UserCalendarDTO();
+		ProjectCalendarDTO schedule = new ProjectCalendarDTO();
 
 		schedule.setEvent_name(event.getText());
 
 		UserDTO userDTO = (UserDTO) session.getAttribute("userDTO");
 		schedule.setUser_no(userDTO.getUserNo());
-		System.out.println("user_no" + userDTO.getUserNo());
-
+		System.out.println("user_no " + userDTO.getUserNo());
+		
+		/*ProjectDTO projectDTO =(ProjectDTO)session.getAttribute("projectDTO");
+		System.out.println("project_no " + projectDTO.getProjectNo());*/
+		schedule.setProject_no(1);
+		
 		schedule.setStart_date(start_date);
 		schedule.setEnd_date(end_date);
 		
@@ -309,12 +275,12 @@ public class ProjectController implements Serializable {
 		 
 
 		if (status == DHXStatus.UPDATE) {
-			System.out.println("update 컨트롤러->서비스 접근");
+			System.out.println("projectCalendar update 컨트롤러->서비스 접근");
 			calendarService.updateEvent(schedule);
 			event.setId(schedule.getEvent_id());
 
 		} else if (status == DHXStatus.INSERT) {
-			System.out.println("insert 컨트롤러->서비스 접근");
+			System.out.println("projectCalendar insert 컨트롤러->서비스 접근");
 			calendarService.insertEvent(schedule);
 			event.setId(schedule.getEvent_id());
 

@@ -405,21 +405,21 @@ Main Components
 .cd-schedule .event-modal .body-bg {
   z-index: 1;
   background: white;
-  -webkit-transform-origin: top left;
-      -ms-transform-origin: top left;
-          transform-origin: top left;
+  -webkit-transform-origin: center;
+      -ms-transform-origin: center;
+          transform-origin: center;
 }
 
 .cd-schedule .event-modal .header-bg {
   z-index: 2;
-  -webkit-transform-origin: top center;
-      -ms-transform-origin: top center;
-          transform-origin: top center;
+  -webkit-transform-origin: center;
+      -ms-transform-origin: center;
+          transform-origin: center;
 }
 
 .cd-schedule .event-modal .close {
   /* this is the 'X' icon */
-  position: absolute;
+  position: relative;
   top: 0;
   right: 0;
   z-index: 3;

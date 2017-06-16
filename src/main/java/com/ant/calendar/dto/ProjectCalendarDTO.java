@@ -1,9 +1,9 @@
 package com.ant.calendar.dto;
 
 public class ProjectCalendarDTO {
-	private int event_id;
-	private int user_no;
-	private int project_no;
+	private Integer event_id;
+	private Integer user_no;
+	private Integer project_no;
 	private String event_name;  
 	private String start_date;  
 	private String end_date;

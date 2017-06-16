@@ -36,6 +36,8 @@
         background: #666;
         color: white;
     } */
+
+    
     
 
 </style>
@@ -55,7 +57,8 @@
     <tr>
         <th>09:00 - 10:00</th>
         
-            <td><input type="button" id="button" style= "width:100%; background-color:transparent;  border:0px transparent solid;"></td>
+            <!-- <td><input type="button" id="button" style= "width:100%; height:100%; background-color:transparent;  border:0px transparent solid;"></td> -->
+            <td></td>
             <td>English</td>
             <td title="No Class" class="Holiday"></td>
             <td>Chemestry-1</td>

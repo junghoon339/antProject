@@ -35,5 +35,10 @@ public class UserController {
 	@RequestMapping("/chat")
 	public String chat(){
 		return "user/chat";
+	}	
+	
+	@RequestMapping("/timetable")
+	public String timeUpdate(){
+		return "timetable/timetable";
 	}
 }

@@ -15,6 +15,7 @@
 <link rel="stylesheet" type="text/css"	href="${pageContext.request.contextPath}/resources/css/main.css" />
 <link rel="stylesheet" type="text/css"	href="${pageContext.request.contextPath}/resources/css/room.css" />
 <link rel="stylesheet" type="text/css"	href="${pageContext.request.contextPath}/resources/css/tabModule.css" />
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/codebase/dhtmlxscheduler.css">
 
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/tabModule.js"></script>
@@ -69,7 +70,7 @@
 				<li>My TimeTable</li>
 				<li>My Calendar</li>
 			</ul>
-			<ul class="tab-content">
+			<ul class="tab-content" >
 				<li>
 					<section id="bs-pricing-six"
 						class="bs-pricing-four roomy-50 bg-white fix">
@@ -143,12 +144,13 @@
 					<h4>완료된 팀플안에 들어갈 내용..</h4>
 				</li>
 				<li>
-					<!--TAB CONTENT-->
-					<%-- <%@include file="../timetable/template.jsp" %> --%>
-					<%@include file="../timetable/table.jsp" %>
+					<!--timetable tab-->
+				<%-- <%@include file="../timetable/timetable.jsp" %> --%>
+				<a href="${pageContext.request.contextPath}/user/timetable">시간표이동</a>
+					
 				</li>
 				<li>
-					<!--TAB CONTENT-->
+					<!-- calendar tab-->
 					${schedule}
 						
 				</li>
@@ -168,7 +170,7 @@
 					<h4 class="modal-title" id="myModalLabel">새로운 팀플 만들기</h4>
 				</div>
 				<div class="modal-body">
-					<div class="container" style="margin-top:30px;">
+					<div class="container" style="margin-top:10px;">
 						<div class="row">
 							<div class="">
 						        <form id="projectForm" class="form-horizontal col-sm-7 col-sm-offset-1" action="${pageContext.request.contextPath}/project/insertProject" method="post">

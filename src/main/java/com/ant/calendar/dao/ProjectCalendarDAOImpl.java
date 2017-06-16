@@ -14,18 +14,17 @@ import com.dhtmlx.planner.DHXEvent;
 import com.dhtmlx.planner.DHXEventsManager;
 
 @Repository
-public class CalendarDAOImpl implements CalendarDAO {
-	
+public class ProjectCalendarDAOImpl implements ProjectCalendarDAO {
+
 	@Autowired
-	private SqlSession sqlSession;
+	private SqlSession sqlSession;	
 	
 	@Override
-	public List<DHXEv> getEvent(int userNo) {
-		System.out.println("select等窜");
+	public List<DHXEv> getEvent(int projectNo) {
 		DHXEventsManager.date_format = "yyyy-MM-dd HH:mm:ss";
 		List evs = new ArrayList();
 		
-		List<UserCalendarDTO> resultset = sqlSession.selectList("userCalendarMapper.getEvent", userNo);
+		List<ProjectCalendarDTO> resultset = sqlSession.selectList("projectCalendarMapper.getEvent", projectNo);
 		
 		for(int i = 0; i < resultset.size(); i++){
 			DHXEvent e = new DHXEvent();
@@ -37,35 +36,23 @@ public class CalendarDAOImpl implements CalendarDAO {
 			evs.add(e);
 		}
 		DHXEventsManager.date_format = "MM/dd/yyyy HH:mm";
-		System.out.println("dao");
+		System.out.println("projectCalendar select 促坷->技记 立辟");
 		return evs;
 	}
 
 	@Override
-	public void updateEvent(UserCalendarDTO schedule) {
-		System.out.println("update 促坷->技记 立辟");
-		sqlSession.update("userCalendarMapper.updateEvent", schedule);
+	public void insertEvent(ProjectCalendarDTO schedule) {
+		sqlSession.insert("projectCalendarMapper.insertEvent", schedule);
 	}
-
-	@Override
-	public void insertEvent(UserCalendarDTO schedule) {
-		System.out.println("insert 促坷->技记 立辟");
-		sqlSession.insert("userCalendarMapper.insertEvent", schedule);
-	}
-
+	
 	@Override
 	public void updateEvent(ProjectCalendarDTO schedule) {
-		// TODO Auto-generated method stub
-	}
-
-	@Override
-	public void insertEvent(ProjectCalendarDTO schedule) {
-		// TODO Auto-generated method stub
+		sqlSession.update("projectCalendarMapper.updateEvent", schedule);
 	}
 
 	@Override
 	public void deleteEvent(Integer id) {
-		sqlSession.delete("userCalendarMapper.deleteEvent",id);
+		sqlSession.delete("projectCalendarMapper.deleteEvent", id);
 	}
 
 }
