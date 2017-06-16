@@ -1,7 +1,5 @@
 package com.ant.chat.websocket;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -10,7 +8,6 @@ import org.springframework.http.server.ServerHttpRequest;
 import org.springframework.http.server.ServerHttpResponse;
 import org.springframework.http.server.ServletServerHttpRequest;
 import org.springframework.web.socket.WebSocketHandler;
-import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.server.support.HttpSessionHandshakeInterceptor;
 
 public class HandshakeInterceptor extends HttpSessionHandshakeInterceptor {
@@ -26,16 +23,10 @@ public class HandshakeInterceptor extends HttpSessionHandshakeInterceptor {
 
 		HttpServletRequest req = ssreq.getServletRequest();
 
-		/*
-		 * String userId = req.getParameter("userid");
-		 * System.out.println("param, id:"+userId); attributes.put("userId",
-		 * userId);
-		 */
-
 		// 세션에서 프로젝트 넘버를 가져옴
 		int projectNo = (int) req.getSession().getAttribute("projectNo");
 		attributes.put("projectNo", projectNo);
-		
+
 		System.out.println("HttpSession에 저장된 pNo:" + projectNo);
 
 		return super.beforeHandshake(request, response, wsHandler, attributes);

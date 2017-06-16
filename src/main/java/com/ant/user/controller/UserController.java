@@ -52,23 +52,6 @@ public class UserController {
 	 * 
 	 * return "project/teamMain";///WEB-INF/views/project/teamMain.jsp }
 	 */
-
-	@RequestMapping("/chat")
-	public ModelAndView chat(HttpSession session) {
-		int projectNo = (int) session.getAttribute("projectNo");
-		ModelAndView mv = new ModelAndView("user/chat");
-		List<String> chatList = null;
-		
-		try {
-			chatList = FileUtils.readLines(new File("/chat/chat_room_no_" + projectNo + ".txt"), "utf-8");
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-
-		mv.addObject("chatList", chatList);
-		return mv;
-	}
-	
 	@RequestMapping("/timetable")
 	public String timeUpdate(){
 		return "timetable/timetable";

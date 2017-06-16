@@ -1,11 +1,8 @@
 package com.ant.chat.service;
 
-import java.io.BufferedReader;
 import java.io.BufferedWriter;
-import java.io.FileNotFoundException;
+import java.io.File;
 import java.io.FileOutputStream;
-import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 
@@ -50,9 +47,10 @@ public class ChatServiceImpl implements ChatService {
 		// The name of the file to open.
 		String pNo = Integer.toString(projectNo);
 		String fileName = "/chat/chat_room_no_" + pNo + ".txt";
+		
 		BufferedWriter bufferedWriter = null;
 		try {
-			FileOutputStream fileOutputStream = new FileOutputStream(fileName, true);
+			FileOutputStream fileOutputStream = new FileOutputStream(fileName, true);	
 			OutputStreamWriter OutputStreamWriter = new OutputStreamWriter(fileOutputStream, "UTF-8");
 			bufferedWriter = new BufferedWriter(OutputStreamWriter);
 			
