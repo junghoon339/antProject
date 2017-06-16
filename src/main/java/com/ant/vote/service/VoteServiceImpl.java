@@ -45,8 +45,7 @@ public class VoteServiceImpl implements VoteService {
 
 	@Override
 	public int deleteVote(int voteNo) {
-		// TODO Auto-generated method stub
-		return 0;
+		return voteDAO.deleteVote(voteNo);
 	}
 
 	@Override

@@ -18,23 +18,28 @@ var getchoice = 0; //선택했던 라디오가 무엇인지 DB에서 가져온 �
 var columns = new Array();
 
 $(function() {
-	
+
 	$(".ifEndLabel").hide();
 		
 	$(".radio").each(function(index,item){
 		columns[index] = $(item).val();
 	})
 	
-	alert(${voteState});
-	if(${voteState}==1){
-		$(".ifEnd").hide();
-		$(".ifEndLabel").show();
-		$(".ifEndLabelDate").text(${voteEndDate});
-	}
+	$('[data-toggle="tooltip"]').tooltip();
 	
 	//초기설정 함수 init()호출
 	init();
 		
+	if(${voteState}==1){
+		$(".ifEnd").hide();
+		$(".ifEndLabel").show();
+		$(".ifEndLabelDate").html("${voteEndDate}");
+		$("#well").css("color", "gray");
+		$(".radio").each(function(index,item){
+			$(item).off();
+		})
+	}
+	
 	$("#vote").on('click', function() {
 		console.log('여기..1');
 		btnEvent(this);
@@ -209,7 +214,6 @@ td {
 	<div id="myModal" class="modal fade in">
         <div class="modal-dialog modal-sm">
             <div class="modal-content">
- 
                 <div class="modal-header">
                     <h4 class="modal-title">Modal Heading</h4>
                 </div>
@@ -217,7 +221,8 @@ td {
                     <h4>글을 삭제하시겠습니까?</h4>
                 </div>
                 <div class="modal-footer">
-                    <button class="btn btn-warning"> 확인</button> 
+                	<input type=hidden id="securityInfo" name="${_csrf.parameterName}" value="${_csrf.token}">	
+                    <button class="btn btn-warning" onclick="location.href='${pageContext.request.contextPath}/vote/delete?voteNo=${voteNo}&userNo=1'"> 확인</button> 
                     <button class="btn btn-default" data-dismiss="modal"> 취소</button>
                 </div>
  
@@ -234,13 +239,21 @@ td {
 						<button data-toggle="dropdown" class="btn btn-default btn-md dropdown-toggle" type="button">
 							<span class="caret"></span></button>
 						<ul class="dropdown-menu">
-							<li><a href="#">수정하기</a></li>
+							<c:choose>
+                		<c:when test="${voteWriter==1}">
+                    		<li><a href="location.href='${pageContext.request.contextPath}/vote/updateForm?voteNo=${voteNo}&userNo=1' ">수정하기</a></li>
 							<li><a data-toggle="modal" href="#myModal">삭제하기</a></li>
+                    	</c:when>
+                    	<c:otherwise>
+                    		<li><font color="gray">수정하기</font></li>
+							<li><font color="gray">삭제하기</font></li>
+                    	</c:otherwise>
+                    </c:choose>
 						</ul>
 					</div>
 					<p>
 				</div>
-				<div class="well">Q.<span class="ifEndLabel">[종료]</span> ${voteTitle}<span class="ifEndLabelDate"></span></div>
+				<div class="well" id="well"><Strong>Q. <span class="ifEndLabel">[종료]</span> ${voteTitle}</Strong><p><font size="1"><span class="ifEndLabelDate"></span> <span class="ifEndLabel">마감</span></font></div>
 		<p>
 		<div>
 			<hr>

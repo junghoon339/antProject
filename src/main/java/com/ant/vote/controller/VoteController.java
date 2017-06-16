@@ -9,6 +9,8 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.TreeMap;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -30,7 +32,7 @@ public class VoteController {
 	VoteService voteService;
 	
 	@RequestMapping("/")
-	public String mainForm(Model model, int userNo) {
+	public String mainForm(HttpServletRequest request, Model model, int userNo) {
 
 		voteService.voteDateUpdate();
 		
@@ -60,6 +62,7 @@ public class VoteController {
 			vote.setState(state);
 		}
 		
+		model.addAttribute("deleteResult", request.getAttribute("deleteResult"));
 		model.addAttribute("doingList", doingList);
 		model.addAttribute("doneList", doneList);
 		return "vote/voteForm";
@@ -119,6 +122,7 @@ public class VoteController {
 		model.addAttribute("voteTitle", dto.getVoteTitle());
 		model.addAttribute("voteState", dto.getVoteState());
 		model.addAttribute("voteEndDate", dto.getVoteEndDate());
+		model.addAttribute("voteWriter", dto.getUserNo());
 		model.addAttribute("voteDetail", detailList);
 		model.addAttribute("userCount", userCount);
 		return "vote/voteDetailForm";
@@ -206,5 +210,24 @@ public class VoteController {
 	public int DetailHandling(int userNo, int voteNo) {
 		System.out.println("userNo-->"+userNo+", voteNo-->"+voteNo);
 		return voteService.updateVote(userNo, voteNo);
+	}
+	
+	@RequestMapping("/delete")
+	public String delete(HttpServletRequest request, int userNo, int voteNo) {
+		int result = voteService.deleteVote(voteNo);
+
+		request.setAttribute("deleteResult", result);
+		return "forward:/vote/";
+	}
+	
+	@RequestMapping("/updateForm")
+	public String update(Model model, int userNo, int voteNo) {
+		VoteDTO vote = voteService.selectVoteListByVoteNo(voteNo);
+		
+		for(VoteDetailDTO voteDetail : vote.getDetails()){
+			voteDetail.getVoteDetailColumn();
+		}
+		model.addAttribute("vote", vote);
+		return "vote/voteUpdateForm";
 	}
 }

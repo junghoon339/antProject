@@ -54,8 +54,7 @@ public class VoteDAOImpl implements VoteDAO {
 
 	@Override
 	public int deleteVote(int voteNo) {
-		// TODO Auto-generated method stub
-		return 0;
+		return session.delete("voteMapper.voteDelete", voteNo);
 	}
 
 	@Override

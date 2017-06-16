@@ -173,10 +173,10 @@
 	</update>
 	
 	<!--
-		투표 항목을 선택한 사람을 종료하는 쿼리문
+		투표 항목을 삭제하는 쿼리문
 	-->
-	<!-- <delete id="">
-	
-	</delete> -->
+	<delete id="voteDelete" parameterType="int">
+		delete from vote where vote_no = #{_parameter}
+	</delete>
 
 </mapper>

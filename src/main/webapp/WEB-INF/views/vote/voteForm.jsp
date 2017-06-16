@@ -141,6 +141,13 @@ td {
 	</div>
 	</div></div>
 	</section>
+	<script type="text/javascript">
+	$(function(){
+		if(${deleteResult}==1){
+			alert("삭제가 완료되었습니다.");
+		}
+	})
+	</script>
 	<footer> 
 		<jsp:include page="/WEB-INF/views/project/footer.jsp" flush="false" /> 
 	</footer>
