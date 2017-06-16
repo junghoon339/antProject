@@ -69,7 +69,7 @@ public class ProjectController implements Serializable {
 		// 로그인된 userNo
 		UserDTO userDTO = (UserDTO) req.getSession().getAttribute("userDTO");
 		int userNo = userDTO.getUserNo();
-		System.out.println("controller에서 받아오는 userID= "+userDTO.getUserId()+"/ userNo= " + userNo);
+		//System.out.println("controller에서 받아오는 userID= "+userDTO.getUserId()+"/ userNo= " + userNo);
 
 		// userNo로 진행중프로젝트, 완료된프로젝트 
 		Map<String, List<ProjectDTO>> projectMap = projectService.selectProjectById(userNo);
@@ -151,13 +151,18 @@ public class ProjectController implements Serializable {
 		UserDTO userDTO = (UserDTO) request.getSession().getAttribute("userDTO");
 		int userNo = userDTO.getUserNo();
 
-		// 조별과제방에 초대된 회원들의 id invitedUser배열을 list로 변환
-		List<String> invitedUserIdList = new ArrayList<>();
-		Collections.addAll(invitedUserIdList, invitedUser);
-
-		// 초대된 회원의 번호를 담은 리스트
-		List<Integer> invitedUserNolist = projectService.selectUserNoById(invitedUserIdList);
-
+		List<Integer> invitedUserNolist = null;
+		
+		System.out.println("invitedUser : "+invitedUser);
+		if(invitedUser!=null){	//초대할 회원들이 존재한다면
+			// 조별과제방에 초대된 회원들의 id invitedUser배열을 list로 변환
+			List<String> invitedUserIdList = new ArrayList<>();
+			Collections.addAll(invitedUserIdList, invitedUser);
+	
+			// 초대된 회원의 번호를 담은 리스트
+			invitedUserNolist = projectService.selectUserNoById(invitedUserIdList);
+		}
+		
 		// 조별과제방 삽입 service
 		int resultInsPro = projectService.insertProject(projectDTO, invitedUserNolist, userNo);
 

@@ -190,7 +190,7 @@ $(document).ready(function(){
 								</div>
 								<div class="modal-footer ">
 									<button type="button" class="btn btn-warning btn-lg" style="width: 100%;">
-										<span class="glyphicon glyphicon-ok-sign"></span> Update
+										<span class="glyphicon glyphicon-ok-sign"></span> 초대하기
 									</button>
 								</div>
 							</div>
