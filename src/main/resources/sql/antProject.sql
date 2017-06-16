@@ -51,8 +51,8 @@ select * from project
 CREATE TABLE project(
    project_no            NUMBER CONSTRAINT project_no_pk PRIMARY KEY,
    project_name          varchar2(50) NOT NULL,
-   project_startdate     varchar2(50) NOT NULL,
-   project_enddate       varchar2(50) NOT NULL,
+   project_startdate     date NOT NULL,
+   project_enddate       date NOT NULL,
    project_subject       varchar2(30) NOT NULL,
    project_teacher       varchar2(20) NOT NULL,
    project_state         NUMBER DEFAULT 0 --0:진행중, 1:설문조사진행중(CRUD불가), 2:프로젝트종료(CRUD불가)

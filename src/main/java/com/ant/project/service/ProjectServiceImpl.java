@@ -95,6 +95,12 @@ public class ProjectServiceImpl implements ProjectService {
 		
 		return result;
 	}
+	
+	@Override
+	public int deleteProjectUser(ProjectUserDTO projectUserDTO) {
+		int result = projectDAO.deleteProjectUser(projectUserDTO);
+		return result;
+	}
 
 	@Override
 	public String selectProjectUserRole(ProjectUserDTO projectUserDTO) {
