@@ -21,17 +21,7 @@
 		$("#insert").click(function(){
 			alert($("input name[voteTitle]").text());
 			
-			if( $("input name[voteTitle]").text()=="" ){
-				/* alert("투표 제목을 입력해주세요."); */	
-				/* return; */
-			}
-			
-			/* else if( $("input name[option]").text()=="" ){
-				alert("투표 항목을 2개이상 입력해주세요.");
-			} */
-			
 			$("#createForm").submit();
-			
 		})
 		
 		//**************************************************************************8
@@ -79,12 +69,12 @@
 					<input type=hidden id="securityInfo" name="${_csrf.parameterName}" value="${_csrf.token}">
 					<input type="hidden" name="projectUserNo" value="1" />
 					투표 제목<p>
-					<input type="text" class="form-control" name="voteTitle" value="" placeholder="제목을 입력하세요." /><p>
+					<input type="text" class="form-control" name="voteTitle" value="" placeholder="제목을 입력하세요." value=""/><p>
 					항목 입력
 					<div id="addArticle"><p>
-						<input type="text" class="form-control" name="chk" placeholder="항목을 입력하세요." /><p>
-						<input type="text" class="form-control" name="chk" placeholder="항목을 입력하세요." /><p>
-						<input type="text" class="form-control" name="chk" placeholder="항목을 입력하세요." /><p>
+						<input type="text" class="form-control" name="chk" placeholder="항목을 입력하세요."  value=""/><p>
+						<input type="text" class="form-control" name="chk" placeholder="항목을 입력하세요." value=""/><p>
+						<input type="text" class="form-control" name="chk" placeholder="항목을 입력하세요." value=""/><p>
 					</div>
 					<a href="#" class="btn btn-sm btn-default" id="addBtn">
 						<span class="glyphicon glyphicon-plus"></span> 

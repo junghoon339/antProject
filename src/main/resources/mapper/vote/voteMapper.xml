@@ -56,15 +56,25 @@
 	  -->
 	<select id="voteSelect" parameterType="int" resultMap="voteDTOMap">
 		select vote_no, project_no, vote_title, vote_adddate, vote_enddate, vote_state
-		from vote where vote_state = #{_parameter}
+		from vote 
+		where vote_state = #{_parameter} order by vote_no
 	</select>
 
+	<!--
+		투표목록을 가져오는 쿼리문
+		parameter 0 : 미참여 / 1 : 참여 
+	  -->
+	<update id="voteDateUpdate">
+		UPDATE vote 
+		SET vote_state = 1
+		WHERE vote_enddate != null AND vote_adddate > vote_enddate 
+	</update>
 
 	<!--
 		해당 투표목록에 해당하는 컬럼을 가져오는 쿼리문
 	-->
 	<select id="voteSelectByVoteNo" parameterType="int" resultMap="collectionVoteMap">
-		SELECT v.vote_no, v.vote_title, d.vote_detail_no, d.vote_detail_column, v.user_no
+		SELECT v.vote_no, v.vote_title, d.vote_detail_no, d.vote_detail_column, v.user_no, v.vote_state, v.vote_enddate
 		FROM vote v JOIN
 		vote_detail d
 		ON v.vote_no = #{_parameter}
@@ -114,12 +124,24 @@
 	</insert>
 	
 	<!--
-		해당 투표에대한 항목을 가져오는 쿼리문
+		해당 투표에대한 참여수를 가져오는 쿼리문
 	-->
-	<select id="voteDetailSelect" parameterType="int" resultMap="voteDetailDTOMap">
-		select * 
-		from vote_detail 
-		where vote_no = #{_parameter} order by vote_detail_no
+	<select id="voteAllCount" parameterType="int" resultType="int">
+		SELECT count(s.vote_selector_no)
+		FROM vote_detail d JOIN vote_selector s 
+		ON d.vote_detail_no = s.vote_detail_no 
+		AND d.vote_no = #{voteNo} 
+	</select>
+	
+	<!--
+		해당 항목에 투표한 사람수를 가져오는 쿼리문
+	-->
+	<select id="voteDetailSelect" parameterType="map" resultMap="collectionVoteDetailMap">
+		SELECT d.vote_detail_no, d.vote_no, s.vote_selector_no
+		FROM vote_detail d JOIN vote_selector s 
+		ON d.vote_detail_no = s.vote_detail_no 
+		AND d.vote_no = #{voteNo} 
+		AND d.vote_detail_no = #{voteDetailNo}
 	</select>
 	
 	<!--
@@ -131,17 +153,30 @@
 	</insert>
 	
 	<!--
-		투표 항목을 선택한 사람을 수정 쿼리문
+		특정대상이 선택한 투표 항목을 바꾸는 수정 쿼리문
 	-->
-	<!-- <update id="">
-	
-	</update> -->
+	<update id="voteSelectorUpdate" parameterType="voteSelectorDTO">
+		update vote_selector
+		set vote_detail_no = #{voteDetailNo}
+		where vote_selector_no = #{voteSelectorNo}
+	</update>
 	
 	<!--
-		투표 항목을 선택한 사람을 삭제하는 쿼리문
+		글쓴이가 본인이 쓴 투표를 종료시키는 쿼리문
 	-->
-	<!-- <delete id="">
+	<update id="voteEndUpdate" parameterType="map">
+		update vote 
+		set vote_state = 1, vote_enddate = sysdate
+		where
+		vote_no = #{voteNo}
+		and user_no = #{userNo}
+	</update>
 	
-	</delete> -->
+	<!--
+		투표 항목을 삭제하는 쿼리문
+	-->
+	<delete id="voteDelete" parameterType="int">
+		delete from vote where vote_no = #{_parameter}
+	</delete>
 
 </mapper>
