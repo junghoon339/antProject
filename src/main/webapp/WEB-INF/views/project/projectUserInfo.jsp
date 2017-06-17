@@ -92,21 +92,13 @@ $(document).ready(function(){
 	
 							</tbody>
 						</table>
-						<a href="#" class="btn btn-sm btn-default" id="addBtn">
+
+						<button class="btn btn-primary btn-xs" data-title="Edit" id="editBtn" data-toggle="modal" data-target="#add" name="${projectUserDTO.userNo}/${projectUserDTO.userName}/${projectUserDTO.projectuserRole.projectUserTask}">
 							<span class="glyphicon glyphicon-plus" data-toggle="modal">팀원추가</span> 
-						</a> 
-						
-						<span data-placement="top" data-toggle="tooltip" title="Edit">
-							<button class="btn btn-primary btn-xs" data-title="Edit" id="editBtn" data-toggle="modal" data-target="#add" name="${projectUserDTO.userNo}/${projectUserDTO.userName}/${projectUserDTO.projectuserRole.projectUserTask}">
-								<span class="glyphicon glyphicon-plus"></span>
-							</button>
-						</span>
-						
+						</button>
 						
 						<div class="clearfix"></div>
 					</div>
-
-
 
 					<div class="modal fade" id="edit" tabindex="-1" role="dialog" aria-labelledby="edit" aria-hidden="true">
 						<div class="modal-dialog">
@@ -183,16 +175,19 @@ $(document).ready(function(){
 									</button>
 									<h4 class="modal-title custom_align" id="Heading">팀원추가</h4>
 								</div>
-								<div class="modal-body">
-									<div class="form-group">
-						           		팀원ID : <input class="form-control"type="text" name="invitedUser"/><p></p>
+								<form action="${pageContext.request.contextPath}/project/addProjectUser" method="post">
+									<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" >
+									<div class="modal-body">
+										<div class="form-group">
+							           		팀원ID : <input class="form-control" type="text" name="userId"/><p></p>
+										</div>
 									</div>
-								</div>
-								<div class="modal-footer ">
-									<button type="button" class="btn btn-warning btn-lg" style="width: 100%;">
-										<span class="glyphicon glyphicon-ok-sign"></span> 초대하기
-									</button>
-								</div>
+									<div class="modal-footer">
+										<button type="submit" class="btn btn-warning btn-lg" style="width: 100%;">
+											<span class="glyphicon glyphicon-ok-sign"></span> 초대하기
+										</button>
+									</div>
+								</form>
 							</div>
 						</div>
 					</div>

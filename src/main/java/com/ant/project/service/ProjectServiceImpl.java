@@ -39,12 +39,6 @@ public class ProjectServiceImpl implements ProjectService {
 		//System.out.println("프로젝트번호"+projectUserDTO.getProjectNo()+" / 조장userNo : "+projectUserDTO.getUserNo());
 		int resultInsLeader = insertProjectLeader(projectUserDTO);
 		
-		//4.초대된 조원에게 초대쪽지보내기
-		//초대된 조원들
-		System.out.println("\n 초대된 팀원의 번호......!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-		for(int userNo2 : invitedUserNoList){
-			System.out.println("초대된 팀원 id : " + userNo2);
-		}
 		result=1;
 		
 		

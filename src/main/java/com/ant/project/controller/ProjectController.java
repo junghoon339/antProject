@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.net.StandardSocketOptions;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -32,6 +33,8 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.ant.calendar.dto.UserCalendarDTO;
 import com.ant.calendar.service.UserCalendarService;
+import com.ant.message.dto.MessageDTO;
+import com.ant.message.service.MessageService;
 import com.ant.project.dto.ProjectDTO;
 import com.ant.project.dto.ProjectUserDTO;
 import com.ant.project.service.ProjectService;
@@ -51,6 +54,9 @@ public class ProjectController implements Serializable {
 	
 	@Autowired
 	private UserCalendarService calendarService;
+	
+	@Autowired
+	private MessageService messageService;
 
 	public static String date_format = "MM/dd/yyyy HH:mm";
 	public static String filter_format = "yyyy-MM-dd";
@@ -145,23 +151,42 @@ public class ProjectController implements Serializable {
 	 * @param:projectDTO
 	 */
 	@RequestMapping("/insertProject")
-	public String insertProject(ProjectDTO projectDTO, String[] invitedUser, HttpServletRequest request) {
+	public String insertProject(ProjectDTO projectDTO, String[] invitedUser, HttpServletRequest req) {
 
 		// 조장이 될(현재 로그인한) 회원의 번호
-		UserDTO userDTO = (UserDTO) request.getSession().getAttribute("userDTO");
+		UserDTO userDTO = (UserDTO) req.getSession().getAttribute("userDTO");
 		int userNo = userDTO.getUserNo();
 
 		List<Integer> invitedUserNolist = null;
 		
+		
+		//초대할 회원들이 존재한다면
 		System.out.println("invitedUser : "+invitedUser);
-		if(invitedUser!=null){	//초대할 회원들이 존재한다면
+		if(invitedUser!=null){	
 			// 조별과제방에 초대된 회원들의 id invitedUser배열을 list로 변환
 			List<String> invitedUserIdList = new ArrayList<>();
 			Collections.addAll(invitedUserIdList, invitedUser);
 	
 			// 초대된 회원의 번호를 담은 리스트
-			invitedUserNolist = projectService.selectUserNoById(invitedUserIdList);
+			//invitedUserNolist = projectService.selectUserNoById(invitedUserIdList);
+			
+			String messageReceiver ="";
+			for(String userId : invitedUser){
+				messageReceiver += userId+";";
+			}
+			System.out.println("최종 messageReceiver : " + messageReceiver);
+			
+			//초대url에 담을 projectNo
+			//int projectNo = (int) req.getSession().getAttribute("projectNo");
+
+			MessageDTO messageDTO = new MessageDTO();
+			messageDTO.setMessageContent(userDTO.getUserName()+"님이 조별과제방으로 초대함"); //쪽지내용
+			messageDTO.setUserNoMessageSender(userDTO.getUserNo()); //보내는사람userNo
+			messageDTO.setMessageReceiver(messageReceiver); //받는사람ID
+			//조원들에게 초대쪽지보내기
+			messageService.messageInsert(messageDTO);
 		}
+		
 		
 		// 조별과제방 삽입 service
 		int resultInsPro = projectService.insertProject(projectDTO, invitedUserNolist, userNo);
@@ -254,6 +279,23 @@ public class ProjectController implements Serializable {
 		return "redirect:/project/projectUserInfo";
 	}
 	
+	/**
+	 * 팀원 초대-팀원정보 페이지에서
+	 */
+	@RequestMapping("/addProjectUser")
+	public String addProjectUser(String userId, HttpServletRequest req){
+		int projectNo = (int) req.getSession().getAttribute("projectNo");
+		UserDTO userDTO = (UserDTO) req.getSession().getAttribute("userDTO");
+
+		MessageDTO messageDTO = new MessageDTO();
+		messageDTO.setMessageContent(userDTO.getUserName()+"님이 조별과제방으로 초대함"); //쪽지내용
+		messageDTO.setUserNoMessageSender(userDTO.getUserNo()); //보내는사람userNo
+		messageDTO.setMessageReceiver(userId); //받는사람ID
+		
+		messageService.messageInsert(messageDTO);
+
+		return "redirect:/project/projectUserInfo";
+	}
 	
 	@RequestMapping("/events")
 	@ResponseBody
