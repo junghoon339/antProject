@@ -51,7 +51,7 @@
 </head>
 <body>
 	<div class="wrapper">
-		<jsp:include page="/WEB-INF/views/project/sidebar_ch.jsp" />
+		<jsp:include page="/WEB-INF/views/project/team_sidebar_ch.jsp" />
 
 
 		<div class="main-panel">
@@ -68,14 +68,11 @@
 				</div>
 			</div>
 
-			
-
-
 			<jsp:include page="footer_ch.jsp" flush="false" />
 		</div>
 	</div>
 	
-	<%-- <c:import url="/project/chat"/> --%>
+	<c:import url="/project/chat"/>
 </body>
 
 <!--   Core JS Files   -->
