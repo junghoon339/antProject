@@ -68,14 +68,12 @@
 				</div>
 			</div>
 
-			
-
-
 			<jsp:include page="footer_ch.jsp" flush="false" />
+
+
 		</div>
 	</div>
 	
-	<%-- <c:import url="/project/chat"/> --%>
 </body>
 
 <!--   Core JS Files   -->
