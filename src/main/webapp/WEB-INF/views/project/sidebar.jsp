@@ -66,10 +66,5 @@
 				<span class="hamb-top"></span> <span class="hamb-middle"></span> 
 				<span class="hamb-bottom"></span>
 			</button>
-			
-
-
-
-
 		</div>
 	</div><!-- /#wrapper -->

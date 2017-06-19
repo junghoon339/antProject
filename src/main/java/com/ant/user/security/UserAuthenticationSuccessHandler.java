@@ -15,25 +15,19 @@ import org.springframework.stereotype.Component;
 import com.ant.user.dto.UserDTO;
 
 /**
- * ½ºÇÁ¸µ ½ÃÅ¥¸®Æ¼¿¡¼­ ·Î±×ÀÎ ½ÇÆÐ½Ã È£ÃâµÇ´Â ÀÌº¥Æ® ÇÚµé·¯ÀÓ
- * 
- * springBean ¼³Á¤ ¹®¼­¿¡¼­ <security:form-login ÅÂ±×¿¡ authentication-failure-ref Ãß°¡ÇÏ¸é
- * ·Î±×ÀÎ ½ÇÆÐ½Ã onAuthentiationFailure ¸Þ¼Òµå°¡ ÀÚµ¿ È£ÃâµÊ
- * @author Hwick
- *
+ * ìš”ê³¤ ë¡œê·¸ì¸ ì„±ê³µí–ˆì„ ë•Œ
  */
 @Component // id=memberAuthenticationFailureHandler
 public class UserAuthenticationSuccessHandler implements AuthenticationSuccessHandler{
     private RedirectStrategy redirectStrategy = new DefaultRedirectStrategy();
-   
 
 	@Override
 	public void onAuthenticationSuccess(HttpServletRequest req, HttpServletResponse res, Authentication auth)
 			throws IOException, ServletException {
 		UserDTO userDTO = (UserDTO)auth.getPrincipal();
-		//ÀÎÁõµÈ(·Î±×ÀÎµÈ) È¸¿ø userDTO Session¿¡ ÀúÀå!
 		req.getSession().setAttribute("userDTO", userDTO);
-		//req.getRequestDispatcher("/user/main").forward(req, res); //¿ìµ¿ÀÌ°¡ Áö¿ì°í º¯°æ!
+		
+		//req.getRequestDispatcher("/user/main").forward(req, res); 
 		redirectStrategy.sendRedirect(req,res,"/project/home");
 	}
 	
