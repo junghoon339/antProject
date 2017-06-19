@@ -19,7 +19,7 @@
 	<select id="selectUserById" parameterType="String" resultMap="userMap">
 		SELECT user_no, user_id, user_name, user_password, user_school, user_major 
 		FROM ant_user
-		WHERE user_id = #{_parameter}	
+		WHERE user_id = #{_parameter}
 	</select>
 	
 

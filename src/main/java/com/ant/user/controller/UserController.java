@@ -4,13 +4,11 @@ import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
-import javax.servlet.http.HttpSession;
-
 import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ant.chat.service.ChatService;
 import com.ant.user.dto.UserDTO;
@@ -24,6 +22,8 @@ public class UserController {
 
 	@Autowired
 	private ChatService chatService;
+
+	private List<String> schoolList;
 
 	@RequestMapping("/join")
 	public String join(UserDTO userDTO) {
@@ -55,5 +55,36 @@ public class UserController {
 	@RequestMapping("/timetable")
 	public String timeUpdate(){
 		return "timetable/timetable";
+	}
+	
+	@RequestMapping("/idCheck")
+	@ResponseBody
+	public int idCheckn(String userId){
+		System.out.println(userId);
+		UserDTO userDTO = userService.selectUserById(userId);
+		System.out.println(userDTO);
+		if (userDTO == null)
+			return 0;
+		
+		return 1;
+	}
+	
+	@RequestMapping(value="/schoolCheck",  produces = "application/json; charset=utf8")
+	@ResponseBody
+	public List<String> schoolCheck(String school){
+		System.out.println(school);
+		try {
+			File file = new File("/chat/school.txt");
+			if (!file.exists()){
+				file.createNewFile();
+			}
+			schoolList = FileUtils.readLines(file,"utf-8");
+			
+			return schoolList;
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		return schoolList;
 	}
 }
