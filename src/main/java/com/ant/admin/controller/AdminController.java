@@ -3,11 +3,13 @@ package com.ant.admin.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.instrument.classloading.tomcat.TomcatLoadTimeWeaver;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.ant.admin.dto.NoticeDTO;
 import com.ant.admin.service.AdminService;
 import com.ant.project.dto.ProjectDTO;
 import com.ant.user.dto.UserDTO;
@@ -156,5 +158,57 @@ public class AdminController {
 		ModelAndView mv=new ModelAndView();
 		mv.setViewName("admin/admin-project");
 		return mv;
+	}
+	
+	@RequestMapping("/adminNotice")
+	public ModelAndView NoticeMain(String pageNumber, String searchText){
+		System.out.println(pageNumber);
+		if(pageNumber==null){
+			pageNumber = "1";
+		}
+		
+		int curPage = Integer.parseInt(pageNumber);
+		int rowCount = 7;
+		int startRow = (curPage-1)*rowCount+1;
+		int endRow = curPage*rowCount;
+		List<NoticeDTO> list = null;
+		int totalRow = 0;
+		if(searchText==null){
+			list = service.noticeSelectAll(startRow, endRow);
+			totalRow = service.noticeTotalCount();
+		}else{
+			list = service.noticeSelectBySearch(startRow, endRow, searchText);
+			totalRow = service.noticeTotalCountBySearch(searchText); 
+		}
+		int pageSu = 5;
+		int startPage = ((curPage-1)/pageSu)*pageSu+1;
+		int endPage = startPage+pageSu-1;
+		
+		boolean flag = false;
+		int lastPageNum = totalRow%rowCount==0 ? totalRow/rowCount : totalRow/rowCount+1;
+		if(lastPageNum<=endPage){
+			endPage=lastPageNum;
+			flag=true;
+		}
+		
+		ModelAndView mv = new ModelAndView();
+		mv.addObject("list",list);
+		mv.addObject("totalRow",totalRow);
+		mv.addObject("startPage",startPage);
+		mv.addObject("endPage",endPage);
+		mv.addObject("flag",flag);
+		mv.addObject("pageSu",pageSu);	
+		mv.addObject("curPage",curPage);
+		mv.addObject("rowCount",rowCount);
+		mv.addObject("searchText",searchText);
+		
+		mv.setViewName("/admin/admin-notice");
+		return mv;
+	}
+	
+	@RequestMapping("/noticeInsert")
+	public String noticeInsert(NoticeDTO noticeDTO) throws Exception{
+		service.insertNotice(noticeDTO);
+		return "redirect:/admin/adminNotice";
 	}
 }

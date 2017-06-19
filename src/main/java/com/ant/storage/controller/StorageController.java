@@ -44,8 +44,8 @@ public class StorageController {
 		int curPage=Integer.parseInt(pageNumber);
 
 		int rowCount=7; //한 페이지에 뿌려질 레코드수
-		int startRow=(curPage-1)*rowCount+1;
-		int endRow=curPage*rowCount;
+		int startRow=(curPage-1)*rowCount+1; //한 페이지에서 시작되는 번호
+		int endRow=curPage*rowCount; //한 페이지에서 끝나는 번호
 		List<StorageDTO> list = null;
 		int totalRow = 0;
 		if(categoryNo==-1){
@@ -53,7 +53,7 @@ public class StorageController {
 			totalRow = service.totalCount(projectNo);
 		}else{
 			list = service.selectBySearch(projectNo, startRow, endRow, categoryNo, searchText);
-			totalRow = service.totalCountBySearch(categoryNo, searchText,projectNo);
+			totalRow = service.totalCountBySearch(categoryNo, searchText,projectNo);	
 		}
 		
 		
