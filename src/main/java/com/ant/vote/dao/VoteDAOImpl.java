@@ -38,7 +38,6 @@ public class VoteDAOImpl implements VoteDAO {
 
 	@Override
 	public int insertVote(VoteDTO voteDTO) {
-		System.out.println("[ �떎�삤 ] �젒洹� �쟾..");
 		return session.insert("voteMapper.voteInsert", voteDTO);
 	}
 
@@ -59,7 +58,6 @@ public class VoteDAOImpl implements VoteDAO {
 
 	@Override
 	public int insertVoteDetail(VoteDetailDTO voteDetailDTO) {
-		System.out.println("[ �떎�삤 ] �젒洹� �쟾..");
 		return session.insert("voteMapper.voteDetailInsert", voteDetailDTO);
 	}
 
@@ -99,19 +97,16 @@ public class VoteDAOImpl implements VoteDAO {
 		Map<String, Integer> map = new HashMap<>();
 		map.put("userNo", userNo);
 		map.put("voteNo", voteNo);
-		System.out.println("�뵒�뀒�씪�씠�땲�뀥�씪�씠利덈뱶, �떎�삤 -> 留덉씠諛뷀떚�뒪 �젒洹� userNo : "+userNo+", voteNo : "+voteNo);
 		VoteDetailDTO dto = session.selectOne("voteMapper.voteSelectCheck", map);
-		System.out.println("留덉씠諛뷀떚�뒪 -> �떎�삤濡� 媛��졇�삩 由ъ뒪�듃.. "+dto);
 		return dto;
 	}
 
+	@Override
 	public int voteMaxNo() {
 		int MaxNo = 0;
 		if (session.selectOne("voteMapper.voteMaxNo") == null) {
-			System.out.println("�떎�삤 留μ뒪�꽆 �듃猷�");
 			MaxNo = 1;
 		} else {
-			System.out.println("�떎�삤 留μ뒪�꽆 �럡�뒪");
 			MaxNo = session.selectOne("voteMapper.voteMaxNo");
 		}
 		return MaxNo;

@@ -1,7 +1,5 @@
 package com.ant.chat.websocket;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -10,7 +8,6 @@ import org.springframework.http.server.ServerHttpRequest;
 import org.springframework.http.server.ServerHttpResponse;
 import org.springframework.http.server.ServletServerHttpRequest;
 import org.springframework.web.socket.WebSocketHandler;
-import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.server.support.HttpSessionHandshakeInterceptor;
 
 public class HandshakeInterceptor extends HttpSessionHandshakeInterceptor {
@@ -18,7 +15,7 @@ public class HandshakeInterceptor extends HttpSessionHandshakeInterceptor {
 	public boolean beforeHandshake(ServerHttpRequest request, ServerHttpResponse response, WebSocketHandler wsHandler,
 			Map<String, Object> attributes) throws Exception {
 
-		// À§ÀÇ ÆÄ¶ó¹ÌÅÍ Áß, attributes ¿¡ °ªÀ» ÀúÀåÇÏ¸é À¥¼ÒÄÏ ÇÚµé·¯ Å¬·¡½ºÀÇ WebSocketSession¿¡ Àü´ÞµÈ´Ù
+		// ï¿½ï¿½ï¿½ï¿½ ï¿½Ä¶ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½, attributes ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï¸ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Úµé·¯ Å¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ WebSocketSessionï¿½ï¿½ ï¿½ï¿½ï¿½ÞµÈ´ï¿½
 		System.out.println("Before Handshake");
 
 		ServletServerHttpRequest ssreq = (ServletServerHttpRequest) request;
@@ -32,11 +29,11 @@ public class HandshakeInterceptor extends HttpSessionHandshakeInterceptor {
 		 * userId);
 		 */
 
-		// ¼¼¼Ç¿¡¼­ ÇÁ·ÎÁ§Æ® ³Ñ¹ö¸¦ °¡Á®¿È
+		// ï¿½ï¿½ï¿½Ç¿ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ® ï¿½Ñ¹ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 		int projectNo = (int) req.getSession().getAttribute("projectNo");
 		attributes.put("projectNo", projectNo);
 		
-		System.out.println("HttpSession¿¡ ÀúÀåµÈ pNo:" + projectNo);
+		System.out.println("HttpSessionï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ pNo:" + projectNo);
 
 		return super.beforeHandshake(request, response, wsHandler, attributes);
 	}

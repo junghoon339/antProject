@@ -33,7 +33,6 @@ public class VoteServiceImpl implements VoteService {
 
 	@Override
 	public int insertVote(VoteDTO voteDTO) {
-		System.out.println("[ 서비스 ] 접근 전..");
 		return voteDAO.insertVote(voteDTO);
 	}
 
@@ -50,7 +49,6 @@ public class VoteServiceImpl implements VoteService {
 
 	@Override
 	public int insertVoteDetail(VoteDetailDTO voteDetailDTO) {
-		System.out.println("[ 서비스 ] 접근 전..");
 		return voteDAO.insertVoteDetail(voteDetailDTO);
 	}
 
@@ -84,7 +82,6 @@ public class VoteServiceImpl implements VoteService {
 
 	@Override
 	public VoteDetailDTO selectVoteDetail(int userNo, int voteNo) {
-		System.out.println("디테일이니셜라이즈드, 서비스 -> 다오 접근 userNo : "+userNo+", voteNo : "+voteNo);
 		return voteDAO.selectVoteDetail(userNo, voteNo);
 	}
 	

@@ -1,29 +1,31 @@
 package com.ant.survey.dto;
 
+import java.util.List;
+
 public class SurveyDetailDTO {
 
-	private int surveyDetail;
+	private int surveyDetailNo;
 	private int surveyNo;
 	private int surveyUserNo;
 	private String surveyDetailUserName;
 	private String surveyDetailUserScore;
 
 	public SurveyDetailDTO(){}
-	public SurveyDetailDTO(int surveyDetail, int surveyNo, int surveyUserNo, String surveyDetailUserName,
+	public SurveyDetailDTO(int surveyDetailNo, int surveyNo, int surveyUserNo, String surveyDetailUserName,
 			String surveyDetailUserScore) {
-		this.surveyDetail = surveyDetail;
+		this.surveyDetailNo = surveyDetailNo;
 		this.surveyNo = surveyNo;
 		this.surveyUserNo = surveyUserNo;
 		this.surveyDetailUserName = surveyDetailUserName;
 		this.surveyDetailUserScore = surveyDetailUserScore;
 	}
-
-	public int getSurveyDetail() {
-		return surveyDetail;
+	
+	public int getSurveyDetailNo() {
+		return surveyDetailNo;
 	}
 
-	public void setSurveyDetail(int surveyDetail) {
-		this.surveyDetail = surveyDetail;
+	public void setSurveyDetailNo(int surveyDetailNo) {
+		this.surveyDetailNo = surveyDetailNo;
 	}
 
 	public int getSurveyNo() {

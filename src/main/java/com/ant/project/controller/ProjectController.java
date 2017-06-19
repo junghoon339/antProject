@@ -24,7 +24,6 @@ import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.web.csrf.CsrfToken;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -61,17 +60,17 @@ public class ProjectController implements Serializable {
 	private Boolean dynFilter;
 	private List<String> chatList;
 	/**
-	 * È¨È­¸é(·Î±×ÀÎ ¼º°øÇÏ¸é ¶ç¿öÁö´Â È­¸é)
+	 * È¨È­ï¿½ï¿½(ï¿½Î±ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï¸ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ È­ï¿½ï¿½)
 	 * @throws Exception
 	 */
 	@RequestMapping("/home")
 	public ModelAndView home(HttpServletRequest req) throws Exception {
-		// ·Î±×ÀÎµÈ userNo
+		// ï¿½Î±ï¿½ï¿½Îµï¿½ userNo
 		UserDTO userDTO = (UserDTO) req.getSession().getAttribute("userDTO");
 		int userNo = userDTO.getUserNo();
-		System.out.println("controller¿¡¼­ ¹Þ¾Æ¿À´Â userID= "+userDTO.getUserId()+"/ userNo= " + userNo);
+		System.out.println("controllerï¿½ï¿½ï¿½ï¿½ ï¿½Þ¾Æ¿ï¿½ï¿½ï¿½ userID= "+userDTO.getUserId()+"/ userNo= " + userNo);
 
-		// userNo·Î ÁøÇàÁßÇÁ·ÎÁ§Æ®, ¿Ï·áµÈÇÁ·ÎÁ§Æ® 
+		// userNoï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®, ï¿½Ï·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ® 
 		Map<String, List<ProjectDTO>> projectMap = projectService.selectProjectById(userNo);
 		List<ProjectDTO> currentProList = projectMap.get("currentProList");
 		List<ProjectDTO> completedProList = projectMap.get("completedProList");
@@ -80,15 +79,15 @@ public class ProjectController implements Serializable {
 		
 		
 
-		// 4°³ÀÇ tab¿¡ µé¾î°¥ µ¥ÀÌÅÍ ÁØºñ...
-		//System.out.println("select»Ñ·Á¶ó!!!");
+		// 4ï¿½ï¿½ï¿½ï¿½ tabï¿½ï¿½ ï¿½ï¿½î°¥ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Øºï¿½...
+		//System.out.println("selectï¿½Ñ·ï¿½ï¿½ï¿½!!!");
 		String contextPath = req.getContextPath();
 /*		HttpSession session = req.getSession();
 
 		UserDTO userDTO = (UserDTO) session.getAttribute("userDTO");
 		int userNo = userDTO.getUserNo();*/
 
-		// calendar¿µ¿ª
+		// calendarï¿½ï¿½ï¿½ï¿½
 		DHXPlanner planner = new DHXPlanner(contextPath + "/resources/codebase/", DHXSkin.TERRACE);
 		planner.localizations.set("cr");
 		planner.setWidth(900);
@@ -101,8 +100,8 @@ public class ProjectController implements Serializable {
 		planner.config.setFirstHour(9);
 		planner.config.setLastHour(19);
 		planner.config.setStartOnMonday(false);
-		planner.config.setMonthDate("%Y³â %M¿ù");
-		planner.config.setDefaultDate("%Y³â %M¿ù %jÀÏ");
+		planner.config.setMonthDate("%Yï¿½ï¿½ %Mï¿½ï¿½");
+		planner.config.setDefaultDate("%Yï¿½ï¿½ %Mï¿½ï¿½ %jï¿½ï¿½");
 		planner.config.setDayDate("%D");
 
 		CsrfToken token = (CsrfToken) req.getAttribute(CsrfToken.class.getName());
@@ -121,14 +120,14 @@ public class ProjectController implements Serializable {
 	}
 
 	/**
-	 * ÇÏ³ªÀÇ Á¶º°°úÁ¦ ¸ÞÀÎÈ­¸é
+	 * ï¿½Ï³ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½È­ï¿½ï¿½
 	 */
 	@RequestMapping("/teamMain/{projectNo}")
 	public String teamMain(@PathVariable int projectNo, HttpServletRequest req) {
-		//session¿¡ projectNoÀúÀå
+		//sessionï¿½ï¿½ projectNoï¿½ï¿½ï¿½ï¿½
 		req.getSession().setAttribute("projectNo", projectNo);
 		
-		//session¿¡ Á¶¿ø,Á¶Àå ´ã±â
+		//sessionï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½,ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
 		UserDTO userDTO = (UserDTO) req.getSession().getAttribute("userDTO");
 		int userNo = userDTO.getUserNo();
 		
@@ -141,31 +140,31 @@ public class ProjectController implements Serializable {
 	}
 
 	/**
-	 * Á¶º°°úÁ¦ »ðÀÔ
+	 * ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 	 * @param:projectDTO
 	 */
 	@RequestMapping("/insertProject")
 	public String insertProject(ProjectDTO projectDTO, String[] invitedUser, HttpServletRequest request) {
 
-		// Á¶ÀåÀÌ µÉ(ÇöÀç ·Î±×ÀÎÇÑ) È¸¿øÀÇ ¹øÈ£
+		// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½(ï¿½ï¿½ï¿½ï¿½ ï¿½Î±ï¿½ï¿½ï¿½ï¿½ï¿½) È¸ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½È£
 		UserDTO userDTO = (UserDTO) request.getSession().getAttribute("userDTO");
 		int userNo = userDTO.getUserNo();
 
-		// Á¶º°°úÁ¦¹æ¿¡ ÃÊ´ëµÈ È¸¿øµéÀÇ id invitedUser¹è¿­À» list·Î º¯È¯
+		// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½æ¿¡ ï¿½Ê´ï¿½ï¿½ È¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ id invitedUserï¿½è¿­ï¿½ï¿½ listï¿½ï¿½ ï¿½ï¿½È¯
 		List<String> invitedUserIdList = new ArrayList<>();
 		Collections.addAll(invitedUserIdList, invitedUser);
 
-		// ÃÊ´ëµÈ È¸¿øÀÇ ¹øÈ£¸¦ ´ãÀº ¸®½ºÆ®
+		// ï¿½Ê´ï¿½ï¿½ È¸ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½È£ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Æ®
 		List<Integer> invitedUserNolist = projectService.selectUserNoById(invitedUserIdList);
 
-		// Á¶º°°úÁ¦¹æ »ðÀÔ service
+		// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ service
 		int resultInsPro = projectService.insertProject(projectDTO, invitedUserNolist, userNo);
 
 		return "redirect:/project/home";
 	}
 
 	/**
-	 * ÆÀÇÃÁ¤º¸ ÀüÃ¼ Á¶È¸
+	 * ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ã¼ ï¿½ï¿½È¸
 	 */
 	@RequestMapping("/teamInfo")
 	public ModelAndView teamInfo(HttpServletRequest req){
@@ -179,7 +178,7 @@ public class ProjectController implements Serializable {
 	}
 	
 	/**
-	 * ÆÀÇÃÁ¤º¸ ¼öÁ¤
+	 * ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 	 */
 	@RequestMapping("/updateTeamInfo")
 	public String updateTeamInfo(ProjectDTO projectDTO,HttpServletRequest req){
@@ -190,14 +189,14 @@ public class ProjectController implements Serializable {
 	}
 	
 	/**
-	 * ÆÀ¿øÁ¤º¸ ÀüÃ¼ Á¶È¸
+	 * ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ã¼ ï¿½ï¿½È¸
 	 */
 	@RequestMapping("/projectUserInfo")
 	public ModelAndView projectUserInfo(HttpServletRequest req){
 		int projectNo = (int) req.getSession().getAttribute("projectNo");
 		List<UserDTO> projectUserList = projectService.selectProjectUsers(projectNo);
 		
-		//System.out.println("controller¿¡¼­ ¹Þ¾Æ¿À´Â ÆÀ¿ø¸®½ºÆ® projectUserList"+projectUserList);
+		//System.out.println("controllerï¿½ï¿½ï¿½ï¿½ ï¿½Þ¾Æ¿ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ® projectUserList"+projectUserList);
 		ModelAndView mv = new ModelAndView();
 		mv.addObject("projectUserList",projectUserList);
 		mv.setViewName("project/projectUserInfo");
@@ -220,7 +219,7 @@ public class ProjectController implements Serializable {
 	}
 	
 	/**
-	 * ÆÀ¿øÁ¤º¸Áß ¸ÃÀºÀÓ¹« ¼öÁ¤
+	 * ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ó¹ï¿½ ï¿½ï¿½ï¿½ï¿½
 	 */
 	@RequestMapping("/updateProjectUserTask")
 	public String updateProjectUserTask(ProjectUserDTO projectUserDTO, HttpServletRequest req){
@@ -233,7 +232,7 @@ public class ProjectController implements Serializable {
 	}
 	
 	/**
-	 * ÆÀ¿ø »èÁ¦
+	 * ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 	 */
 	@RequestMapping("/deleteProjectUser")
 	public String deleteProjectUser(ProjectUserDTO projectUserDTO, HttpServletRequest req){
@@ -249,7 +248,7 @@ public class ProjectController implements Serializable {
 	@RequestMapping("/events")
 	@ResponseBody
 	public String events(HttpServletRequest request) throws Exception {
-		System.out.println("1. eventÁ¢±Ù");
+		System.out.println("1. eventï¿½ï¿½ï¿½ï¿½");
 		String value = request.getParameter("ids");
 
 		String actions = "";
@@ -271,7 +270,7 @@ public class ProjectController implements Serializable {
 	}
 
 	private String saveOne(HttpServletRequest request, String id, String prefix) {
-		System.out.println("2. saveOneÁ¢±Ù");
+		System.out.println("2. saveOneï¿½ï¿½ï¿½ï¿½");
 		security = new DHXSecurity();
 		attributes = new HashMap();
 		from = null;
@@ -287,9 +286,9 @@ public class ProjectController implements Serializable {
 			status = DHXStatus.UPDATE;
 		else if (st.equals("delete") || st.equals("deleted"))
 			status = DHXStatus.DELETE;
-		System.out.println("2.saveOne¿¡¼­ idÁ¢±Ù:"+id);
+		System.out.println("2.saveOneï¿½ï¿½ï¿½ï¿½ idï¿½ï¿½ï¿½ï¿½:"+id);
 		DHXEv ev = createEvent(id, status);
-		System.out.println("2.saveOne¿¡¼­ ev.getId()Á¢±Ù222222:"+ev.getId());
+		System.out.println("2.saveOneï¿½ï¿½ï¿½ï¿½ ev.getId()ï¿½ï¿½ï¿½ï¿½222222:"+ev.getId());
 		attributes.clear();
 
 		if (security.can(status).booleanValue()) {
@@ -351,19 +350,19 @@ public class ProjectController implements Serializable {
 	}
 
 	private String toLowerCase(String value) {
-		System.out.println("3. toLowerCaseÁ¢±Ù");
+		System.out.println("3. toLowerCaseï¿½ï¿½ï¿½ï¿½");
 		String first = value.substring(0, 1);
 		String last = value.substring(1);
 		return (new StringBuilder()).append(first.toLowerCase()).append(last).toString();
 	}
 
 	public DHXEv createEvent(String id, DHXStatus status) {
-		System.out.println("4. createEventÁ¢±Ù");
+		System.out.println("4. createEventï¿½ï¿½ï¿½ï¿½");
 		return new DHXEvent();
 	}
 
 	public DHXStatus saveEvent(DHXEv event, DHXStatus status, HttpSession session) {
-		System.out.println("5. saveEventÁ¢±Ù");
+		System.out.println("5. saveEventï¿½ï¿½ï¿½ï¿½");
 		if (event.getStart_date().getHours() == 0) {
 			Calendar calendar = Calendar.getInstance();
 			calendar.setTime(event.getStart_date());
@@ -393,7 +392,7 @@ public class ProjectController implements Serializable {
 		schedule.setEnd_date(end_date);
 		
 		if(event.getId()!=null){
-			System.out.println("¾Æ¤¿¤¿¤¿¤¿¤¿¤¿"+event.getId());
+			System.out.println("ï¿½Æ¤ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½"+event.getId());
 			schedule.setEvent_id(event.getId());
 		}
 		
@@ -404,19 +403,19 @@ public class ProjectController implements Serializable {
 		  
 		 if(i!=null){
 			 
-			 System.out.println("i°¡ null ¾Æ´Ò¶§:"+schedule.getEvent_id());
+			 System.out.println("iï¿½ï¿½ null ï¿½Æ´Ò¶ï¿½:"+schedule.getEvent_id());
 		 }
 		  System.out.println("event.getId()zzzzzz:"+event.getId());*/
 
 		if (status == DHXStatus.UPDATE) {
-			System.out.println("update ÄÁÆ®·Ñ·¯->¼­ºñ½º Á¢±Ù");
+			System.out.println("update ï¿½ï¿½Æ®ï¿½Ñ·ï¿½->ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½");
 			calendarService.updateEvent(schedule);
 			event.setId(schedule.getEvent_id());
 		} else if (status == DHXStatus.INSERT) {
-			System.out.println("insert ÄÁÆ®·Ñ·¯->¼­ºñ½º Á¢±Ù");
+			System.out.println("insert ï¿½ï¿½Æ®ï¿½Ñ·ï¿½->ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½");
 			
 			calendarService.insertEvent(schedule);
-			System.out.println("¿¡·¯?:"+schedule.getEvent_id());
+			System.out.println("ï¿½ï¿½ï¿½ï¿½?:"+schedule.getEvent_id());
 			
 			event.setId(schedule.getEvent_id()-1);
 
@@ -429,7 +428,7 @@ public class ProjectController implements Serializable {
 	}
 
 	protected void parseRequest(HttpServletRequest request) {
-		System.out.println("6. parseRequest Á¢±Ù");
+		System.out.println("6. parseRequest ï¿½ï¿½ï¿½ï¿½");
 		if (request == null)
 			return;
 		String fromValue = request.getParameter("from");
@@ -445,7 +444,7 @@ public class ProjectController implements Serializable {
 	}
 
 	protected Boolean filterEvent(DHXEv ev) {
-		System.out.println("7. filterEvent Á¢±Ù");
+		System.out.println("7. filterEvent ï¿½ï¿½ï¿½ï¿½");
 		if (!dynFilter.booleanValue())
 			return Boolean.valueOf(true);
 		if (from == null && to == null)
