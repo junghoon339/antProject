@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.net.StandardSocketOptions;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -19,6 +20,7 @@ import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import javax.swing.plaf.synth.SynthSpinnerUI;
 
 import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +34,8 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.ant.calendar.dto.UserCalendarDTO;
 import com.ant.calendar.service.UserCalendarService;
+import com.ant.message.dto.MessageDTO;
+import com.ant.message.service.MessageService;
 import com.ant.project.dto.ProjectDTO;
 import com.ant.project.dto.ProjectUserDTO;
 import com.ant.project.service.ProjectService;
@@ -42,6 +46,7 @@ import com.dhtmlx.planner.DHXPlanner;
 import com.dhtmlx.planner.DHXSecurity;
 import com.dhtmlx.planner.DHXSkin;
 import com.dhtmlx.planner.DHXStatus;
+import com.sun.org.apache.bcel.internal.generic.NEW;
 
 @Controller
 @RequestMapping("/project")
@@ -51,6 +56,9 @@ public class ProjectController implements Serializable {
 	
 	@Autowired
 	private UserCalendarService calendarService;
+	
+	@Autowired
+	private MessageService messageService;
 
 	public static String date_format = "MM/dd/yyyy HH:mm";
 	public static String filter_format = "yyyy-MM-dd";
@@ -69,15 +77,49 @@ public class ProjectController implements Serializable {
 		// 로그인된 userNo
 		UserDTO userDTO = (UserDTO) req.getSession().getAttribute("userDTO");
 		int userNo = userDTO.getUserNo();
-		System.out.println("controller에서 받아오는 userID= "+userDTO.getUserId()+"/ userNo= " + userNo);
 
 		// userNo로 진행중프로젝트, 완료된프로젝트 
 		Map<String, List<ProjectDTO>> projectMap = projectService.selectProjectById(userNo);
 		List<ProjectDTO> currentProList = projectMap.get("currentProList");
+		List<ProjectDTO> surveyingProList = projectMap.get("surveyingProList");
 		List<ProjectDTO> completedProList = projectMap.get("completedProList");
-		//System.out.println("currentProList: " + currentProList.isEmpty());
 		//System.out.println("completedProList: " + completedProList.isEmpty());
 		
+		for(ProjectDTO dto:currentProList){
+			Calendar startCal = Calendar.getInstance();
+			
+			startCal.setTime(new Date());
+			long startTime = startCal.getTimeInMillis();
+			
+			SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+			Date to = format.parse(dto.getProjectEnddate());
+			
+			startCal.setTime(to);
+			long goalTime =startCal.getTimeInMillis();
+			
+			long dday = (goalTime-startTime);
+			dday = dday/1000/60/60/24;
+			
+			dto.setDday((int)dday+1);
+		}
+		for(ProjectDTO dto:surveyingProList){
+			Calendar startCal = Calendar.getInstance();
+			
+			startCal.setTime(new Date());
+			long startTime = startCal.getTimeInMillis();
+			
+			SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+			Date to = format.parse(dto.getProjectEnddate());
+			
+			startCal.setTime(to);
+			long goalTime =startCal.getTimeInMillis();
+			
+			long dday = (goalTime-startTime);
+			dday = dday/1000/60/60/24;
+			
+			dto.setDday((int)dday+1);
+			System.out.println("디데이 : "+dday);
+		}
 		
 
 		// 4개의 tab에 들어갈 데이터 준비...
@@ -116,6 +158,7 @@ public class ProjectController implements Serializable {
 		mv.addObject("schedule", planner.render());
 		mv.setViewName("project/home");
 		mv.addObject("currentProList",currentProList);
+		mv.addObject("surveyingProList",surveyingProList);
 		mv.addObject("completedProList",completedProList);
 		return mv;
 	}
@@ -145,21 +188,42 @@ public class ProjectController implements Serializable {
 	 * @param:projectDTO
 	 */
 	@RequestMapping("/insertProject")
-	public String insertProject(ProjectDTO projectDTO, String[] invitedUser, HttpServletRequest request) {
+	public String insertProject(ProjectDTO projectDTO, String[] invitedUser, HttpServletRequest req) {
 
 		// 조장이 될(현재 로그인한) 회원의 번호
-		UserDTO userDTO = (UserDTO) request.getSession().getAttribute("userDTO");
+		UserDTO userDTO = (UserDTO) req.getSession().getAttribute("userDTO");
 		int userNo = userDTO.getUserNo();
 
-		// 조별과제방에 초대된 회원들의 id invitedUser배열을 list로 변환
-		List<String> invitedUserIdList = new ArrayList<>();
-		Collections.addAll(invitedUserIdList, invitedUser);
+		List<Integer> invitedUserNolist = null;
+		
+		//초대할 회원들이 존재한다면
+		if(invitedUser!=null){	
+			// 조별과제방에 초대된 회원들의 id invitedUser배열을 list로 변환
+			List<String> invitedUserIdList = new ArrayList<>();
+			Collections.addAll(invitedUserIdList, invitedUser);
+				
+			String messageReceiver ="";
+			for(String userId : invitedUser){
+				messageReceiver += userId+";";
+			}
+			System.out.println("최종 messageReceiver : " + messageReceiver);
+			
+			//초대장에 담을 projectNo
+			//int projectNo = (int) req.getSession().getAttribute("projectNo");
 
-		// 초대된 회원의 번호를 담은 리스트
-		List<Integer> invitedUserNolist = projectService.selectUserNoById(invitedUserIdList);
+			MessageDTO messageDTO = new MessageDTO();
+			messageDTO.setMessageContent(userDTO.getUserName()+"님이 ["+projectDTO.getProjectName()+"] 조별과제방으로 초대함-생성시 초대"); //쪽지내용
+			messageDTO.setUserNoMessageSender(userDTO.getUserNo()); //보내는사람userNo
+			messageDTO.setMessageReceiver(messageReceiver); //받는사람ID
+			//조원들에게 초대쪽지보내기
+			messageService.messageInsert(messageDTO);
+			
+			// 초대된 회원의 번호를 담은 리스트
+			//invitedUserNolist = projectService.selectUserNoById(invitedUserIdList);
+		}
 
 		// 조별과제방 삽입 service
-		int resultInsPro = projectService.insertProject(projectDTO, invitedUserNolist, userNo);
+		int resultInsPro = projectService.insertProject(projectDTO, invitedUser, userNo);
 
 		return "redirect:/project/home";
 	}
@@ -249,6 +313,30 @@ public class ProjectController implements Serializable {
 		return "redirect:/project/projectUserInfo";
 	}
 	
+	/**
+	 * 팀원 초대-팀원정보 페이지에서
+	 */
+	@RequestMapping("/addProjectUser")
+	public String addProjectUser(String userId, HttpServletRequest req){
+		int projectNo = (int) req.getSession().getAttribute("projectNo");
+		UserDTO userDTO = (UserDTO) req.getSession().getAttribute("userDTO");
+
+		ProjectDTO projectDto=projectService.selectProject(projectNo);
+		
+		MessageDTO messageDTO = new MessageDTO();
+		messageDTO.setMessageContent(userDTO.getUserName()+"님이 [" +projectDto.getProjectName()+ "] 조별과제방으로 초대했습니다.-추가초대"); //쪽지내용
+		messageDTO.setUserNoMessageSender(userDTO.getUserNo()); //보내는사람userNo
+		messageDTO.setMessageReceiver(userId); //받는사람ID
+		
+		messageService.messageInsert(messageDTO);
+
+		ProjectUserDTO projectUserDTO = new ProjectUserDTO();
+		projectUserDTO.setProjectNo(projectNo);
+		projectUserDTO.setUserId(userId);
+		projectService.insertProjectMember(projectUserDTO);
+		
+		return "redirect:/project/projectUserInfo";
+	}
 	
 	@RequestMapping("/events")
 	@ResponseBody

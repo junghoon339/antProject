@@ -19,8 +19,8 @@
 		</div>
 		<div class="collapse navbar-collapse" id="navbar">
 			<ul class="nav navbar-nav navbar-right">
-				<li class="dropdown"><a href="#" class="dropdown-stoggle"
-					data-toggle="dropdown" role="button" aria-expanded="false"> <i
+				<li class="dropdown"><a href="${pageContext.request.contextPath }/message/main?userNo=${sessionScope.userDTO.userNo}"
+					 role="button"> <i
 						class="fa fa-fw fa-bell-o"></i> 쪽지함 <span class="badge">10</span></a>
 						<li class="dropdown"><a href="#" class="dropdown-stoggle"
 					data-toggle="dropdown" role="button" aria-expanded="false"> <i

@@ -62,7 +62,7 @@ $(document).ready(function(){
 								<th>학교</th>
 								<th>학과</th>
 								<th>역할</th>
-								<th>Edit & Delete</th>
+								<c:if test="${projectUserRole=='조장'}"><th>Edit & Delete</th></c:if>
 							</thead>
 							<tbody>
 								<c:choose>
@@ -73,6 +73,7 @@ $(document).ready(function(){
 											<td>${projectUserDTO.userSchool}</td>
 											<td>${projectUserDTO.userMajor}</td>
 											<td>${projectUserDTO.projectuserRole.projectUserTask}</td>
+											<c:if test="${projectUserRole=='조장'}">
 											<td><span data-placement="top" data-toggle="tooltip" title="Edit">
 													<button class="btn btn-primary btn-xs" data-title="Edit" id="editBtn" data-toggle="modal" data-target="#edit" name="${projectUserDTO.userNo}/${projectUserDTO.userName}/${projectUserDTO.projectuserRole.projectUserTask}">
 														<span class="glyphicon glyphicon-pencil"></span>
@@ -81,7 +82,7 @@ $(document).ready(function(){
 													<button class="btn btn-danger btn-xs" data-title="Delete" id="delBtn" data-toggle="modal" data-target="#delete" name="${projectUserDTO.userNo}">
 														<span class="glyphicon glyphicon-trash"></span>
 													</button>
-												</span></td>
+												</span></td></c:if>
 											</tr>
 										</c:forEach>
 									</c:when>
@@ -92,21 +93,15 @@ $(document).ready(function(){
 	
 							</tbody>
 						</table>
-						<a href="#" class="btn btn-sm btn-default" id="addBtn">
+						
+						<c:if test="${projectUserRole=='조장'}">	
+						<button class="btn btn-primary btn-xs" data-title="Edit" id="editBtn" data-toggle="modal" data-target="#add" name="${projectUserDTO.userNo}/${projectUserDTO.userName}/${projectUserDTO.projectuserRole.projectUserTask}">
 							<span class="glyphicon glyphicon-plus" data-toggle="modal">팀원추가</span> 
-						</a> 
-						
-						<span data-placement="top" data-toggle="tooltip" title="Edit">
-							<button class="btn btn-primary btn-xs" data-title="Edit" id="editBtn" data-toggle="modal" data-target="#add" name="${projectUserDTO.userNo}/${projectUserDTO.userName}/${projectUserDTO.projectuserRole.projectUserTask}">
-								<span class="glyphicon glyphicon-plus"></span>
-							</button>
-						</span>
-						
+						</button>
+						</c:if>
 						
 						<div class="clearfix"></div>
 					</div>
-
-
 
 					<div class="modal fade" id="edit" tabindex="-1" role="dialog" aria-labelledby="edit" aria-hidden="true">
 						<div class="modal-dialog">
@@ -183,16 +178,19 @@ $(document).ready(function(){
 									</button>
 									<h4 class="modal-title custom_align" id="Heading">팀원추가</h4>
 								</div>
-								<div class="modal-body">
-									<div class="form-group">
-						           		팀원ID : <input class="form-control"type="text" name="invitedUser"/><p></p>
+								<form action="${pageContext.request.contextPath}/project/addProjectUser" method="post">
+									<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" >
+									<div class="modal-body">
+										<div class="form-group">
+							           		팀원ID : <input class="form-control" type="text" name="userId"/><p></p>
+										</div>
 									</div>
-								</div>
-								<div class="modal-footer ">
-									<button type="button" class="btn btn-warning btn-lg" style="width: 100%;">
-										<span class="glyphicon glyphicon-ok-sign"></span> Update
-									</button>
-								</div>
+									<div class="modal-footer">
+										<button type="submit" class="btn btn-warning btn-lg" style="width: 100%;">
+											<span class="glyphicon glyphicon-ok-sign"></span> 초대하기
+										</button>
+									</div>
+								</form>
 							</div>
 						</div>
 					</div>

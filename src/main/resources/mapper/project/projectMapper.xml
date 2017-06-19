@@ -61,8 +61,10 @@
 	</select>
 		
 	<!-- 팀플방에 조원등록 -->
-	
-	
+	<insert id="insertProjectMember" parameterType="projectUserDTO">
+		INSERT INTO project_user(project_user_no,project_no,user_no,project_user_role)
+		VALUES(seq_project_user_no.nextval, #{projectNo}, (SELECT user_no FROM ant_user WHERE user_id=#{userId}), '조원')
+	</insert>
 	
 	
 	<!-- 진행중, 완료된 조별과제 검색 -->

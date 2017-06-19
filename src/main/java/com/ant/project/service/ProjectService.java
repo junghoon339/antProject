@@ -12,7 +12,8 @@ public interface ProjectService {
 	/**
 	 * 새로운팀플방생성
 	 */
-	public int insertProject(ProjectDTO projectDTO,List<Integer> invitedUserNoList,int userNo);
+//	public int insertProject(ProjectDTO projectDTO,List<Integer> invitedUserNoList,int userNo);
+	public int insertProject(ProjectDTO projectDTO, String[] invitedUser, int userNo);
 	
 	
 	/**
@@ -28,6 +29,13 @@ public interface ProjectService {
 	 */
 	public List<Integer> selectUserNoById(List<String> invitedUserIdList);
 
+	
+	/**
+	 * 조원 삽입 
+	 */
+	public int insertProjectMember(ProjectUserDTO projectUserDTO);
+
+	
 	/**
 	 * 현재 진행중/완료된 프로젝트 검색
 	 */

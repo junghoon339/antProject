@@ -38,16 +38,46 @@
 			num = num + 1 ;
 		})
 	    
- 	    $("#projectForm").submit(function(){
+  	    $("#projectForm").submit(function(){
 	    	alert("새로운 조별과제가 등록되었습니다.");
 	    }); 
-	    $("#insertProjectBtn").click(function(){
+ 	    $("#insertProjectBtn").click(function(){
 	    	//alert("팀플생성버튼눌림");
+	    	if(check()==true)  	
 	    	$("#projectForm").submit();
 	    	
 	    });  
-		
+		 
 	});
+	
+	function check() {
+		  if(fr.projectName.value == "") {
+		    alert("조별과제명을 입력해 주세요.");
+		    fr.projectName.focus();
+		    return false;
+		  }
+		  else if(fr.projectSubject.value == "") {
+		    alert("과목명을 입력해 주세요.");
+		    fr.projectSubject.focus();
+		    return false;
+		  }
+		  else if(fr.projectTeacher.value == "") {
+		    alert("교수님 성함을 입력해 주세요.");
+		    fr.projectTeacher.focus();
+		    return false;
+		  }
+		  else if(fr.projectStartdate.value == "") {
+		    alert("조별과제 시작날짜를 입력해 주세요.");
+		    fr.projectStartdate.focus();
+		    return false;
+		  }
+		  else if(fr.projectEnddate.value == "") {
+		    alert("조별과제 종료날짜를 입력해 주세요.");
+		    fr.projectEnddate.focus();
+		    return false;
+		  }
+		  else return true;
+		}
 	
 	
 	
@@ -87,20 +117,32 @@
 										</div>
 									</c:when>
 									<c:otherwise><!-- 진행중인 조별과제가 있으면 -->
-										<c:forEach items="${currentProList}" var="projectDTO">
+										<c:forEach items="${surveyingProList}" var="projectDTO">
 											<div class="col-md-3">
 												<div class="bs bs-pricing">
 													<div class="cotent">
 														<h3 class="category">${projectDTO.projectName}</h3>
-														<h3 class="category">${projectDTO.projectNo}</h3>
 														<h1 class="bs-caption">
-															<small>D-</small>11
+															<small>D-</small>${projectDTO.dday}
 														</h1>
 														<a href="${pageContext.request.contextPath}/project/teamMain/${projectDTO.projectNo}" class="btn btn-danger">Enter</a>
 													</div>
 												</div>
 											</div>
 										</c:forEach>
+										<c:forEach items="${currentProList}" var="projectDTO">
+											<div class="col-md-3">
+												<div class="bs bs-pricing">
+													<div class="cotent">
+														<h3 class="category">${projectDTO.projectName}</h3>
+														<h1 class="bs-caption">
+															<small>D-</small>${projectDTO.dday}
+														</h1>
+														<a href="${pageContext.request.contextPath}/project/teamMain/${projectDTO.projectNo}" class="btn btn-danger">Enter</a>
+													</div>
+												</div>
+											</div>
+										</c:forEach>										
 									</c:otherwise>								
 								</c:choose>
 								<div class="col-md-3"><!-- 플러스아이콘 -->
@@ -185,7 +227,7 @@
 					<div class="container" style="margin-top:10px;">
 						<div class="row">
 							<div class="">
-						        <form id="projectForm" class="form-horizontal col-sm-7 col-sm-offset-1" action="${pageContext.request.contextPath}/project/insertProject" method="post">
+						        <form id="projectForm" name="fr" class="form-horizontal col-sm-7 col-sm-offset-1" action="${pageContext.request.contextPath}/project/insertProject" method="post" onsubmit="return check()">
 									<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" >
 						        	*새로운 조별과제를 만드는 분이 자동으로 조장으로 지정됩니다.<p></p>
 									팀플명 : <input class="form-control" type="text" name="projectName" /><p></p>
