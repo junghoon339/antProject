@@ -44,7 +44,7 @@ public class AdminController {
 		int totalRow=service.userTotalCount();//총 게시물 개수
 		int pageSu=1; //뿌려질 페이지 수
 		int startPage=((curPage-1)/pageSu)*pageSu+1;
-		int endPage=startPage*pageSu;
+		int endPage=startPage+pageSu-1;
 		
 		System.out.println("startPage:"+startPage);
 		System.out.println("endPage:"+endPage);
@@ -109,7 +109,7 @@ public class AdminController {
 		System.out.println("tttttttttttttrrrrrrrrrrrrrrrrr"+totalRow);
 		int pageSu=1; //뿌려질 페이지 수
 		int startPage=((curPage-1)/pageSu)*pageSu+1;
-		int endPage=startPage*pageSu;
+		int endPage=startPage+pageSu-1;
 		
 		System.out.println("startPage:"+startPage);
 		System.out.println("endPage:"+endPage);
