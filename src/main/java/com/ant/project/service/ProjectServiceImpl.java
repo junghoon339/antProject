@@ -25,7 +25,8 @@ public class ProjectServiceImpl implements ProjectService {
 	private ProjectDAO projectDAO;
 	
 	@Override
-	public int insertProject(ProjectDTO projectDTO, List<Integer> invitedUserNoList, int userNo) {
+//	public int insertProject(ProjectDTO projectDTO, List<Integer> invitedUserNoList, int userNo) {
+	public int insertProject(ProjectDTO projectDTO, String[] invitedUser, int userNo) {
 		int result=0;
 		//1.조별과제방 삽입
 		int resultInsPro = projectDAO.insertProject(projectDTO);
@@ -39,9 +40,12 @@ public class ProjectServiceImpl implements ProjectService {
 		//System.out.println("프로젝트번호"+projectUserDTO.getProjectNo()+" / 조장userNo : "+projectUserDTO.getUserNo());
 		int resultInsLeader = insertProjectLeader(projectUserDTO);
 		
+		//4.조원 삽입
+		for(String userId:invitedUser){
+			projectUserDTO.setUserId(userId);
+			projectDAO.insertProjectMember(projectUserDTO);
+		}
 		result=1;
-		
-		
 		return result;
 	}
 
@@ -57,13 +61,15 @@ public class ProjectServiceImpl implements ProjectService {
 		return invitedUserNolist;
 	}
 
+	//조원삽입
+	@Override
+	public int insertProjectMember(ProjectUserDTO projectUserDTO) {
+		return projectDAO.insertProjectMember(projectUserDTO);
+	}
+
 	@Override
 	public Map<String, List<ProjectDTO>> selectProjectById(int userNo) {
-		//System.out.println("ProjectServiceImpl진입함!! userNo : "+userNo);
 		Map<String, List<ProjectDTO>> projectMap = projectDAO.selectProjectById(userNo);
-		//System.out.println("ProjectServiceImpl에서 selectProjectById()호출결과!! projectMap : "+projectMap);
-
-		
 		return projectMap;
 	}
 
@@ -88,7 +94,6 @@ public class ProjectServiceImpl implements ProjectService {
 	@Override
 	public int updateProjectUserTask(ProjectUserDTO projectUserDTO) {
 		int result = projectDAO.updateProjectUserTask(projectUserDTO);
-		
 		return result;
 	}
 	
@@ -103,10 +108,4 @@ public class ProjectServiceImpl implements ProjectService {
 		String projectUserRole = projectDAO.selectProjectUserRole(projectUserDTO);
 		return projectUserRole;
 	}
-	
-	
-	
-	
-	
-
 }

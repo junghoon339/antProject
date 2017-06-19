@@ -23,6 +23,13 @@ $(document).ready(function() {
 	
 	$("#start-date").attr("value",startDate);
 	$("#end-date").attr("value",endDate);
+
+	//조원일경우
+	if("${projectUserRole}"=="조장"){
+		//$("input, select").attr("readonly","readonly");
+		$("#updateBtn").attr("style","display:display");
+	}
+
 })
 	//데이트 포멧 
 	function dateToYYYYMMDD(date){
@@ -42,7 +49,6 @@ $(document).ready(function() {
 	</header>
 	<jsp:include page="sidebar.jsp" />
 	<div id="burger"></div>
-
 
 	<section>
 		<div class="container">
@@ -89,7 +95,7 @@ $(document).ready(function() {
 							class="glyphicon glyphicon-plus">팀원추가</span>
 						</a> -->
 						<br/>
-						<button type="submit" class="btn btn-danger">수정</button>
+						<button type="submit" class="btn btn-danger" id="updateBtn" style="display:none">수정</button>
 					</form>
 
 				</div>

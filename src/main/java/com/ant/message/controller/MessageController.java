@@ -19,7 +19,7 @@ public class MessageController {
 	private MessageService service;
 	
 	@RequestMapping("/main")
-	public ModelAndView message(@RequestParam(defaultValue="43")int userNo,String pageNumber,@RequestParam(defaultValue="false")boolean flag){
+	public ModelAndView message(int userNo,String pageNumber,@RequestParam(defaultValue="false")boolean flag){
 		
 		List<MessageDTO> list=null;
 		if(flag){//보낸쪽지함
@@ -38,7 +38,7 @@ public class MessageController {
 	}
 	
 	@RequestMapping("/sendMain")
-	public ModelAndView sendMessage(@RequestParam(defaultValue="43")int userNo,String pageNumber){
+	public ModelAndView sendMessage(int userNo,String pageNumber){
 		List<MessageDTO> list=service.sendMessageSelectAll(userNo);
 		ModelAndView mv=new ModelAndView();
 		

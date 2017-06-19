@@ -23,11 +23,11 @@
 	/* 모달 */
 	$(document).ready(function() {
 		$("#receiveBtn").click(function(){
-			location.href="${pageContext.request.contextPath}/message/main?userNo=13&flag=false";
+			location.href="${pageContext.request.contextPath}/message/main?userNo=${sessionScope.userDTO.userNo}&flag=false";
 		});
 		
 		$("#sendBtn").click(function(){
-			location.href="${pageContext.request.contextPath}/message/main?userNo=13&flag=true";
+			location.href="${pageContext.request.contextPath}/message/main?userNo=${sessionScope.userDTO.userNo}&flag=true";
 		});
 		
 		$("#mytable #checkall").click(function() {
@@ -207,7 +207,7 @@
 									method="post">
 									
 									<input type="hidden" id="securityInfo" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-									<input type="hidden" name ="userNoMessageSender" value="43">
+									<input type="hidden" name ="userNoMessageSender" value="${sessionScope.userDTO.userNo}">
 									
 									<fieldset>
 

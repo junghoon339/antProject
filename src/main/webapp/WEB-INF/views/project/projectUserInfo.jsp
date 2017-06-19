@@ -62,7 +62,7 @@ $(document).ready(function(){
 								<th>학교</th>
 								<th>학과</th>
 								<th>역할</th>
-								<th>Edit & Delete</th>
+								<c:if test="${projectUserRole=='조장'}"><th>Edit & Delete</th></c:if>
 							</thead>
 							<tbody>
 								<c:choose>
@@ -73,6 +73,7 @@ $(document).ready(function(){
 											<td>${projectUserDTO.userSchool}</td>
 											<td>${projectUserDTO.userMajor}</td>
 											<td>${projectUserDTO.projectuserRole.projectUserTask}</td>
+											<c:if test="${projectUserRole=='조장'}">
 											<td><span data-placement="top" data-toggle="tooltip" title="Edit">
 													<button class="btn btn-primary btn-xs" data-title="Edit" id="editBtn" data-toggle="modal" data-target="#edit" name="${projectUserDTO.userNo}/${projectUserDTO.userName}/${projectUserDTO.projectuserRole.projectUserTask}">
 														<span class="glyphicon glyphicon-pencil"></span>
@@ -81,7 +82,7 @@ $(document).ready(function(){
 													<button class="btn btn-danger btn-xs" data-title="Delete" id="delBtn" data-toggle="modal" data-target="#delete" name="${projectUserDTO.userNo}">
 														<span class="glyphicon glyphicon-trash"></span>
 													</button>
-												</span></td>
+												</span></td></c:if>
 											</tr>
 										</c:forEach>
 									</c:when>
@@ -92,10 +93,12 @@ $(document).ready(function(){
 	
 							</tbody>
 						</table>
-
+						
+						<c:if test="${projectUserRole=='조장'}">	
 						<button class="btn btn-primary btn-xs" data-title="Edit" id="editBtn" data-toggle="modal" data-target="#add" name="${projectUserDTO.userNo}/${projectUserDTO.userName}/${projectUserDTO.projectuserRole.projectUserTask}">
 							<span class="glyphicon glyphicon-plus" data-toggle="modal">팀원추가</span> 
 						</button>
+						</c:if>
 						
 						<div class="clearfix"></div>
 					</div>
