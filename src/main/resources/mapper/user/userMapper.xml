@@ -22,5 +22,15 @@
 		WHERE user_id = #{_parameter}
 	</select>
 	
-
+	<!-- no에 해당하는 정보 검색 -->
+	<select id="selectUserByNo" parameterType="Int" resultMap="userMap">
+		SELECT user_no, user_id, user_name, user_password, user_school, user_major 
+		FROM ant_user
+		WHERE user_no = #{_parameter}
+	</select>
+	
+	<update id="updateTempPassword" parameterType="userDTO">
+		UPDATE ant_user SET user_password = #{userPassword}
+		WHERE user_no=#{userNo}
+	</update>
 </mapper>

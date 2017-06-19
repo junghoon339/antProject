@@ -30,4 +30,21 @@ public interface UserDAO {
 	 * @return
 	 */
 	public UserDTO selectUserById(String id);
+	
+	/**
+	 * 임시 비밀번호 업데이트
+	 * @param userNo
+	 * @param pw
+	 * @return
+	 */
+	public int updateTempPassword(int userNo, String pw);
+
+	/**
+	 * userno로 dto가져오기
+	 * @param userNo
+	 * @return
+	 */
+	public UserDTO selectUserByNo(int userNo);
+	
+	
 }

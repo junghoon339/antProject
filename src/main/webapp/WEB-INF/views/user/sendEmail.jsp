@@ -35,89 +35,11 @@
 </head>
 
 <body>
-<!-- 	<nav class="navbar navbar-transparent navbar-fixed-top"
-		role="navigation">
-		<div class="container">
-			Brand and toggle get grouped for better mobile display
-			<div class="navbar-header">
-				<button type="button" class="navbar-toggle" data-toggle="collapse"
-					data-target="#bs-example-navbar-collapse-1">
-					<span class="sr-only">Toggle navigation</span> <span
-						class="icon-bar"></span> <span class="icon-bar"></span> <span
-						class="icon-bar"></span>
-				</button>
-			</div>
-
-			Collect the nav links, forms, and other content for toggling
-						<div class="collapse navbar-collapse"
-				id="bs-example-navbar-collapse-1">
-				<ul class="nav navbar-nav">
-					<li class="dropdown"><a href="#" class="dropdown-toggle"
-						data-toggle="dropdown"> <img src="images/flags/US.png" />
-							English(US) <b class="caret"></b>
-					</a>
-						<ul class="dropdown-menu">
-							<li><a href="#"><img src="images/flags/DE.png" />
-									Deutsch</a></li>
-							<li><a href="#"><img src="images/flags/GB.png" />
-									English(UK)</a></li>
-							<li><a href="#"><img src="images/flags/FR.png" />
-									Fran�짠ais</a></li>
-							<li><a href="#"><img src="images/flags/RO.png" />
-									Rom�짖n��</a></li>
-							<li><a href="#"><img src="images/flags/IT.png" />
-									Italiano</a></li>
-
-							<li class="divider"></li>
-							<li><a href="#"><img src="images/flags/ES.png" />
-									Espa�짹ol <span class="label label-default">soon</span></a></li>
-							<li><a href="#"><img src="images/flags/BR.png" />
-									Portugu�짧s <span class="label label-default">soon</span></a></li>
-							<li><a href="#"><img src="images/flags/JP.png" /> 챈�짜챈�짭챔짧� <span
-									class="label label-default">soon</span></a></li>
-							<li><a href="#"><img src="images/flags/TR.png" />
-									T�쩌rk�짠e <span class="label label-default">soon</span></a></li>
-
-						</ul></li>
-
-				</ul>
-				<ul class="nav navbar-nav navbar-right">
-					<li><a href="#"> <i class="fa fa-facebook-square"></i>
-							Like
-					</a></li>
-					<li><a href="#"> <i class="fa fa-google-plus-square"></i>
-							Plus
-					</a></li>
-					<li><a href="#"> <i class="fa fa-pinterest"></i> Pin
-					</a></li>
-				</ul>
-
-			</div>
-			/.navbar-collapse
-		</div>
-		/.container
-	</nav> -->
-
 	<div class="main"
 		style="background-image: url('${pageContext.request.contextPath}/resources/images/video_bg.jpg')">
-		<%-- <video id="video_background" preload="auto" autoplay="true"
-			loop="loop" muted="muted" volume="0">
-			<source
-				src="${pageContext.request.contextPath}/resources/video/time.webm"
-				type="video/webm">
-			<source
-				src="${pageContext.request.contextPath}/resources/video/time.mp4"
-				type="video/mp4">
-			Video not supported
-		</video> --%>
-		<!--    Change the image source '/images/video_bg.jpg')" with your favourite image.     -->
-
-		<!-- 		<div class="cover black" data-color="black"></div>
- -->
-		<!--   You can change the black color for the filter with those colors: blue, green, red, orange       -->
 
 		<div class="container">
-			<h1 class="logo">The Ants and Grasshopper</h1>
+			<h1 class="logo">메일 보냈으니까 확인해라</h1>
 			<!--  H1 can have 2 designs: "logo" and "logo cursive"           -->
 			<br>
 			<div class="content">
@@ -127,10 +49,7 @@
 							<div class="panel-heading">
 								<div class="row">
 									<div class="col-xs-6">
-										<a href="#" class="active" id="login-form-link">로그인</a>
-									</div>
-									<div class="col-xs-6">
-										<a href="#" id="register-form-link">회원가입</a>
+										<a href="#" class="active" id="login-form-link">비번찾기</a>
 									</div>
 								</div>
 								<hr>
@@ -144,12 +63,8 @@
 											<input type="hidden" name="${_csrf.parameterName}"
 												value="${_csrf.token}">
 											<div class="form-group">
-												<input type="text" name="userId" id="userId"
+												<input type="text" name="emailAddr" id="userId"
 													class="form-control" placeholder="Email Address" value="">
-											</div>
-											<div class="form-group">
-												<input type="password" name="userPassword" id="userPassword"
-													class="form-control" placeholder="Password">
 											</div>
 											<div class="form-group text-center">
 												<!-- <input type="checkbox"  class=""
@@ -160,7 +75,7 @@
 												<div class="row">
 													<div class="col-sm-6 col-sm-offset-3">
 														<input type="submit" name="login-submit" id="login-submit"
-															class="form-control btn btn-login" value="로그인">
+															class="form-control btn btn-login" value="메일 보내기">
 													</div>
 												</div>
 											</div>
@@ -168,54 +83,14 @@
 												<div class="row">
 													<div class="col-lg-12">
 														<div class="text-center">
-															<a href="${pageContext.request.contextPath}/user/forgotPassword"
-																class="forgot-password">비밀번호 찾기</a>
+															<a href="https://phpoll.com/recover"
+																class="forgot-password">로그인 하기</a>
 														</div>
 													</div>
 												</div>
 											</div>
 										</form>
-										<form id="register-form"
-											action="${pageContext.request.contextPath}/user/join"
-											method="post" role="form" style="display: none;">
-											<input type="hidden" name="${_csrf.parameterName}"
-												value="${_csrf.token}">
-											<div class="form-group">
-												<input type="email" name="userId" id="email"
-													class="form-control" placeholder="이메일 주소" value="">
-											</div>
-											<div class="form-group">
-												<input type="password" name="userPassword" id="password"
-													class="form-control" placeholder="비밀번호">
-											</div>
-											<div class="form-group">
-												<input type="password" name="confirmPassword"
-													id="confirm-password" class="form-control"
-													placeholder="비밀번호 확인">
-											</div>
-											<div class="form-group">
-												<input type="text" name="userName" id="username"
-													class="form-control" placeholder="이름" value="">
-											</div>
-											<div class="form-group">
-												<input type="text" name="userSchool" id="school"
-													class="form-control" placeholder="대학교" value="">
-													<div id="suggestion-box"></div>
-											</div>
-											<div class="form-group">
-												<input type="text" name="userMajor" id="major"
-													class="form-control" placeholder="전공" value="">
-											</div>
-											<div class="form-group">
-												<div class="row">
-													<div class="col-sm-6 col-sm-offset-3">
-														<input type="submit" name="register-submit"
-															id="register-submit"
-															class="form-control btn btn-register" value="회원가입">
-													</div>
-												</div>
-											</div>
-										</form>
+										
 									</div>
 								</div>
 							</div>
