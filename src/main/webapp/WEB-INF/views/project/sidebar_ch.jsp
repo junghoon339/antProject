@@ -20,8 +20,7 @@
 		</div>
 
 		<ul class="nav">
-			<li class="active"><a href="dashboard.html"> <i
-					class="ti-pie-chart"></i>
+			<li class="active"><a href="${pageContext.request.contextPath}/"> <i	class="ti-pie-chart"></i>
 					<p>진행중 조별과제</p>
 			</a></li>
 			<li><a href="user.html"> <i class="ti-user"></i>

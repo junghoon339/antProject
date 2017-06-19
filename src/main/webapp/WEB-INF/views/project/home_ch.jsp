@@ -6,47 +6,32 @@
 <html>
 <head>
 <meta charset="utf-8" />
-<link rel="apple-touch-icon" sizes="76x76"
-	href="assets/img/apple-icon.png">
-<link rel="icon" type="image/png" sizes="96x96"
-	href="assets/img/favicon.png">
+<link rel="apple-touch-icon" sizes="76x76" href="assets/img/apple-icon.png">
+<link rel="icon" type="image/png" sizes="96x96" href="assets/img/favicon.png">
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 
 <title>Paper Dashboard by Creative Tim</title>
 
-<meta
-	content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0'
-	name='viewport' />
+<meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
 <meta name="viewport" content="width=device-width" />
 
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 <!-- Bootstrap core CSS     -->
-<link
-	href="${pageContext.request.contextPath }/resources/css/bootstrap.min.css"
-	rel="stylesheet" />
+<link href="${pageContext.request.contextPath }/resources/css/bootstrap.min.css" rel="stylesheet" />
 
 <!-- Animation library for notifications   -->
-<link
-	href="${pageContext.request.contextPath }/resources/css/animate.min.css"
-	rel="stylesheet" />
+<link href="${pageContext.request.contextPath }/resources/css/animate.min.css" rel="stylesheet" />
 
 <!--  Paper Dashboard core CSS    -->
-<link
-	href="${pageContext.request.contextPath }/resources/css/paper-dashboard.css"
-	rel="stylesheet" />
+<link href="${pageContext.request.contextPath }/resources/css/paper-dashboard.css" rel="stylesheet" />
 
 <%--     <!--  CSS for Demo Purpose, don't include it in your project     -->
     <link href="${pageContext.request.contextPath }/resources/css/demo.css" rel="stylesheet" />
  --%>
 <!--  Fonts and icons     -->
-<link
-	href="http://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css"
-	rel="stylesheet">
-<link href='https://fonts.googleapis.com/css?family=Muli:400,300'
-	rel='stylesheet' type='text/css'>
-<link
-	href="${pageContext.request.contextPath }/resources/css/themify-icons.css"
-	rel="stylesheet">
+<link href="http://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" rel="stylesheet">
+<link href='https://fonts.googleapis.com/css?family=Muli:400,300' rel='stylesheet' type='text/css'>
+<link href="${pageContext.request.contextPath }/resources/css/themify-icons.css" rel="stylesheet">
 
 <script type="text/javascript">
 	$(document).ready(function() {
@@ -72,55 +57,86 @@
 	    }); 
 	    $("#insertProjectBtn").click(function(){
 	    	//alert("팀플생성버튼눌림");
-	    	$("#projectForm").submit();
+	    	if(check()==true) $("#projectForm").submit();
 	    	
 	    });  
 		
 	});
 	
-	
-	
-	
+	function check() {
+		  if(fr.projectName.value == "") {
+		    alert("조별과제명을 입력해 주세요.");
+		    fr.projectName.focus();
+		    return false;
+		  }
+		  else if(fr.projectSubject.value == "") {
+		    alert("과목명을 입력해 주세요.");
+		    fr.projectSubject.focus();
+		    return false;
+		  }
+		  else if(fr.projectTeacher.value == "") {
+		    alert("교수님 성함을 입력해 주세요.");
+		    fr.projectTeacher.focus();
+		    return false;
+		  }
+		  else if(fr.projectStartdate.value == "") {
+		    alert("조별과제 시작날짜를 입력해 주세요.");
+		    fr.projectStartdate.focus();
+		    return false;
+		  }
+		  else if(fr.projectEnddate.value == "") {
+		    alert("조별과제 종료날짜를 입력해 주세요.");
+		    fr.projectEnddate.focus();
+		    return false;
+		  }
+		  else return true;
+		}
+
 </script>
 </head>
 <body>
 	<div class="wrapper">
 		<jsp:include page="/WEB-INF/views/project/sidebar_ch.jsp" />
 
-
 		<div class="main-panel">
 			<jsp:include page="header_ch.jsp" flush="false" />
-
-
 
 			<div class="content">
 				<div class="container-fluid">
 					<div class="row">
 						<c:choose>
-							<c:when test="${empty currentProList}">
-								<!-- 진행중인 조별과제가 없으면 -->
+							<c:when test="${empty currentProList}"><!-- 진행중인 조별과제가 없으면 -->
 								<div class="col-md-3">
 									<div class="bs bs-pricing">
 										<div class="cotent">
-											진행중인 조별과제가 없습니다.
-											</h4>
+											<h4>진행중인 조별과제가 없습니다.</h4>
 										</div>
 									</div>
 								</div>
 							</c:when>
-							<c:otherwise>
-								<!-- 진행중인 조별과제가 있으면 -->
+							<c:otherwise><!-- 진행중인 조별과제가 있으면 -->
+								<c:forEach items="${surveyingProList}" var="projectDTO">
+											<div class="col-md-3">
+												<div class="bs bs-pricing">
+													<div class="cotent">
+														<h3 class="category">${projectDTO.projectName}</h3>
+														<h1 class="bs-caption">
+															<small>D-</small>${projectDTO.dday}
+														</h1>
+														<a href="${pageContext.request.contextPath}/project/teamMain/${projectDTO.projectNo}" class="btn btn-danger">Enter</a>
+													</div>
+												</div>
+											</div>
+								</c:forEach>
 								<c:forEach items="${currentProList}" var="projectDTO">
 									<div class="col-md-3">
 										<div class="bs bs-pricing">
 											<div class="cotent">
 												<h3 class="category">${projectDTO.projectName}</h3>
-												<h3 class="category">${projectDTO.projectNo}</h3>
 												<h1 class="bs-caption">
-													<small>D-</small>11
+													<small>D-</small>${projectDTO.dday}
 												</h1>
-												<a
-													href="${pageContext.request.contextPath}/project/teamMain/${projectDTO.projectNo}"
+												<a href="${pageContext.request.contextPath}/project/teamMain/${projectDTO.projectNo}"
 													class="btn btn-danger">Enter</a>
 											</div>
 										</div>
@@ -128,12 +144,10 @@
 								</c:forEach>
 							</c:otherwise>
 						</c:choose>
-						<div class="col-md-3">
-							<!-- 플러스아이콘 -->
+						<div class="col-md-3"><!-- 플러스아이콘 -->
 							<div class="bs bs-pricing">
 								<div class="cotent" id="plusImg">
-									<img
-										src="${pageContext.request.contextPath}/resources/img/plus.png">
+									<img src="${pageContext.request.contextPath}/resources/img/plus.png">
 								</div>
 							</div>
 						</div>
