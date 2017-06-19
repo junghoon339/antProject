@@ -56,7 +56,6 @@ public class UserAuthenticationProvider implements AuthenticationProvider {
 			throw new BadCredentialsException("아이디 또는 비밀번호를 다시 확인하세요. \n<br>등록되지 않은 아이디이거나, 아이디 또는 비밀번호를 잘못 입력하셨습니다.");
 		}
 		
-		
 		// 인증에 성공한 이후
 		// 3. 모두 일치하면 Authentication을 만들어서 리턴
 		List<AuthorityDTO> list = authorityDAO.selectAuthorityByUserNo(userNo);

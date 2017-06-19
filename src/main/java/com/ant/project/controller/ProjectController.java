@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.net.StandardSocketOptions;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -19,6 +20,7 @@ import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import javax.swing.plaf.synth.SynthSpinnerUI;
 
 import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +33,8 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.ant.calendar.dto.UserCalendarDTO;
 import com.ant.calendar.service.UserCalendarService;
+import com.ant.message.dto.MessageDTO;
+import com.ant.message.service.MessageService;
 import com.ant.project.dto.ProjectDTO;
 import com.ant.project.dto.ProjectUserDTO;
 import com.ant.project.service.ProjectService;
@@ -41,6 +45,7 @@ import com.dhtmlx.planner.DHXPlanner;
 import com.dhtmlx.planner.DHXSecurity;
 import com.dhtmlx.planner.DHXSkin;
 import com.dhtmlx.planner.DHXStatus;
+import com.sun.org.apache.bcel.internal.generic.NEW;
 
 @Controller
 @RequestMapping("/project")
@@ -50,44 +55,82 @@ public class ProjectController implements Serializable {
 	
 	@Autowired
 	private UserCalendarService calendarService;
+	
+	@Autowired
+	private MessageService messageService;
 
 	public static String date_format = "MM/dd/yyyy HH:mm";
 	public static String filter_format = "yyyy-MM-dd";
 	public DHXSecurity security;
-	private HashMap attributes;
+	private HashMap<String, String> attributes;
 	private Date from;
 	private Date to;
 	private Boolean dynFilter;
 	private List<String> chatList;
 	/**
-	 * Ȩȭ��(�α��� �����ϸ� ������� ȭ��)
+	 * 홈화占쏙옙(占싸깍옙占쏙옙 占쏙옙占쏙옙占싹몌옙 占쏙옙占쏙옙占쏙옙占� 화占쏙옙)
 	 * @throws Exception
 	 */
 	@RequestMapping("/home")
 	public ModelAndView home(HttpServletRequest req) throws Exception {
-		// �α��ε� userNo
+		// 占싸깍옙占싸듸옙 userNo
 		UserDTO userDTO = (UserDTO) req.getSession().getAttribute("userDTO");
 		int userNo = userDTO.getUserNo();
-		System.out.println("controller���� �޾ƿ��� userID= "+userDTO.getUserId()+"/ userNo= " + userNo);
 
-		// userNo�� ������������Ʈ, �Ϸ��������Ʈ 
+
+		// userNo占쏙옙 占쏙옙占쏙옙占쏙옙占쏙옙占쏙옙占쏙옙트, 占싹뤄옙占쏙옙占쏙옙占쏙옙占싣� 
 		Map<String, List<ProjectDTO>> projectMap = projectService.selectProjectById(userNo);
 		List<ProjectDTO> currentProList = projectMap.get("currentProList");
+		List<ProjectDTO> surveyingProList = projectMap.get("surveyingProList");
 		List<ProjectDTO> completedProList = projectMap.get("completedProList");
-		//System.out.println("currentProList: " + currentProList.isEmpty());
 		//System.out.println("completedProList: " + completedProList.isEmpty());
 		
+		for(ProjectDTO dto:currentProList){
+			Calendar startCal = Calendar.getInstance();
+			
+			startCal.setTime(new Date());
+			long startTime = startCal.getTimeInMillis();
+			
+			SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+			Date to = format.parse(dto.getProjectEnddate());
+			
+			startCal.setTime(to);
+			long goalTime =startCal.getTimeInMillis();
+			
+			long dday = (goalTime-startTime);
+			dday = dday/1000/60/60/24;
+			
+			dto.setDday((int)dday+1);
+		}
+		for(ProjectDTO dto:surveyingProList){
+			Calendar startCal = Calendar.getInstance();
+			
+			startCal.setTime(new Date());
+			long startTime = startCal.getTimeInMillis();
+			
+			SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+			Date to = format.parse(dto.getProjectEnddate());
+			
+			startCal.setTime(to);
+			long goalTime =startCal.getTimeInMillis();
+			
+			long dday = (goalTime-startTime);
+			dday = dday/1000/60/60/24;
+			
+			dto.setDday((int)dday+1);
+			System.out.println("디데이 : "+dday);
+		}
 		
 
-		// 4���� tab�� �� ������ �غ�...
-		//System.out.println("select�ѷ���!!!");
+		// 4占쏙옙占쏙옙 tab占쏙옙 占쏙옙載� 占쏙옙占쏙옙占쏙옙 占쌔븝옙...
+		//System.out.println("select占싼뤄옙占쏙옙!!!");
 		String contextPath = req.getContextPath();
 /*		HttpSession session = req.getSession();
 
 		UserDTO userDTO = (UserDTO) session.getAttribute("userDTO");
 		int userNo = userDTO.getUserNo();*/
 
-		// calendar����
+		// calendar占쏙옙占쏙옙
 		DHXPlanner planner = new DHXPlanner(contextPath + "/resources/codebase/", DHXSkin.TERRACE);
 		planner.localizations.set("cr");
 		planner.setWidth(900);
@@ -100,8 +143,8 @@ public class ProjectController implements Serializable {
 		planner.config.setFirstHour(9);
 		planner.config.setLastHour(19);
 		planner.config.setStartOnMonday(false);
-		planner.config.setMonthDate("%Y�� %M��");
-		planner.config.setDefaultDate("%Y�� %M�� %j��");
+		planner.config.setMonthDate("%Y占쏙옙 %M占쏙옙");
+		planner.config.setDefaultDate("%Y占쏙옙 %M占쏙옙 %j占쏙옙");
 		planner.config.setDayDate("%D");
 
 		CsrfToken token = (CsrfToken) req.getAttribute(CsrfToken.class.getName());
@@ -115,19 +158,20 @@ public class ProjectController implements Serializable {
 		mv.addObject("schedule", planner.render());
 		mv.setViewName("project/home");
 		mv.addObject("currentProList",currentProList);
+		mv.addObject("surveyingProList",surveyingProList);
 		mv.addObject("completedProList",completedProList);
 		return mv;
 	}
 
 	/**
-	 * �ϳ��� �������� ����ȭ��
+	 * 占싹놂옙占쏙옙 占쏙옙占쏙옙占쏙옙占쏙옙 占쏙옙占쏙옙화占쏙옙
 	 */
 	@RequestMapping("/teamMain/{projectNo}")
 	public String teamMain(@PathVariable int projectNo, HttpServletRequest req) {
-		//session�� projectNo����
+		//session占쏙옙 projectNo占쏙옙占쏙옙
 		req.getSession().setAttribute("projectNo", projectNo);
 		
-		//session�� ����,���� ���
+		//session占쏙옙 占쏙옙占쏙옙,占쏙옙占쏙옙 占쏙옙占�
 		UserDTO userDTO = (UserDTO) req.getSession().getAttribute("userDTO");
 		int userNo = userDTO.getUserNo();
 		
@@ -140,31 +184,52 @@ public class ProjectController implements Serializable {
 	}
 
 	/**
-	 * �������� ����
+	 * 占쏙옙占쏙옙占쏙옙占쏙옙 占쏙옙占쏙옙
 	 * @param:projectDTO
 	 */
 	@RequestMapping("/insertProject")
-	public String insertProject(ProjectDTO projectDTO, String[] invitedUser, HttpServletRequest request) {
+	public String insertProject(ProjectDTO projectDTO, String[] invitedUser, HttpServletRequest req) {
 
-		// ������ ��(���� �α�����) ȸ���� ��ȣ
-		UserDTO userDTO = (UserDTO) request.getSession().getAttribute("userDTO");
+		// 조장이 될(현재 로그인한) 회원의 번호
+		UserDTO userDTO = (UserDTO) req.getSession().getAttribute("userDTO");
 		int userNo = userDTO.getUserNo();
 
-		// ���������濡 �ʴ�� ȸ������ id invitedUser�迭�� list�� ��ȯ
-		List<String> invitedUserIdList = new ArrayList<>();
-		Collections.addAll(invitedUserIdList, invitedUser);
+		List<Integer> invitedUserNolist = null;
+		
+		//초대할 회원들이 존재한다면
+		if(invitedUser!=null){	
+			// 조별과제방에 초대된 회원들의 id invitedUser배열을 list로 변환
+			List<String> invitedUserIdList = new ArrayList<>();
+			Collections.addAll(invitedUserIdList, invitedUser);
+				
+			String messageReceiver ="";
+			for(String userId : invitedUser){
+				messageReceiver += userId+";";
+			}
+			System.out.println("최종 messageReceiver : " + messageReceiver);
+			
+			//초대장에 담을 projectNo
+			//int projectNo = (int) req.getSession().getAttribute("projectNo");
 
-		// �ʴ�� ȸ���� ��ȣ�� ���� ����Ʈ
-		List<Integer> invitedUserNolist = projectService.selectUserNoById(invitedUserIdList);
+			MessageDTO messageDTO = new MessageDTO();
+			messageDTO.setMessageContent(userDTO.getUserName()+"님이 ["+projectDTO.getProjectName()+"] 조별과제방으로 초대함-생성시 초대"); //쪽지내용
+			messageDTO.setUserNoMessageSender(userDTO.getUserNo()); //보내는사람userNo
+			messageDTO.setMessageReceiver(messageReceiver); //받는사람ID
+			//조원들에게 초대쪽지보내기
+			messageService.messageInsert(messageDTO);
+			
+			// 초대된 회원의 번호를 담은 리스트
+			//invitedUserNolist = projectService.selectUserNoById(invitedUserIdList);
+		}
 
-		// ���������� ���� service
-		int resultInsPro = projectService.insertProject(projectDTO, invitedUserNolist, userNo);
+		// 조별과제방 삽입 service
+		int resultInsPro = projectService.insertProject(projectDTO, invitedUser, userNo);
 
 		return "redirect:/project/home";
 	}
 
 	/**
-	 * �������� ��ü ��ȸ
+	 * 占쏙옙占쏙옙占쏙옙占쏙옙 占쏙옙체 占쏙옙회
 	 */
 	@RequestMapping("/teamInfo")
 	public ModelAndView teamInfo(HttpServletRequest req){
@@ -178,7 +243,7 @@ public class ProjectController implements Serializable {
 	}
 	
 	/**
-	 * �������� ����
+	 * 占쏙옙占쏙옙占쏙옙占쏙옙 占쏙옙占쏙옙
 	 */
 	@RequestMapping("/updateTeamInfo")
 	public String updateTeamInfo(ProjectDTO projectDTO,HttpServletRequest req){
@@ -189,14 +254,14 @@ public class ProjectController implements Serializable {
 	}
 	
 	/**
-	 * �������� ��ü ��ȸ
+	 * 占쏙옙占쏙옙占쏙옙占쏙옙 占쏙옙체 占쏙옙회
 	 */
 	@RequestMapping("/projectUserInfo")
 	public ModelAndView projectUserInfo(HttpServletRequest req){
 		int projectNo = (int) req.getSession().getAttribute("projectNo");
 		List<UserDTO> projectUserList = projectService.selectProjectUsers(projectNo);
 		
-		//System.out.println("controller���� �޾ƿ��� ��������Ʈ projectUserList"+projectUserList);
+		//System.out.println("controller占쏙옙占쏙옙 占쌨아울옙占쏙옙 占쏙옙占쏙옙占쏙옙占쏙옙트 projectUserList"+projectUserList);
 		ModelAndView mv = new ModelAndView();
 		mv.addObject("projectUserList",projectUserList);
 		mv.setViewName("project/projectUserInfo");
@@ -209,7 +274,11 @@ public class ProjectController implements Serializable {
 		ModelAndView mv = new ModelAndView("chat/chat");
 		
 		try {
-			chatList = FileUtils.readLines(new File("/chat/chat_room_no_" + projectNo + ".txt"), "utf-8");
+			File file = new File("/chat/chat_room_no_" + projectNo + ".txt");
+			if (!file.exists()){
+				file.createNewFile();
+			}
+			chatList = FileUtils.readLines(file,"utf-8");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -219,7 +288,7 @@ public class ProjectController implements Serializable {
 	}
 	
 	/**
-	 * ���������� �����ӹ� ����
+	 * 占쏙옙占쏙옙占쏙옙占쏙옙占쏙옙 占쏙옙占쏙옙占쌈뱄옙 占쏙옙占쏙옙
 	 */
 	@RequestMapping("/updateProjectUserTask")
 	public String updateProjectUserTask(ProjectUserDTO projectUserDTO, HttpServletRequest req){
@@ -232,7 +301,7 @@ public class ProjectController implements Serializable {
 	}
 	
 	/**
-	 * ���� ����
+	 * 占쏙옙占쏙옙 占쏙옙占쏙옙
 	 */
 	@RequestMapping("/deleteProjectUser")
 	public String deleteProjectUser(ProjectUserDTO projectUserDTO, HttpServletRequest req){
@@ -244,11 +313,35 @@ public class ProjectController implements Serializable {
 		return "redirect:/project/projectUserInfo";
 	}
 	
+	/**
+	 * 팀원 초대-팀원정보 페이지에서
+	 */
+	@RequestMapping("/addProjectUser")
+	public String addProjectUser(String userId, HttpServletRequest req){
+		int projectNo = (int) req.getSession().getAttribute("projectNo");
+		UserDTO userDTO = (UserDTO) req.getSession().getAttribute("userDTO");
+
+		ProjectDTO projectDto=projectService.selectProject(projectNo);
+		
+		MessageDTO messageDTO = new MessageDTO();
+		messageDTO.setMessageContent(userDTO.getUserName()+"님이 [" +projectDto.getProjectName()+ "] 조별과제방으로 초대했습니다.-추가초대"); //쪽지내용
+		messageDTO.setUserNoMessageSender(userDTO.getUserNo()); //보내는사람userNo
+		messageDTO.setMessageReceiver(userId); //받는사람ID
+		
+		messageService.messageInsert(messageDTO);
+
+		ProjectUserDTO projectUserDTO = new ProjectUserDTO();
+		projectUserDTO.setProjectNo(projectNo);
+		projectUserDTO.setUserId(userId);
+		projectService.insertProjectMember(projectUserDTO);
+		
+		return "redirect:/project/projectUserInfo";
+	}
 	
 	@RequestMapping("/events")
 	@ResponseBody
 	public String events(HttpServletRequest request) throws Exception {
-		System.out.println("1. event����");
+		System.out.println("1. event占쏙옙占쏙옙");
 		String value = request.getParameter("ids");
 
 		String actions = "";
@@ -270,9 +363,9 @@ public class ProjectController implements Serializable {
 	}
 
 	private String saveOne(HttpServletRequest request, String id, String prefix) {
-		System.out.println("2. saveOne����");
+		System.out.println("2. saveOne占쏙옙占쏙옙");
 		security = new DHXSecurity();
-		attributes = new HashMap();
+		attributes = new HashMap<String, String>();
 		from = null;
 		to = null;
 		dynFilter = Boolean.valueOf(true);
@@ -286,9 +379,9 @@ public class ProjectController implements Serializable {
 			status = DHXStatus.UPDATE;
 		else if (st.equals("delete") || st.equals("deleted"))
 			status = DHXStatus.DELETE;
-		System.out.println("2.saveOne���� id����:"+id);
+		System.out.println("2.saveOne占쏙옙占쏙옙 id占쏙옙占쏙옙:"+id);
 		DHXEv ev = createEvent(id, status);
-		System.out.println("2.saveOne���� ev.getId()����222222:"+ev.getId());
+		System.out.println("2.saveOne占쏙옙占쏙옙 ev.getId()占쏙옙占쏙옙222222:"+ev.getId());
 		attributes.clear();
 
 		if (security.can(status).booleanValue()) {
@@ -338,11 +431,11 @@ public class ProjectController implements Serializable {
 			st = "error";
 		String attrs = "";
 
-		Set keys = attributes.keySet();
-		for (Iterator i$ = keys.iterator(); i$.hasNext();) {
-			String key = (String) i$.next();
+		Set<String> keys = attributes.keySet();
+		for (Iterator<String> i$ = keys.iterator(); i$.hasNext();) {
+			String key = i$.next();
 			attrs = (new StringBuilder()).append(attrs).append(" ").append(key).append("=\"")
-					.append((String) attributes.get(key)).append("\"").toString();
+					.append(attributes.get(key)).append("\"").toString();
 		}
 
 		return (new StringBuilder()).append("<action type=\"").append(st).append("\" sid=\"").append(id)
@@ -350,19 +443,19 @@ public class ProjectController implements Serializable {
 	}
 
 	private String toLowerCase(String value) {
-		System.out.println("3. toLowerCase����");
+		System.out.println("3. toLowerCase占쏙옙占쏙옙");
 		String first = value.substring(0, 1);
 		String last = value.substring(1);
 		return (new StringBuilder()).append(first.toLowerCase()).append(last).toString();
 	}
 
 	public DHXEv createEvent(String id, DHXStatus status) {
-		System.out.println("4. createEvent����");
+		System.out.println("4. createEvent占쏙옙占쏙옙");
 		return new DHXEvent();
 	}
 
 	public DHXStatus saveEvent(DHXEv event, DHXStatus status, HttpSession session) {
-		System.out.println("5. saveEvent����");
+		System.out.println("5. saveEvent占쏙옙占쏙옙");
 		if (event.getStart_date().getHours() == 0) {
 			Calendar calendar = Calendar.getInstance();
 			calendar.setTime(event.getStart_date());
@@ -392,7 +485,7 @@ public class ProjectController implements Serializable {
 		schedule.setEnd_date(end_date);
 		
 		if(event.getId()!=null){
-			System.out.println("�Ƥ�����������"+event.getId());
+			System.out.println("占싣ㅿ옙占쏙옙占쏙옙占쏙옙占쏙옙占쏙옙"+event.getId());
 			schedule.setEvent_id(event.getId());
 		}
 		
@@ -403,19 +496,19 @@ public class ProjectController implements Serializable {
 		  
 		 if(i!=null){
 			 
-			 System.out.println("i�� null �ƴҶ�:"+schedule.getEvent_id());
+			 System.out.println("i占쏙옙 null 占싣닐띰옙:"+schedule.getEvent_id());
 		 }
 		  System.out.println("event.getId()zzzzzz:"+event.getId());*/
 
 		if (status == DHXStatus.UPDATE) {
-			System.out.println("update ��Ʈ�ѷ�->���� ����");
+			System.out.println("update 占쏙옙트占싼뤄옙->占쏙옙占쏙옙 占쏙옙占쏙옙");
 			calendarService.updateEvent(schedule);
 			event.setId(schedule.getEvent_id());
 		} else if (status == DHXStatus.INSERT) {
-			System.out.println("insert ��Ʈ�ѷ�->���� ����");
+			System.out.println("insert 占쏙옙트占싼뤄옙->占쏙옙占쏙옙 占쏙옙占쏙옙");
 			
 			calendarService.insertEvent(schedule);
-			System.out.println("����?:"+schedule.getEvent_id());
+			System.out.println("占쏙옙占쏙옙?:"+schedule.getEvent_id());
 			
 			event.setId(schedule.getEvent_id()-1);
 
@@ -428,7 +521,7 @@ public class ProjectController implements Serializable {
 	}
 
 	protected void parseRequest(HttpServletRequest request) {
-		System.out.println("6. parseRequest ����");
+		System.out.println("6. parseRequest 占쏙옙占쏙옙");
 		if (request == null)
 			return;
 		String fromValue = request.getParameter("from");
@@ -444,7 +537,7 @@ public class ProjectController implements Serializable {
 	}
 
 	protected Boolean filterEvent(DHXEv ev) {
-		System.out.println("7. filterEvent ����");
+		System.out.println("7. filterEvent 占쏙옙占쏙옙");
 		if (!dynFilter.booleanValue())
 			return Boolean.valueOf(true);
 		if (from == null && to == null)

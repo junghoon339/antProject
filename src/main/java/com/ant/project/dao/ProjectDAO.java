@@ -32,6 +32,11 @@ public interface ProjectDAO {
 	public List<Integer> selectUserNoById(List<String> invitedUserIdList);
 	
 	/**
+	 * 조원 삽입 
+	 */
+	public int insertProjectMember(ProjectUserDTO projectUserDTO);
+	
+	/**
 	 * 5. 현재 진행중/완료된 프로젝트 검색
 	 */
 	public Map<String, List<ProjectDTO>> selectProjectById(int userNo);

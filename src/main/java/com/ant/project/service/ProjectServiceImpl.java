@@ -22,25 +22,25 @@ public class ProjectServiceImpl implements ProjectService {
 	private ProjectDAO projectDAO;
 	
 	@Override
-	public int insertProject(ProjectDTO projectDTO, List<Integer> invitedUserNoList, int userNo) {
+//	public int insertProject(ProjectDTO projectDTO, List<Integer> invitedUserNoList, int userNo) {
+	public int insertProject(ProjectDTO projectDTO, String[] invitedUser, int userNo) {
 		int result=0;
-		//1.���������� ����
+		//1.占쏙옙占쏙옙占쏙옙占쏙옙占쏙옙 占쏙옙占쏙옙
 		int resultInsPro = projectDAO.insertProject(projectDTO);
 		
-		//2.��� ���Ե� ���������� ��ȣ �˻�
+		//2.占쏙옙占� 占쏙옙占쌉듸옙 占쏙옙占쏙옙占쏙옙占쏙옙占쏙옙 占쏙옙호 占싯삼옙
 		int projectNo = projectDAO.selectProjectNo();
 		
-		//3.���� ����
-		//������ ���������濡 ����
+		//3.占쏙옙占쏙옙 占쏙옙占쏙옙
+		//占쏙옙占쏙옙占쏙옙 占쏙옙占쏙옙占쏙옙占쏙옙占썸에 占쏙옙占쏙옙
 		ProjectUserDTO projectUserDTO = new ProjectUserDTO(projectNo, userNo);
-		//System.out.println("������Ʈ��ȣ"+projectUserDTO.getProjectNo()+" / ����userNo : "+projectUserDTO.getUserNo());
+		//System.out.println("占쏙옙占쏙옙占쏙옙트占쏙옙호"+projectUserDTO.getProjectNo()+" / 占쏙옙占쏙옙userNo : "+projectUserDTO.getUserNo());
 		int resultInsLeader = insertProjectLeader(projectUserDTO);
 		
-		//4.�ʴ�� �������� ����������
-		//�ʴ�� ������
-		System.out.println("\n �ʴ�� ������ ��ȣ......!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-		for(int userNo2 : invitedUserNoList){
-			System.out.println("�ʴ�� ���� id : " + userNo2);
+		//4.조원 삽입
+		for(String userId:invitedUser){
+			projectUserDTO.setUserId(userId);
+			projectDAO.insertProjectMember(projectUserDTO);
 		}
 		result=1;
 		return result;
@@ -58,13 +58,16 @@ public class ProjectServiceImpl implements ProjectService {
 		return invitedUserNolist;
 	}
 
+	//조원삽입
+	@Override
+	public int insertProjectMember(ProjectUserDTO projectUserDTO) {
+		return projectDAO.insertProjectMember(projectUserDTO);
+	}
+
 	@Override
 	public Map<String, List<ProjectDTO>> selectProjectById(int userNo) {
-		//System.out.println("ProjectServiceImpl������!! userNo : "+userNo);
-		Map<String, List<ProjectDTO>> projectMap = projectDAO.selectProjectById(userNo);
-		//System.out.println("ProjectServiceImpl���� selectProjectById()ȣ����!! projectMap : "+projectMap);
 
-		
+		Map<String, List<ProjectDTO>> projectMap = projectDAO.selectProjectById(userNo);
 		return projectMap;
 	}
 
@@ -89,7 +92,6 @@ public class ProjectServiceImpl implements ProjectService {
 	@Override
 	public int updateProjectUserTask(ProjectUserDTO projectUserDTO) {
 		int result = projectDAO.updateProjectUserTask(projectUserDTO);
-		
 		return result;
 	}
 	
@@ -104,10 +106,4 @@ public class ProjectServiceImpl implements ProjectService {
 		String projectUserRole = projectDAO.selectProjectUserRole(projectUserDTO);
 		return projectUserRole;
 	}
-	
-	
-	
-	
-	
-
 }

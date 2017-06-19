@@ -48,7 +48,14 @@ public class UserServiceImpl implements UserService {
 		// TODO Auto-generated method stub
 		return 0;
 	}
-
+	
+	public int updateTempPassword(int userNo, String pw){
+		String encodedPassword = passwordEncoder.encode(pw);
+		int result = userDAO.updateTempPassword(userNo, encodedPassword);
+		
+		return result;
+	}
+	
 	@Override
 	public int login(String id, String password) {
 		// TODO Auto-generated method stub
@@ -58,6 +65,12 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public UserDTO selectUserById(String id) {
 		UserDTO userDTO = userDAO.selectUserById(id);
+		return userDTO;
+	}
+	
+	@Override
+	public UserDTO selectUserByNo(int userNo) {
+		UserDTO userDTO = userDAO.selectUserByNo(userNo);
 		return userDTO;
 	}
 	

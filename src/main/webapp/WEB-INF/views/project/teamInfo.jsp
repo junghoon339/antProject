@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -41,7 +42,6 @@
 <script>
 $(function(){
 	
-	
 	$("#Btn").click(function(){
 		
 		if($("select[name='projectState']").val()=='1'){
@@ -69,6 +69,34 @@ $(function(){
 		}
 	})
 })
+
+$(document).ready(function() {
+	var startDate =  dateToYYYYMMDD( new Date("${projectDTO.projectStartdate}"));
+	var endDate =  dateToYYYYMMDD( new Date("${projectDTO.projectEnddate}"));
+	//alert(startDate);
+	//var startDate = dateToYYYYMMDD("${projectDTO.projectStartdate}");
+	//var endDate = dateToYYYYMMDD("${projectDTO.projectEnddate}");
+	
+	$("#start-date").attr("value",startDate);
+	$("#end-date").attr("value",endDate);
+
+	//조원일경우
+	if("${projectUserRole}"=="조장"){
+		//$("input, select").attr("readonly","readonly");
+		$("#updateBtn").attr("style","display:display");
+	}
+
+})
+	//데이트 포멧 
+	function dateToYYYYMMDD(date){
+	    function pad(num) {
+	        num = num + '';
+	        return num.length < 2 ? '0' + num : num;
+	    }
+	    return date.getFullYear() + '-' + pad(date.getMonth()+1) + '-' + pad(date.getDate());
+	}
+
+
 </script>
 </head>
 <body>
@@ -77,7 +105,6 @@ $(function(){
 	</header>
 	<jsp:include page="sidebar.jsp" />
 	<div id="burger"></div>
-
 
 	<section>
 		<div class="container">
@@ -95,13 +122,16 @@ $(function(){
 						교수님 : <input class="form-control" type="text" name="projectTeacher" value="${projectDTO.projectTeacher}"/>
 						<p></p>
 						시작날짜:
-						<div class="input-group registration-date-time">
-							<input class="form-control" name="projectStartdate" id="reg|istration-date" type="date" value="${projectDTO.projectStartdate}">
+						<div class="input-group registration-date-time"> 
+ 							<fmt:parseDate var="startDate" value="${projectDTO.projectStartdate}" pattern="yyyy-MM-dd"></fmt:parseDate>
+						
+ 							<input class="form-control" name="projectStartdate" id="start-date" type="date" >
+							
 						</div>
 						<p></p>
 						종료날짜 :
 						<div class="input-group registration-date-time">
-							<input class="form-control" name="projectEnddate" id="registration-date" type="date" value="${projectDTO.projectEnddate}">
+							<input class="form-control" name="projectEnddate" id="end-date" type="date" >
 						</div>
 						<p></p>
 						프로젝트 상태 :
@@ -121,8 +151,9 @@ $(function(){
 							class="glyphicon glyphicon-plus">팀원추가</span>
 						</a> -->
 						<br/>
-						<button type="submit" class="btn btn-danger">수정</button> 
+						<button type="submit" class="btn btn-danger" id="updateBtn" style="display:none">수정</button>
 						<button type="button" class="btn btn-danger" id="Btn">마감하기</button>
+						
 					</form>
 
 				</div>
@@ -169,6 +200,9 @@ $(function(){
 
 </body>
 <script	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+<!-- 달력js -->
+<script src="http://momentjs.com/downloads/moment-with-locales.js"></script>
+<script src="http://momentjs.com/downloads/moment-timezone-with-data.js"></script>
 <script type="text/javascript">
 $(document).ready(function(){
 	//var projectState = 

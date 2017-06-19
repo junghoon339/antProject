@@ -40,4 +40,14 @@ public interface UserService {
 	 */
 	public UserDTO selectUserById(String id);
 	
+	/**
+	 * userNo로 dto가져오기
+	 * @param userNo
+	 * @return
+	 */
+	public UserDTO selectUserByNo(int userNo);
+
+	
+	public int updateTempPassword(int userNo, String pw);
+	
 }

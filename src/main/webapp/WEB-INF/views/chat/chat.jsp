@@ -51,20 +51,15 @@
 	//var onMessage = function onMessage //변수
 	sock.onmessage = onMessage;
 
-	//WebSocket과 연결을 끊고 싶을 때 실행하는 메소드다
-	sock.onclose = onClose;
+	// WebSocket과 연결을 끊고 싶을 때 실행하는 메소드다
+	// sock.onclose = onClose;
 
 	var name = '${userDTO.userName}';
 	// name에 로그인된 사람 이름이 저장	
 
-	/*     sock.onopen = function() {
-	    sock.send( $("#message").val() +"<br/>");
-	}; */
-
 	function removeTag(str) {
 		return str.replace(/(<([^>]+)>)/ig, "");
 	}
-
 
 	function getTimeStamp() {
 	  var d = new Date();
@@ -135,13 +130,8 @@
 		var myMessage = $("#panel-body").last().append(myMessage);
 		$("#panel-body").scrollTop($("#panel-body")[0].scrollHeight);
 		$("time.timeago").timeago();
-
-		//sock.close();
 	}
 
-	function onClose(evt) {
-		$("#data").append("Connection Closed!");
-	}
 </script>
 </head>
 <body>
@@ -157,10 +147,8 @@
 							</h3>
 						</div>
 						<div class="col-md-4 col-xs-4" style="text-align: right;">
-							<a href="#"><span id="minim_chat_window"
-								class="glyphicon glyphicon-minus icon_minim"></span></a> <a href="#"><span
-								class="glyphicon glyphicon-remove icon_close"
-								data-id="chat_window_1"></span></a>
+							<a href="#"><span id="minim_chat_window" class="glyphicon glyphicon-minus icon_minim"></span></a> 
+								<!-- <a href="#"><span class="glyphicon glyphicon-remove icon_close" data-id="chat_window_1"></span></a> -->
 						</div>
 					</div>
 					<!-- 채팅은 이 안에 들어와야 함 -->

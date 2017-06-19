@@ -19,7 +19,7 @@ public class MessageController {
 	private MessageService service;
 	
 	@RequestMapping("/main")
-	public ModelAndView message(@RequestParam(defaultValue="13")int userNo,String pageNumber, String searchText,@RequestParam(defaultValue="false")boolean flag, @RequestParam(defaultValue="-1") int categoryNo){
+	public ModelAndView message(int userNo,String pageNumber, String searchText,@RequestParam(defaultValue="false")boolean flag, @RequestParam(defaultValue="-1") int categoryNo){
 		System.out.println("dao searchText = "+searchText);
 		System.out.println("dao categoryNo = "+categoryNo);
 		if(pageNumber==null){
@@ -30,6 +30,8 @@ public class MessageController {
 		int rowCount = 7;
 		int startRow = (curPage-1)*rowCount+1;
 		int endRow = curPage*rowCount;
+
+
 		List<MessageDTO> list=null;
 		int totalRow = 0;
 		if(categoryNo==-1){//검색어 없을 때
@@ -81,7 +83,7 @@ public class MessageController {
 	}
 	
 	@RequestMapping("/sendMain")
-	public ModelAndView sendMessage(@RequestParam(defaultValue="13")int userNo,String pageNumber){
+	public ModelAndView sendMessage(int userNo,String pageNumber){
 		
 		if(pageNumber==null){
 			pageNumber="1";
@@ -92,6 +94,7 @@ public class MessageController {
 		int startRow = (curpage-1)*rowCount+1;
 		int endRow = curpage*rowCount;
 		List<MessageDTO> list=service.sendMessageSelectAll(userNo,startRow,endRow);
+
 		ModelAndView mv=new ModelAndView();
 		
 		mv.addObject("messageList",list);

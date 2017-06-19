@@ -57,6 +57,7 @@ public class MessageServiceImpl implements MessageService{
 
 	@Override
 	public int messageInsert(MessageDTO messageDTO) {
+		
 		int result=0;
 		String receivers=messageDTO.getMessageReceiver();
 		

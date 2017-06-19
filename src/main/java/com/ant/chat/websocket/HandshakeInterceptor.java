@@ -15,7 +15,7 @@ public class HandshakeInterceptor extends HttpSessionHandshakeInterceptor {
 	public boolean beforeHandshake(ServerHttpRequest request, ServerHttpResponse response, WebSocketHandler wsHandler,
 			Map<String, Object> attributes) throws Exception {
 
-		// ���� �Ķ���� ��, attributes �� ���� �����ϸ� ������ �ڵ鷯 Ŭ������ WebSocketSession�� ���޵ȴ�
+		// 占쏙옙占쏙옙 占식띰옙占쏙옙占� 占쏙옙, attributes 占쏙옙 占쏙옙占쏙옙 占쏙옙占쏙옙占싹몌옙 占쏙옙占쏙옙占쏙옙 占쌘들러 클占쏙옙占쏙옙占쏙옙 WebSocketSession占쏙옙 占쏙옙占쌨된댐옙
 		System.out.println("Before Handshake");
 
 		ServletServerHttpRequest ssreq = (ServletServerHttpRequest) request;
@@ -23,17 +23,11 @@ public class HandshakeInterceptor extends HttpSessionHandshakeInterceptor {
 
 		HttpServletRequest req = ssreq.getServletRequest();
 
-		/*
-		 * String userId = req.getParameter("userid");
-		 * System.out.println("param, id:"+userId); attributes.put("userId",
-		 * userId);
-		 */
-
-		// ���ǿ��� ������Ʈ �ѹ��� ������
+		// 세션에서 프로젝트 넘버를 가져옴
 		int projectNo = (int) req.getSession().getAttribute("projectNo");
 		attributes.put("projectNo", projectNo);
-		
-		System.out.println("HttpSession�� ����� pNo:" + projectNo);
+
+		System.out.println("HttpSession에 저장된 pNo:" + projectNo);
 
 		return super.beforeHandshake(request, response, wsHandler, attributes);
 	}
