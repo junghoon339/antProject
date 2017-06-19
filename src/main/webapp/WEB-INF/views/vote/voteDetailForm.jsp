@@ -58,6 +58,7 @@ $(function() {
 			$("#vote").on("click", function(){
 				console.log('여기..2');
 				btnEvent(this);
+				init();
 				return;
 			});
 		}
@@ -78,7 +79,7 @@ $(function() {
 			data : "userNo="+${sessionScope.userDTO.userNo}+"&voteNo="+${voteNo}+"&"+$("#securityInfo").attr("name")+"="+$("#securityInfo").val() ,
 			success : function(result) {
 				if(result!='0'){
-					alert("투표가 마감되었습니다.")
+					alert("투표가 마감되었습니다.");
 				}
 				$(".ifEnd").hide();
 				$(".ifEndLabel").show();

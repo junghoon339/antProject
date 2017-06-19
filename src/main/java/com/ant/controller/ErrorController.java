@@ -17,7 +17,7 @@ public class ErrorController {
 	public String throwable(HttpServletRequest request, Model model) {
 		logger.info("throwable");
 		pageErrorLog(request);
-		model.addAttribute("msg", "¿¹¿Ü°¡ ¹ß»ýÇÏ¿´½À´Ï´Ù.");
+		model.addAttribute("msg", "ï¿½ï¿½ï¿½Ü°ï¿½ ï¿½ß»ï¿½ï¿½Ï¿ï¿½ï¿½ï¿½ï¿½Ï´ï¿½.");
 		return "error/error";
 	}
 
@@ -25,7 +25,7 @@ public class ErrorController {
 	public String exception(HttpServletRequest request, Model model) {
 		logger.info("exception");
 		pageErrorLog(request);
-		model.addAttribute("msg", "¿¹¿Ü°¡ ¹ß»ýÇÏ¿´½À´Ï´Ù.");
+		model.addAttribute("msg", "ï¿½ï¿½ï¿½Ü°ï¿½ ï¿½ß»ï¿½ï¿½Ï¿ï¿½ï¿½ï¿½ï¿½Ï´ï¿½.");
 		return "error/error";
 	}
 
@@ -33,7 +33,7 @@ public class ErrorController {
 	public String pageError400(HttpServletRequest request, Model model) {
 		logger.info("page error code 400");
 		pageErrorLog(request);
-		model.addAttribute("msg", "Àß¸øµÈ ¿äÃ»ÀÔ´Ï´Ù.");
+		model.addAttribute("msg", "ï¿½ß¸ï¿½ï¿½ï¿½ ï¿½ï¿½Ã»ï¿½Ô´Ï´ï¿½.");
 		return "error/error";
 	}
 
@@ -41,7 +41,7 @@ public class ErrorController {
 	public String pageError403(HttpServletRequest request, Model model) {
 		logger.info("page error code 403");
 		pageErrorLog(request);
-		model.addAttribute("msg", "Á¢±ÙÀÌ ±ÝÁöµÇ¾ú½À´Ï´Ù.");
+		model.addAttribute("msg", "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ç¾ï¿½ï¿½ï¿½ï¿½Ï´ï¿½.");
 		return "error/error";
 	}
 
@@ -49,7 +49,7 @@ public class ErrorController {
 	public String pageError404(HttpServletRequest request, Model model) {
 		logger.info("page error code 404");
 		pageErrorLog(request);
-		model.addAttribute("msg", "¿äÃ»ÇÏ½Å ÆäÀÌÁö´Â Á¸ÀçÇÏÁö ¾Ê½À´Ï´Ù.");
+		model.addAttribute("msg", "ï¿½ï¿½Ã»ï¿½Ï½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ê½ï¿½ï¿½Ï´ï¿½.");
 		return "error/error";
 	}
 
@@ -57,7 +57,7 @@ public class ErrorController {
 	public String pageError405(HttpServletRequest request, Model model) {
 		logger.info("page error code 405");
 		pageErrorLog(request);
-		model.addAttribute("msg", "¿äÃ»µÈ ¸Þ¼Òµå°¡ Çã¿ëµÇÁö ¾Ê½À´Ï´Ù.");
+		model.addAttribute("msg", "ï¿½ï¿½Ã»ï¿½ï¿½ ï¿½Þ¼Òµå°¡ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ê½ï¿½ï¿½Ï´ï¿½.");
 		return "error/error";
 	}
 
@@ -65,7 +65,7 @@ public class ErrorController {
 	public String pageError500(HttpServletRequest request, Model model) {
 		logger.info("page error code 500");
 		pageErrorLog(request);
-		model.addAttribute("msg", "¼­¹ö¿¡ ¿À·ù°¡ ¹ß»ýÇÏ¿´½À´Ï´Ù.");
+		model.addAttribute("msg", "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ß»ï¿½ï¿½Ï¿ï¿½ï¿½ï¿½ï¿½Ï´ï¿½.");
 		return "error/error";
 	}
 
@@ -73,7 +73,7 @@ public class ErrorController {
 	public String pageError503(HttpServletRequest request, Model model) {
 		logger.info("page error code 503");
 		pageErrorLog(request);
-		model.addAttribute("msg", "¼­ºñ½º¸¦ »ç¿ëÇÒ ¼ö ¾ø½À´Ï´Ù.");
+		model.addAttribute("msg", "ï¿½ï¿½ï¿½ñ½º¸ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½.");
 		return "error/error";
 	}
 
