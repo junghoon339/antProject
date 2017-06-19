@@ -1,10 +1,7 @@
 package com.ant.project.service;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import javax.swing.plaf.synth.SynthSpinnerUI;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -27,23 +24,23 @@ public class ProjectServiceImpl implements ProjectService {
 	@Override
 	public int insertProject(ProjectDTO projectDTO, List<Integer> invitedUserNoList, int userNo) {
 		int result=0;
-		//1.Á¶º°°úÁ¦¹æ »ðÀÔ
+		//1.ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 		int resultInsPro = projectDAO.insertProject(projectDTO);
 		
-		//2.¹æ±Ý »ðÀÔµÈ Á¶º°°úÁ¦ÀÇ ¹øÈ£ °Ë»ö
+		//2.ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ôµï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½È£ ï¿½Ë»ï¿½
 		int projectNo = projectDAO.selectProjectNo();
 		
-		//3.Á¶Àå »ðÀÔ
-		//Á¶ÀåÀ» Á¶º°°úÁ¦¹æ¿¡ »ðÀÔ
+		//3.ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+		//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½æ¿¡ ï¿½ï¿½ï¿½ï¿½
 		ProjectUserDTO projectUserDTO = new ProjectUserDTO(projectNo, userNo);
-		//System.out.println("ÇÁ·ÎÁ§Æ®¹øÈ£"+projectUserDTO.getProjectNo()+" / Á¶ÀåuserNo : "+projectUserDTO.getUserNo());
+		//System.out.println("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½È£"+projectUserDTO.getProjectNo()+" / ï¿½ï¿½ï¿½ï¿½userNo : "+projectUserDTO.getUserNo());
 		int resultInsLeader = insertProjectLeader(projectUserDTO);
 		
-		//4.ÃÊ´ëµÈ Á¶¿ø¿¡°Ô ÂÊÁöº¸³»±â
-		//ÃÊ´ëµÈ Á¶¿øµé
-		System.out.println("\n ÃÊ´ëµÈ ÆÀ¿øÀÇ ¹øÈ£......!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+		//4.ï¿½Ê´ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+		//ï¿½Ê´ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+		System.out.println("\n ï¿½Ê´ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½È£......!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
 		for(int userNo2 : invitedUserNoList){
-			System.out.println("ÃÊ´ëµÈ ÆÀ¿ø id : " + userNo2);
+			System.out.println("ï¿½Ê´ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ id : " + userNo2);
 		}
 		result=1;
 		return result;
@@ -63,9 +60,9 @@ public class ProjectServiceImpl implements ProjectService {
 
 	@Override
 	public Map<String, List<ProjectDTO>> selectProjectById(int userNo) {
-		//System.out.println("ProjectServiceImplÁøÀÔÇÔ!! userNo : "+userNo);
+		//System.out.println("ProjectServiceImplï¿½ï¿½ï¿½ï¿½ï¿½ï¿½!! userNo : "+userNo);
 		Map<String, List<ProjectDTO>> projectMap = projectDAO.selectProjectById(userNo);
-		//System.out.println("ProjectServiceImpl¿¡¼­ selectProjectById()È£Ãâ°á°ú!! projectMap : "+projectMap);
+		//System.out.println("ProjectServiceImplï¿½ï¿½ï¿½ï¿½ selectProjectById()È£ï¿½ï¿½ï¿½ï¿½!! projectMap : "+projectMap);
 
 		
 		return projectMap;

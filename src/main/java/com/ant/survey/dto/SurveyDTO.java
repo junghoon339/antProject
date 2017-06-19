@@ -1,5 +1,7 @@
 package com.ant.survey.dto;
 
+import java.util.List;
+
 public class SurveyDTO {
 
 	private int surveyNo;
@@ -8,6 +10,8 @@ public class SurveyDTO {
 	private String surveyEndDate;
 	private int surveyState;
 
+	private List<SurveyUserDTO> surveyUsers;
+	
 	public SurveyDTO() {}
 	public SurveyDTO(int surveyNo, int projectNo, String surveyStartDate, String surveyEndDate, int surveyState) {
 		this.surveyNo = surveyNo;
@@ -15,6 +19,14 @@ public class SurveyDTO {
 		this.surveyStartDate = surveyStartDate;
 		this.surveyEndDate = surveyEndDate;
 		this.surveyState = surveyState;
+	}
+
+	public List<SurveyUserDTO> getSurveyUsers() {
+		return surveyUsers;
+	}
+	
+	public void setSurveyUsers(List<SurveyUserDTO> surveyUsers) {
+		this.surveyUsers = surveyUsers;
 	}
 
 	public int getSurveyNo() {

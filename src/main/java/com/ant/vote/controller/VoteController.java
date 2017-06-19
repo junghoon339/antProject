@@ -14,10 +14,9 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.ant.vote.dto.VoteDTO;
 import com.ant.vote.dto.VoteDetailDTO;
@@ -74,28 +73,29 @@ public class VoteController {
 	}
 
 	@RequestMapping("/Create")
-	public String Create(String projectUserNo, String voteTitle, String voteEndDate, String[] chk) {
+	public String Create(int userNo, int projectNo, String voteTitle, String voteEndDate, String[] chk) {
 
-		// 투표 생성시 Date객체 생성.. --> 현재시간
 		SimpleDateFormat sd = new SimpleDateFormat("MM/dd/yyyy", Locale.KOREA);
 		String nowDate = sd.format(new Date());
 
-		// DTO생성..
 		int result = 0;
 		int createVoteNo = 0;
-
 		VoteDTO insertVoteDTO;
 		
 		if(voteEndDate==null){
-			insertVoteDTO = new VoteDTO(0, 1, 1, voteTitle, nowDate.toString(), null, 0);
+			insertVoteDTO = new VoteDTO(0, userNo, projectNo, voteTitle, nowDate.toString(), null, 0);
 		}else{
-			insertVoteDTO = new VoteDTO(0, 1, 1, voteTitle, nowDate.toString(), voteEndDate.toString(), 0);
+			insertVoteDTO = new VoteDTO(0, userNo, projectNo, voteTitle, nowDate.toString(), voteEndDate.toString(), 0);
 		}
 		result = voteService.insertVote(insertVoteDTO);
 		createVoteNo = voteService.voteMaxNo();
 		for (String column : chk) {
-			VoteDetailDTO insertVoteDetailDTO = new VoteDetailDTO(0, createVoteNo, column);
-			result = voteService.insertVoteDetail(insertVoteDetailDTO);
+			if(column.trim().equals("")){
+				
+			} else {
+				VoteDetailDTO insertVoteDetailDTO = new VoteDetailDTO(0, createVoteNo, column);
+				result = voteService.insertVoteDetail(insertVoteDetailDTO);
+			}
 		}
 
 		return "redirect:/vote/?userNo=1";
@@ -173,7 +173,9 @@ public class VoteController {
 		if (vote.getUserNo() == userNo) {
 			voteCreater = 1;
 		}
-
+		
+		System.out.println( "진짜... 스시가오먹고보자"+voteService.selectVoteDetailCall(voteNo) );
+		map.put("userCount", voteService.selectVoteDetailCall(voteNo));
 		map.put("choice", choiceCheck);
 		map.put("participated", participated);
 		map.put("voteCreater", voteCreater);
@@ -221,13 +223,29 @@ public class VoteController {
 	}
 	
 	@RequestMapping("/updateForm")
-	public String update(Model model, int userNo, int voteNo) {
+	public String updateForm(Model model, int userNo, int voteNo) {
 		VoteDTO vote = voteService.selectVoteListByVoteNo(voteNo);
+		List<VoteDetailDTO> voteDetailList = new ArrayList<>();
 		
 		for(VoteDetailDTO voteDetail : vote.getDetails()){
-			voteDetail.getVoteDetailColumn();
+			voteDetailList.add(voteDetail);
 		}
+		
+		System.out.println(vote.getVoteTitle());
 		model.addAttribute("vote", vote);
+		model.addAttribute("voteDetailList", voteDetailList);
 		return "vote/voteUpdateForm";
+	}
+	
+	@RequestMapping("/update")
+	public String update(RedirectAttributes redirectAttr, int userNo, int projectNo , int voteNo, String[] chk) {
+		
+		for(String s : chk){
+			voteService.insertVoteDetail(new VoteDetailDTO(0, voteNo, s));
+		}
+		
+		redirectAttr.addAttribute("voteNo", voteNo);
+		redirectAttr.addAttribute("userCount", voteService.selectVoteDetailCall(voteNo));
+		return "redirect:/vote/detail";
 	}
 }

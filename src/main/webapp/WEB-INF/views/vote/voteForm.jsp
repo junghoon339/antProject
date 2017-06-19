@@ -42,7 +42,7 @@ td {
 	$(function(){
 		
 		$(".obj").mouseenter(function(){
-	        $(this).css("background-color", "#fdbfc0");
+	        $(this).css("background-color", "#fff4f4");
 	    });
 		
 	    $(".obj").mouseleave(function(){
@@ -80,7 +80,7 @@ td {
 					<table class="obj">
 						<tr>
 							<td rowspan="2" id="q"><h1>Q.</h1></td>
-							<td colspan="2">${doingList.voteNo}.${doingList.voteTitle}</td>
+							<td colspan="2">${doingStatus.count}.${doingList.voteTitle}</td>
 						</tr>
 						<tr>
 							<td id="attribute" width="50"><c:choose>
@@ -113,7 +113,7 @@ td {
 				<table class="obj">
 					<tr>
 						<td rowspan="2" id="q"><h1>Q.</h1></td>
-						<td colspan="2">${doneList.voteNo}. ${doneList.voteTitle} </td>
+						<td colspan="2">${doneStatus.count}. ${doneList.voteTitle} </td>
 					</tr>
 					<tr>
 						<td id="attribute" width="50">
