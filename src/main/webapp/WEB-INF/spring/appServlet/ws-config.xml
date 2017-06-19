@@ -10,7 +10,6 @@
 		</websocket:handshake-interceptors>
 		<websocket:sockjs />
 	</websocket:handlers>
-
-
-	<bean id="echoHandler" class="com.ant.chat.websocket.EchoHandler" />
+    
+    <bean id="echoHandler" class="com.ant.chat.websocket.EchoHandler" />
 </beans>

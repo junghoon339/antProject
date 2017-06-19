@@ -147,13 +147,13 @@
 			<div class="content">
 				<div class="container-fluid">
 					<div class="row">
-						<div class="col-md-12">
-						<div class="content table-responsive table-full-width">
+						
+						<div class="table-responsive">
 							<button type="button" class="btn btn-danger btn-filter" id="done">완료된프로젝트</button>
 							<button type="button" class="btn btn-danger btn-filter"
 								id="doing">진행중프로젝트</button>
 
-							<table id="mytable" class="table table-hover">
+							<table id="mytable" class="table table-bordred table-striped">
 
 								<thead>
 
@@ -276,8 +276,6 @@
 									</div>
 								</div>
 							</div>
-						</div>
-						
 						</div>
 					</div>
 				</div>
