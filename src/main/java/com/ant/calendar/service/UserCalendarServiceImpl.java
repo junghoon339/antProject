@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.ant.calendar.dao.UserCalendarDAO;
-import com.ant.calendar.dto.ProjectCalendarDTO;
 import com.ant.calendar.dto.UserCalendarDTO;
 import com.dhtmlx.planner.DHXEv;
 
@@ -18,25 +17,25 @@ public class UserCalendarServiceImpl implements UserCalendarService{
 
 	@Override
 	public List<DHXEv> getEvent(int userNo) {
-		System.out.println("userCalendar select ¼­ºñ½º->´Ù¿À Á¢±Ù "+userNo);
+		System.out.println("userCalendar select ï¿½ï¿½ï¿½ï¿½->ï¿½Ù¿ï¿½ ï¿½ï¿½ï¿½ï¿½ "+userNo);
 		return calendarDAO.getEvent(userNo);
 	}
 
 	@Override
 	public void updateEvent(UserCalendarDTO schedule) {
-		System.out.println("userCalendar updateEvent ¼­ºñ½º->´Ù¿À Á¢±Ù"+schedule);
+		System.out.println("userCalendar updateEvent ï¿½ï¿½ï¿½ï¿½->ï¿½Ù¿ï¿½ ï¿½ï¿½ï¿½ï¿½"+schedule);
 		calendarDAO.updateEvent(schedule);
 	}
 
 	@Override
 	public void insertEvent(UserCalendarDTO schedule) {
-		System.out.println("userCalendar insertEvent ¼­ºñ½º->´Ù¿À Á¢±Ù"+schedule);
+		System.out.println("userCalendar insertEvent ï¿½ï¿½ï¿½ï¿½->ï¿½Ù¿ï¿½ ï¿½ï¿½ï¿½ï¿½"+schedule);
 		calendarDAO.insertEvent(schedule);
 	}
 
 	@Override
 	public void deleteEvent(Integer id) {
-		System.out.println("userCalendar deleteEvnet ¼­ºñ½º->´Ù¿À Á¢±Ù"+id);
+		System.out.println("userCalendar deleteEvnet ï¿½ï¿½ï¿½ï¿½->ï¿½Ù¿ï¿½ ï¿½ï¿½ï¿½ï¿½"+id);
 		calendarDAO.deleteEvent(id);
 	}
 	

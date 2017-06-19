@@ -16,26 +16,34 @@
 <script>
 	$(function() {
 	
-		var num=4;
 		
 		$("#insert").click(function(){
-			alert($("input name[voteTitle]").text());
-			
-			if( $("input name[voteTitle]").text()=="" ){
-				/* alert("투표 제목을 입력해주세요."); */	
-				/* return; */
+			if( $("input[name='voteTitle']").val().trim()=="" ){
+				alert("투표 제목을 입력해주세요.\n입력된 투표내용 : "+$("input[name='voteTitle']").val().trim());
+				return;
+			}
+			else{
+				var count=0;
+				$("input[name='chk']").each(function(index, item){
+					console.log(index+", "+item);
+					if($(item).val().trim()!=""){
+						count++;
+						console.log(count);
+					}
+				})
+				if(count<2){
+					alert("투표 항목을 2개이상 입력해주세요.");
+					return;
+				}
+				else {
+					alert("항목 2개이상 입력 완료..");
+				}
 			}
 			
-			/* else if( $("input name[option]").text()=="" ){
-				alert("투표 항목을 2개이상 입력해주세요.");
-			} */
-			
 			$("#createForm").submit();
-			
 		})
 		
 		//**************************************************************************8
-		
 		var checked = true;
 		
 		$("#datepicker").datepicker();
@@ -44,7 +52,6 @@
 			
 			var code = "<input type='text' class='form-control' name='chk' placeholder='항목을 입력하세요.''/><p>";
 			$("#addArticle").append(code);
-			num = num + 1 ;
 		})
 
 		$("#dateCheck").click(function() {
@@ -78,6 +85,8 @@
 				<form action="${pageContext.request.contextPath}/vote/Create" id="createForm" method="post">
 					<input type=hidden id="securityInfo" name="${_csrf.parameterName}" value="${_csrf.token}">
 					<input type="hidden" name="projectUserNo" value="1" />
+					<input type="hidden" name="userNo" value="${sessionScope.userDTO.userNo}" />
+					<input type="hidden" name="projectNo" value="${sessionScope.projectNo}" />
 					투표 제목<p>
 					<input type="text" class="form-control" name="voteTitle" value="" placeholder="제목을 입력하세요." /><p>
 					항목 입력

@@ -103,6 +103,13 @@
 			location.href="${pageContext.request.contextPath}/message/sendCancel?messageNo="+messageNo;
 			
 		});
+		
+		/* 검색 */
+		$("#submitBt").click(function(){
+			location.href="${pageContext.request.contextPath}/message/main?searchText="+$("#searchText").val()+"&userNo=13&categoryNo="+$("#category").val()+"&flag=${flag}";
+		})
+		
+		/* 검색 */
 	});
 	/* 모달 */
 	function messageSelect(messageNo){
@@ -350,18 +357,72 @@
 
 					</table>
 
+
+					
+
+
+
 					<div class="clearfix"></div>
+					<!-- 검색 -->
+					<div class="container" style="width:600px;">
+					    <div class="row">    
+					        <div class="col-xs-8 col-xs-offset-2" >
+							    <div class="input-group">
+					                <div class="input-group-btn search-panel">
+					                    <!-- <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+					                    	<span id="search_concept">검색 옵션</span> <span class="caret"></span>
+					                    </button>
+					                    <ul class="dropdown-menu" role="menu">
+					                      <li><a href="#contains" id="searchByName">이름</a></li>
+					                      <li><a href="#its_equal" id="searchByTitle">제목</a></li>
+					                    </ul> -->
+					                    <select class="btn btn-default dropdown-toggle" data-toggle="dropdown" style="width:80px" id="category">
+									        <option value="-1">선택</option>
+									        <option value="0">이름</option>
+									        <option value="1">내용</option>
+						    			</select>
+					                </div>
+					                <input type="hidden" name="search_param" value="all" id="search_param">         
+					                <input type="text" class="form-control" name="x" placeholder="검색어를 입력하세요." id="searchText">
+					                <span class="input-group-btn">
+					                    <button class="btn btn-default" type="button" id="submitBt"><span class="glyphicon glyphicon-search"></span></button>
+					                </span>
+					            </div>
+					        </div>
+						</div>
+					</div>
+							<!-- 검색 -->
 					<ul class="pagination pull-right">
-						<li class="disabled"><a href="#"><span
-								class="glyphicon glyphicon-chevron-left"></span></a></li>
-						<li class="active"><a href="#">1</a></li>
-						<li><a href="#">2</a></li>
-						<li><a href="#">3</a></li>
-						<li><a href="#">4</a></li>
-						<li><a href="#">5</a></li>
-						<li><a href="#"><span
-								class="glyphicon glyphicon-chevron-right"></span></a></li>
+					
+					<c:choose>
+						<c:when test="${startPage==1}">
+							<li class="disabled"><a href="#"><span
+									class="glyphicon glyphicon-chevron-left"></span></a></li>
+						</c:when>
+						<c:otherwise>
+							<li class="disabled"><a href="${pageContext.request.contextPath}/message/main?userNo=13&flag=false&pageNumber=${endPage-pageSu}"><span
+									class="glyphicon glyphicon-chevron-left"></span></a></li>
+						</c:otherwise>	
+					</c:choose>
+					
+						<c:forEach begin="${startPage}" end="${endPage}" var="pageNum" step="1">		
+						<li><a href="${pageContext.request.contextPath}/message/main?userNo=13&flag=${f}&pageNumber=${pageNum}&searchText=${searchText}&categoryNo=${categoryNo}">${pageNum}</a></li>
+						</c:forEach>
+						
+						<c:choose >
+							<c:when test="${stopLastPage==true}">
+								<li><a href="#"><span
+									class="glyphicon glyphicon-chevron-right"></span></a></li>
+							</c:when>	
+							<c:otherwise>
+								<li><a href="${pageContext.request.contextPath}/message/main?userNo=13&flag=false&pageNumber=${startPage+pageSu}"><span
+									class="glyphicon glyphicon-chevron-right"></span></a></li>
+							</c:otherwise>	
+						</c:choose>
 					</ul>
+					
+					
+					
 
 				</div>
 

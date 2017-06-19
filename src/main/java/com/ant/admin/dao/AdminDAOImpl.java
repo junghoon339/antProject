@@ -8,8 +8,10 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.ant.admin.dto.NoticeDTO;
 import com.ant.message.dto.MessageDTO;
 import com.ant.project.dto.ProjectDTO;
+import com.ant.storage.dto.StorageDTO;
 import com.ant.user.dto.UserDTO;
 
 @Repository
@@ -128,6 +130,50 @@ public class AdminDAOImpl implements AdminDAO {
 		map.put("projectState", projectState);
 		map.put("projectSubject", projectSubject);
 		return session.selectOne("mapper.admin.adminMapper.projectTotalCountBySubject",map);
+	}
+
+	@Override
+	public int insertNotice(NoticeDTO noticeDTO) throws Exception {
+		// TODO Auto-generated method stub
+		return session.insert("mapper.admin.adminMapper.insertNotice", noticeDTO);
+	}
+
+	@Override
+	public int updateNotice(NoticeDTO noticeDTO) throws Exception {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int deleteNotice(int storageNo, int userNo) throws Exception {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public List<NoticeDTO> noticeSelectAll(int startRow, int endRow) {
+		Map<String, Integer> map = new HashMap<>();
+		map.put("startRow", startRow);
+		map.put("endRow", endRow);
+		return session.selectList("mapper.admin.adminMapper.noticeSelectAll", map);
+	}
+
+	@Override
+	public int noticeTotalCount() {
+		// TODO Auto-generated method stub
+		return session.selectOne("mapper.admin.adminMapper.noticeTotalCount");
+	}
+
+	@Override
+	public List<NoticeDTO> noticeSelectBySearch(int startRow, int endRow, String searchText) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public int noticeTotalCountBySearch(String searchText, int noticeNo) {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 
 }

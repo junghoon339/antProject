@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.ant.calendar.dto.ProjectCalendarDTO;
-import com.ant.calendar.dto.UserCalendarDTO;
 import com.dhtmlx.planner.DHXEv;
 import com.dhtmlx.planner.DHXEvent;
 import com.dhtmlx.planner.DHXEventsManager;
@@ -36,7 +35,7 @@ public class ProjectCalendarDAOImpl implements ProjectCalendarDAO {
 			evs.add(e);
 		}
 		DHXEventsManager.date_format = "MM/dd/yyyy HH:mm";
-		System.out.println("projectCalendar select ´Ù¿À->¼¼¼Ç Á¢±Ù");
+		System.out.println("projectCalendar select ï¿½Ù¿ï¿½->ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½");
 		return evs;
 	}
 

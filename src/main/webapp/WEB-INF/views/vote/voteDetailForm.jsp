@@ -18,7 +18,7 @@ var getchoice = 0; //선택했던 라디오가 무엇인지 DB에서 가져온 �
 var columns = new Array();
 
 $(function() {
-
+	
 	$(".ifEndLabel").hide();
 		
 	$(".radio").each(function(index,item){
@@ -75,13 +75,18 @@ $(function() {
 			url : "${pageContext.request.contextPath}/vote/Detail/endVote",
 			type : "post",
 			dataType : "json",
-			data : "userNo=1&voteNo="+${voteNo}+"&"+$("#securityInfo").attr("name")+"="+$("#securityInfo").val() ,
+			data : "userNo="+${sessionScope.userDTO.userNo}+"&voteNo="+${voteNo}+"&"+$("#securityInfo").attr("name")+"="+$("#securityInfo").val() ,
 			success : function(result) {
 				if(result!='0'){
 					alert("투표가 마감되었습니다.")
 				}
 				$(".ifEnd").hide();
 				$(".ifEndLabel").show();
+				$(".ifEndLabelDate").html(dateToYYYYMMDD(new Date()));
+				$("#well").css("color", "gray");
+				$(".radio").each(function(index,item){
+					$(item).off();
+				})
 			},
 			error : function(err) {
 				alert("오류 발생 이니셜라이즈 : " + err);
@@ -95,19 +100,21 @@ function init(){
 		url : "${pageContext.request.contextPath}/vote/Detail/Initialized",
 		type : "post",
 		dataType : "json",
-		data : "userNo=1&voteNo="+${voteNo}+"&columns="+columns+"&"+$("#securityInfo").attr("name")+"="+$("#securityInfo").val() , // $("#voteNo").val()
+		data : "userNo=${sessionScope.userDTO.userNo}&voteNo="+${voteNo}+"&columns="+columns+"&"+$("#securityInfo").attr("name")+"="+$("#securityInfo").val() , // $("#voteNo").val()
 		success : function(result) {
 			console.log("성공햇지롱1   리턴값 --->: " + result);
 			
 			getchoice = result.choice;
 			selectChk = result.participated;
 			writer = result.voteCreater;
+			$("#userCount").html('<font color="#c3c3c3">참여 '+result.userCount+'</font>');
 			
 			$.each(result.gauge,function(index2, item2){
 				$(".radio").each(function(index,item){
 					if(item.value==index2){
 						$(item).parent().parent().next().children().children().children().css("width",(item2+"%"));
 						$(item).parent().parent().next().children().next().text("　"+item2+"%");
+						$(item).parent().next().next().children().next().children().text(Math.round(item2*${userCount})/100);
 					}
 					  console.log(index+","+item.value+", "+index2+", "+item2)
 				})
@@ -149,7 +156,7 @@ function btnEvent(a){
 			url : "${pageContext.request.contextPath}/vote/Detail/Handling",
 			type : "post",
 			dataType : "text",
-			data : "userNo=1&voteNo="+${voteNo}+"&column="+choice+"&"+$("#securityInfo").attr("name")+"="+$("#securityInfo").val() , // $("#voteNo").val()
+			data : "userNo="+${sessionScope.userDTO.userNo}+"&voteNo="+${voteNo}+"&column="+choice+"&"+$("#securityInfo").attr("name")+"="+$("#securityInfo").val() , // $("#voteNo").val()
 			success : function(result) {
 				location.reload();
 				console.log("성공햇지롱2" + result);
@@ -176,6 +183,15 @@ function btnEvent(a){
 			return;
 		}
 	}
+}
+
+//데이트 포멧 
+function dateToYYYYMMDD(date){
+    function pad(num) {
+        num = num + '';
+        return num.length < 2 ? '0' + num : num;
+    }
+    return date.getFullYear() + '-' + pad(date.getMonth()+1) + '-' + pad(date.getDate());
 }
 </script>
 <style>
@@ -222,7 +238,7 @@ td {
                 </div>
                 <div class="modal-footer">
                 	<input type=hidden id="securityInfo" name="${_csrf.parameterName}" value="${_csrf.token}">	
-                    <button class="btn btn-warning" onclick="location.href='${pageContext.request.contextPath}/vote/delete?voteNo=${voteNo}&userNo=1'"> 확인</button> 
+                    <button class="btn btn-warning" onclick="location.href='${pageContext.request.contextPath}/vote/delete?voteNo=${voteNo}&userNo=${sessionScope.userDTO.userNo}'"> 확인</button> 
                     <button class="btn btn-default" data-dismiss="modal"> 취소</button>
                 </div>
  
@@ -240,8 +256,8 @@ td {
 							<span class="caret"></span></button>
 						<ul class="dropdown-menu">
 							<c:choose>
-                		<c:when test="${voteWriter==1}">
-                    		<li><a href="location.href='${pageContext.request.contextPath}/vote/updateForm?voteNo=${voteNo}&userNo=1' ">수정하기</a></li>
+                		<c:when test="${voteWriter==sessionScope.userDTO.userNo}">
+                    		<li><a href='${pageContext.request.contextPath}/vote/updateForm?voteNo=${voteNo}&userNo=${sessionScope.userDTO.userNo}'>수정하기</a></li>
 							<li><a data-toggle="modal" href="#myModal">삭제하기</a></li>
                     	</c:when>
                     	<c:otherwise>
@@ -267,7 +283,12 @@ td {
 						 <input type="radio" name="voteChk" id="radio" class="radio" value="${voteDetailList.voteDetailNo}">
 						</td>
 						<td width="80%" valign="bottom" class="valueTd">${voteDetailList.voteDetailColumn}</td>
-						<td width="20px"></td>
+						<td width="20px">
+							<span class="glyphicon glyphicon-thumbs-up"></span> 
+							<font>
+								<span id="colCount">0</span>
+							</font>
+						</td>
 					</tr>
 					<tr>
 						<td valign="middle" align="center">
@@ -286,7 +307,7 @@ td {
 					</tr>
 				</table>
 			</c:forEach>
-			<font color="#c3c3c3">참여 ${userCount}</font><br><br>
+			<span id="userCount"><font color="#c3c3c3">참여 ${userCount}</font></span><br><br>
 			<!-- ★★★★★★★★★★★★★★★★★★★★ -->
 			<br>
 			<!-- if로 투표를 참여했었는지 안했었는지..확인 -->

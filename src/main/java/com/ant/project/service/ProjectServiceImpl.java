@@ -1,10 +1,7 @@
 package com.ant.project.service;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import javax.swing.plaf.synth.SynthSpinnerUI;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -28,19 +25,19 @@ public class ProjectServiceImpl implements ProjectService {
 //	public int insertProject(ProjectDTO projectDTO, List<Integer> invitedUserNoList, int userNo) {
 	public int insertProject(ProjectDTO projectDTO, String[] invitedUser, int userNo) {
 		int result=0;
-		//1.Á¶º°°úÁ¦¹æ »ğÀÔ
+		//1.å ì™ì˜™å ì™ì˜™å ì™ì˜™å ì™ì˜™å ì™ì˜™ å ì™ì˜™å ì™ì˜™
 		int resultInsPro = projectDAO.insertProject(projectDTO);
 		
-		//2.¹æ±İ »ğÀÔµÈ Á¶º°°úÁ¦ÀÇ ¹øÈ£ °Ë»ö
+		//2.å ì™ì˜™å ï¿½ å ì™ì˜™å ìŒ‰ë“¸ì˜™ å ì™ì˜™å ì™ì˜™å ì™ì˜™å ì™ì˜™å ì™ì˜™ å ì™ì˜™í˜¸ å ì‹¯ì‚¼ì˜™
 		int projectNo = projectDAO.selectProjectNo();
 		
-		//3.Á¶Àå »ğÀÔ
-		//Á¶ÀåÀ» Á¶º°°úÁ¦¹æ¿¡ »ğÀÔ
+		//3.å ì™ì˜™å ì™ì˜™ å ì™ì˜™å ì™ì˜™
+		//å ì™ì˜™å ì™ì˜™å ì™ì˜™ å ì™ì˜™å ì™ì˜™å ì™ì˜™å ì™ì˜™å ì¸ì— å ì™ì˜™å ì™ì˜™
 		ProjectUserDTO projectUserDTO = new ProjectUserDTO(projectNo, userNo);
-		//System.out.println("ÇÁ·ÎÁ§Æ®¹øÈ£"+projectUserDTO.getProjectNo()+" / Á¶ÀåuserNo : "+projectUserDTO.getUserNo());
+		//System.out.println("å ì™ì˜™å ì™ì˜™å ì™ì˜™íŠ¸å ì™ì˜™í˜¸"+projectUserDTO.getProjectNo()+" / å ì™ì˜™å ì™ì˜™userNo : "+projectUserDTO.getUserNo());
 		int resultInsLeader = insertProjectLeader(projectUserDTO);
 		
-		//4.Á¶¿ø »ğÀÔ
+		//4.ì¡°ì› ì‚½ì…
 		for(String userId:invitedUser){
 			projectUserDTO.setUserId(userId);
 			projectDAO.insertProjectMember(projectUserDTO);
@@ -61,7 +58,7 @@ public class ProjectServiceImpl implements ProjectService {
 		return invitedUserNolist;
 	}
 
-	//Á¶¿ø»ğÀÔ
+	//ì¡°ì›ì‚½ì…
 	@Override
 	public int insertProjectMember(ProjectUserDTO projectUserDTO) {
 		return projectDAO.insertProjectMember(projectUserDTO);
@@ -69,6 +66,7 @@ public class ProjectServiceImpl implements ProjectService {
 
 	@Override
 	public Map<String, List<ProjectDTO>> selectProjectById(int userNo) {
+
 		Map<String, List<ProjectDTO>> projectMap = projectDAO.selectProjectById(userNo);
 		return projectMap;
 	}

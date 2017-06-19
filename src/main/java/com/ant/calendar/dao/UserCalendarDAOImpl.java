@@ -7,7 +7,6 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.ant.calendar.dto.ProjectCalendarDTO;
 import com.ant.calendar.dto.UserCalendarDTO;
 import com.dhtmlx.planner.DHXEv;
 import com.dhtmlx.planner.DHXEvent;
@@ -36,20 +35,20 @@ public class UserCalendarDAOImpl implements UserCalendarDAO {
 			evs.add(e);
 		}
 		DHXEventsManager.date_format = "MM/dd/yyyy HH:mm";
-		System.out.println("select ´Ù¿À->¼¼¼Ç Á¢±Ù");
+		System.out.println("select ï¿½Ù¿ï¿½->ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½");
 		return evs;
 		
 	}
 
 	@Override
 	public void updateEvent(UserCalendarDTO schedule) {
-		//System.out.println("userCalendar update ´Ù¿À->¼¼¼Ç Á¢±Ù");
+		//System.out.println("userCalendar update ï¿½Ù¿ï¿½->ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½");
 		sqlSession.update("userCalendarMapper.updateEvent", schedule);
 	}
 
 	@Override
 	public void insertEvent(UserCalendarDTO schedule) {
-		//System.out.println("userCalendar insert ´Ù¿À->¼¼¼Ç Á¢±Ù");
+		//System.out.println("userCalendar insert ï¿½Ù¿ï¿½->ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½");
 		sqlSession.insert("userCalendarMapper.insertEvent", schedule);
 	}
 

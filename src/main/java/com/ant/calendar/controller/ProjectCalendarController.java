@@ -22,9 +22,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.ant.calendar.dto.ProjectCalendarDTO;
-import com.ant.calendar.dto.UserCalendarDTO;
 import com.ant.calendar.service.ProjectCalendarService;
-import com.ant.project.dto.ProjectDTO;
 import com.ant.user.dto.UserDTO;
 import com.dhtmlx.planner.DHXEv;
 import com.dhtmlx.planner.DHXEvent;
@@ -50,13 +48,13 @@ public class ProjectCalendarController implements Serializable {
 	
 	@RequestMapping("/projectCalendar")
 	public ModelAndView home(HttpServletRequest req) throws Exception {
-		// ·Î±×ÀÎµÈ userNo
+		// ï¿½Î±ï¿½ï¿½Îµï¿½ userNo
 		/*
 		 * UserDTO userDTO = (UserDTO) req.getSession().getAttribute("userDTO");
 		 * int userNo = userDTO.getUserNo();
-		 * System.out.println("controller¿¡¼­ ¹Þ¾Æ¿À´Â userNo = " + userNo);
+		 * System.out.println("controllerï¿½ï¿½ï¿½ï¿½ ï¿½Þ¾Æ¿ï¿½ï¿½ï¿½ userNo = " + userNo);
 		 * 
-		 * //userNo·Î ÁøÇàÁßÇÁ·ÎÁ§Æ®, ¿Ï·áµÈÇÁ·ÎÁ§Æ® Map<String, List<ProjectDTO>> projectMap =
+		 * //userNoï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®, ï¿½Ï·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ® Map<String, List<ProjectDTO>> projectMap =
 		 * projectService.selectProjectById(userNo); List<ProjectDTO>
 		 * currentProList = projectMap.get("currentProList"); List<ProjectDTO>
 		 * completedProList = projectMap.get("completedProList");
@@ -75,8 +73,8 @@ public class ProjectCalendarController implements Serializable {
 		 * getProjectName()+"/state : "+dto.getProjectState());
 		 * 
 		 */
-		// 4°³ÀÇ tab¿¡ µé¾î°¥ µ¥ÀÌÅÍ ÁØºñ...
-		System.out.println("select»Ñ·Á¶ó!!!");
+		// 4ï¿½ï¿½ï¿½ï¿½ tabï¿½ï¿½ ï¿½ï¿½î°¥ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Øºï¿½...
+		System.out.println("selectï¿½Ñ·ï¿½ï¿½ï¿½!!!");
 		String contextPath = req.getContextPath();
 		HttpSession session = req.getSession();
 
@@ -89,7 +87,7 @@ public class ProjectCalendarController implements Serializable {
 		System.out.println("projectNo : "+projectNo);
 		
 		
-		// calendar¿µ¿ª
+		// calendarï¿½ï¿½ï¿½ï¿½
 		DHXPlanner planner = new DHXPlanner(contextPath + "/resources/codebase/", DHXSkin.TERRACE);
 		planner.localizations.set("cr");
 		planner.setWidth(900);
@@ -102,8 +100,8 @@ public class ProjectCalendarController implements Serializable {
 		planner.config.setFirstHour(9);
 		planner.config.setLastHour(19);
 		planner.config.setStartOnMonday(false);
-		planner.config.setMonthDate("%Y³â %M¿ù");
-		planner.config.setDefaultDate("%Y³â %M¿ù %jÀÏ");
+		planner.config.setMonthDate("%Yï¿½ï¿½ %Mï¿½ï¿½");
+		planner.config.setDefaultDate("%Yï¿½ï¿½ %Mï¿½ï¿½ %jï¿½ï¿½");
 		planner.config.setDayDate("%D");
 
 		CsrfToken token = (CsrfToken) req.getAttribute(CsrfToken.class.getName());
@@ -124,7 +122,7 @@ public class ProjectCalendarController implements Serializable {
 	@RequestMapping("/events")
 	@ResponseBody
 	public String events(HttpServletRequest request) throws Exception {
-		System.out.println("1. eventÁ¢±Ù");
+		System.out.println("1. eventï¿½ï¿½ï¿½ï¿½");
 		String value = request.getParameter("ids");
 
 		String actions = "";
@@ -146,7 +144,7 @@ public class ProjectCalendarController implements Serializable {
 	}
 
 	private String saveOne(HttpServletRequest request, String id, String prefix) {
-		System.out.println("2. saveOneÁ¢±Ù");
+		System.out.println("2. saveOneï¿½ï¿½ï¿½ï¿½");
 		security = new DHXSecurity();
 		attributes = new HashMap();
 		from = null;
@@ -225,19 +223,19 @@ public class ProjectCalendarController implements Serializable {
 	}
 
 	private String toLowerCase(String value) {
-		System.out.println("3. toLowerCaseÁ¢±Ù");
+		System.out.println("3. toLowerCaseï¿½ï¿½ï¿½ï¿½");
 		String first = value.substring(0, 1);
 		String last = value.substring(1);
 		return (new StringBuilder()).append(first.toLowerCase()).append(last).toString();
 	}
 
 	public DHXEv createEvent(String id, DHXStatus status) {
-		System.out.println("4. createEventÁ¢±Ù");
+		System.out.println("4. createEventï¿½ï¿½ï¿½ï¿½");
 		return new DHXEvent();
 	}
 
 	public DHXStatus saveEvent(DHXEv event, DHXStatus status, HttpSession session) {
-		System.out.println("5. saveEventÁ¢±Ù");
+		System.out.println("5. saveEventï¿½ï¿½ï¿½ï¿½");
 		if (event.getStart_date().getHours() == 0) {
 			Calendar calendar = Calendar.getInstance();
 			calendar.setTime(event.getStart_date());
@@ -275,12 +273,12 @@ public class ProjectCalendarController implements Serializable {
 		 
 
 		if (status == DHXStatus.UPDATE) {
-			System.out.println("projectCalendar update ÄÁÆ®·Ñ·¯->¼­ºñ½º Á¢±Ù");
+			System.out.println("projectCalendar update ï¿½ï¿½Æ®ï¿½Ñ·ï¿½->ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½");
 			calendarService.updateEvent(schedule);
 			event.setId(schedule.getEvent_id());
 
 		} else if (status == DHXStatus.INSERT) {
-			System.out.println("projectCalendar insert ÄÁÆ®·Ñ·¯->¼­ºñ½º Á¢±Ù");
+			System.out.println("projectCalendar insert ï¿½ï¿½Æ®ï¿½Ñ·ï¿½->ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½");
 			calendarService.insertEvent(schedule);
 			event.setId(schedule.getEvent_id());
 
@@ -293,7 +291,7 @@ public class ProjectCalendarController implements Serializable {
 	}
 
 	protected void parseRequest(HttpServletRequest request) {
-		System.out.println("6. parseRequest Á¢±Ù");
+		System.out.println("6. parseRequest ï¿½ï¿½ï¿½ï¿½");
 		if (request == null)
 			return;
 		String fromValue = request.getParameter("from");
@@ -309,7 +307,7 @@ public class ProjectCalendarController implements Serializable {
 	}
 
 	protected Boolean filterEvent(DHXEv ev) {
-		System.out.println("7. filterEvent Á¢±Ù");
+		System.out.println("7. filterEvent ï¿½ï¿½ï¿½ï¿½");
 		if (!dynFilter.booleanValue())
 			return Boolean.valueOf(true);
 		if (from == null && to == null)

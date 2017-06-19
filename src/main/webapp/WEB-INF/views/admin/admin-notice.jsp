@@ -107,7 +107,7 @@ body{
 	<div class="container">
 		<div class="row">
 			<div class="col-lg-8 col-lg-offset-2">
-				  <div class="col-sm-6"><h1>자료실</h1></div>
+				  <div class="col-sm-6"><h1>공지사항</h1></div>
 				 <div class="col-sm-6" align="right"><a class="btn btn-danger" href="#danger" data-toggle="modal" ><h4>글쓰기</h4></a></div>
 				
 				
@@ -126,8 +126,6 @@ body{
 					                      <li><a href="#its_equal" id="searchByTitle">제목</a></li>
 					                    </ul> -->
 					                    <select class="btn btn-default dropdown-toggle" data-toggle="dropdown" style="width:80px" id="category">
-									        <option value="-1">선택</option>
-									        <option value="0">이름</option>
 									        <option value="1">제목</option>
 						    			</select>
 					                </div>
@@ -155,7 +153,7 @@ body{
 								<button type="button" class="close" data-dismiss="modal"
 									aria-hidden="true">×</button>
 								<h1>
-									<i class="glyphicon glyphicon-thumbs-up"></i> 자료등록
+									<i class="glyphicon glyphicon-thumbs-up"></i> 공지등록
 								</h1>
 							</div>
 							
@@ -167,7 +165,7 @@ body{
 							<!-- 인설트 폼 -->
 							<div class="modal-body">
 								<form class="form-horizontal"
-									action="${pageContext.request.contextPath}/storage/insert"
+									action="${pageContext.request.contextPath}/admin/noticeInsert"
 									method="post" enctype="multipart/form-data">
 									
 									<input type="hidden" id="securityInfo" name="${_csrf.parameterName}" value="${_csrf.token}"/>
@@ -176,14 +174,14 @@ body{
 									<fieldset>
 
 										<!-- Form Name -->
-										<legend>자료를 등록하세요!</legend>
+										<legend>공지를 등록하세요!</legend>
 
 										<!-- Text input-->
 										<div class="form-group">
 											<label class="col-md-4 control-label" for="name"
 												style="text-align: right; width:63px" >제목</label>
 											<div class="col-md-4">
-												<input id="name" name="storageTitle" type="text"
+												<input id="name" name="noticeTitle" type="text"
 													placeholder="제목을 입력하세요" class="form-control input-md"
 													style="width:465px">
 													
@@ -196,31 +194,11 @@ body{
 											<label class="col-md-4 control-label" for="anschrift" style="width:63px">내용</label>
 											<div class="col-md-4">
 												<textarea class="form-control" id="anschrift"
-													name="storageContent" style="width: 465px; height: 150px"
+													name="noticeContent" style="width: 465px; height: 150px"
 													placeholder="내용을 입력하세요"></textarea>
 											</div>
 										</div>
-
-
-
-										<div class="input-group">
-											<span class="input-group-btn">
-												<button id="fake-file-button-browse" type="button"
-													class="btn btn-default">
-													<span class="glyphicon glyphicon-file"></span>
-												</button>
-											</span> <input type="file" id="files-input-upload"
-												style="display: none" name="file"> <input type="text"
-												id="fake-file-input-name" disabled="disabled"
-												placeholder="File not selected" class="form-control" name="filePath">
-											<span class="input-group-btn">
-												<button type="button" class="btn btn-default"
-													disabled="disabled" id="fake-file-button-upload">
-													<span class="glyphicon glyphicon-upload"></span>
-												</button>
-											</span>
-										</div>
-										<small class="pull-right">파일을 등록하세요</small>
+										
 										<!-- Button (Double) -->
 										<div class="form-group">
 											<label class="col-md-4 control-label" for="anmelden"></label>
@@ -268,33 +246,18 @@ body{
 						<thead>
 
 							<th>글 번호</th>
-							<th>이름</th>
 							<th>제목</th>
 							<th>등록 날짜</th>
-							<th>첨부파일</th>
-
-
 							<th style="width: 60px;">조회수</th>
+							
 						</thead>
 						<tbody>
 							<c:forEach var="item" items="${list}">
 								<tr>
-									<td>${item.storageNo}</td>
-									<td>${item.userDTO.userName}</td>
+									<td>${item.noticeNo}</td>
 									<td><a
-										href="${pageContext.request.contextPath}/storage/tableDetail/${item.storageNo}">${item.storageTitle}</a></td>
+										href="#">${item.noticeTitle}</a></td>
 									<td>${item.writeDay}</td>
-									<c:choose>
-										<c:when test="${item.fileName==null}">
-											<td class="center"><span class="label label-warning">파일이
-													없습니다.</span></td>
-										</c:when>
-										<c:otherwise>
-											<td class="center"><span class="label label-info">${item.fileName}</span>
-											</td>
-										</c:otherwise>
-									</c:choose>
-
 									<td>${item.readNum}</td>
 
 								</tr>
@@ -317,13 +280,13 @@ body{
 										class="glyphicon glyphicon-chevron-left"></span></a></li>
 							</c:when>
 							<c:otherwise>
-								<li><a href="${pageContext.request.contextPath}/storage/storageTable/1?pageNumber=${endPage-pageSu}"><span
+								<li><a href="${pageContext.request.contextPath}/admin/adminNotice?pageNumber=${endPage-pageSu}"><span
 										class="glyphicon glyphicon-chevron-left"></span></a></li>
 							</c:otherwise>
 						</c:choose>	
 						
 						<c:forEach begin="${startPage}" end="${endPage}" var="pageNum" step="1">
-							<li><a href="${pageContext.request.contextPath}/storage/storageTable/1?pageNumber=${pageNum}&searchText=${searchText}&categoryNo=${categoryNo}">${pageNum}</a></li>
+							<li><a href="${pageContext.request.contextPath}/admin/adminNotice?pageNumber=${pageNum}">${pageNum}</a></li>
 						</c:forEach>
 						
 						<c:choose>
@@ -332,7 +295,7 @@ body{
 										class="glyphicon glyphicon-chevron-right"></span></a></li>
 								</c:when>
 								<c:otherwise>
-										<li><a href="${pageContext.request.contextPath}/storage/storageTable/1?pageNumber=${startPage+pageSu}"><span
+										<li><a href="${pageContext.request.contextPath}/admin/adminNotice?pageNumber=${startPage+pageSu}"><span
 										class="glyphicon glyphicon-chevron-right"></span></a></li>
 								</c:otherwise>
 						</c:choose>

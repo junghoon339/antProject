@@ -15,7 +15,7 @@ public class HandshakeInterceptor extends HttpSessionHandshakeInterceptor {
 	public boolean beforeHandshake(ServerHttpRequest request, ServerHttpResponse response, WebSocketHandler wsHandler,
 			Map<String, Object> attributes) throws Exception {
 
-		// À§ÀÇ ÆÄ¶ó¹ÌÅÍ Áß, attributes ¿¡ °ªÀ» ÀúÀåÇÏ¸é À¥¼ÒÄÏ ÇÚµé·¯ Å¬·¡½ºÀÇ WebSocketSession¿¡ Àü´ŞµÈ´Ù
+		// å ì™ì˜™å ì™ì˜™ å ì‹ë°ì˜™å ì™ì˜™å ï¿½ å ì™ì˜™, attributes å ì™ì˜™ å ì™ì˜™å ì™ì˜™ å ì™ì˜™å ì™ì˜™å ì‹¹ëªŒì˜™ å ì™ì˜™å ì™ì˜™å ì™ì˜™ å ìŒ˜ë“¤ëŸ¬ í´å ì™ì˜™å ì™ì˜™å ì™ì˜™ WebSocketSessionå ì™ì˜™ å ì™ì˜™å ìŒ¨ëœëŒì˜™
 		System.out.println("Before Handshake");
 
 		ServletServerHttpRequest ssreq = (ServletServerHttpRequest) request;
@@ -23,11 +23,11 @@ public class HandshakeInterceptor extends HttpSessionHandshakeInterceptor {
 
 		HttpServletRequest req = ssreq.getServletRequest();
 
-		// ¼¼¼Ç¿¡¼­ ÇÁ·ÎÁ§Æ® ³Ñ¹ö¸¦ °¡Á®¿È
+		// ì„¸ì…˜ì—ì„œ í”„ë¡œì íŠ¸ ë„˜ë²„ë¥¼ ê°€ì ¸ì˜´
 		int projectNo = (int) req.getSession().getAttribute("projectNo");
 		attributes.put("projectNo", projectNo);
 
-		System.out.println("HttpSession¿¡ ÀúÀåµÈ pNo:" + projectNo);
+		System.out.println("HttpSessionì— ì €ì¥ëœ pNo:" + projectNo);
 
 		return super.beforeHandshake(request, response, wsHandler, attributes);
 	}

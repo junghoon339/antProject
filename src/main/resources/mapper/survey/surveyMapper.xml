@@ -1,5 +1,96 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="mapper.calendar.surveyMapper">
+<mapper namespace="surveyMapper">
 
+<!-- <result column="" property="" /> -->
+
+	<resultMap type="surveyDTO" id="surveyDTOMap">
+	<id column="survey_no" property="surveyNo" />
+	<result column="project_no" property="projectNo" />
+	<result column="survey_strartdate" property="surveyStartDate" />
+	<result column="survey_enddate" property="surveyEndDate" />
+	<result column="survey_state" property="surveyState" />
+	</resultMap>
+	
+	<resultMap type="surveyUserDTO" id="surveyUserDTOMap">
+	<id column="survey_user_no" property="surveyUserNo" />
+	<result column="survey_no" property="surveyNo" />
+	<result column="user_no" property="userNo" />
+	<result column="survey_user_state" property="surveyUserState" />
+	</resultMap>
+	
+	<resultMap type="surveyDetailDTO" id="surveyDetailDTOMap">
+	<id column="survey_detail_no" property="surveyDetailNo" />
+	<result column="survey_no" property="surveyNo" />
+	<result column="survey_user_no" property="surveyUserNo" />
+	<result column="survey_detail_username" property="surveyDetailUserName" />
+	<result column="survey_detail_userscore" property="surveyDetailUserScore" />
+	</resultMap>
+	
+	<resultMap type="surveyDTO" id="surveyDTOCollection">
+	<id column="survey_no" property="surveyNo" />
+	<result column="project_no" property="projectNo" />
+	<result column="survey_strartdate" property="surveyStartDate" />
+	<result column="survey_enddate" property="surveyEndDate" />
+	<result column="survey_state" property="surveyState" />
+	<collection property="surveyUsers" ofType="surveyUserDTO">
+		<id column="survey_user_no" property="surveyUserNo" />
+		<result column="survey_no" property="surveyNo" />
+		<result column="user_no" property="userNo" />
+		<result column="survey_user_state" property="surveyUserState" />
+	</collection>
+	</resultMap>
+	
+	<resultMap type="surveyUserDTO" id="surveyUserDTOCollection">
+	<id column="survey_user_no" property="surveyUserNo" />
+	<result column="survey_no" property="surveyNo" />
+	<result column="user_no" property="userNo" />
+	<result column="survey_user_state" property="surveyUserState" />
+	<collection property="surveyDetails" ofType="surveyDetailDTO">
+		<id column="survey_detail_no" property="surveyDetailNo" />
+		<result column="survey_no" property="surveyNo" />
+		<result column="survey_user_no" property="surveyUserNo" />
+		<result column="survey_detail_username" property="surveyDetailUserName" />
+		<result column="survey_detail_userscore" property="surveyDetailUserScore" />
+	</collection>
+	</resultMap>
+	
+	<!-- <select id="surveySelectByProjectNo" parameterType="" resultMap="">
+		selec
+	</select> -->
+	
+	<insert id="surveyCreate" parameterType="surveyDTO">
+		INSERT INTO survey
+		VALUES(seq_survey_no.nextval, #{surveyNo}, #{surveyStartdate}, #{surveyEnddate}, #{surveyState})
+	</insert>
+	
+	<update id="surveyUpdate" parameterType="int">
+		UPDATE survey
+		SET survey_state = 1
+		WHERE project_no = #{_parameter}
+	</update>
+	
+	<insert id="surveyUserCreate" parameterType="surveyUserDTO">
+		INSERT INTO survey_user
+		VALUES(seq_survey_user_no.nextval, #{surveyNo}, #{userNo}, #{surveyUserState})
+	</insert>
+	
+	<update id="surveyUserUpdate" parameterType="map">
+		UPDATE survey_user
+		SET survey_user_state = 1
+		WHERE survey_no = #{surveyNo} AND user_no = #{userNo}
+	</update>
+	
+	<insert id="surveyDetailCreate" parameterType="surveyDetailDTO">
+		INSERT INTO survey_detail
+		VALUES(seq_survey_detail_no.nextval, #{surveyNo}, #{surveyUserNo}, #{surveyDetailUserName}, #{surveyDetailUserScore})
+	</insert>
+	
+	<select id="surveySelectByProjectNo" parameterType="int" resultMap="surveyDTOCollection">
+		SELECT *
+		FROM survey s JOIN survey_user su
+		ON s.survey_no = su.survey_no
+		AND survey_no = #{_parameter}
+	</select>
+	
 </mapper>
