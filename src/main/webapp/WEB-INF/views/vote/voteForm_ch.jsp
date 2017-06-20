@@ -43,14 +43,13 @@
 
 <script>
 	$(function(){
-		alert(1);
 
 		$(".obj").mouseenter(function(){
 	        $(this).css("background-color", "#fff4f4");
 	    });
 		
 	    $(".obj").mouseleave(function(){
-	        $(this).css("background-color", "white");
+	        $(this).css("background-color", "gray");
 	    });
 	    
 	    $(".obj").dblclick(function(){
