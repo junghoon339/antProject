@@ -168,67 +168,37 @@
 						<div class="col-md-12">
 							<div class="card">
 								<div class="header">
-									<h4 class="title">진행중인 조별과제</h4>
+									<h4 class="title">완료된 조별과제</h4>
 								</div>
 								<div class="content">
-									 여기 어디야
+									 
 									<c:choose>
-										<c:when	test="${empty currentProList}&&${empty surveyingProList}">
-											<!-- 진행중인,완료대기중인 조별과제가 없으면 -->
+									<c:when test="${empty completedProList}"><!-- 완료된 조별과제가 없으면 -->
+										<div class="col-md-3">
+											<div class="bs bs-pricing">
+												<div class="cotent">
+													완료된 조별과제가 없습니다.</h4>
+												</div>
+											</div>
+										</div>
+									</c:when>
+									<c:otherwise><!-- 완료된 조별과제가 있으면 -->
+										<c:forEach items="${completedProList}" var="projectDTO">
 											<div class="col-md-3">
 												<div class="bs bs-pricing">
 													<div class="cotent">
-														<h4>진행중인 조별과제가 없습니다.</h4>
+														<h3 class="category">${projectDTO.projectName}</h3>
+														<h1 class="bs-caption">
+															<small>D-</small>11
+														</h1>
+														<a href="${pageContext.request.contextPath}/project/teamMain/${projectDTO.projectNo}" class="btn btn-danger">Enter</a>
 													</div>
 												</div>
 											</div>
-										</c:when>
-										<c:otherwise>
-											<!-- 진행중인 조별과제가 있으면 -->
-											<c:forEach items="${surveyingProList}" var="projectDTO">
-												<div class="col-md-3">
-													<div class="bs bs-pricing">
-														<div class="cotent">
-															<h3 class="category">${projectDTO.projectName}</h3>
-															<input type="hidden" name="${projectDTO.projectNo}"
-																value="${projectDTO.projectNo}" /> <a href="#"
-																style="color: #BCE55C;" class="survey">설문조사해라${projectDTO.projectNo}</a>
-															<h1 class="bs-caption">
-																<small>D-</small>${projectDTO.dday}
-															</h1>
-															<a
-																href="${pageContext.request.contextPath}/project/teamMain/${projectDTO.projectNo}"
-																class="btn btn-danger">Enter</a>
-														</div>
-													</div>
-												</div>
-											</c:forEach>
-											<c:forEach items="${currentProList}" var="projectDTO">
-												<div class="col-md-3">
-													<div class="bs bs-pricing">
-														<div class="cotent">
-															<h3 class="category">${projectDTO.projectName}</h3>
-															<h1 class="bs-caption">
-																<small>D-</small>${projectDTO.dday}
-															</h1>
-															<a
-																href="${pageContext.request.contextPath}/project/teamMain/${projectDTO.projectNo}"
-																class="btn btn-danger">Enter</a>
-														</div>
-													</div>
-												</div>
-											</c:forEach>
-										</c:otherwise>
-									</c:choose>
-									<div class="col-md-3">
-										<!-- 플러스아이콘 -->
-										<div class="bs bs-pricing">
-											<div class="cotent" id="plusImg">
-												<img
-													src="${pageContext.request.contextPath}/resources/img/plus.png">
-											</div>
-										</div>
-									</div>
+										</c:forEach>
+									</c:otherwise>
+
+								</c:choose>
 								</div>
 							</div>
 						</div>
@@ -241,105 +211,6 @@
 	</div>
 
 
-	<!-- Modal -->
-	<div id="myModal2" class="modal fade" role="dialog">
-		<div class="modal-dialog" style="width: 400px;">
-			<!-- Modal content-->
-			<div class="modal-content">
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal">×</button>
-					<h4 class="modal-title">조원 점수평가</h4>
-				</div>
-				<div class="modal-body">
-					<table>
-						<div id="print"></div>
-					</table>
-					<%-- <center>
-      		<p>
-			유인재 <font color="orange">☆☆☆☆☆</font> <a href="#">[편집]</a><p>
-			김정훈 <font color="orange">☆☆☆☆☆</font> <a href="#">[편집]</a><p>
-			황유정 <font color="orange">☆☆☆☆☆</font> <a href="#">[편집]</a><p>
-			김지현 <font color="orange">☆☆☆☆☆</font> <a href="#">[편집]</a><p>
-			정해찬 <font color="orange">☆☆☆☆☆</font> <a href="#">[편집]</a><p>
-			</center> --%>
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-default" data-dismiss="modal">확인</button>
-					<button type="button" class="btn btn-default" data-dismiss="modal">취소</button>
-				</div>
-			</div>
-
-		</div>
-	</div>
-
-	<!-- Modal -->
-	<div class="modal fade" id="myModal" tabindex="-1" role="dialog"
-		aria-labelledby="myModalLabel" aria-hidden="true">
-		<div class="modal-dialog">
-			<div class="modal-content">
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal"
-						aria-label="Close">
-						<span aria-hidden="true">&times;</span>
-					</button>
-					<h4 class="modal-title" id="myModalLabel">새로운 조별과제 등록</h4>
-				</div>
-				<div class="modal-body">
-					<div class="container" style="margin-top: 10px;">
-						<div class="row">
-							<div class="">
-								<form id="projectForm" name="fr"
-									class="form-horizontal col-sm-7 col-sm-offset-1"
-									action="${pageContext.request.contextPath}/project/insertProject"
-									method="post">
-									<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"> 
-									*새로운 조별과제를 만드는 분이 자동으로 조장으로 지정됩니다.
-									<p></p>
-									팀플명 : <input class="form-control" type="text"
-										name="projectName" />
-									<p></p>
-									과목명 : <input class="form-control" type="text"
-										name="projectSubject" />
-									<p></p>
-									교수님 : <input class="form-control" type="text"
-										name="projectTeacher" />
-									<p></p>
-									시작날짜:
-									<div class="input-group registration-date-time">
-										<input class="form-controsl" name="projectStartdate"
-											id="reg|istration-date" type="date">
-									</div>
-									<p></p>
-									종료날짜 :
-									<div class="input-group registration-date-time">
-										<input class="form-control" name="projectEnddate"
-											id="registration-date" type="date">
-									</div>
-									<p></p>
-
-									<div id="invitedMemberDiv">
-										팀원ID : <input class="form-control" type="text"
-											name="invitedUser" />
-										<p></p>
-									</div>
-
-									<!-- <span id="addMember">+</span> -->
-									<a href="#" class="btn btn-sm btn-default" id="addBtn"> <span
-										class="glyphicon glyphicon-plus">팀원추가</span>
-									</a>
-								</form>
-							</div>
-						</div>
-					</div>
-
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-danger" id="insertProjectBtn">등록</button>
-					<button type="button" class="btn btn-default" data-dismiss="modal">취소</button>
-				</div>
-			</div>
-		</div>
-	</div>
 
 </body>
 
