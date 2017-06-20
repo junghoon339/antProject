@@ -246,6 +246,7 @@ public class ProjectController implements Serializable {
 	 */
 	@RequestMapping("/updateTeamInfo")
 	public String updateTeamInfo(ProjectDTO projectDTO,HttpServletRequest req){
+		System.out.println("업데이트 컨트롤러 실행됬다!!!!");
 		int projectNo = (int) req.getSession().getAttribute("projectNo");	
 		projectDTO.setProjectNo(projectNo);
 		System.out.println("수정하려고하는 프로젝트 상태 : "+projectDTO.getProjectState());

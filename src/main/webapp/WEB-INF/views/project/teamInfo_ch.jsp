@@ -157,7 +157,7 @@ $(document).ready(function() {
 					<div class="row">
 
 						<!-- 이곳에 내용작성!!!!!!!!!!!!!!!! -->
-						<div class="col-lg-8 col-lg-offset-2">
+<%-- 						<div class="col-lg-8 col-lg-offset-2">
 							<h1>팀플 정보</h1>
 							<hr>
 							<form name="projectForm" class="" action="${pageContext.request.contextPath}/project/updateTeamInfo" method="post">
@@ -178,8 +178,7 @@ $(document).ready(function() {
 								<p></p>
 								종료날짜 :
 								<div class="input-group registration-date-time">
-									<input class="form-control" name="projectEnddate" id="end-date"
-										type="date">
+									<input class="form-control" name="projectEnddate" id="end-date"	type="date">
 								</div>
 								<p></p>
 
@@ -187,7 +186,66 @@ $(document).ready(function() {
 								<button type="submit" class="btn btn-danger" id="updateBtn"	style="display: none">수정</button>
 								<button type="button" class="btn btn-danger" id="Btn">마감하기</button>
 							</form>
-						</div>
+						</div> --%>
+                    <div class="col-lg-8 col-md-7">
+                        <div class="card">
+                            <div class="header">
+                                <h4 class="title">조별과제 정보</h4>
+                            </div>
+                            <div class="content">
+                                <form name="projectForm" class="" action="${pageContext.request.contextPath}/project/updateTeamInfo" method="post">
+								<input type="hidden" id="securityInfo" name="${_csrf.parameterName}" value="${_csrf.token}">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label>조별과제명</label>
+                                                <input type="text" class="form-control border-input" name="projectName" value="${projectDTO.projectName}" >
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label>과목명</label>
+                                                <input type="text" class="form-control border-input"  name="projectSubject" value="${projectDTO.projectSubject}">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label>교수님</label>
+                                                <input type="text" class="form-control border-input" name="projectTeacher" value="${projectDTO.projectTeacher}">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">                                                                                 	
+                                                <label>시작날짜</label>
+                                               <input class="form-control border-input" name="projectStartdate" id="start-date" type="date">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">                                                                                 	
+                                                <label>종료날짜</label>
+                                               <input class="form-control border-input" name="projectEnddate" id="end-date"	type="date">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="text-center">
+                                        <button type="submit" class="btn btn-info btn-fill btn-wd" id="updateBtn" style="display: none">수정</button>
+										<button type="button" class="btn btn-info btn-fill btn-wd" id="Btn">마감하기</button>
+                                    </div>
+                                    <div class="clearfix"></div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+
+
 
 					</div>
 				</div>
