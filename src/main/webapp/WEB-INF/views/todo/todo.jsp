@@ -27,31 +27,36 @@
 					dataType:"json",
 					success:function(re){
 						//re.userNo == 현재 userNo같으면! else{alert('메모변경은 메모를 등록한사람만 가능합니다.')}
-						if(re!=null){
-							var updateVal=prompt("포스트잇에 적을 내용을 입력해주세요",re.todoContent);
-							if(updateVal!=null){
-								$("#todoNo").val(postitSu[1]);
-								$("#todoContent").val(updateVal);
-								$.ajax({
-									url:url+"/todo/todoUpdate",
-									type:"post",
-									data:$("#todoForm").serialize(),
-									dataType:"text",
-									success:function(re){
-										if(re>0){
-											alert("수정됫네?ㅎㅎ");
-											todoSelectAll();
-										}else{
-											alert("수정안됫으");
+						if("${sessionScope.userDTO.userNo}"==re.userNo){
+							if(re!=null){
+								var updateVal=prompt("포스트잇에 적을 내용을 입력해주세요",re.todoContent);
+								if(updateVal!=null){
+									$("#todoNo").val(postitSu[1]);
+									$("#todoContent").val(updateVal);
+									$.ajax({
+										url:url+"/todo/todoUpdate",
+										type:"post",
+										data:$("#todoForm").serialize(),
+										dataType:"text",
+										success:function(re){
+											if(re>0){
+												alert("수정됫네?ㅎㅎ");
+												todoSelectAll();
+											}else{
+												alert("수정안됫으");
+											}
+										},
+										error:function(err){
+											alert("에러발생 : "+err);
 										}
-									},
-									error:function(err){
-										alert("에러발생 : "+err);
-									}
-								});
+									});
+								}
+								
 							}
-							
+						}else{
+							alert("메모변경은 메모를 등록한 사람만 가능합니다.");
 						}
+						
 					},
 					error:function(err){
 						alert("에러발생 : "+err);
@@ -72,7 +77,7 @@
 	
 	var url="${pageContext.request.contextPath}";
 	
-	
+	var sessionUserNo="${sessionScope.userDTO.userNo}";
 </script>
 </head>
 <body>

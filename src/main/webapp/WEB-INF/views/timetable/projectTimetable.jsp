@@ -1,34 +1,37 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<!DOCTYPE html>
+	pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <html>
-	<head>
-		<meta charset="UTF-8">
-		<meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
-		<meta name="og:title" content="서울대학교 시간표 SNUTT" />
-		<meta name="og:type" content="timetable" />
-		<meta name="og:site_name" content="SNUTT" />
-		<meta name="og:description" content="서울대학교 시간표 작성 웹서비스" />
-		
-		<title>서울대학교 시간표 : SNUTT</title>
-		
-		<!-- jQuery -->		
-		<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-		<link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/themes/smoothness/jquery-ui.css" />
-		<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/jquery-ui.min.js"></script>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
+<title>Insert title here</title>
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/codebase/dhtmlxscheduler.css"/>
 
-		<!--  Bootstrap -->
-		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
-		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
-		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+<link rel="stylesheet" type="text/css"
+	href="${pageContext.request.contextPath}/resources/css/header.css" />
+<link rel="stylesheet" type="text/css"
+	href="${pageContext.request.contextPath}/resources/css/sidebar.css" />
 
-		<link href="${pageContext.request.contextPath}/resources/asset/stylesheets/timetable.css" media="all" rel="stylesheet" type="text/css" />
+<script src="http://code.jquery.com/jquery-latest.min.js"></script>
 
-		<script src="${pageContext.request.contextPath}/resources/asset/javascripts/utils.js" type="text/javascript"></script>
-		<script src="${pageContext.request.contextPath}/resources/asset/javascripts/exportpng.js" type="text/javascript"></script>
-		<script src="${pageContext.request.contextPath}/resources/asset/javascripts/timetable_common.js" type="text/javascript"></script>
-		<script src="${pageContext.request.contextPath}/resources/asset/javascripts/timetable_snutt.js" type="text/javascript"></script>
-		<script>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+      <link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/themes/smoothness/jquery-ui.css" />
+      <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/jquery-ui.min.js"></script>
+
+      <!--  Bootstrap -->
+      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+      <link href="${pageContext.request.contextPath}/resources/asset/stylesheets/timetable.css" media="all" rel="stylesheet" type="text/css" />
+      <script src="${pageContext.request.contextPath}/resources/asset/javascripts/utils.js" type="text/javascript"></script>
+      <script src="${pageContext.request.contextPath}/resources/asset/javascripts/exportpng.js" type="text/javascript"></script>
+      <script src="${pageContext.request.contextPath}/resources/asset/javascripts/timetable_common.js" type="text/javascript"></script>
+      <script src="${pageContext.request.contextPath}/resources/asset/javascripts/timetable_snutt.js" type="text/javascript"></script>
+	<script>
       (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
          (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
@@ -38,13 +41,64 @@
       ga('send', 'pageview');
 
     </script>
-    <style type="text/css">
-    
-    </style>
-	</head>
-	<body>
-		
-		<div class="container">
+
+<script type="text/javascript">
+	/* 모달 */
+	$(document).ready(function() {
+		$("#mytable #checkall").click(function() {
+			if ($("#mytable #checkall").is(':checked')) {
+				$("#mytable input[type=checkbox]").each(function() {
+					$(this).prop("checked", true);
+				});
+
+			} else {
+				$("#mytable input[type=checkbox]").each(function() {
+					$(this).prop("checked", false);
+				});
+			}
+		});
+
+		$("[data-toggle=tooltip]").tooltip();
+	});
+	/* 모달 */
+</script>
+
+
+<style type="text/css">
+.modal-header-danger {
+	color: #fff;
+	padding: 9px 15px; border-bottom : 1px solid #eee; background-color :
+	#d9534f; -webkit-border-top-left-radius : 5px;
+	-webkit-border-top-right-radius : 5px; -moz-border-radius-topleft : 5px;
+	-moz-border-radius-topright : 5px; border-top-left-radius : 5px;
+	border-top-right-radius: 5px;
+	padding: 9px 15px;
+	border-bottom: 1px solid #eee;
+	background-color: #d9534f;
+	-webkit-border-top-left-radius: 5px;
+	-webkit-border-top-right-radius: 5px;
+	-moz-border-radius-topleft: 5px;
+	-moz-border-radius-topright: 5px;
+	border-top-left-radius: 5px;
+	border-bottom: 1px solid #eee;
+	background-color: #d9534f;
+	-webkit-border-top-left-radius: 5px;
+	-webkit-border-top-right-radius: 5px;
+	-moz-border-radius-topleft: 5px;
+	-moz-border-radius-topright: 5px;
+	border-top-left-radius: 5px;
+}
+
+/* insert form */
+
+/* insert form */
+</style>
+</head>
+<body>
+	<header> <jsp:include page="/WEB-INF/views/project/header.jsp" flush="false" /> </header>
+	<jsp:include page="/WEB-INF/views/project/sidebar.jsp" />
+	<div id="burger"></div>
+<div class="container">
 			<div id="content_wrapper">
 				<div id="timetable_container">
 					<div id="timecells_container">
@@ -52,6 +106,7 @@
 							<div id="customcell" style="display:none;"></div>  
 						</div>
 					</div>
+							<h1 style="color: black">Team Timetable</h1>
 					<table id="timetable" >
 							<tr>
 								<th>&nbsp;</th>
@@ -213,6 +268,7 @@
 		
 		<div id="custom_lecture_modal">
 			<form id="custom_lecture_form">
+				<input type=hidden id="securityInfo" name="${_csrf.parameterName}" value="${_csrf.token}">
 				<input type="text" name="" id="custom_course_title" class="input-large" placeholder="교과목명을 입력하세요." /><br />
 				<input type="text" name="" id="custom_location" class="input-large" placeholder="강의동을 입력하세요." /><br />
 				<input type="hidden" name="" id="custom_class_time"/>
@@ -220,6 +276,12 @@
 				<a id="custom_lecture_close_button" class="btn btn-inverse">취소</a>
 			</form>
 		</div>
-	</body> 
-</html> 
-    
+
+	<footer> <jsp:include page="/WEB-INF/views/project/footer.jsp"
+		flush="false" /> </footer>
+
+</body>
+<script
+src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+
+</html>

@@ -145,45 +145,65 @@ addEvent(dropAreas, 'drop', function (event) {
     	$("#todoNo").val(postitSu[1]);
     	// alert(iObj.indexOf("p"));
     	
+    	//ajax넣은부분이 고친부분
+    	$.ajax({
+			url:url+"/todo/selectText",
+			type:"post",
+			data:"todoNo="+postitSu[1]+"&"+$("#securityInfo").attr("name")+"="+$("#securityInfo").val(),
+			dataType:"json",
+			success:function(re){
+				if(sessionUserNo==re.userNo){
+					if($("#todoLocation").val()==3){
+			    		$.ajax({
+			    			url:url+"/todo/todoDelete",
+			    			type:"post",
+			    			data:"todoNo="+postitSu[1]+"&"+$("#securityInfo").attr("name")+"="+$("#securityInfo").val(),
+			    			dataType:"text",
+			    			success:function(re){
+			    				if(re>0){
+			    					alert("삭제굿");
+			    					todoSelectAll();
+			    				}else{
+			    					alert("삭제안됨");
+			    				}
+			    			},
+			    			error:function(err){
+			    				
+			    			}
+			    		});
+			    	}else{
+			    		$.ajax({
+			    	    	url:url+"/todo/todoUpdate",
+			    	    	type:"post",
+			    	    	data:$("#todoForm").serialize(),
+			    	    	dataType:"text",
+			    	    	success:function(re){
+			    	    		//alert(re);
+			    	    		if(re>0){
+			    	    			alert("잘변경됨")
+			    	    			todoSelectAll();
+			    	    		}else{
+			    	    			alert("안변경됨");
+			    	    		}
+			    	    	},
+			    	    	error:function(err){
+			    	    		console.log("오류 : " + err)
+			    	    	}
+			    	    });
+			    	}
+				}else{
+		    		alert("포스트잇은 등록한 사용자만 지우거나 움직일수  있습니다.");
+		    	}
+			},
+			error:function(err){
+				alert("err:"+err);
+			}
+			
+    	});
+    	
+  
     	//포스트잇 지우기
-    	if($("#todoLocation").val()==3){
-    		$.ajax({
-    			url:url+"/todo/todoDelete",
-    			type:"post",
-    			data:"todoNo="+postitSu[1]+"&"+$("#securityInfo").attr("name")+"="+$("#securityInfo").val(),
-    			dataType:"text",
-    			success:function(re){
-    				if(re>0){
-    					alert("삭제굿");
-    					todoSelectAll();
-    				}else{
-    					alert("삭제안됨");
-    				}
-    			},
-    			error:function(err){
-    				
-    			}
-    		});
-    	}else{
-    		$.ajax({
-    	    	url:url+"/todo/todoUpdate",
-    	    	type:"post",
-    	    	data:$("#todoForm").serialize(),
-    	    	dataType:"text",
-    	    	success:function(re){
-    	    		//alert(re);
-    	    		if(re>0){
-    	    			alert("잘변경됨")
-    	    			todoSelectAll();
-    	    		}else{
-    	    			alert("안변경됨");
-    	    		}
-    	    	},
-    	    	error:function(err){
-    	    		console.log("오류 : " + err)
-    	    	}
-    	    });
-    	}
+    	
     	
     	
     }else{//새로등록하는것

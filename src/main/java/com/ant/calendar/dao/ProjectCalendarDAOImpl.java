@@ -47,6 +47,7 @@ public class ProjectCalendarDAOImpl implements ProjectCalendarDAO {
 	@Override
 	public void updateEvent(ProjectCalendarDTO schedule) {
 		sqlSession.update("projectCalendarMapper.updateEvent", schedule);
+		System.out.println("updateEvent 다오->세션 접근");
 	}
 
 	@Override
