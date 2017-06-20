@@ -18,25 +18,49 @@
 			<a href="http://www.creative-tim.com" class="simple-text">
 				Creative Tim </a>
 		</div>
-
 		<ul class="nav">
-			<li class="active"><a href="dashboard.html"> <i
-					class="ti-pie-chart"></i>
-					<p>진행중 조별과제</p>
-			</a></li>
-			<li><a href="user.html"> <i class="ti-user"></i>
-					<p>완료된 조별과제</p>
-			</a></li>
-			<li><a href="table.html"> <i
-					class="ti-view-list-alt"></i>
-					<p>My TimeTable</p>
-			</a></li>
-			<li><a href="typography.html"> <i class="ti-text"></i>
-					<p>My Calendar</p>
-			</a></li>
-			<li><a href="icons.html"> <i class="ti-pencil-alt2"></i>
-					<p>공지사항</p>
-			</a></li>
+			<c:choose>
+				<c:when test="${projectNo==null}">
+					<li class="active"><a href="dashboard.html"> <i
+							class="ti-pie-chart"></i>
+							<p>진행중 조별과제</p>
+					</a></li>
+					<li><a href="user.html"> <i class="ti-user"></i>
+							<p>완료된 조별과제</p>
+					</a></li>
+					<li><a href="table.html"> <i class="ti-view-list-alt"></i>
+							<p>My TimeTable</p>
+					</a></li>
+					<li><a href="typography.html"> <i class="ti-text"></i>
+							<p>My Calendar</p>
+					</a></li>
+					<li><a href="icons.html"> <i class="ti-pencil-alt2"></i>
+							<p>공지사항</p>
+					</a></li>
+				</c:when>
+				<c:otherwise>
+					<li class="active"><a href="${pageContext.request.contextPath}/project/teamInfo"> <i
+							class="ti-pie-chart"></i>
+							<p>조별과제 정보</p>
+					</a></li>
+					<li><a href="${pageContext.request.contextPath}/project/projectUserInfo"> <i class="ti-user"></i>
+							<p>조원 정보</p>
+					</a></li>
+					<li><a href="table.html"> <i class="ti-view-list-alt"></i>
+							<p>조별과제 시간표</p>
+					</a></li>
+					<li><a href="${pageContext.request.contextPath}/calendar/projectCalendar"> <i class="ti-text"></i>
+							<p>조별과제 달력</p>
+					</a></li>
+					<li><a href="${pageContext.request.contextPath}/storage/storageTable/1"> <i class="ti-pencil-alt2"></i>
+							<p>자료실</p>
+					</a></li>
+					<li><a href="${pageContext.request.contextPath}/vote/"> <i class="ti-pencil-alt2"></i>
+							<p>투표</p>
+					</a></li>
+				</c:otherwise>
+			</c:choose>
+
 			<!--  <li>
                     <a href="maps.html">
                         <i class="ti-map"></i>

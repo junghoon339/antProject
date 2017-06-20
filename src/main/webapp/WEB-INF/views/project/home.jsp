@@ -47,7 +47,6 @@
 	    	$("#projectForm").submit();
 	    	
 	    });  
-		 
 	});
 	
 	function check() {
@@ -78,10 +77,7 @@
 		  }
 		  else return true;
 		}
-	
-	
-	
-	
+
 </script>
 <style type="text/css">
  .form-control {width:30%;}

@@ -20,48 +20,43 @@ public class EchoHandler extends TextWebSocketHandler {
 	private ChatService service;
 	private static Logger logger = LoggerFactory.getLogger(EchoHandler.class);
 
-	// 모든 세션을 저장한다
+	// 맵 = 프로젝트 넘버, 리스트 = 그 프로젝트에 담긴 세션들
 	private Map<String, List<WebSocketSession>> sessionListMap = new HashMap<String, List<WebSocketSession>>();
 
 	/**
-	 * 클占쏙옙占싱억옙트 占쏙옙占쏙옙 占쏙옙占식울옙 占쏙옙占쏙옙풔占� 占쌨소듸옙
+	 * 세션이 연결되면 젤 먼저 여기로 옴
 	 */
 	@Override
 	public void afterConnectionEstablished(WebSocketSession session) throws Exception {
-		// 占쏙옙占싶쇽옙占싶울옙占쏙옙 占쏙옙占쏙옙占쏙옙 占쏙옙占실울옙占쏙옙 projectNo占쏙옙 占쏙옙占쏙옙占쏙옙
 		Map<String, Object> projectNoMap = session.getAttributes();
 		int projectNo = (int) projectNoMap.get("projectNo");
 
 		List<WebSocketSession> sessionList = null;
-		System.out.println("ㅠㅠㅠㅠㅠ");
+		
 		// 세션리스트가 들어있는 맵이 존재하는지 확인
 		if (sessionListMap.get(Integer.toString(projectNo))==null) {
 			// 비어있으면 그 리스트를 만들어 줌
-			System.out.println(1111111111);
 			sessionList = new ArrayList<WebSocketSession>();
 		} else {
-			System.out.println(22222222);
 			sessionList = sessionListMap.get(Integer.toString(projectNo));
 		}
-		System.out.println(session);
 		sessionList.add(session);
-		System.out.println(sessionListMap.get(Integer.toString(projectNo)));
 		sessionListMap.put(Integer.toString(projectNo), sessionList);
 
-		// 2 List :
 		logger.info(" {} conntected ", session.getId());
 	}
 
 	/**
-	 * 클占쏙옙占싱억옙트占쏙옙 占쏙옙占쏙옙占쏙옙 占쏙옙占쏙옙占쏙옙 占쌨쏙옙占쏙옙占쏙옙 占쏙옙占쏙옙占쏙옙占쏙옙 占쏙옙 占쏙옙占쏙옙풔占� 占쌨소듸옙
+	 * 메시지를 보내면 이게 실행댐
 	 */
 	@Override
 	protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
 		Map<String, Object> projectNoMap = session.getAttributes();
 		int projectNo = (int) projectNoMap.get("projectNo");
-		// 占싣뤄옙占쏙옙 占쏙옙占싱댐옙 占쌍댐옙 2占쏙옙
+		
 		logger.info("From {}, recieved Message : {} ", session.getId(), message.getPayload());
 
+		// 프로젝트 넘버에 해당하는 리스트를 꺼내고, 그 리스트에 접속한 세션에게 메세지 전송
 		for (WebSocketSession sess : sessionListMap.get(Integer.toString(projectNo))) {
 			sess.sendMessage(new TextMessage(message.getPayload()));
 		}
@@ -71,7 +66,7 @@ public class EchoHandler extends TextWebSocketHandler {
 	}
 
 	/**
-	 * 클占쏙옙占싱억옙트占쏙옙 占쏙옙占쏙옙占쏙옙 占쏙옙占쏙옙占쏙옙 占쏙옙 占쏙옙占쏙옙풔占� 占쌨소듸옙
+	 * 세션 접속이 끊기고
 	 */
 	@Override
 	public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {
@@ -82,10 +77,11 @@ public class EchoHandler extends TextWebSocketHandler {
 		List<WebSocketSession> sessionList = sessionListMap.get(Integer.toString(projectNo));
 
 		System.out.println(sessionListMap.get(Integer.toString(projectNo)));
-		// 2 List
+
+		// 세션 삭제
 		sessionList.remove(session);
 
-		// 1 Map
+		// 세션 리스트가 모두 삭제되면 맵도 삭제
 		if (sessionList.isEmpty()) {
 			sessionListMap.remove(Integer.toString(projectNo));
 		}

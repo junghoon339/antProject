@@ -64,6 +64,7 @@
 					<div class="row">
 						
 						<!-- 이곳에 내용작성!!!!!!!!!!!!!!!! -->
+						
 					</div>
 				</div>
 			</div>
@@ -72,7 +73,7 @@
 		</div>
 	</div>
 	
-	<c:import url="/project/chat"/>
+	<%-- <c:import url="/project/chat"/> --%>
 </body>
 
 <!--   Core JS Files   -->

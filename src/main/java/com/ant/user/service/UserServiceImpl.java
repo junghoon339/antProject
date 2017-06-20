@@ -31,7 +31,7 @@ public class UserServiceImpl implements UserService {
 
 		UserDTO dbDTO = userDAO.selectUserById(userDTO.getUserId());
 		
-		// ±ÇÇÑµî·Ï
+		// ï¿½ï¿½ï¿½Ñµï¿½ï¿½
 		authorityDAO.insertAuthority(new AuthorityDTO(dbDTO.getUserNo(), Constants.ROLE_USER));
 		
 		return 1;
@@ -73,5 +73,4 @@ public class UserServiceImpl implements UserService {
 		UserDTO userDTO = userDAO.selectUserByNo(userNo);
 		return userDTO;
 	}
-	
 }

@@ -15,11 +15,11 @@ public class HandshakeInterceptor extends HttpSessionHandshakeInterceptor {
 	public boolean beforeHandshake(ServerHttpRequest request, ServerHttpResponse response, WebSocketHandler wsHandler,
 			Map<String, Object> attributes) throws Exception {
 
-		// 占쏙옙占쏙옙 占식띰옙占쏙옙占� 占쏙옙, attributes 占쏙옙 占쏙옙占쏙옙 占쏙옙占쏙옙占싹몌옙 占쏙옙占쏙옙占쏙옙 占쌘들러 클占쏙옙占쏙옙占쏙옙 WebSocketSession占쏙옙 占쏙옙占쌨된댐옙
-		System.out.println("Before Handshake");
+		// 세션에서 프로젝트 넘버를 가져오고, 그걸 웹소켓 attributes에 저장
+		// System.out.println("Before Handshake");
 
 		ServletServerHttpRequest ssreq = (ServletServerHttpRequest) request;
-		System.out.println("URI:" + request.getURI());
+		// System.out.println("URI:" + request.getURI());
 
 		HttpServletRequest req = ssreq.getServletRequest();
 
