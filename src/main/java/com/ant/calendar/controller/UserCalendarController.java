@@ -1,5 +1,6 @@
 package com.ant.calendar.controller;
 
+import java.io.Serializable;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.text.ParseException;
@@ -31,9 +32,8 @@ import com.dhtmlx.planner.DHXSkin;
 import com.dhtmlx.planner.DHXStatus;
 
 @Controller
-@RequestMapping("/userCalender")
-public class UserCalendarController {
-	
+@RequestMapping("/userCalendar")
+public class UserCalendarController implements Serializable{
 	@Autowired
 	private UserCalendarService calendarService;
 	
@@ -45,8 +45,8 @@ public class UserCalendarController {
 	private Date to;
 	private Boolean dynFilter;
 	
-	@RequestMapping("/userCalender")
-	public ModelAndView user(HttpServletRequest req) throws Exception {
+	@RequestMapping("/userCalendar")
+	public ModelAndView home(HttpServletRequest req) throws Exception {
 		
 		System.out.println("userCalendar 뿌려짐");
 		String contextPath = req.getContextPath();
@@ -54,6 +54,7 @@ public class UserCalendarController {
 
 		UserDTO userDTO = (UserDTO) session.getAttribute("userDTO");
 		int userNo = userDTO.getUserNo();
+		System.out.println("userNo : "+userNo);
 	
 		DHXPlanner planner = new DHXPlanner(contextPath + "/resources/codebase/", DHXSkin.TERRACE);
 		planner.localizations.set("cr");
@@ -87,7 +88,7 @@ public class UserCalendarController {
 	@RequestMapping("/events")
 	@ResponseBody
 	public String events(HttpServletRequest request) throws Exception {
-		System.out.println("1. event����");
+		System.out.println("1. events들어옴");
 		String value = request.getParameter("ids");
 
 		String actions = "";
@@ -225,13 +226,7 @@ public class UserCalendarController {
 		UserDTO userDTO = (UserDTO) session.getAttribute("userDTO");
 		schedule.setUser_no(userDTO.getUserNo());
 		System.out.println("user_no " + userDTO.getUserNo());
-		
-		
-		/*int projectNo = (int) session.getAttribute("projectNo");
-		ProjectDTO projectDTO = projectService.selectProject(projectNo);
-		int nono = projectDTO.getProjectNo();		
-		schedule.setProject_no(nono);
-		System.out.println("nono=??? : "+nono);*/
+
 		
 		schedule.setStart_date(start_date);
 		schedule.setEnd_date(end_date);
@@ -243,12 +238,10 @@ public class UserCalendarController {
 		 
 
 		if (status == DHXStatus.UPDATE) {
-			System.out.println("projectCalendar update ��Ʈ�ѷ�->���� ����");
 			calendarService.updateEvent(schedule);
 			event.setId(schedule.getEvent_id());
 
 		} else if (status == DHXStatus.INSERT) {
-			System.out.println("projectCalendar insert ��Ʈ�ѷ�->���� ����");
 			calendarService.insertEvent(schedule);
 			event.setId(schedule.getEvent_id()-1);
 

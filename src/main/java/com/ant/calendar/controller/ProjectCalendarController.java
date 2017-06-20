@@ -84,7 +84,7 @@ public class ProjectCalendarController implements Serializable {
 		planner.config.setFirstHour(9);
 		planner.config.setLastHour(19);
 		planner.config.setStartOnMonday(false);
-		planner.config.setMonthDate("%Y년%M월");
+		planner.config.setMonthDate("%Y년 %M월");
 		planner.config.setDefaultDate("%Y년%M월 %j일");
 		planner.config.setDayDate("%D");
 
@@ -97,7 +97,7 @@ public class ProjectCalendarController implements Serializable {
 
 		ModelAndView mv = new ModelAndView();
 		mv.addObject("schedule", planner.render());
-		mv.setViewName("calendar/test");
+		mv.setViewName("calendar/scheduler");
 		// mv.addObject("currentProList",currentProList);
 		// mv.addObject("completedProList",completedProList);
 		return mv;
@@ -247,11 +247,11 @@ public class ProjectCalendarController implements Serializable {
 		System.out.println("user_no " + userDTO.getUserNo());
 		
 		
-		/*int projectNo = (int) session.getAttribute("projectNo");
+		int projectNo = (int) session.getAttribute("projectNo");
 		ProjectDTO projectDTO = projectService.selectProject(projectNo);
 		int nono = projectDTO.getProjectNo();		
 		schedule.setProject_no(nono);
-		System.out.println("nono=??? : "+nono);*/
+		System.out.println("nono=??? : "+nono);
 		
 		schedule.setStart_date(start_date);
 		schedule.setEnd_date(end_date);

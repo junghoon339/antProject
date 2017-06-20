@@ -46,7 +46,14 @@ SELECT * FROM ANT_USER;
 drop table ant_user;
 select * tab;
 
-select * from project
+select * from project_calendar;
+
+insert into PROJECT_CALENDAR
+value (seq, )
+
+SELECT pc.event_id, pc.event_name, pc.project_no, pc.user_no, pc.start_date, pc.end_date, p.project_startdate, p.project_enddate
+	FROM project_calendar pc, project p
+	WHERE pc.project_no=p.project_no and p.project_no=5;
 
 CREATE TABLE project(
    project_no            NUMBER CONSTRAINT project_no_pk PRIMARY KEY,
@@ -204,7 +211,7 @@ create sequence seq_message_no;
 commit
 select * from message;
 
-insert into message values(seq_message_no.nextval,(select user_no from ant_user where user_id='13@naver.com'),'ÂÊÁöÀßµÇ³Ä',sysdate,null,0,13);
+insert into message values(seq_message_no.nextval,(select user_no from ant_user where user_id='13@naver.com'),'ï¿½ï¿½ï¿½ï¿½ï¿½ßµÇ³ï¿½',sysdate,null,0,13);
 
 
 CREATE TABLE storage

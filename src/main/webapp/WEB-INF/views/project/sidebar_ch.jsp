@@ -49,7 +49,7 @@
 					<li><a href="table.html"> <i class="ti-view-list-alt"></i>
 							<p>조별과제 시간표</p>
 					</a></li>
-					<li><a href="${pageContext.request.contextPath}/calendar/projectCalendar"> <i class="ti-text"></i>
+					<li><a href="${pageContext.request.contextPath}/projectCalendar/projectCalendar"> <i class="ti-text"></i>
 							<p>조별과제 달력</p>
 					</a></li>
 					<li><a href="${pageContext.request.contextPath}/storage/storageTable/1"> <i class="ti-pencil-alt2"></i>
