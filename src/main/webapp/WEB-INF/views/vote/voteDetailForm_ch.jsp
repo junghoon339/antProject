@@ -1,14 +1,44 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>투표상세</title>
+
+<meta charset="utf-8" />
+<link rel="apple-touch-icon" sizes="76x76" href="assets/img/apple-icon.png">
+<link rel="icon" type="image/png" sizes="96x96" href="assets/img/favicon.png">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+
+<title>Paper Dashboard by Creative Tim</title>
+
+<meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
+<meta name="viewport" content="width=device-width" />
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/header.css" />
-<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/sidebar.css" />
+<!-- Bootstrap core CSS     -->
+<link href="${pageContext.request.contextPath }/resources/css/bootstrap.min.css" rel="stylesheet" />
+
+<!-- Animation library for notifications   -->
+<link href="${pageContext.request.contextPath }/resources/css/animate.min.css" rel="stylesheet" />
+
+<!--  Paper Dashboard core CSS    -->
+<link href="${pageContext.request.contextPath }/resources/css/paper-dashboard.css" rel="stylesheet" />
+
+<%--     <!--  CSS for Demo Purpose, don't include it in your project     -->
+    <link href="${pageContext.request.contextPath }/resources/css/demo.css" rel="stylesheet" />
+ --%>
+<!--  Fonts and icons     -->
+<link
+	href="http://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css"
+	rel="stylesheet">
+<link href='https://fonts.googleapis.com/css?family=Muli:400,300'
+	rel='stylesheet' type='text/css'>
+<link
+	href="${pageContext.request.contextPath }/resources/css/themify-icons.css"
+	rel="stylesheet">
+
 <script>
 
 var choice = 0; //선택한 라디오 벨류값
@@ -18,10 +48,9 @@ var getchoice = 0; //선택했던 라디오가 무엇인지 DB에서 가져온 �
 var columns = new Array();
 
 $(function() {
-	
 	$(".ifEndLabel").hide();
 		
-	$(".radio").each(function(index,item){
+	$(".regular-radio").each(function(index,item){
 		columns[index] = $(item).val();
 	})
 	
@@ -29,15 +58,15 @@ $(function() {
 	
 	//초기설정 함수 init()호출
 	init();
-		
 	if(${voteState}==1){
 		$(".ifEnd").hide();
 		$(".ifEndLabel").show();
 		$(".ifEndLabelDate").html("${voteEndDate}");
-		$("#well").css("color", "gray");
-		$(".radio").each(function(index,item){
-			$(item).off();
+		$(".regular-radio").each(function(index,item){
+			console.log(index+","+item);
+			$(item).hide();
 		})
+		$("#well").css("color", "gray");
 	}
 	
 	$("#vote").on('click', function() {
@@ -76,7 +105,7 @@ $(function() {
 			url : "${pageContext.request.contextPath}/vote/Detail/endVote",
 			type : "post",
 			dataType : "json",
-			data : "userNo="+${sessionScope.userDTO.userNo}+"&voteNo="+${voteNo}+"&"+$("#securityInfo").attr("name")+"="+$("#securityInfo").val() ,
+			data : "voteNo="+${voteNo}+"&"+$("#securityInfo").attr("name")+"="+$("#securityInfo").val() ,
 			success : function(result) {
 				if(result!='0'){
 					alert("투표가 마감되었습니다.");
@@ -84,10 +113,13 @@ $(function() {
 				$(".ifEnd").hide();
 				$(".ifEndLabel").show();
 				$(".ifEndLabelDate").html(dateToYYYYMMDD(new Date()));
-				$("#well").css("color", "gray");
-				$(".radio").each(function(index,item){
-					$(item).off();
+				console.log("라디오클래스 접근");
+				$(".regular-radio").each(function(index,item){
+					console.log(index+","+item);
+					$(item).hide();
 				})
+				console.log("well아이디 접근");
+				$("#well").css("color", "gray");
 			},
 			error : function(err) {
 				alert("오류 발생 이니셜라이즈 : " + err);
@@ -101,7 +133,7 @@ function init(){
 		url : "${pageContext.request.contextPath}/vote/Detail/Initialized",
 		type : "post",
 		dataType : "json",
-		data : "userNo=${sessionScope.userDTO.userNo}&voteNo="+${voteNo}+"&columns="+columns+"&"+$("#securityInfo").attr("name")+"="+$("#securityInfo").val() , // $("#voteNo").val()
+		data : "voteNo="+${voteNo}+"&columns="+columns+"&"+$("#securityInfo").attr("name")+"="+$("#securityInfo").val() , // $("#voteNo").val()
 		success : function(result) {
 			console.log("성공햇지롱1   리턴값 --->: " + result);
 			
@@ -111,7 +143,7 @@ function init(){
 			$("#userCount").html('<font color="#c3c3c3">참여 '+result.userCount+'</font>');
 			
 			$.each(result.gauge,function(index2, item2){
-				$(".radio").each(function(index,item){
+				$(".regular-radio").each(function(index,item){
 					if(item.value==index2){
 						$(item).parent().parent().next().children().children().children().css("width",(item2+"%"));
 						$(item).parent().parent().next().children().next().text("　"+item2+"%");
@@ -124,8 +156,8 @@ function init(){
 			if(selectChk=="0"){
 				$("#vote").text("투표하기");
 			}else{
-				$(".radio").hide();
-				$(".radioTd").hide();
+				$(".regular-radio").hide();
+				$(".radiTd").hide();
 				$(".valueTd").attr('width', '90%');
 				$("#vote").text("다시 투표하기");
 			}
@@ -157,13 +189,13 @@ function btnEvent(a){
 			url : "${pageContext.request.contextPath}/vote/Detail/Handling",
 			type : "post",
 			dataType : "text",
-			data : "userNo="+${sessionScope.userDTO.userNo}+"&voteNo="+${voteNo}+"&column="+choice+"&"+$("#securityInfo").attr("name")+"="+$("#securityInfo").val() , // $("#voteNo").val()
+			data : "voteNo="+${voteNo}+"&column="+choice+"&"+$("#securityInfo").attr("name")+"="+$("#securityInfo").val() , // $("#voteNo").val()
 			success : function(result) {
 				location.reload();
 				console.log("성공햇지롱2" + result);
 				
-				$(".radio").hide();
-				$(".radioTd").hide();
+				$(".regular-radio").hide();
+				$(".radiTd").hide();
 				$(".valueTd").attr('width', '90%');
 				$("#vote").text("다시 투표하기");
 			},
@@ -172,8 +204,8 @@ function btnEvent(a){
 			}
 		});
 	} else if( $(a).text()=='다시 투표하기') {
-		$(".radio").show();
-		$(".radioTd").show();
+		$(".regular-radio").show();
+		$(".radiTd").show();
 		$(".valueTd").attr('width', '80%');
 		$("#vote").text("투표하기");	
 
@@ -199,130 +231,163 @@ function dateToYYYYMMDD(date){
 table {
 	width: 100%;
 }
-
 td {
-	/* border:red 2px solid; */
 	height: 40px;
 }
 
-.btn span.glyphicon {
-	opacity: 0;
-}
-
-.btn.active span.glyphicon {
-	opacity: 1;
-}
-
+.radio-primary input[type="radio"] + label::after {
+    background-color: #428bca; }
+.radio-primary input[type="radio"]:checked + label::before {
+    border-color: #428bca; }
+.radio-primary input[type="radio"]:checked + label::after {
+    background-color: #428bca; }
 </style>
 </head>
 <body>
-<header> 
-		<jsp:include page="/WEB-INF/views/project/header.jsp" flush="false" />
-	</header>
-	<jsp:include page="/WEB-INF/views/project/sidebar.jsp" />
-	<div id="burger"></div>
-	<section>
-	<div class="container">
-		<div class="row">
-	<%@include file="header.jsp"%>
-	
-	<!-- **************************************************************** -->
-	
-	<div id="myModal" class="modal fade in">
-        <div class="modal-dialog modal-sm">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title">Modal Heading</h4>
-                </div>
-                <div class="modal-body">
-                    <h4>글을 삭제하시겠습니까?</h4>
-                </div>
-                <div class="modal-footer">
-                	<input type=hidden id="securityInfo" name="${_csrf.parameterName}" value="${_csrf.token}">	
-                    <button class="btn btn-warning" onclick="location.href='${pageContext.request.contextPath}/vote/delete?voteNo=${voteNo}&userNo=${sessionScope.userDTO.userNo}'"> 확인</button> 
-                    <button class="btn btn-default" data-dismiss="modal"> 취소</button>
-                </div>
- 
-            </div><!-- /.modal-content -->
-        </div><!-- /.modal-dalog -->
-    </div><!-- /.modal -->
-	
-	<!-- **************************************************************** -->
-	
-	<div class="col-lg-9 col-lg-offset-2">
-		<input type=hidden id="securityInfo" name="${_csrf.parameterName}" value="${_csrf.token}"> <input type=hidden id="voteNo" value="${voteNo}" />
-				<div align="right" style="vertical-align: middle;">
-					<div class="btn-group">
-						<button data-toggle="dropdown" class="btn btn-default btn-md dropdown-toggle" type="button">
-							<span class="caret"></span></button>
-						<ul class="dropdown-menu">
-							<c:choose>
-                		<c:when test="${voteWriter==sessionScope.userDTO.userNo}">
-                    		<li><a href='${pageContext.request.contextPath}/vote/updateForm?voteNo=${voteNo}&userNo=${sessionScope.userDTO.userNo}'>수정하기</a></li>
-							<li><a data-toggle="modal" href="#myModal">삭제하기</a></li>
-                    	</c:when>
-                    	<c:otherwise>
-                    		<li><font color="gray">수정하기</font></li>
-							<li><font color="gray">삭제하기</font></li>
-                    	</c:otherwise>
-                    </c:choose>
-						</ul>
+
+<!-- **************************************************************** -->
+						<div id="myModal" class="modal fade in">
+					        <div class="modal-dialog modal-sm">
+					            <div class="modal-content">
+					                <div class="modal-header">
+					                    <h4 class="modal-title">Modal Heading</h4>
+					                </div>
+					                <div class="modal-body">
+					                    <h4>글을 삭제하시겠습니까?</h4>
+					                </div>
+					                <div class="modal-footer">
+					                	<input type=hidden id="securityInfo" name="${_csrf.parameterName}" value="${_csrf.token}">	
+					                    <button class="btn btn-warning" onclick="location.href='${pageContext.request.contextPath}/vote/delete?voteNo=${voteNo}'"> 확인</button> 
+					                    <button class="btn btn-default" data-dismiss="modal"> 취소</button>
+					                </div>
+					 
+					            </div><!-- /.modal-content -->
+					        </div><!-- /.modal-dalog -->
+					    </div><!-- /.modal -->
+						
+						<!-- **************************************************************** -->
+
+	<div class="wrapper">
+		<jsp:include page="/WEB-INF/views/project/sidebar_ch.jsp" />
+		<div class="main-panel">
+			<jsp:include page="header_ch.jsp" flush="false" />
+
+			<div class="content">
+				<div class="container-fluid">
+					<div class="row">
+						
+						<!-- 이곳에 내용작성!!!!!!!!!!!!!!!! -->
+						<section>
+						<div class="container">
+							<div class="row">
+						
+						<div class="col-lg-9 col-lg-offset-1">
+						<%@include file="header.jsp"%>
+							<input type=hidden id="securityInfo" name="${_csrf.parameterName}" value="${_csrf.token}"> <input type=hidden id="voteNo" value="${voteNo}" />
+									<div align="right" style="vertical-align: middle;">
+										<div class="btn-group">
+											<button data-toggle="dropdown" class="btn btn-default btn-md dropdown-toggle" type="button">
+												<span class="caret"></span></button>
+											<ul class="dropdown-menu">
+												<c:choose>
+							                		<c:when test="${voteWriter==sessionScope.userDTO.userNo}">
+							                    		<li><a href='${pageContext.request.contextPath}/vote/updateForm?voteNo=${voteNo}'>수정하기</a></li>
+														<li><a data-toggle="modal" href="#myModal">삭제하기</a></li>
+							                    	</c:when>
+							                    	<c:otherwise>
+							                    		<li><font color="gray">수정하기</font></li>
+														<li><font color="gray">삭제하기</font></li>
+							                    	</c:otherwise>
+					                  		  </c:choose>
+											</ul>
+										</div>
+										<p>
+									</div>
+									<div class="well" id="well"><Strong>Q. <span class="ifEndLabel">[종료]</span> ${voteTitle}</Strong><p><font size="1"><span class="ifEndLabelDate"></span> <span class="ifEndLabel">마감</span></font></div>
+							<p>
+							<div>
+								<hr>
+								<!-- ★★★★★★★★★★★★★★★★★★★★ -->
+								<c:forEach items="${voteDetail}" var="voteDetailList"
+									varStatus="voteDetailStatus">
+									<table>
+										<tr>
+											<td rowspan="2" width="3%"/>
+											<td rowspan="2" width="10%" align="center"  class="radiTd">
+												<div class="radio radio-primary">
+											 		<input type="radio" name="radio" id="radio" class="regular-radio" value="${voteDetailList.voteDetailNo}" />
+											 	</div>
+											</td>
+											<td width="80%" valign="bottom" class="valueTd">${voteDetailList.voteDetailColumn}</td>
+											<td width="20px">
+												<span class="glyphicon glyphicon-thumbs-up"></span> 
+												<font>
+													<span id="colCount">0</span>
+												</font>
+											</td>
+										</tr>
+										<tr>
+											<td valign="middle" align="center">
+												<div class="progress progress-striped">
+													<div class="progress-bar progress-bar-warning progress-bar-striped active"
+														role="progressbar" aria-valuenow="1" aria-valuemin="0"
+														aria-valuemax="100" style="width: 0%"></div>
+												</div>
+											</td>
+											<td valign="top">&nbsp;&nbsp;0%</td>
+										</tr>
+										<tr>
+											<td colspan="4">
+												<hr>
+											</td>
+										</tr>
+									</table>
+								</c:forEach>
+								<span id="userCount"><font color="#c3c3c3">참여 ${userCount}</font></span><br><br>
+								<!-- ★★★★★★★★★★★★★★★★★★★★ -->
+								<br>
+								<!-- if로 투표를 참여했었는지 안했었는지..확인 -->
+										<span class="ifEnd">
+											<a href="#" class="btn btn-lg btn-danger" id="vote" style="display: inline-block; width: 49%;"> 
+											<span class="glyphicon glyphicon-check"> </span>투표하기</a>
+											<a href="#" class="btn btn-lg btn-danger" id="voteEnd" style="display: inline-block; width: 50%;"> 
+											<span class="glyphicon glyphicon-minus-sign"> </span>투표종료</a>
+										</span>
+									</div>
+						</div>
+						</div></div></section>
 					</div>
-					<p>
 				</div>
-				<div class="well" id="well"><Strong>Q. <span class="ifEndLabel">[종료]</span> ${voteTitle}</Strong><p><font size="1"><span class="ifEndLabelDate"></span> <span class="ifEndLabel">마감</span></font></div>
-		<p>
-		<div>
-			<hr>
-			<!-- ★★★★★★★★★★★★★★★★★★★★ -->
-			<c:forEach items="${voteDetail}" var="voteDetailList"
-				varStatus="voteDetailStatus">
-				<table>
-					<tr>
-						<td rowspan="2" width="3%"/>
-						<td rowspan="2" width="10%" align="center"  class="radioTd">
-						 <input type="radio" name="voteChk" id="radio" class="radio" value="${voteDetailList.voteDetailNo}">
-						</td>
-						<td width="80%" valign="bottom" class="valueTd">${voteDetailList.voteDetailColumn}</td>
-						<td width="20px">
-							<span class="glyphicon glyphicon-thumbs-up"></span> 
-							<font>
-								<span id="colCount">0</span>
-							</font>
-						</td>
-					</tr>
-					<tr>
-						<td valign="middle" align="center">
-							<div class="progress progress-striped">
-								<div class="progress-bar progress-bar-success"
-									role="progressbar" aria-valuenow="1" aria-valuemin="0"
-									aria-valuemax="100" style="width: 0%"></div>
-							</div>
-						</td>
-						<td valign="top">&nbsp;&nbsp;0%</td>
-					</tr>
-					<tr>
-						<td colspan="4">
-							<hr>
-						</td>
-					</tr>
-				</table>
-			</c:forEach>
-			<span id="userCount"><font color="#c3c3c3">참여 ${userCount}</font></span><br><br>
-			<!-- ★★★★★★★★★★★★★★★★★★★★ -->
-			<br>
-			<!-- if로 투표를 참여했었는지 안했었는지..확인 -->
-					<span class="ifEnd">
-						<a href="#" class="btn btn-lg btn-danger" id="vote" style="display: inline-block; width: 49%;"> 
-						<span class="glyphicon glyphicon-check"> </span>투표하기</a>
-						<a href="#" class="btn btn-lg btn-danger" id="voteEnd" style="display: inline-block; width: 50%;"> 
-						<span class="glyphicon glyphicon-minus-sign"> </span>투표종료</a>
-					</span>
-				</div>
+			</div>
+
+			<jsp:include page="footer_ch.jsp" flush="false" />
+		</div>
 	</div>
-	</div></div></section>
-	<footer> 
-		<jsp:include page="/WEB-INF/views/project/footer.jsp" flush="false" /> 
-	</footer>
+	
+	<%-- <c:import url="/project/chat"/> --%>
 </body>
+
+<!--   Core JS Files   -->
+<script
+	src="${pageContext.request.contextPath }/resources/js/bootstrap.min.js" type="text/javascript"></script>
+
+<!--  Checkbox, Radio & Switch Plugins -->
+<%-- <script
+	src="${pageContext.request.contextPath }/resources/js/bootstrap-checkbox-radio.js"></script> --%>
+
+<!--  Charts Plugin -->
+<script
+	src="${pageContext.request.contextPath }/resources/js/chartist.min.js"></script>
+
+<!--  Notifications Plugin    -->
+<script
+	src="${pageContext.request.contextPath }/resources/js/bootstrap-notify.js"></script>
+
+
+<!-- Paper Dashboard Core javascript and methods for Demo purpose -->
+<script
+	src="${pageContext.request.contextPath }/resources/js/paper-dashboard.js"></script>
+
+<!-- Paper Dashboard DEMO methods, don't include it in your project! -->
+<%-- <script src="${pageContext.request.contextPath }/resources/js/demo.js"></script> --%>
 </html>

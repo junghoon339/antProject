@@ -30,4 +30,5 @@ public interface SurveyDAO {
 	
 	int surveyDetailCreate(SurveyDetailDTO surveyDetailDTO);
 	
+	int updateTeamInfo(int projectNo);
 }

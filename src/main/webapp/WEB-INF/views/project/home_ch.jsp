@@ -2,10 +2,12 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="security" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta charset="utf-8" />
+<security:csrfMetaTags/>
 <link rel="apple-touch-icon" sizes="76x76" href="assets/img/apple-icon.png">
 <link rel="icon" type="image/png" sizes="96x96" href="assets/img/favicon.png">
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
@@ -32,6 +34,9 @@
 <link href="${pageContext.request.contextPath }/resources/css/themify-icons.css" rel="stylesheet">
 
 <script type="text/javascript">
+var header = $("meta[name='_csrf_header']").attr("content");
+var token = $("meta[name='_csrf']").attr("content");
+
 	$(document).ready(function() {
 		//tabModule.init();
 		
@@ -59,6 +64,34 @@
 	    	
 	    });  
 		
+	    
+	    $(".survey").click(function(){
+	    	alert( $(this).parent().children().next().val() );
+			$.ajax({
+				url : "${pageContext.request.contextPath}/survey/",
+				type : "post",
+				beforeSend : function(xhr){
+	                  xhr.setRequestHeader(header, token);
+	               },
+				dataType : "json",
+				data : "projectNo="+$(this).parent().children().next().val(),
+				success : function(result) {
+					
+					var str = "";
+					$.each(result, function(index, item){
+						str += '<tr width="100%">';
+						str +='<td name="nameTd" width="50%"><center>'+item.userName+'</center></td>';
+						str +='<td name="scoreTd" width="15%"><input type="text" placeholder="점수를 입력해주세요." value=""/></td>';
+						str +='<td name="updateTd" width="35%"><a href="#"><center>완료</center></a></td>';
+						str +='</tr>';
+					})
+					$("#print").html(str);
+					$("#myModal2").modal('show');
+					
+				},
+				error : function(err) { alert("teamInfo.jsp ERROR : "+err); }
+			});
+	    })
 	});
 	
 	function check() {
@@ -118,7 +151,8 @@
 												<div class="bs bs-pricing">
 													<div class="cotent">
 														<h3 class="category">${projectDTO.projectName}</h3>
-														<a href="#" style="color:#BCE55C;">설문조사해라</a>
+														<input type="hidden" name="${projectDTO.projectNo}" value="${projectDTO.projectNo}"/>
+														<a href="#" style="color:#BCE55C;" class="survey">설문조사해라${projectDTO.projectNo}</a>
 														<h1 class="bs-caption">
 															<small>D-</small>${projectDTO.dday}
 														</h1>
@@ -159,6 +193,39 @@
 
 		</div>
 	</div>
+	
+	<!-- Modal -->
+<div id="myModal2" class="modal fade" role="dialog">
+  <div class="modal-dialog" style="width:400px;">
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">×</button>
+        <h4 class="modal-title">조원 점수평가</h4>
+      </div>
+      <div class="modal-body">
+      <table>
+      		<div id="print">
+      			
+      		</div>
+      </table>
+      		<%-- <center>
+      		<p>
+			유인재 <font color="orange">☆☆☆☆☆</font> <a href="#">[편집]</a><p>
+			김정훈 <font color="orange">☆☆☆☆☆</font> <a href="#">[편집]</a><p>
+			황유정 <font color="orange">☆☆☆☆☆</font> <a href="#">[편집]</a><p>
+			김지현 <font color="orange">☆☆☆☆☆</font> <a href="#">[편집]</a><p>
+			정해찬 <font color="orange">☆☆☆☆☆</font> <a href="#">[편집]</a><p>
+			</center> --%>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">확인</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal">취소</button>
+      </div>
+    </div>
+
+  </div>
+</div>
 	
 	<!-- Modal -->
 	<div class="modal fade" id="myModal" tabindex="-1" role="dialog"

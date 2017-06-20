@@ -93,4 +93,10 @@
 		AND survey_no = #{_parameter}
 	</select>
 	
+	<update id="updateTeamInfo" parameterType="int">
+		UPDATE project
+		SET project_state=1
+		WHERE project_no=#{_parameter}
+	</update>
+	
 </mapper>

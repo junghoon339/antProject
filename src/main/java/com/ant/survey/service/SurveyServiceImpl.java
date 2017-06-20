@@ -51,4 +51,9 @@ public class SurveyServiceImpl implements SurveyService{
 		return surveyDAO.surveyDetailCreate(surveyDetailDTO);
 	}
 	
+	@Override
+	public int updateTeamInfo(int projectNo) {
+		return surveyDAO.updateTeamInfo(projectNo);
+	}
+	
 }
