@@ -4,7 +4,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 
 <div class="sidebar" data-background-color="white"
-	data-active-color="danger">
+	data-active-color="success">
 
 	<!--
 		Tip 1: you can change the color of the sidebar's background using: data-background-color="white | black"
@@ -13,16 +13,18 @@
 
 	<div class="sidebar-wrapper">
 		<div class="logo">
-			<a href="http://www.creative-tim.com" class="simple-text">
-				Creative Tim </a>
+			<a href="${pageContext.request.contextPath}/project/home" class="simple-text">
+				Ants & Grasshopper </a>
 		</div>
 		<ul class="nav">
 			<c:choose>
 				<c:when test="${projectNo==null}">
-					<li class="active"><a href="${pageContext.request.contextPath}/project/home"> <i
-							class="ti-pie-chart"></i>
-							<p>진행중 조별과제</p>
-					</a></li>
+					<li class="active">
+						<a href="${pageContext.request.contextPath}/project/home"> 
+							<i class="ti-pie-chart"></i>
+							<p id="active-text">진행중 조별과제</p>
+						</a>
+					</li>
 					<li><a href="${pageContext.request.contextPath}/project/home"> <i class="ti-user"></i>
 							<p>완료된 조별과제</p>
 					</a></li>
@@ -41,7 +43,7 @@
 				<c:otherwise>
 					<li class="active"><a href="${pageContext.request.contextPath}/project/teamInfo"> <i
 							class="ti-pie-chart"></i>
-							<p>조별과제 정보</p>
+							<p id="active-text">조별과제 정보</p>
 					</a></li>
 					<li><a href="${pageContext.request.contextPath}/project/projectUserInfo"> <i class="ti-user"></i>
 							<p>조원 정보</p>

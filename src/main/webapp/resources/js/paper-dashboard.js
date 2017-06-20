@@ -29,7 +29,16 @@ $(document).ready(function(){
 
     //  Activate the tooltips
     $('[rel="tooltip"]').tooltip();
-
+        
+    $(document).on("click", ".nav li", function(){
+    	$(".nav li").find(".active").attr("class", "");
+    	$("#active-text").attr("id","");
+    	
+    	$(this).attr("class","active");
+    	$(this).find("p").attr("id", "active-text");
+    })
+    
+    $(".navbar-brand").text($("#active-text").text());
 });
 
 // activate collapse right menu when the windows is resized
