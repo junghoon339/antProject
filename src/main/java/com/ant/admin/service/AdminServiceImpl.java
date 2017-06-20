@@ -29,7 +29,7 @@ public class AdminServiceImpl implements AdminService {
 		
 		int result=adminDAO.userDelete(userNo);
 		if(result==0){
-			//¿¡·¯¹ß»ı!! ¿À·ùÆäÀÌÁö!
+			//ï¿½ï¿½ï¿½ï¿½ï¿½ß»ï¿½!! ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½!
 		}
 		return result;
 	}
@@ -45,7 +45,7 @@ public class AdminServiceImpl implements AdminService {
 		// TODO Auto-generated method stub
 		int result=adminDAO.projectDelete(projectNo);
 		if(result==0){
-			//¿¡·¯¹ß»ı! ¿À·ùÆäÀÌÁö!
+			//ï¿½ï¿½ï¿½ï¿½ï¿½ß»ï¿½! ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½!
 		}
 		return result;
 	}
@@ -97,9 +97,9 @@ public class AdminServiceImpl implements AdminService {
 			String searchText) {
 		List<ProjectDTO> list=null;
 		
-		if(categoryNo==0){ //ÇÁ·ÎÁ§Æ®¸íÀ¸·Î Ã£±â
+		if(categoryNo==0){ //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Ã£ï¿½ï¿½
 			list=adminDAO.projectSelectAllByProjectName(projectState, startRow, endRow, searchText);
-		}else{ //°ú¸ñ¸íÀ¸·Î Ã£±â
+		}else{ //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Ã£ï¿½ï¿½
 			list=adminDAO.projectSelectAllBySubject(projectState, startRow, endRow, searchText);
 		}
 		return list;
@@ -108,9 +108,9 @@ public class AdminServiceImpl implements AdminService {
 	@Override
 	public int projectTotalCountBySearch(int projectState, int categoryNo, String searchText) {
 		int result=0;
-		if(categoryNo==0){ //ÇÁ·ÎÁ§Æ®¸íÀ¸·Î Ã£±â
+		if(categoryNo==0){ //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Ã£ï¿½ï¿½
 			result=adminDAO.projectTotalCountByProjectName(projectState, searchText);
-		}else{ //°ú¸ñ¸íÀ¸·Î Ã£±â
+		}else{ //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Ã£ï¿½ï¿½
 			result=adminDAO.projectTotalCountBySubject(projectState, searchText);
 		}
 		return result;
@@ -120,32 +120,36 @@ public class AdminServiceImpl implements AdminService {
 	public int insertNotice(NoticeDTO noticeDTO) throws Exception {
 		int result = adminDAO.insertNotice(noticeDTO);
 		if(result==0){
-			throw new Exception("»ğÀÔ ¿À·ù");
+			throw new Exception("ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½");
 		}
 		return result;
 	}
 
 	@Override
 	public int updateNotice(NoticeDTO noticeDTO) throws Exception {
-		// TODO Auto-generated method stub
-		return 0;
+		int result = adminDAO.updateNotice(noticeDTO);
+		if(result==0){
+			throw new Exception("ì—…ë°ì´íŠ¸ ì‹¤íŒ¨");
+		}
+		return result;
 	}
 
 	@Override
-	public int deleteNotice(int storageNo, int userNo) throws Exception {
-		// TODO Auto-generated method stub
-		return 0;
+	public int deleteNotice(int storageNo) throws Exception {
+		int result = adminDAO.deleteNotice(storageNo);
+		if(result==0){
+			throw new Exception("ì‚­ì œì‹¤íŒ¨");
+		}
+		return result;
 	}
 
 	@Override
 	public List<NoticeDTO> noticeSelectAll(int startRow, int endRow) {
-		// TODO Auto-generated method stub
 		return adminDAO.noticeSelectAll(startRow, endRow);
 	}
 
 	@Override
 	public int noticeTotalCount() {
-		// TODO Auto-generated method stub
 		return adminDAO.noticeTotalCount();
 	}
 
@@ -159,6 +163,12 @@ public class AdminServiceImpl implements AdminService {
 	public int noticeTotalCountBySearch(String searchText) {
 		// TODO Auto-generated method stub
 		return 0;
+	}
+
+	@Override
+	public NoticeDTO selectByNoticeNum(int noticeNo) {
+		adminDAO.readNumUpdate(noticeNo);
+		return adminDAO.selectByNoticeNum(noticeNo);
 	}
 
 }

@@ -22,7 +22,6 @@ public class AdminDAOImpl implements AdminDAO {
 	
 	@Override
 	public List<UserDTO> userSelectAll(int startRow,int endRow) {
-		// TODO Auto-generated method stub
 		Map<String,Integer> map=new HashMap<>();
 		map.put("startRow", startRow);
 		map.put("endRow", endRow);
@@ -47,7 +46,6 @@ public class AdminDAOImpl implements AdminDAO {
 
 	@Override
 	public int projectDelete(int projectNo) {
-		// TODO Auto-generated method stub
 		return session.delete("mapper.admin.adminMapper.projectDelete",projectNo);
 	}
 
@@ -83,13 +81,11 @@ public class AdminDAOImpl implements AdminDAO {
 
 	@Override
 	public int userTotalCount() {
-		// TODO Auto-generated method stub
 		return session.selectOne("mapper.admin.adminMapper.userTotalCount");
 	}
 
 	@Override
 	public int projectTotalCount(int projectState) {
-		// TODO Auto-generated method stub
 		return session.selectOne("mapper.admin.adminMapper.projectTotalCount",projectState);
 	}
 
@@ -134,20 +130,17 @@ public class AdminDAOImpl implements AdminDAO {
 
 	@Override
 	public int insertNotice(NoticeDTO noticeDTO) throws Exception {
-		// TODO Auto-generated method stub
 		return session.insert("mapper.admin.adminMapper.insertNotice", noticeDTO);
 	}
 
 	@Override
 	public int updateNotice(NoticeDTO noticeDTO) throws Exception {
-		// TODO Auto-generated method stub
-		return 0;
+		return session.update("mapper.admin.adminMapper.updateNotice", noticeDTO);
 	}
 
 	@Override
-	public int deleteNotice(int storageNo, int userNo) throws Exception {
-		// TODO Auto-generated method stub
-		return 0;
+	public int deleteNotice(int storageNo) throws Exception {
+		return session.delete("mapper.admin.adminMapper.deleteNotice", storageNo);
 	}
 
 	@Override
@@ -160,7 +153,6 @@ public class AdminDAOImpl implements AdminDAO {
 
 	@Override
 	public int noticeTotalCount() {
-		// TODO Auto-generated method stub
 		return session.selectOne("mapper.admin.adminMapper.noticeTotalCount");
 	}
 
@@ -174,6 +166,16 @@ public class AdminDAOImpl implements AdminDAO {
 	public int noticeTotalCountBySearch(String searchText, int noticeNo) {
 		// TODO Auto-generated method stub
 		return 0;
+	}
+
+	@Override
+	public NoticeDTO selectByNoticeNum(int noticeNo) {
+		return session.selectOne("mapper.admin.adminMapper.noticeDetail", noticeNo);
+	}
+
+	@Override
+	public int readNumUpdate(int noticeNo) {
+		return session.update("mapper.admin.adminMapper.readNumUpdate", noticeNo);
 	}
 
 }

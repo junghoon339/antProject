@@ -112,6 +112,19 @@ body{
 }
 /* search form */
 </style>
+<script type="text/javascript">
+	$(function(){
+		$("#submitBt").click(function(){
+			if($("#name").val()==null){
+				alert("제목을 입력해주세요");
+			}
+				location.href = "${pageContext.request.contextPath}/storage/storageTable/1?searchText="+$("#searchText").val()+"&categoryNo="+$("#category").val();
+		})
+		
+		
+	})
+			
+</script>
 </head>
 <body>
 	<div class="wrapper">
@@ -134,51 +147,147 @@ body{
 						
 						
 						
-						
-						
-						
-						
-						
-						
-						<div class="col-lg-8 col-lg-offset-2">
-				  <div class="col-sm-6"><h1>공지사항</h1></div>
-				 <div class="col-sm-6" align="right"><a class="btn btn-danger" href="#danger" data-toggle="modal" ><h4>글쓰기</h4></a></div>
-				
-				
-				
-				<!-- 검색 -->
-					<div class="container" style="width:910px;">
-					    <div class="row">    
-					        <div class="col-xs-8 col-xs-offset-2" >
-							    <div class="input-group">
-					                <div class="input-group-btn search-panel">
-					                    <!-- <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+						<div class="col-md-12">
+                        <div class="card">
+                        
+                        
+                            <div class="header">
+                            <div class="col-sm-6">
+                                <h4 class="title">공지사항</h4>
+                            </div>
+                                <div class="col-sm-6" align="right">
+										<a class="btn btn-danger" href="#danger" data-toggle="modal">공지등록</a>
+								</div>
+                            </div>
+                            
+                            
+                            
+                            
+                            
+                            <div class="header">
+                            <!-- 검색 -->
+									<div class="container" style="width: 910px;">
+										<div class="row">
+											<div class="col-xs-8 col-xs-offset-2">
+												<div class="input-group">
+													<div class="input-group-btn search-panel">
+														<!-- <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
 					                    	<span id="search_concept">검색 옵션</span> <span class="caret"></span>
 					                    </button>
 					                    <ul class="dropdown-menu" role="menu">
 					                      <li><a href="#contains" id="searchByName">이름</a></li>
 					                      <li><a href="#its_equal" id="searchByTitle">제목</a></li>
 					                    </ul> -->
-					                    <select class="btn btn-default dropdown-toggle" data-toggle="dropdown" style="width:80px" id="category">
-									        <option value="1">제목</option>
-						    			</select>
-					                </div>
-					                <input type="hidden" name="search_param" value="all" id="search_param">         
-					                <input type="text" class="form-control" name="x" placeholder="검색어를 입력하세요." id="searchText">
-					                <span class="input-group-btn">
-					                    <button class="btn btn-default" type="button" id="submitBt"><span class="glyphicon glyphicon-search"></span></button>
-					                </span>
-					            </div>
-					        </div>
-						</div>
-					</div>
-							<!-- 검색 -->
-							
-							
-							
-							
+														<select class="btn btn-default dropdown-toggle"
+															data-toggle="dropdown" style="width: 90px" id="category">
+															<option value="1">제목</option>
+														</select>
+													</div>
+													<input type="hidden" name="search_param" value="all"
+														id="search_param"> <input type="text"
+														class="form-control" name="x" placeholder="검색어를 입력하세요."
+														id="searchText"> <span class="input-group-btn">
+														<button class="btn btn-default" type="button"
+															id="submitBt">
+															<span class="glyphicon glyphicon-search"></span>
+														</button>
+													</span>
+												</div>
+											</div>
+										</div>
+									</div>
+									<!-- 검색 -->
+									
+									</div>
+									
+									
+									
+									
+									
+									
+                            
+                            <div class="content table-responsive table-full-width">
+                                <table class="table table-striped">
+                                   <thead>
 
-				<!-- Modal -->
+										<th>글 번호</th>
+										<th>제목</th>
+										<th>등록 날짜</th>
+										<th style="width: 80px;">조회수</th>
+										
+									</thead>
+                                    <tbody>
+                                    <c:forEach var="item" items="${list}">
+										<tr>
+											<td>${item.noticeNo}</td>
+											<td><a
+												href="${pageContext.request.contextPath}/admin/noticeDetail/${item.noticeNo}">${item.noticeTitle}</a></td>
+											<td>${item.writeDay}</td>
+											<td>${item.readNum}</td>
+		
+										</tr>
+									</c:forEach>
+                                    </tbody>
+                                </table>
+						<!-- paging~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~` -->
+											<div class="clearfix" style="text-align: center" align="center">
+											<ul class="pagination pull-right" style="margin-right:30%">
+						
+												<c:choose>
+													<c:when test="${startPage==1}">
+														<li class="disabled"><a href="#"><span
+																class="glyphicon glyphicon-chevron-left"></span></a></li>
+													</c:when>
+													<c:otherwise>
+														<li><a href="${pageContext.request.contextPath}/admin/adminNotice?pageNumber=${endPage-pageSu}"><span
+																class="glyphicon glyphicon-chevron-left"></span></a></li>
+													</c:otherwise>
+												</c:choose>	
+												
+												<c:forEach begin="${startPage}" end="${endPage}" var="pageNum" step="1">
+													<li><a href="${pageContext.request.contextPath}/admin/adminNotice?pageNumber=${pageNum}">${pageNum}</a></li>
+												</c:forEach>
+												
+												<c:choose>
+														<c:when test="${flag==true}">
+															<li class="disabled"><a href="#"><span
+																class="glyphicon glyphicon-chevron-right"></span></a></li>
+														</c:when>
+														<c:otherwise>
+																<li><a href="${pageContext.request.contextPath}/admin/adminNotice?pageNumber=${startPage+pageSu}"><span
+																class="glyphicon glyphicon-chevron-right"></span></a></li>
+														</c:otherwise>
+												</c:choose>
+												
+											</ul>
+										</div>
+				
+					<!-- paging~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~` -->
+                            </div>
+                        </div>
+                    </div>
+						
+						
+						
+						
+						
+					
+						
+						
+						
+						
+						
+						
+						<!-- 이곳에 내용작성!!!!!!!!!!!!!!!! -->
+					</div>
+				</div>
+			</div>
+
+			<jsp:include page="/WEB-INF/views/project/footer_ch.jsp" flush="false" />
+		</div>
+	</div>
+	
+	<!-- Modal -->
 				<div class="modal fade" id="danger" tabindex="-1" role="dialog"
 					aria-labelledby="myModalLabel" aria-hidden="true">
 					<div class="modal-dialog">
@@ -214,29 +323,29 @@ body{
 										<div class="form-group">
 											<label class="col-md-4 control-label" for="name"
 												style="text-align: right; width:63px" >제목</label>
-											<div class="col-md-4">
+										
 												<input id="name" name="noticeTitle" type="text"
 													placeholder="제목을 입력하세요" class="form-control input-md"
 													style="width:465px">
 													
-											</div>
+											
 										</div>
 
 
 										<!-- Textarea -->
 										<div class="form-group">
 											<label class="col-md-4 control-label" for="anschrift" style="width:63px">내용</label>
-											<div class="col-md-4">
+											
 												<textarea class="form-control" id="anschrift"
-													name="noticeContent" style="width: 465px; height: 150px"
+													name="noticeContent" rows="5" style="width:150%"
 													placeholder="내용을 입력하세요"></textarea>
-											</div>
+											
 										</div>
 										
 										<!-- Button (Double) -->
 										<div class="form-group">
 											<label class="col-md-4 control-label" for="anmelden"></label>
-											<div class="col-md-8">
+											<div class="col-md-8" align="right">
 												<input type="submit" id="anmelden" name="anmelden"
 													class="btn btn-success" value="등록">
 											</div>
@@ -272,92 +381,6 @@ body{
 				</div>
 				<!-- /.modal -->
 				<!-- Modal -->
-				<div class="table-responsive">
-
-
-					<table id="mytable" class="table table-bordred table-striped">
-
-						<thead>
-
-							<th>글 번호</th>
-							<th>제목</th>
-							<th>등록 날짜</th>
-							<th style="width: 60px;">조회수</th>
-							
-						</thead>
-						<tbody>
-							<c:forEach var="item" items="${list}">
-								<tr>
-									<td>${item.noticeNo}</td>
-									<td><a
-										href="#">${item.noticeTitle}</a></td>
-									<td>${item.writeDay}</td>
-									<td>${item.readNum}</td>
-
-								</tr>
-							</c:forEach>
-
-						</tbody>
-
-					</table>
-					
-					
-					
-					
-					<!-- paging~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~` -->
-					<div class="clearfix" style="text-align: center" align="center">
-					<ul class="pagination pull-right" style="margin-right:30%">
-
-						<c:choose>
-							<c:when test="${startPage==1}">
-								<li class="disabled"><a href="#"><span
-										class="glyphicon glyphicon-chevron-left"></span></a></li>
-							</c:when>
-							<c:otherwise>
-								<li><a href="${pageContext.request.contextPath}/admin/adminNotice?pageNumber=${endPage-pageSu}"><span
-										class="glyphicon glyphicon-chevron-left"></span></a></li>
-							</c:otherwise>
-						</c:choose>	
-						
-						<c:forEach begin="${startPage}" end="${endPage}" var="pageNum" step="1">
-							<li><a href="${pageContext.request.contextPath}/admin/adminNotice?pageNumber=${pageNum}">${pageNum}</a></li>
-						</c:forEach>
-						
-						<c:choose>
-								<c:when test="${flag==true}">
-									<li class="disabled"><a href="#"><span
-										class="glyphicon glyphicon-chevron-right"></span></a></li>
-								</c:when>
-								<c:otherwise>
-										<li><a href="${pageContext.request.contextPath}/admin/adminNotice?pageNumber=${startPage+pageSu}"><span
-										class="glyphicon glyphicon-chevron-right"></span></a></li>
-								</c:otherwise>
-						</c:choose>
-						
-					</ul>
-				</div>
-				
-					<!-- paging~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~` -->
-			</div>
-		</div>
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						<!-- 이곳에 내용작성!!!!!!!!!!!!!!!! -->
-					</div>
-				</div>
-			</div>
-
-			<jsp:include page="/WEB-INF/views/project/footer_ch.jsp" flush="false" />
-		</div>
-	</div>
 	
 	<%-- <c:import url="/project/chat"/> --%>
 </body>
