@@ -30,7 +30,7 @@
 					<li><a href="table.html"> <i class="ti-view-list-alt"></i>
 							<p>My TimeTable</p>
 					</a></li>
-					<li><a href="typography.html"> <i class="ti-text"></i>
+					<li><a href="${pageContext.request.contextPath}/userCalendar/userCalendar"> <i class="ti-text"></i>
 							<p>My Calendar</p>
 					</a></li>
 					<li><a href="icons.html"> <i class="ti-pencil-alt2"></i>
@@ -54,7 +54,7 @@
 							<p>조별과제 시간표</p>
 					</a></li>
 					<li><a
-						href="${pageContext.request.contextPath}/calendar/projectCalendar">
+						href="${pageContext.request.contextPath}/projectCalendar/projectCalendar">
 							<i class="ti-text"></i>
 							<p>조별과제 달력</p>
 					</a></li>
