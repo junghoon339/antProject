@@ -19,7 +19,7 @@ public class MessageController {
 	private MessageService service;
 	
 	@RequestMapping("/main")
-	public ModelAndView message(int userNo,String pageNumber, String searchText,@RequestParam(defaultValue="false")boolean flag, @RequestParam(defaultValue="-1") int categoryNo){
+	public ModelAndView message(@RequestParam(defaultValue="13")int userNo,String pageNumber, String searchText,@RequestParam(defaultValue="false")boolean flag, @RequestParam(defaultValue="-1") int categoryNo){
 		System.out.println("dao searchText = "+searchText);
 		System.out.println("dao categoryNo = "+categoryNo);
 		if(pageNumber==null){
@@ -34,19 +34,19 @@ public class MessageController {
 
 		List<MessageDTO> list=null;
 		int totalRow = 0;
-		if(categoryNo==-1){//°Ë»ö¾î ¾øÀ» ¶§
-			if(flag){//º¸³½ÂÊÁöÇÔ
+		if(categoryNo==-1){//ï¿½Ë»ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½
+			if(flag){//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 				list=service.sendMessageSelectAll(userNo,startRow,endRow);
 				totalRow = service.countSendeMessageTotal(userNo);
-			}else{//¹Þ´ÂÂÊÁöÇÔ
+			}else{//ï¿½Þ´ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 				list=service.receiveMessageSelectAll(userNo,startRow,endRow);
 				totalRow = service.countReceiveMessageTotal(userNo);
 			}
 		}else{
-			if(flag){// °Ë»ö¾î¿¡ µû¸¥ º¸³½ÂÊÁöÇÔ
+			if(flag){// ï¿½Ë»ï¿½ï¿½î¿¡ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 				list = service.sendMessageSelectAllBySearch(userNo, startRow, endRow, categoryNo, searchText);
 				totalRow = service.countSendMessageTotalBySearch(userNo, categoryNo, searchText);
-			}else{// °Ë»ö¾î¿¡ µû¸¥ ¹ÞÀºÂÊÁöÇÔ
+			}else{// ï¿½Ë»ï¿½ï¿½î¿¡ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 				list = service.receiveMessageSelectAllBySearch(userNo, startRow, endRow, categoryNo, searchText);
 				totalRow = service.countReceiveMessageTotalBySearch(userNo, categoryNo, searchText);
 			}
@@ -55,7 +55,7 @@ public class MessageController {
 		int startPage = ((curPage-1)/pageSu)*pageSu+1;
 		int endPage = startPage+pageSu-1;
 		
-		boolean stopLastPage=false;//¸¶Áö¸· ÆäÀÌÁö¿¡ ³Ñ¾î°¡±â ¹öÆ° ¾ø¾Ö±â
+		boolean stopLastPage=false;//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ñ¾î°¡ï¿½ï¿½ ï¿½ï¿½Æ° ï¿½ï¿½ï¿½Ö±ï¿½
 		int lastPageNum=totalRow%rowCount==0 ? totalRow/rowCount : totalRow/rowCount+1;
 		if(lastPageNum<=endPage){
 			endPage=lastPageNum;
@@ -77,7 +77,7 @@ public class MessageController {
 		mv.addObject("categoryNo",categoryNo);
 		mv.addObject("searchText",searchText);
 		
-		mv.setViewName("message/message");
+		mv.setViewName("message/message_ch");
 		
 		return mv;
 	}
@@ -98,7 +98,7 @@ public class MessageController {
 		ModelAndView mv=new ModelAndView();
 		
 		mv.addObject("messageList",list);
-		mv.setViewName("message/message");
+		mv.setViewName("message/message_ch");
 		return mv;
 		
 	}

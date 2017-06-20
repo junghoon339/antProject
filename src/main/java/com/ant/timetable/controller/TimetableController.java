@@ -16,11 +16,8 @@ public class TimetableController {
 	}
 	
 	@RequestMapping("/main")
-	@ResponseBody
-	public void main(HttpServletRequest reqeust){
-		System.out.println("»£√‚");
-		String classTime = reqeust.getParameter("class_time");
-		System.out.println("dddddd  : " + classTime);
-	
+	public String main (){
+		return "timetable/timetable";
 	}
+
 }
