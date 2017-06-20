@@ -485,18 +485,22 @@ function generate_timecell(lectures)
         
         //db에 색깔바꾸기
         var changeColor=lecture.color.plane+";"+lecture.color.border;
-       /* $.ajax({
+        $.ajax({
         	url:commonUrl+"/timetable/changeColor",
-        	type:,
-        	data:,
-        	dataType:,
+        	type:"post",
+        	data:"timetableNo="+ele.attr('lecture-number')+"&timetableColor="+changeColor+"&"+$("#securityInfo").attr("name")+"="+$("#securityInfo").val(),
+        	dataType:"text",
         	success:function(result){
-        		
+        		if(result>0){
+        			alert("수정됬으");
+        		}else{
+        			alert("수정안됨");
+        		}
         	},
         	error:function(err){
         		alert("err:"+err);
         	}
-        });*/
+        });
       })
     }
   });i
