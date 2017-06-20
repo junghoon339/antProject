@@ -42,6 +42,14 @@
 		select user_no,user_id,user_name,user_school,user_major,project_state from (select rownum as rnum,a.* from (select au.user_no,user_id,user_name,user_school,user_major,p.project_state from ant_user au left join project_user pu on au.USER_no=pu.user_no left join project p on pu.project_no=p.project_no)a)b where b.rnum>=#{startRow} and b.rnum&lt;=#{endRow}
 	</select> -->
 	
+	<resultMap type="noticeDTO" id="noticeDTOMap">
+		<id column="notice_no" property="noticeNo"/>
+		<result column="notice_title" property="noticeTitle"/>
+		<result column="notice_content" property="noticeContent"/>
+		<result column="notice_readnum" property="readNum"/>
+		<result column="notice_writeday" property="writeDay"/>
+	</resultMap>
+	
 	<select id="userSelectAll" parameterType="map" resultMap="userDTOMap">
 		select b.rnum,user_no,user_id,user_name,user_school,user_major,doing,done from (select rownum rnum,a.*, (select count(p.project_no) from project p join project_user pu on p.project_no=pu.project_no where pu.user_no=a.user_no and p.project_state=0) as doing, (select count(p.project_no) from project p join project_user pu on p.project_no=pu.project_no where pu.user_no=a.user_no and p.project_state=1) as done from (select * from ant_user)a)b where b.rnum>=#{startRow} and b.rnum&lt;=#{endRow}
 	</select>
@@ -81,4 +89,19 @@
 	<select id="projectTotalCountBySubject" parameterType="map" resultType="int">
 		select count(project_no) from project where project_state=#{projectState} and project_subject like '%'||#{projectSubject}||'%'
 	</select>
+	
+	<!-- 공지사항~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~```` -->
+	<select id="noticeSelectAll" parameterType="map" resultMap="noticeDTOMap">
+		select * from (select rownum as rnum,b.* from(select notice_no,notice_title,notice_content,notice_readnum,notice_writeday 
+   		 from notice order by notice_writeday desc)b)c where c.rnum>=#{startRow} and c.rnum&lt;=#{endRow}
+	</select>
+	
+	<select id="noticeTotalCount" resultType="int">
+		select count(notice_no) from notice
+	</select>
+	
+	<insert id="insertNotice" parameterType="noticeDTO">
+		insert into notice values (seq_notice_no.nextval,#{noticeTitle},#{noticeContent},0,sysdate)
+	</insert>
+	
 </mapper>

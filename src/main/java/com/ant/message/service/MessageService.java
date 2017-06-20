@@ -8,12 +8,42 @@ public interface MessageService {
 	/**
 	 * 받은쪽지 전체 가져오기
 	 * */
-	public List<MessageDTO> receiveMessageSelectAll(int userNoMessageSender);
+	public List<MessageDTO> receiveMessageSelectAll(int userNoMessageSender, int startRow, int endRow);
+	
+	/**
+	 * 	받은 쪽지 전체 수
+	 * */
+	public int countReceiveMessageTotal(int userNo); 
+	
+	/**
+	 * 	검색어에 따른 받은쪽지 전체 가져오기
+	 * */
+	public List<MessageDTO> receiveMessageSelectAllBySearch(int userNoMessageSender, int startRow, int endRow, int categoryNo, String searchText);
+	
+	/**
+	 * 	검색어에 따른 받은쪽지 갯수 가져오기
+	 * */
+	public int countReceiveMessageTotalBySearch(int userNo, int categoryNo, String searchText);
 	
 	/**
 	 * 보낸쪽지 전체 가져오기
 	 * */
-	public List<MessageDTO> sendMessageSelectAll(int userNoMessagereceiver);
+	public List<MessageDTO> sendMessageSelectAll(int userNoMessagereceiver, int startRow,int endRow);
+	
+	/**
+	 * 	보낸 쪽지 전체 수
+	 * */
+	public int countSendeMessageTotal(int userNo); 
+	
+	/**
+	 * 	검색어에 따른 보낸쪽지 전체 가져오기
+	 * */
+	public List<MessageDTO> sendMessageSelectAllBySearch(int userNoMessagereceiver, int startRow,int endRow, int categoryNo, String searchText);
+	
+	/**
+	 * 	검색어에 따른 보낸쪽지 갯수 가져오기
+	 * */
+	public int countSendMessageTotalBySearch(int userNo, int categoryNo, String searchText);
 	
 	/**
 	 *보낸쪽지,받은쪽지 상세 

@@ -6,6 +6,7 @@ public class ProjectUserDTO {
 	private int userNo;	//회원번호
 	private String projectUserRole;	//팀원역할(조원,조장)
 	private String projectUserTask;
+	private String userId;
 
 
 	private ProjectDTO projectDTO; //관리자의 회원관리에서 사용
@@ -13,7 +14,7 @@ public class ProjectUserDTO {
 	public ProjectUserDTO() {}
 	public ProjectUserDTO(int projectNo, int userNo) {
 		super();
-		this.projectNo =					 projectNo;
+		this.projectNo = projectNo;
 		this.userNo = userNo;
 	}
 	
@@ -22,6 +23,8 @@ public class ProjectUserDTO {
 		this.userNo = userNo;
 		this.projectUserTask = projectUserTask;
 	}
+	
+	
 	public int getProjectUserNo() {
 		return projectUserNo;
 	}
@@ -59,6 +62,12 @@ public class ProjectUserDTO {
 
 	public void setProjectDTO(ProjectDTO projectDTO) {
 		this.projectDTO = projectDTO;
+	}
+	public String getUserId() {
+		return userId;
+	}
+	public void setUserId(String userId) {
+		this.userId = userId;
 	}
 	
 	

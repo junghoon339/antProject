@@ -13,6 +13,7 @@
 			/WEB-INF/spring/appServlet/updown-servlet.xml
 			/WEB-INF/spring/appServlet/db-transaction.xml
 			/WEB-INF/spring/appServlet/ws-config.xml
+			/WEB-INF/spring/appServlet/email-context.xml
 		</param-value>
 	</context-param>
 

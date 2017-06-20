@@ -15,19 +15,19 @@ public class HandshakeInterceptor extends HttpSessionHandshakeInterceptor {
 	public boolean beforeHandshake(ServerHttpRequest request, ServerHttpResponse response, WebSocketHandler wsHandler,
 			Map<String, Object> attributes) throws Exception {
 
-		// À§ÀÇ ÆÄ¶ó¹ÌÅÍ Áß, attributes ¿¡ °ªÀ» ÀúÀåÇÏ¸é À¥¼ÒÄÏ ÇÚµé·¯ Å¬·¡½ºÀÇ WebSocketSession¿¡ Àü´ŞµÈ´Ù
-		System.out.println("Before Handshake");
+		// ì„¸ì…˜ì—ì„œ í”„ë¡œì íŠ¸ ë„˜ë²„ë¥¼ ê°€ì ¸ì˜¤ê³ , ê·¸ê±¸ ì›¹ì†Œì¼“ attributesì— ì €ì¥
+		// System.out.println("Before Handshake");
 
 		ServletServerHttpRequest ssreq = (ServletServerHttpRequest) request;
-		System.out.println("URI:" + request.getURI());
+		// System.out.println("URI:" + request.getURI());
 
 		HttpServletRequest req = ssreq.getServletRequest();
 
-		// ¼¼¼Ç¿¡¼­ ÇÁ·ÎÁ§Æ® ³Ñ¹ö¸¦ °¡Á®¿È
+		// ì„¸ì…˜ì—ì„œ í”„ë¡œì íŠ¸ ë„˜ë²„ë¥¼ ê°€ì ¸ì˜´
 		int projectNo = (int) req.getSession().getAttribute("projectNo");
 		attributes.put("projectNo", projectNo);
 
-		System.out.println("HttpSession¿¡ ÀúÀåµÈ pNo:" + projectNo);
+		System.out.println("HttpSessionì— ì €ì¥ëœ pNo:" + projectNo);
 
 		return super.beforeHandshake(request, response, wsHandler, attributes);
 	}

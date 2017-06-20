@@ -39,16 +39,17 @@ public class ProjectDAOImpl implements ProjectDAO {
 	@Override
 	public List<Integer> selectUserNoById(List<String> list) {
 		List <Integer> invitedUserNolist = sqlSession.selectList("projectMapper.selectUserNoById", list);
-		//System.out.println("ProjectDAOImpl------------>>>>>>invitedUserNolist:"+invitedUserNolist);
-
 		return invitedUserNolist;
+	}
+	
+	//조원삽입
+	@Override
+	public int insertProjectMember(ProjectUserDTO projectUserDTO) {
+		return sqlSession.insert("projectMapper.insertProjectMember", projectUserDTO);
 	}
 
 	@Override
 	public Map<String, List<ProjectDTO>> selectProjectById(int userNo) {
-		
-		System.out.println("ProjectDAOImpl에서 selectProjectById()호출됨!!!");
-
 		
 		Map<String, Integer> map = new HashMap<>();
 		map.put("projectState", 0);
@@ -57,7 +58,10 @@ public class ProjectDAOImpl implements ProjectDAO {
 		//현재진행중 조별과제
 		List<ProjectDTO> currentProList = sqlSession.selectList("projectMapper.selectProjectById", map);
 
-
+		//완료대기중 조별과제
+		map.put("projectState", 1);
+		List<ProjectDTO> surveyingProList = sqlSession.selectList("projectMapper.selectProjectById", map);
+		
 		//완료된 조별과제
 		map.put("projectState", 2);
 		List<ProjectDTO> completedProList = sqlSession.selectList("projectMapper.selectProjectById", map);
@@ -65,6 +69,7 @@ public class ProjectDAOImpl implements ProjectDAO {
 		//projectMap에 currentProList,completedProList를 담음
 		Map<String, List<ProjectDTO>> projectMap = new HashMap<>();
 		projectMap.put("currentProList", currentProList);
+		projectMap.put("surveyingProList", surveyingProList);
 		projectMap.put("completedProList", completedProList);
 		
 		return projectMap;
@@ -105,11 +110,6 @@ public class ProjectDAOImpl implements ProjectDAO {
 		String projectUserRole = sqlSession.selectOne("projectMapper.selectProjectUserRole", projectUserDTO);
 		return projectUserRole;
 	}
-	
-	
-
-	
-	
 	
 }
 

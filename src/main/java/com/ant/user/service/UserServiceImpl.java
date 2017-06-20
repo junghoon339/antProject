@@ -31,7 +31,7 @@ public class UserServiceImpl implements UserService {
 
 		UserDTO dbDTO = userDAO.selectUserById(userDTO.getUserId());
 		
-		// ±ÇÇÑµî·Ï
+		// ï¿½ï¿½ï¿½Ñµï¿½ï¿½
 		authorityDAO.insertAuthority(new AuthorityDTO(dbDTO.getUserNo(), Constants.ROLE_USER));
 		
 		return 1;
@@ -48,7 +48,14 @@ public class UserServiceImpl implements UserService {
 		// TODO Auto-generated method stub
 		return 0;
 	}
-
+	
+	public int updateTempPassword(int userNo, String pw){
+		String encodedPassword = passwordEncoder.encode(pw);
+		int result = userDAO.updateTempPassword(userNo, encodedPassword);
+		
+		return result;
+	}
+	
 	@Override
 	public int login(String id, String password) {
 		// TODO Auto-generated method stub
@@ -61,4 +68,9 @@ public class UserServiceImpl implements UserService {
 		return userDTO;
 	}
 	
+	@Override
+	public UserDTO selectUserByNo(int userNo) {
+		UserDTO userDTO = userDAO.selectUserByNo(userNo);
+		return userDTO;
+	}
 }

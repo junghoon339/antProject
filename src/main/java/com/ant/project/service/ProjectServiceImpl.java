@@ -1,10 +1,7 @@
 package com.ant.project.service;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import javax.swing.plaf.synth.SynthSpinnerUI;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -25,25 +22,25 @@ public class ProjectServiceImpl implements ProjectService {
 	private ProjectDAO projectDAO;
 	
 	@Override
-	public int insertProject(ProjectDTO projectDTO, List<Integer> invitedUserNoList, int userNo) {
+//	public int insertProject(ProjectDTO projectDTO, List<Integer> invitedUserNoList, int userNo) {
+	public int insertProject(ProjectDTO projectDTO, String[] invitedUser, int userNo) {
 		int result=0;
-		//1.Á¶º°°úÁ¦¹æ »ğÀÔ
+		//1.å ì™ì˜™å ì™ì˜™å ì™ì˜™å ì™ì˜™å ì™ì˜™ å ì™ì˜™å ì™ì˜™
 		int resultInsPro = projectDAO.insertProject(projectDTO);
 		
-		//2.¹æ±İ »ğÀÔµÈ Á¶º°°úÁ¦ÀÇ ¹øÈ£ °Ë»ö
+		//2.å ì™ì˜™å ï¿½ å ì™ì˜™å ìŒ‰ë“¸ì˜™ å ì™ì˜™å ì™ì˜™å ì™ì˜™å ì™ì˜™å ì™ì˜™ å ì™ì˜™í˜¸ å ì‹¯ì‚¼ì˜™
 		int projectNo = projectDAO.selectProjectNo();
 		
-		//3.Á¶Àå »ğÀÔ
-		//Á¶ÀåÀ» Á¶º°°úÁ¦¹æ¿¡ »ğÀÔ
+		//3.å ì™ì˜™å ì™ì˜™ å ì™ì˜™å ì™ì˜™
+		//å ì™ì˜™å ì™ì˜™å ì™ì˜™ å ì™ì˜™å ì™ì˜™å ì™ì˜™å ì™ì˜™å ì¸ì— å ì™ì˜™å ì™ì˜™
 		ProjectUserDTO projectUserDTO = new ProjectUserDTO(projectNo, userNo);
-		//System.out.println("ÇÁ·ÎÁ§Æ®¹øÈ£"+projectUserDTO.getProjectNo()+" / Á¶ÀåuserNo : "+projectUserDTO.getUserNo());
+		//System.out.println("å ì™ì˜™å ì™ì˜™å ì™ì˜™íŠ¸å ì™ì˜™í˜¸"+projectUserDTO.getProjectNo()+" / å ì™ì˜™å ì™ì˜™userNo : "+projectUserDTO.getUserNo());
 		int resultInsLeader = insertProjectLeader(projectUserDTO);
 		
-		//4.ÃÊ´ëµÈ Á¶¿ø¿¡°Ô ÂÊÁöº¸³»±â
-		//ÃÊ´ëµÈ Á¶¿øµé
-		System.out.println("\n ÃÊ´ëµÈ ÆÀ¿øÀÇ ¹øÈ£......!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-		for(int userNo2 : invitedUserNoList){
-			System.out.println("ÃÊ´ëµÈ ÆÀ¿ø id : " + userNo2);
+		//4.ì¡°ì› ì‚½ì…
+		for(String userId:invitedUser){
+			projectUserDTO.setUserId(userId);
+			projectDAO.insertProjectMember(projectUserDTO);
 		}
 		result=1;
 		return result;
@@ -61,13 +58,16 @@ public class ProjectServiceImpl implements ProjectService {
 		return invitedUserNolist;
 	}
 
+	//ì¡°ì›ì‚½ì…
+	@Override
+	public int insertProjectMember(ProjectUserDTO projectUserDTO) {
+		return projectDAO.insertProjectMember(projectUserDTO);
+	}
+
 	@Override
 	public Map<String, List<ProjectDTO>> selectProjectById(int userNo) {
-		//System.out.println("ProjectServiceImplÁøÀÔÇÔ!! userNo : "+userNo);
-		Map<String, List<ProjectDTO>> projectMap = projectDAO.selectProjectById(userNo);
-		//System.out.println("ProjectServiceImpl¿¡¼­ selectProjectById()È£Ãâ°á°ú!! projectMap : "+projectMap);
 
-		
+		Map<String, List<ProjectDTO>> projectMap = projectDAO.selectProjectById(userNo);
 		return projectMap;
 	}
 
@@ -92,7 +92,6 @@ public class ProjectServiceImpl implements ProjectService {
 	@Override
 	public int updateProjectUserTask(ProjectUserDTO projectUserDTO) {
 		int result = projectDAO.updateProjectUserTask(projectUserDTO);
-		
 		return result;
 	}
 	
@@ -107,10 +106,4 @@ public class ProjectServiceImpl implements ProjectService {
 		String projectUserRole = projectDAO.selectProjectUserRole(projectUserDTO);
 		return projectUserRole;
 	}
-	
-	
-	
-	
-	
-
 }

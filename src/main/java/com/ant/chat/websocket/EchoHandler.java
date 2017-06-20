@@ -20,48 +20,43 @@ public class EchoHandler extends TextWebSocketHandler {
 	private ChatService service;
 	private static Logger logger = LoggerFactory.getLogger(EchoHandler.class);
 
-	// ¸ğµç ¼¼¼ÇÀ» ÀúÀåÇÑ´Ù
+	// ë§µ = í”„ë¡œì íŠ¸ ë„˜ë²„, ë¦¬ìŠ¤íŠ¸ = ê·¸ í”„ë¡œì íŠ¸ì— ë‹´ê¸´ ì„¸ì…˜ë“¤
 	private Map<String, List<WebSocketSession>> sessionListMap = new HashMap<String, List<WebSocketSession>>();
 
 	/**
-	 * Å¬¶óÀÌ¾ğÆ® ¿¬°á ÀÌÈÄ¿¡ ½ÇÇàµÇ´Â ¸Ş¼Òµå
+	 * ì„¸ì…˜ì´ ì—°ê²°ë˜ë©´ ì ¤ ë¨¼ì € ì—¬ê¸°ë¡œ ì˜´
 	 */
 	@Override
 	public void afterConnectionEstablished(WebSocketSession session) throws Exception {
-		// ÀÎÅÍ¼ÁÅÍ¿¡¼­ ÀúÀåÇÑ ¼¼¼Ç¿¡¼­ projectNo¸¦ °¡Á®¿È
 		Map<String, Object> projectNoMap = session.getAttributes();
 		int projectNo = (int) projectNoMap.get("projectNo");
 
 		List<WebSocketSession> sessionList = null;
-		System.out.println("¤Ğ¤Ğ¤Ğ¤Ğ¤Ğ");
-		// ¼¼¼Ç¸®½ºÆ®°¡ µé¾îÀÖ´Â ¸ÊÀÌ Á¸ÀçÇÏ´ÂÁö È®ÀÎ
+		
+		// ì„¸ì…˜ë¦¬ìŠ¤íŠ¸ê°€ ë“¤ì–´ìˆëŠ” ë§µì´ ì¡´ì¬í•˜ëŠ”ì§€ í™•ì¸
 		if (sessionListMap.get(Integer.toString(projectNo))==null) {
-			// ºñ¾îÀÖÀ¸¸é ±× ¸®½ºÆ®¸¦ ¸¸µé¾î ÁÜ
-			System.out.println(1111111111);
+			// ë¹„ì–´ìˆìœ¼ë©´ ê·¸ ë¦¬ìŠ¤íŠ¸ë¥¼ ë§Œë“¤ì–´ ì¤Œ
 			sessionList = new ArrayList<WebSocketSession>();
 		} else {
-			System.out.println(22222222);
 			sessionList = sessionListMap.get(Integer.toString(projectNo));
 		}
-		System.out.println(session);
 		sessionList.add(session);
-		System.out.println(sessionListMap.get(Integer.toString(projectNo)));
 		sessionListMap.put(Integer.toString(projectNo), sessionList);
 
-		// 2 List :
 		logger.info(" {} conntected ", session.getId());
 	}
 
 	/**
-	 * Å¬¶óÀÌ¾ğÆ®°¡ À¥¼ÒÄÏ ¼­¹ö·Î ¸Ş½ÃÁö¸¦ Àü¼ÛÇßÀ» ¶§ ½ÇÇàµÇ´Â ¸Ş¼Òµå
+	 * ë©”ì‹œì§€ë¥¼ ë³´ë‚´ë©´ ì´ê²Œ ì‹¤í–‰ëŒ
 	 */
 	@Override
 	protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
 		Map<String, Object> projectNoMap = session.getAttributes();
 		int projectNo = (int) projectNoMap.get("projectNo");
-		// ¾Æ·¡¿Í °°ÀÌ´Â ÃÖ´ë 2°³
+		
 		logger.info("From {}, recieved Message : {} ", session.getId(), message.getPayload());
 
+		// í”„ë¡œì íŠ¸ ë„˜ë²„ì— í•´ë‹¹í•˜ëŠ” ë¦¬ìŠ¤íŠ¸ë¥¼ êº¼ë‚´ê³ , ê·¸ ë¦¬ìŠ¤íŠ¸ì— ì ‘ì†í•œ ì„¸ì…˜ì—ê²Œ ë©”ì„¸ì§€ ì „ì†¡
 		for (WebSocketSession sess : sessionListMap.get(Integer.toString(projectNo))) {
 			sess.sendMessage(new TextMessage(message.getPayload()));
 		}
@@ -71,7 +66,7 @@ public class EchoHandler extends TextWebSocketHandler {
 	}
 
 	/**
-	 * Å¬¶óÀÌ¾ğÆ®°¡ ¿¬°áÀ» ²÷¾úÀ» ¶§ ½ÇÇàµÇ´Â ¸Ş¼Òµå
+	 * ì„¸ì…˜ ì ‘ì†ì´ ëŠê¸°ê³ 
 	 */
 	@Override
 	public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {
@@ -82,10 +77,11 @@ public class EchoHandler extends TextWebSocketHandler {
 		List<WebSocketSession> sessionList = sessionListMap.get(Integer.toString(projectNo));
 
 		System.out.println(sessionListMap.get(Integer.toString(projectNo)));
-		// 2 List
+
+		// ì„¸ì…˜ ì‚­ì œ
 		sessionList.remove(session);
 
-		// 1 Map
+		// ì„¸ì…˜ ë¦¬ìŠ¤íŠ¸ê°€ ëª¨ë‘ ì‚­ì œë˜ë©´ ë§µë„ ì‚­ì œ
 		if (sessionList.isEmpty()) {
 			sessionListMap.remove(Integer.toString(projectNo));
 		}

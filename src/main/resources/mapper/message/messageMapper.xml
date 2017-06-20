@@ -16,14 +16,68 @@
 		</association>
 	</resultMap>
 
-	<select id="receiveMessageSelectAll" parameterType="int" resultMap="messageDTOMap">
-		select m.*, au.user_name,au.user_id from message m join ant_user au on m.user_no_message_sender=au.user_no where USER_NO_MESSAGE_RECEIVER=#{_parameter}
-	</select>
+	<select id="receiveMessageSelectAll" parameterType="map" resultMap="messageDTOMap">
+	select * from (select rownum as rnum,b.* from(select m.*, au.user_name,au.user_id 
+    from message m join ant_user au on m.user_no_message_sender=au.user_no 
+    where USER_NO_MESSAGE_RECEIVER=#{userNoMessageSender} order by m.message_sendtime desc)b)c where c.rnum>=#{startRow} and c.rnum&lt;=#{endRow}	
+    </select>
 	
-	<select id="sendMessageSelectAll" parameterType="int" resultMap="messageDTOMap">
-		select m.*, au.user_name,au.user_id from message m join ant_user au on m.user_no_message_receiver=au.user_no where USER_NO_MESSAGE_sender=#{_parameter}
-	</select>
-	
+	<select id="sendMessageSelectAll" parameterType="map" resultMap="messageDTOMap">
+	select * from (select rownum as rnum,b.* from(select m.*, au.user_name,au.user_id 
+    from message m join ant_user au on m.user_no_message_receiver=au.user_no 
+    where USER_NO_MESSAGE_SENDER=#{userNoMessagereceiver} order by m.message_sendtime desc)b)c where c.rnum>=#{startRow} and c.rnum&lt;=#{endRow}	
+    </select>
+    
+    <select id="countReveiveMessage" parameterType="int" resultType="int">
+    	select count(message_no) from message where USER_NO_MESSAGE_RECEIVER=#{_paremeter}
+    </select>
+    
+    <select id="countSendMessage" parameterType="int" resultType="int">
+    	select count(message_no) from message where USER_NO_MESSAGE_SENDER=#{_paremeter}
+    </select>
+    <!-- 검색할 때 -->
+    <select id="receiveMessageSelectAllByName" parameterType="map" resultMap="messageDTOMap">
+    select * from (select rownum as rnum,b.* from(select m.*, au.user_name,au.user_id 
+    from message m join ant_user au on m.user_no_message_sender=au.user_no 
+    where USER_NO_MESSAGE_RECEIVER=#{userNoMessageSender} and au.user_name like '%'||#{searchText}||'%' order by m.message_sendtime desc)b)c where c.rnum>=#{startRow} and c.rnum&lt;=#{endRow}
+    </select>
+    
+    <select id="receiveMessageSelectAllByContent" parameterType="map" resultMap="messageDTOMap">
+     select * from (select rownum as rnum,b.* from(select m.*, au.user_name,au.user_id 
+    from message m join ant_user au on m.user_no_message_sender=au.user_no 
+    where USER_NO_MESSAGE_RECEIVER=#{userNoMessageSender} and m.message_content like '%'||#{searchText}||'%' order by m.message_sendtime desc)b)c where c.rnum>=#{startRow} and c.rnum&lt;=#{endRow}   
+    </select>
+    
+    <select id="countReveiveMessageByName" parameterType="map" resultType="int">
+    select count(message_no) from message m join ant_user au on m.user_no_message_sender=au.user_no where m.USER_NO_MESSAGE_RECEIVER=#{userNo} and au.user_name like '%'||#{searchText}||'%'
+    </select>
+    
+    <select id="countReveiveMessageByContent" parameterType="map" resultType="int">
+    select count(message_no) from message m join ant_user au on m.user_no_message_sender=au.user_no where m.USER_NO_MESSAGE_RECEIVER=#{userNo} and m.message_content like '%'||#{searchText}||'%'
+    </select>
+    
+    <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+    
+    <select id="sendMessageSelectAllByName" parameterType="map" resultMap="messageDTOMap">
+    select * from (select rownum as rnum,b.* from(select m.*, au.user_name,au.user_id 
+    from message m join ant_user au on m.user_no_message_receiver=au.user_no 
+    where USER_NO_MESSAGE_SENDER=#{userNoMessagereceiver} and au.user_name like '%'||#{searchText}||'%' order by m.message_sendtime desc)b)c where c.rnum>=#{startRow} and c.rnum&lt;=#{endRow}	
+    </select>
+    
+    <select id="sendMessageSelectAllByContent" parameterType="map" resultMap="messageDTOMap">
+    select * from (select rownum as rnum,b.* from(select m.*, au.user_name,au.user_id 
+    from message m join ant_user au on m.user_no_message_receiver=au.user_no 
+    where USER_NO_MESSAGE_SENDER=#{userNoMessagereceiver} and m.message_content like '%'||#{searchText}||'%' order by m.message_sendtime desc)b)c where c.rnum>=#{startRow} and c.rnum&lt;=#{endRow}	
+    </select>
+    
+    <select id="countSendMessageByName" parameterType="map" resultType="int">
+    select count(message_no) from message m join ant_user au on m.user_no_message_sender=au.user_no where m.USER_NO_MESSAGE_SENDER=#{userNo} and au.user_name like '%'||#{searchText}||'%'
+    </select>
+    
+    <select id="countSendMessageByContent" parameterType="map" resultType="int">
+    select count(message_no) from message m join ant_user au on m.user_no_message_sender=au.user_no where m.USER_NO_MESSAGE_SENDER=#{userNo} and m.message_content like '%'||#{searchText}||'%'
+    </select>
+	<!-- 검색할 때 -->
 	<insert id="messageInsert" parameterType="messageDTO">
 		insert into message values(seq_message_no.nextval,(select user_no from ant_user where user_id=#{messageReceiver}),#{messageContent},sysdate,null,0,#{userNoMessageSender})
 	</insert>

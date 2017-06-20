@@ -14,6 +14,8 @@ public class ProjectDTO {
 	//private List<String> invitedUser; //조장이 초대한 팀원들의 아이디를 담는 list
 	private List<ProjectUserDTO> projectUserDTOs;
 	
+	private int dday;
+	
 	public ProjectDTO() {}
 
 	public ProjectDTO(int projectNo, String projectName, String projectStartdate, String projectEnddate,
@@ -92,6 +94,13 @@ public class ProjectDTO {
 		this.projectUserDTOs = projectUserDTOs;
 	}
 
+	public int getDday() {
+		return dday;
+	}
+
+	public void setDday(int dday) {
+		this.dday = dday;
+	}
 
 	
 	

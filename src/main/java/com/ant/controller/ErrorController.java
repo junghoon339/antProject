@@ -9,74 +9,74 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping("/error")
+@RequestMapping("/common/error")
 public class ErrorController {
 	private static final Logger logger = LoggerFactory.getLogger(ErrorController.class);
-
+	
 	@RequestMapping(value = "/throwable")
 	public String throwable(HttpServletRequest request, Model model) {
 		logger.info("throwable");
 		pageErrorLog(request);
-		model.addAttribute("msg", "¿¹¿Ü°¡ ¹ß»ıÇÏ¿´½À´Ï´Ù.");
+		model.addAttribute("msg", "ì˜ˆì™¸ê°€ ë°œìƒí•˜ì˜€ìŠµë‹ˆë‹¤.");
 		return "error/error";
 	}
-
+	
 	@RequestMapping(value = "/exception")
 	public String exception(HttpServletRequest request, Model model) {
 		logger.info("exception");
 		pageErrorLog(request);
-		model.addAttribute("msg", "¿¹¿Ü°¡ ¹ß»ıÇÏ¿´½À´Ï´Ù.");
+		model.addAttribute("msg", "ì˜ˆì™¸ê°€ ë°œìƒí•˜ì˜€ìŠµë‹ˆë‹¤.");
 		return "error/error";
 	}
-
+	
 	@RequestMapping(value = "/400")
 	public String pageError400(HttpServletRequest request, Model model) {
 		logger.info("page error code 400");
 		pageErrorLog(request);
-		model.addAttribute("msg", "Àß¸øµÈ ¿äÃ»ÀÔ´Ï´Ù.");
+		model.addAttribute("msg", "ì˜ëª»ëœ ìš”ì²­ì…ë‹ˆë‹¤.");
 		return "error/error";
 	}
-
+	
 	@RequestMapping(value = "/403")
 	public String pageError403(HttpServletRequest request, Model model) {
 		logger.info("page error code 403");
 		pageErrorLog(request);
-		model.addAttribute("msg", "Á¢±ÙÀÌ ±İÁöµÇ¾ú½À´Ï´Ù.");
+		model.addAttribute("msg", "ì ‘ê·¼ì´ ê¸ˆì§€ë˜ì—ˆìŠµë‹ˆë‹¤.");
 		return "error/error";
 	}
-
+	
 	@RequestMapping(value = "/404")
 	public String pageError404(HttpServletRequest request, Model model) {
 		logger.info("page error code 404");
 		pageErrorLog(request);
-		model.addAttribute("msg", "¿äÃ»ÇÏ½Å ÆäÀÌÁö´Â Á¸ÀçÇÏÁö ¾Ê½À´Ï´Ù.");
+		model.addAttribute("msg", "ìš”ì²­í•˜ì‹  í˜ì´ì§€ëŠ” ì¡´ì¬í•˜ì§€ ì•ŠìŠµë‹ˆë‹¤.");
 		return "error/error";
 	}
-
+	
 	@RequestMapping(value = "/405")
 	public String pageError405(HttpServletRequest request, Model model) {
 		logger.info("page error code 405");
 		pageErrorLog(request);
-		model.addAttribute("msg", "¿äÃ»µÈ ¸Ş¼Òµå°¡ Çã¿ëµÇÁö ¾Ê½À´Ï´Ù.");
+		model.addAttribute("msg", "ìš”ì²­ëœ ë©”ì†Œë“œê°€ í—ˆìš©ë˜ì§€ ì•ŠìŠµë‹ˆë‹¤.");
 		return "error/error";
 	}
-
+	
 	@RequestMapping(value = "/500")
 	public String pageError500(HttpServletRequest request, Model model) {
 		logger.info("page error code 500");
 		pageErrorLog(request);
-		model.addAttribute("msg", "¼­¹ö¿¡ ¿À·ù°¡ ¹ß»ıÇÏ¿´½À´Ï´Ù.");
+		model.addAttribute("msg", "ì„œë²„ì— ì˜¤ë¥˜ê°€ ë°œìƒí•˜ì˜€ìŠµë‹ˆë‹¤.");
 		return "error/error";
 	}
-
+	
 	@RequestMapping(value = "/503")
 	public String pageError503(HttpServletRequest request, Model model) {
 		logger.info("page error code 503");
 		pageErrorLog(request);
-		model.addAttribute("msg", "¼­ºñ½º¸¦ »ç¿ëÇÒ ¼ö ¾ø½À´Ï´Ù.");
+		model.addAttribute("msg", "ì„œë¹„ìŠ¤ë¥¼ ì‚¬ìš©í•  ìˆ˜ ì—†ìŠµë‹ˆë‹¤.");
 		return "error/error";
 	}
-
+	
 	private void pageErrorLog(HttpServletRequest request) {
 		logger.info("status_code : " + request.getAttribute("javax.servlet.error.status_code"));
 		logger.info("exception_type : " + request.getAttribute("javax.servlet.error.exception_type"));

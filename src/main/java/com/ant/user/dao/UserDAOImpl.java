@@ -32,8 +32,17 @@ public class UserDAOImpl implements UserDAO {
 	
 	@Override
 	public UserDTO selectUserById(String id) {
-		// TODO Auto-generated method stub
-		
 		return sqlSession.selectOne("UserMapper.selectUserById", id);
+	}
+	
+	@Override
+	public UserDTO selectUserByNo(int userNo) {
+		return sqlSession.selectOne("UserMapper.selectUserByNo", userNo);
+	}
+
+	@Override
+	public int updateTempPassword(int userNo, String pw) {
+		UserDTO userDTO = new UserDTO(userNo, null, null, pw, null, null);
+		return sqlSession.update("UserMapper.updateTempPassword", userDTO);
 	}
 }

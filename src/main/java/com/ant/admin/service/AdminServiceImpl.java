@@ -6,8 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.ant.admin.dao.AdminDAO;
+import com.ant.admin.dto.NoticeDTO;
 import com.ant.message.dto.MessageDTO;
 import com.ant.project.dto.ProjectDTO;
+import com.ant.storage.dto.StorageDTO;
 import com.ant.user.dto.UserDTO;
 
 @Service
@@ -112,6 +114,51 @@ public class AdminServiceImpl implements AdminService {
 			result=adminDAO.projectTotalCountBySubject(projectState, searchText);
 		}
 		return result;
+	}
+
+	@Override
+	public int insertNotice(NoticeDTO noticeDTO) throws Exception {
+		int result = adminDAO.insertNotice(noticeDTO);
+		if(result==0){
+			throw new Exception("»ðÀÔ ¿À·ù");
+		}
+		return result;
+	}
+
+	@Override
+	public int updateNotice(NoticeDTO noticeDTO) throws Exception {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int deleteNotice(int storageNo, int userNo) throws Exception {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public List<NoticeDTO> noticeSelectAll(int startRow, int endRow) {
+		// TODO Auto-generated method stub
+		return adminDAO.noticeSelectAll(startRow, endRow);
+	}
+
+	@Override
+	public int noticeTotalCount() {
+		// TODO Auto-generated method stub
+		return adminDAO.noticeTotalCount();
+	}
+
+	@Override
+	public List<NoticeDTO> noticeSelectBySearch(int startRow, int endRow, String searchText) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public int noticeTotalCountBySearch(String searchText) {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 
 }

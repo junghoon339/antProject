@@ -17,15 +17,29 @@ public class MessageServiceImpl implements MessageService{
 	private MessageDAO messageDAO;
 	
 	@Override
-	public List<MessageDTO> receiveMessageSelectAll(int userNoMessageSender) {
+	public List<MessageDTO> receiveMessageSelectAll(int userNoMessageSender, int startRow, int endRow) {
 		// TODO Auto-generated method stub
-		return messageDAO.receiveMessageSelectAll(userNoMessageSender);
+		return messageDAO.receiveMessageSelectAll(userNoMessageSender, startRow, endRow);
+	}
+	
+	@Override
+	public int countReceiveMessageTotal(int userNo) {
+		// TODO Auto-generated method stub
+		return messageDAO.countReceiveMessageTotal(userNo);
 	}
 
+
 	@Override
-	public List<MessageDTO> sendMessageSelectAll(int userNoMessagereceiver) {
+	public List<MessageDTO> sendMessageSelectAll(int userNoMessagereceiver, int startRow, int endRow) {
 		
-		return messageDAO.sendMessageSelectAll(userNoMessagereceiver);
+		return messageDAO.sendMessageSelectAll(userNoMessagereceiver,startRow,endRow);
+	}
+	
+
+	@Override
+	public int countSendeMessageTotal(int userNo) {
+		// TODO Auto-generated method stub
+		return messageDAO.countSendeMessageTotal(userNo);
 	}
 
 	@Override
@@ -43,6 +57,7 @@ public class MessageServiceImpl implements MessageService{
 
 	@Override
 	public int messageInsert(MessageDTO messageDTO) {
+		
 		int result=0;
 		String receivers=messageDTO.getMessageReceiver();
 		
@@ -100,4 +115,51 @@ public class MessageServiceImpl implements MessageService{
 		return result;
 	}
 
+	@Override
+	public List<MessageDTO> receiveMessageSelectAllBySearch(int userNoMessageSender, int startRow, int endRow,
+			int categoryNo, String searchText) {
+		List<MessageDTO> list = null;
+		if(categoryNo==0){//이름검색
+			list = messageDAO.receiveMessageSelectAllByName(userNoMessageSender, startRow, endRow, searchText);
+		}else{//내용검색
+			list = messageDAO.receiveMessageSelectAllByContent(userNoMessageSender, startRow, endRow, searchText);
+		}
+		return list;
+	}
+
+	@Override
+	public int countReceiveMessageTotalBySearch(int userNo, int categoryNo, String searchText) {
+		int result = 0;
+		if(categoryNo==0){
+			result = messageDAO.countReceiveMessageTotalByName(userNo, searchText);
+		}else{
+			result = messageDAO.countReceiveMessageTotalByContent(userNo, searchText);
+		}
+		return result;
+	}
+
+	@Override
+	public List<MessageDTO> sendMessageSelectAllBySearch(int userNoMessagereceiver, int startRow, int endRow,
+			int categoryNo, String searchText) {
+		List<MessageDTO> list = null;
+		if(categoryNo==0){//이름검색
+			list = messageDAO.sendMessageSelectAllByName(userNoMessagereceiver, startRow, endRow, searchText);
+		}else{//내용검색
+			list = messageDAO.sendMessageSelectAllByContent(userNoMessagereceiver, startRow, endRow, searchText);
+		}
+		return list;
+	}
+
+	@Override
+	public int countSendMessageTotalBySearch(int userNo, int categoryNo, String searchText) {
+		int result = 0;
+		if(categoryNo==0){
+			result = messageDAO.countSendMessageTotalByName(userNo, searchText);
+		}else{
+			result = messageDAO.countSendMessageTotalByContent(userNo, searchText);
+		}
+		return result;
+	}
+
+	
 }

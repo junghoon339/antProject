@@ -102,7 +102,7 @@
 	<select id="selectAllByTitle" parameterType="map" resultMap="storageMap">
 		select * from (select rownum as rnum,b.* from (select s.storage_no,s.project_no,s.storage_filename,s.storage_filepath,s.storage_filesize,s.storage_readnum,s.storage_writeday,s.storage_title,s.storage_content,a.user_name,a.user_no	
     from storage s join ant_user a on s.user_no=a.user_no 
-    where s.project_no=#{projectNo} and s.storage_title like'%'||#{searchText}||'%' order by s.STORAGE_WRITEDAY desc)b)c where c.rnum>=#{startRow} and c.rnum&lt;=#{endRow}
+    where s.project_no=#{projectNo} and s.storage_title like'%'||#{searchText}||'%' order by s.STORAGE_WRITEDAY desc)b)c where c.rnum>=#{startRow} and c.rnum&lt;=#{endRow} 
 	</select>
 	
 	<!-- 총 row count 이름으로 -->

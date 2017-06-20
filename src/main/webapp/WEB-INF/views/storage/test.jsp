@@ -321,8 +321,9 @@ body{
 										class="glyphicon glyphicon-chevron-left"></span></a></li>
 							</c:otherwise>
 						</c:choose>	
+						
 						<c:forEach begin="${startPage}" end="${endPage}" var="pageNum" step="1">
-							<li class="active"><a href="${pageContext.request.contextPath}/storage/storageTable/1?pageNumber=${pageNum}&searchText=${searchText}&categoryNo=${categoryNo}">${pageNum}</a></li>
+							<li><a href="${pageContext.request.contextPath}/storage/storageTable/1?pageNumber=${pageNum}&searchText=${searchText}&categoryNo=${categoryNo}">${pageNum}</a></li>
 						</c:forEach>
 						
 						<c:choose>
@@ -335,6 +336,7 @@ body{
 										class="glyphicon glyphicon-chevron-right"></span></a></li>
 								</c:otherwise>
 						</c:choose>
+						
 					</ul>
 				</div>
 				

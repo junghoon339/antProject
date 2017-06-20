@@ -4,17 +4,17 @@ import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
-import javax.servlet.http.HttpSession;
-
 import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.ant.chat.service.ChatService;
 import com.ant.user.dto.UserDTO;
 import com.ant.user.service.UserService;
+import com.ant.util.Email;
+import com.ant.util.EmailSender;
 
 @Controller
 @RequestMapping("/user")
@@ -23,7 +23,12 @@ public class UserController {
 	private UserService userService;
 
 	@Autowired
-	private ChatService chatService;
+	private EmailSender emailSender;
+
+	@Autowired
+	private Email email;
+	
+	private List<String> schoolList;
 
 	@RequestMapping("/join")
 	public String join(UserDTO userDTO) {
@@ -35,15 +40,13 @@ public class UserController {
 	public String error() {
 		return "user/error";
 	}
-	
 
 	@RequestMapping("/logout")
 	public String logout() {
 		return "index";
 	}
 
-
-	// ¿ìµ¿ÀÌ°¡ »èÁ¦ÇÏ°í ÀÌºÎºÐÀ» ÀÌÁ¦ projectController¿¡¼­ ÇÏµµ·Ï ÇÏ°Ú½À´Ï´Ù!
+	// ï¿½ìµ¿ï¿½Ì°ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï°ï¿½ ï¿½ÌºÎºï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ projectControllerï¿½ï¿½ï¿½ï¿½ ï¿½Ïµï¿½ï¿½ï¿½ ï¿½Ï°Ú½ï¿½ï¿½Ï´ï¿½!
 	/*
 	 * @RequestMapping("/main") public String afterLogin() { return
 	 * "project/home"; }
@@ -55,5 +58,64 @@ public class UserController {
 	@RequestMapping("/timetable")
 	public String timeUpdate(){
 		return "timetable/userTimetable"; 
+	}
+
+	@RequestMapping("/idCheck")
+	@ResponseBody
+	public int idCheckn(String userId) {
+		UserDTO userDTO = userService.selectUserById(userId);
+		if (userDTO == null)
+			return 0;
+
+		return 1;
+	}
+
+	@RequestMapping(value = "/schoolCheck", produces = "application/json; charset=utf8")
+	@ResponseBody
+	public List<String> schoolCheck(String school) {
+		System.out.println(school);
+		try {
+			File file = new File("/chat/school.txt");
+			if (!file.exists()) {
+				file.createNewFile();
+			}
+			schoolList = FileUtils.readLines(file, "utf-8");
+
+			return schoolList;
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		return schoolList;
+	}
+
+	@RequestMapping("/forgotPassword")
+	public String forgotPassword() {
+		return "user/forgotPassword";
+	}
+
+	@RequestMapping("/sendEmail")
+	public ModelAndView sendEmail(String emailAddr) throws Exception {
+		// ï¿½Ó½Ãºï¿½Ð¹ï¿½È£ï¿½ï¿½ 8ï¿½ï¿½
+		String pw=emailSender.temporaryPassword(8);
+		
+		ModelAndView mv = new ModelAndView("user/sendEmail");
+		
+		// idï¿½ï¿½ Ã£ï¿½ï¿½ ï¿½Ö³ï¿½ï¿½ï¿½ï¿½ï¿½
+		UserDTO dto = userService.selectUserById(emailAddr);
+		if (dto == null) {
+			mv.addObject("msg", "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ê´ï¿½ ï¿½ï¿½ï¿½Ìµï¿½ï¿½Ô´Ï´ï¿½.");
+			return mv;
+		}
+
+		email.setReceiver(emailAddr);
+		email.setSubject("ï¿½ï¿½ï¿½Ì¿ï¿½ ï¿½ï¿½Â¯ï¿½ï¿½ ï¿½ï¿½Ð¹ï¿½È£ Ã£ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ô´Ï´ï¿½.");
+		email.setContent("ï¿½Ó½ï¿½ ï¿½ï¿½Ð¹ï¿½È£ï¿½ï¿½ " + pw + " ï¿½Ô´Ï´ï¿½.");
+
+		userService.updateTempPassword(dto.getUserNo(), pw);
+		
+		emailSender.SendEmail(email);
+		
+		return mv;
 	}
 }

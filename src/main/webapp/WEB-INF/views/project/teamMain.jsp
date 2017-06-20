@@ -1,69 +1,108 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-	<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<!DOCTYPE html>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
-<link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
-<link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
+<meta charset="utf-8" />
+<link rel="apple-touch-icon" sizes="76x76"
+	href="assets/img/apple-icon.png">
+<link rel="icon" type="image/png" sizes="96x96"
+	href="assets/img/favicon.png">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 
-<link rel="stylesheet" type="text/css"
-	href="${pageContext.request.contextPath}/resources/css/header.css" />
-<link rel="stylesheet" type="text/css"
-	href="${pageContext.request.contextPath}/resources/css/sidebar.css" />
+<title>Paper Dashboard by Creative Tim</title>
+
+<meta
+	content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0'
+	name='viewport' />
+<meta name="viewport" content="width=device-width" />
+
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+<!-- Bootstrap core CSS     -->
+<link
+	href="${pageContext.request.contextPath }/resources/css/bootstrap.min.css"
+	rel="stylesheet" />
+
+<!-- Animation library for notifications   -->
+<link
+	href="${pageContext.request.contextPath }/resources/css/animate.min.css"
+	rel="stylesheet" />
+
+<!--  Paper Dashboard core CSS    -->
+<link
+	href="${pageContext.request.contextPath }/resources/css/paper-dashboard.css"
+	rel="stylesheet" />
+
+<%--     <!--  CSS for Demo Purpose, don't include it in your project     -->
+    <link href="${pageContext.request.contextPath }/resources/css/demo.css" rel="stylesheet" />
+ --%>
+<!--  Fonts and icons     -->
+<link
+	href="http://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css"
+	rel="stylesheet">
+<link href='https://fonts.googleapis.com/css?family=Muli:400,300'
+	rel='stylesheet' type='text/css'>
+<link
+	href="${pageContext.request.contextPath }/resources/css/themify-icons.css"
+	rel="stylesheet">
+
 </head>
-
-
 <body>
-	<header>
-		<jsp:include page="header.jsp" flush="false" />
-	</header>
-	<jsp:include page="sidebar.jsp" />
-	<div id="burger"></div>
+	<div class="wrapper">
+		<jsp:include page="/WEB-INF/views/project/sidebar_ch.jsp" />
 
 
-	<section>
-		<div class="container">
-			<div class="row">
-				<div class="col-lg-8 col-lg-offset-2">
-					<h1>Fancy Toggle Sidebar Navigation</h1>
-					${userDTO.userId}
-					${projectNo}
-					${projectUserRole}
-					<p>Bacon ipsum dolor sit amet tri-tip shoulder tenderloin
-						shankle. Bresaola tail pancetta ball tip doner meatloaf corned
-						beef. Kevin pastrami tri-tip prosciutto ham hock pork belly bacon
-						pork loin salami pork chop shank corned beef tenderloin meatball
-						cow. Pork bresaola meatloaf tongue, landjaeger tail andouille
-						strip steak tenderloin sausage chicken tri-tip. Pastrami tri-tip
-						kielbasa sausage porchetta pig sirloin boudin rump meatball
-						andouille chuck tenderloin biltong shank</p>
-					<p>Pig meatloaf bresaola, spare ribs venison short loin rump
-						pork loin drumstick jowl meatball brisket. Landjaeger chicken
-						fatback pork loin doner sirloin cow short ribs hamburger shoulder
-						salami pastrami. Pork swine beef ribs t-bone flank filet mignon,
-						ground round tongue. Tri-tip cow turducken shank beef shoulder
-						bresaola tongue flank leberkas ball tip.</p>
+		<div class="main-panel">
+			<jsp:include page="header_ch.jsp" flush="false" />
+
+
+
+			<div class="content">
+				<div class="container-fluid">
+					<div class="row">
+						
+						<!-- 이곳에 내용작성!!!!!!!!!!!!!!!! -->
+					</div>
 				</div>
 			</div>
+
+			
+
+
+			<jsp:include page="footer_ch.jsp" flush="false" />
 		</div>
-	</section>
-
-
-
-	<c:import url="/project/chat"/>
-
-
-	<footer>
-		<jsp:include page="footer.jsp" flush="false" />
-	</footer>
-
+	</div>
+	
+	<%-- <c:import url="/project/chat"/> --%>
 </body>
+
+<!--   Core JS Files   -->
 <script
-	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+	src="${pageContext.request.contextPath }/resources/js/jquery-1.10.2.js"
+	type="text/javascript"></script>
+<script
+	src="${pageContext.request.contextPath }/resources/js/bootstrap.min.js"
+	type="text/javascript"></script>
+
+<!--  Checkbox, Radio & Switch Plugins -->
+<script
+	src="${pageContext.request.contextPath }/resources/js/bootstrap-checkbox-radio.js"></script>
+
+<!--  Charts Plugin -->
+<script
+	src="${pageContext.request.contextPath }/resources/js/chartist.min.js"></script>
+
+<!--  Notifications Plugin    -->
+<script
+	src="${pageContext.request.contextPath }/resources/js/bootstrap-notify.js"></script>
+
+
+<!-- Paper Dashboard Core javascript and methods for Demo purpose -->
+<script
+	src="${pageContext.request.contextPath }/resources/js/paper-dashboard.js"></script>
+
+<!-- Paper Dashboard DEMO methods, don't include it in your project! -->
+<%-- <script src="${pageContext.request.contextPath }/resources/js/demo.js"></script> --%>
 </html>

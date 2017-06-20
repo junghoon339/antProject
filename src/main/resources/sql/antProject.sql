@@ -55,21 +55,21 @@ CREATE TABLE project(
    project_enddate       date NOT NULL,
    project_subject       varchar2(30) NOT NULL,
    project_teacher       varchar2(20) NOT NULL,
-   project_state         NUMBER DEFAULT 0 --0:ÁøÇàÁß, 1:¼³¹®Á¶»çÁøÇàÁß(CRUDºÒ°¡), 2:ÇÁ·ÎÁ§Æ®Á¾·á(CRUDºÒ°¡)
+   project_state         NUMBER DEFAULT 0 --0:ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½, 1:ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½(CRUDï¿½Ò°ï¿½), 2:ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ï¿½ï¿½(CRUDï¿½Ò°ï¿½)
 );
 create sequence seq_project_no;
 
 SELECT * FROM ANT_USER;
 
 INSERT INTO PROJECT_USER
-VALUES (seq_project_user_no.nextval, 1, 84, 'Á¶¿ø', 'ÇÏÀÌ');
+VALUES (seq_project_user_no.nextval, 1, 84, 'ï¿½ï¿½ï¿½ï¿½', 'ï¿½ï¿½ï¿½ï¿½');
 
 CREATE TABLE project_user(
    project_user_no       NUMBER CONSTRAINT project_user_no_pk PRIMARY KEY,
    project_no            NUMBER CONSTRAINT project_user_project_no_fk references project(project_no) on delete cascade,
    user_no               NUMBER CONSTRAINT project_user_no_fk references ant_user(user_no) on delete cascade,
-   project_user_role     varchar2(30),  --Á¶¿ø,Á¶Àå
-   project_user_task     varchar2(50) --ÆÀÇÃ³» °¢ÀÚ ¸ÃÀº ¿ªÇÒ   
+   project_user_role     varchar2(30),  --ï¿½ï¿½ï¿½ï¿½,ï¿½ï¿½ï¿½ï¿½
+   project_user_task     varchar2(50) --ï¿½ï¿½ï¿½Ã³ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½   
 );
 create sequence seq_project_user_no;
 
@@ -152,7 +152,7 @@ CREATE TABLE project_calendar
 (
 	event_id NUMBER  CONSTRAINT project_event_id_pk primary key,
 	project_no  NUMBER CONSTRAINT calendar_project_no_fk references project(project_no) on delete cascade,
-	user_no NUMBER  CONSTRAINT user_calendar_user_no_fk references ant_user(user_no) on delete cascade ,
+	user_no NUMBER  CONSTRAINT project_calendar_user_no_fk references ant_user(user_no) on delete cascade ,
 	event_name varchar2(127) NOT NULL,
 	start_date date not null,
 	end_date date not null
@@ -201,8 +201,11 @@ CREATE TABLE message
    user_no_message_sender number constraint message_user_no_sender_fk references ant_user(user_no) on delete cascade
 );
 create sequence seq_message_no; 
-
+commit
 select * from message;
+
+insert into message values(seq_message_no.nextval,(select user_no from ant_user where user_id='13@naver.com'),'ÂÊÁöÀßµÇ³Ä',sysdate,null,0,13);
+
 
 CREATE TABLE storage
 (

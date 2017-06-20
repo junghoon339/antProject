@@ -147,10 +147,8 @@
 							</h3>
 						</div>
 						<div class="col-md-4 col-xs-4" style="text-align: right;">
-							<a href="#"><span id="minim_chat_window"
-								class="glyphicon glyphicon-minus icon_minim"></span></a> <a href="#"><span
-								class="glyphicon glyphicon-remove icon_close"
-								data-id="chat_window_1"></span></a>
+							<a href="#"><span id="minim_chat_window" class="glyphicon glyphicon-minus icon_minim"></span></a> 
+								<!-- <a href="#"><span class="glyphicon glyphicon-remove icon_close" data-id="chat_window_1"></span></a> -->
 						</div>
 					</div>
 					<!-- 채팅은 이 안에 들어와야 함 -->
