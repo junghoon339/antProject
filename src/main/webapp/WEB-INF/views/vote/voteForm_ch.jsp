@@ -43,15 +43,14 @@
 
 <script>
 	$(function(){
-		alert(1);
 
-		$(".obj").mouseenter(function(){
+/* 		$(".obj").mouseenter(function(){
 	        $(this).css("background-color", "#fff4f4");
 	    });
 		
 	    $(".obj").mouseleave(function(){
-	        $(this).css("background-color", "white");
-	    });
+	        $(this).css("background-color", "gray");
+	    }); */
 	    
 	    $(".obj").dblclick(function(){
 	    	$(this).parent().submit();
@@ -87,12 +86,8 @@ td {
 <body>
 	<div class="wrapper">
 		<jsp:include page="/WEB-INF/views/project/sidebar_ch.jsp" />
-
-
 		<div class="main-panel">
 			<jsp:include page="header_ch.jsp" flush="false" />
-
-
 
 			<div class="content">
 				<div class="container-fluid">
@@ -100,88 +95,86 @@ td {
 						
 						<!-- 이곳에 내용작성!!!!!!!!!!!!!!!! -->
 						<section>
-	<div class="container">
-		<div class="row">
-	
-	<div class="col-lg-9 col-lg-offset-1">
-	<%@include file="header.jsp"%>
-		<div class="well">
-			<h4>진행중인 투표</h4>
-		</div>
-
-		<div id="doing" class="List" >
-				<c:forEach items="${doingList}" var="doingList" varStatus="doingStatus">
-				<form class="doingForm" id="doingForm" action="${pageContext.request.contextPath}/vote/Detail" method="post">
-				<input type=hidden id="securityInfo" name="${_csrf.parameterName}" value="${_csrf.token}">
-					<input type="hidden" name="voteNo" id="voteNo" value="${doingList.voteNo}" />
-					<input type="hidden" name="userNo" id="userNo" value="${userNo}" />
-					<input type="hidden" name="userCount" value="${doingList.userCount}"/>
-					<table class="obj">
-						<tr>
-							<td rowspan="2" id="q"><h1>Q.</h1></td>
-							<td colspan="2">${doingStatus.count}.${doingList.voteTitle}</td>
-						</tr>
-						<tr>
-							<td id="attribute" width="50"><c:choose>
-									<c:when test="${doingList.userCount!=0}">${doingList.userCount}</c:when>
-									<c:otherwise>0</c:otherwise>
-								</c:choose> 명 참여</td>
-							<td id="attribute"><c:choose>
-									<c:when test="${doingList.state==false}">미참여</c:when>
-									<c:otherwise>참여완료</c:otherwise>
-								</c:choose></td>
-						</tr>
-					</table>
-				</form>
-					<hr>
-				</c:forEach>
-		</div>
-
-
-		<div class="well">
-			<h4>종료된 투표</h4>
-		</div>
-		<div id="done" class="List">
-		
-				<c:forEach items="${doneList}" var="doneList" varStatus="doneStatus">
-				<form class="doneForm" id="doneForm" action="${pageContext.request.contextPath}/vote/Detail">
-				<input type=hidden id="securityInfo" name="${_csrf.parameterName}" value="${_csrf.token}">
-				<input type="hidden" name="voteNo" value="${doneList.voteNo}" />
-				<input type="hidden" name="userNo" id="userNo" value="${userNo}" />
-				<input type="hidden" name="userCount" value="${doneList.userCount}"/>
-				<table class="obj">
-					<tr>
-						<td rowspan="2" id="q"><h1>Q.</h1></td>
-						<td colspan="2">${doneStatus.count}. ${doneList.voteTitle} </td>
-					</tr>
-					<tr>
-						<td id="attribute" width="50">
-						<c:choose>
-						<c:when test="${doneList.userCount!=0}">${doneList.userCount}</c:when>
-									<c:otherwise>0</c:otherwise>
-						</c:choose>명 참여</td>
-						<td id="attribute">
-						<c:choose>
-									<c:when test="${doneList	.state==false}">미참여</c:when>
-									<c:otherwise>참여완료</c:otherwise>
-						</c:choose>
-						</td>
-					</tr>
-					<tr>
-						<td></td>
-						<td colspan="2" id="attribute">투표 마감 ${doneList.voteEndDate}</td>
-					</tr>
-					</table>
-					</form>
-					<hr>
-				</c:forEach>
-		</div>
-		<p>
-	</div>
-	</div></div>
-	</section>
+						<div class="container">
+							<div class="row">
 						
-						
+						<div class="col-lg-9 col-lg-offset-1">
+						<%@include file="header.jsp"%>
+							<div class="well">
+								<h4>진행중인 투표</h4>
+							</div>
+					
+							<div id="doing" class="List" >
+									<c:forEach items="${doingList}" var="doingList" varStatus="doingStatus">
+									<form class="doingForm" id="doingForm" action="${pageContext.request.contextPath}/vote/Detail" method="post">
+									<input type=hidden id="securityInfo" name="${_csrf.parameterName}" value="${_csrf.token}">
+										<input type="hidden" name="voteNo" id="voteNo" value="${doingList.voteNo}" />
+										<input type="hidden" name="userNo" id="userNo" value="${userNo}" />
+										<input type="hidden" name="userCount" value="${doingList.userCount}"/>
+										<table class="obj">
+											<tr>
+												<td rowspan="2" id="q"><h1>Q.</h1></td>
+												<td colspan="2">${doingStatus.count}.${doingList.voteTitle}</td>
+											</tr>
+											<tr>
+												<td id="attribute" width="50"><c:choose>
+														<c:when test="${doingList.userCount!=0}">${doingList.userCount}</c:when>
+														<c:otherwise>0</c:otherwise>
+													</c:choose> 명 참여</td>
+												<td id="attribute">
+													<c:choose>
+														<c:when test="${doingList.state==false}">미참여</c:when>
+														<c:otherwise>참여완료</c:otherwise>
+													</c:choose>
+												</td>
+											</tr>
+										</table>
+									</form>
+									<hr>
+								</c:forEach>
+							</div>
+					
+							<div class="well">
+								<h4>종료된 투표</h4>
+							</div>
+							<div id="done" class="List">
+								<c:forEach items="${doneList}" var="doneList" varStatus="doneStatus">
+									<form class="doneForm" id="doneForm" action="${pageContext.request.contextPath}/vote/Detail">
+									<input type=hidden id="securityInfo" name="${_csrf.parameterName}" value="${_csrf.token}">
+									<input type="hidden" name="voteNo" value="${doneList.voteNo}" />
+									<input type="hidden" name="userNo" id="userNo" value="${userNo}" />
+									<input type="hidden" name="userCount" value="${doneList.userCount}"/>
+									<table class="obj">
+										<tr>
+											<td rowspan="2" id="q"><h1>Q.</h1></td>
+											<td colspan="2">${doneStatus.count}. ${doneList.voteTitle} </td>
+										</tr>
+										<tr>
+											<td id="attribute" width="50">
+											<c:choose>
+											<c:when test="${doneList.userCount!=0}">${doneList.userCount}</c:when>
+														<c:otherwise>0</c:otherwise>
+											</c:choose>명 참여</td>
+											<td id="attribute">
+											<c:choose>
+														<c:when test="${doneList	.state==false}">미참여</c:when>
+														<c:otherwise>참여완료</c:otherwise>
+											</c:choose>
+											</td>
+										</tr>
+										<tr>
+											<td></td>
+											<td colspan="2" id="attribute">투표 마감 ${doneList.voteEndDate}</td>
+										</tr>
+										</table>
+										</form>
+										<hr>
+									</c:forEach>
+							</div>
+							<p>
+						</div>
+						</div></div>
+						</section>
 					</div>
 				</div>
 			</div>

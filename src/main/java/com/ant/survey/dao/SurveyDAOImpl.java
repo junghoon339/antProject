@@ -56,4 +56,9 @@ public class SurveyDAOImpl implements SurveyDAO{
 		return session.insert("surveyMapper.surveyDetailCreate", surveyDetailDTO);
 	}
 
+	@Override
+	public int updateTeamInfo(int projectNo) {
+		return session.update("surveyMapper.updateTeamInfo", projectNo);
+	}
+	
 }
