@@ -58,9 +58,19 @@
 						<div class="row">부터 참고하면서 작성하면 됨
 					-->
 					
-
-
-
+					<div class="row" id="report">
+						<div class="col-md-12">
+							<div class="card">
+								<div class="content">
+									<c:import url="/project/home"/>
+									<button id="pdfdown">다운</button>
+								</div>
+							</div>
+						</div>
+					</div>
+				
+		
+					
 				</div>
 			</div>
 			<jsp:include page="/WEB-INF/views/project/footer_ch.jsp" flush="false" />
@@ -88,12 +98,13 @@
 	<!-- 필요한 자바스크립트 파일은 여기에 넣어주면 됨 -->
 	<script
 		src="${pageContext.request.contextPath }/resources/js/html2canvas.js"></script>
+	<script src="${pageContext.request.contextPath }/resources/js/jspdf.min.js"></script>
 	<script>
 	$(document).ready(function(){
 		$("#pdfdown").click(function() {
 			html2canvas(document.getElementById("report"), {
 				onrendered : function(canvas) {
-					var imgData = canvas.toDataURL('image/png');
+					var imgData = canvas.toDataURL('image/jpeg',1.0);
 					console.log('report image url : ' + imgData);
 					var doc = new jsPDF('p', 'mm', [ 297, 210 ]);
 					doc.addImage(imgData, 'PNG', 10, 10, 190, 95);
@@ -101,6 +112,7 @@
 				}
 			});
 		});
+		
 		function fnCopy() {
 			html2canvas($("#divSource"), {
 				//allowTaint: true,

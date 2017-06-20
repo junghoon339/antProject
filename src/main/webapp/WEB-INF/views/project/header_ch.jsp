@@ -2,11 +2,9 @@
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
-
-<%-- <%@ page
-	import="org.springframework.security.core.context.SecurityContextHolder"%>
+<%@ page import="org.springframework.security.core.context.SecurityContextHolder"%>
 <%@ page import="org.springframework.security.core.Authentication"%>
-<%@ page import="com.ant.user.dto.UserDTO"%> --%>
+<%@ page import="com.ant.user.dto.UserDTO"%>
 
 		<nav class="navbar navbar-default">
             <div class="container-fluid">
