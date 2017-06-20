@@ -202,7 +202,7 @@ public class AdminController {
 		mv.addObject("rowCount",rowCount);
 		mv.addObject("searchText",searchText);
 		
-		mv.setViewName("/admin/admin-notice");
+		mv.setViewName("/admin/adminNootice");
 		return mv;
 	}
 	
