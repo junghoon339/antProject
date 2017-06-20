@@ -48,6 +48,7 @@
 	href="${pageContext.request.contextPath }/resources/css/themify-icons.css"
 	rel="stylesheet">
 
+
 </head>
 <body>
 	<div class="wrapper">
@@ -64,6 +65,24 @@
 					<div class="row">
 						
 						<!-- 이곳에 내용작성!!!!!!!!!!!!!!!! -->
+				
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
 					</div>
 				</div>
 			</div>

@@ -68,17 +68,19 @@ public class ProjectController implements Serializable {
 	private Boolean dynFilter;
 	private List<String> chatList;
 	/**
-	 * 홈화占쏙옙(占싸깍옙占쏙옙 占쏙옙占쏙옙占싹몌옙 占쏙옙占쏙옙占쏙옙占� 화占쏙옙)
+	 * 홈화면(로그인하면 나오는 페이지)
 	 * @throws Exception
 	 */
 	@RequestMapping("/home")
 	public ModelAndView home(HttpServletRequest req) throws Exception {
-		// 占싸깍옙占싸듸옙 userNo
+		//홈화면 진입시 projectNo에 null을 담음
+		req.getSession().setAttribute("projectNo", null);
+		
+		// 현재 로그인된 userNo
 		UserDTO userDTO = (UserDTO) req.getSession().getAttribute("userDTO");
 		int userNo = userDTO.getUserNo();
 
-
-		// userNo占쏙옙 占쏙옙占쏙옙占쏙옙占쏙옙占쏙옙占쏙옙트, 占싹뤄옙占쏙옙占쏙옙占쏙옙占싣� 
+		// 현재진행중, 완료대기중, 완료된 조별과제를 담은 map
 		Map<String, List<ProjectDTO>> projectMap = projectService.selectProjectById(userNo);
 		List<ProjectDTO> currentProList = projectMap.get("currentProList");
 		List<ProjectDTO> surveyingProList = projectMap.get("surveyingProList");
@@ -130,7 +132,7 @@ public class ProjectController implements Serializable {
 		UserDTO userDTO = (UserDTO) session.getAttribute("userDTO");
 		int userNo = userDTO.getUserNo();*/
 
-		// calendar占쏙옙占쏙옙
+		// calendar!!!
 		DHXPlanner planner = new DHXPlanner(contextPath + "/resources/codebase/", DHXSkin.TERRACE);
 		planner.localizations.set("cr");
 		planner.setWidth(900);
@@ -156,7 +158,7 @@ public class ProjectController implements Serializable {
 
 		ModelAndView mv = new ModelAndView();
 		mv.addObject("schedule", planner.render());
-		mv.setViewName("project/home");
+		mv.setViewName("project/home_ch");
 		mv.addObject("currentProList",currentProList);
 		mv.addObject("surveyingProList",surveyingProList);
 		mv.addObject("completedProList",completedProList);
@@ -164,14 +166,12 @@ public class ProjectController implements Serializable {
 	}
 
 	/**
-	 * 占싹놂옙占쏙옙 占쏙옙占쏙옙占쏙옙占쏙옙 占쏙옙占쏙옙화占쏙옙
+	 * 하나의 팀프로젝트 메인화면
 	 */
 	@RequestMapping("/teamMain/{projectNo}")
 	public String teamMain(@PathVariable int projectNo, HttpServletRequest req) {
-		//session占쏙옙 projectNo占쏙옙占쏙옙
 		req.getSession().setAttribute("projectNo", projectNo);
 		
-		//session占쏙옙 占쏙옙占쏙옙,占쏙옙占쏙옙 占쏙옙占�
 		UserDTO userDTO = (UserDTO) req.getSession().getAttribute("userDTO");
 		int userNo = userDTO.getUserNo();
 		
@@ -184,7 +184,7 @@ public class ProjectController implements Serializable {
 	}
 
 	/**
-	 * 占쏙옙占쏙옙占쏙옙占쏙옙 占쏙옙占쏙옙
+	 * 새로운 조별과제방 생성
 	 * @param:projectDTO
 	 */
 	@RequestMapping("/insertProject")
@@ -229,7 +229,7 @@ public class ProjectController implements Serializable {
 	}
 
 	/**
-	 * 占쏙옙占쏙옙占쏙옙占쏙옙 占쏙옙체 占쏙옙회
+	 * 조별과제 정보 조회
 	 */
 	@RequestMapping("/teamInfo")
 	public ModelAndView teamInfo(HttpServletRequest req){
@@ -238,12 +238,12 @@ public class ProjectController implements Serializable {
 		
 		ModelAndView mv = new ModelAndView();
 		mv.addObject("projectDTO",projectDTO);
-		mv.setViewName("project/teamInfo");
+		mv.setViewName("project/teamInfo_ch");
 		return mv;
 	}
 	
 	/**
-	 * 占쏙옙占쏙옙占쏙옙占쏙옙 占쏙옙占쏙옙
+	 * 조별과제 정보 수정
 	 */
 	@RequestMapping("/updateTeamInfo")
 	public String updateTeamInfo(ProjectDTO projectDTO,HttpServletRequest req){
@@ -254,17 +254,16 @@ public class ProjectController implements Serializable {
 	}
 	
 	/**
-	 * 占쏙옙占쏙옙占쏙옙占쏙옙 占쏙옙체 占쏙옙회
+	 * 조별과제 팀원 조회
 	 */
 	@RequestMapping("/projectUserInfo")
 	public ModelAndView projectUserInfo(HttpServletRequest req){
 		int projectNo = (int) req.getSession().getAttribute("projectNo");
 		List<UserDTO> projectUserList = projectService.selectProjectUsers(projectNo);
 		
-		//System.out.println("controller占쏙옙占쏙옙 占쌨아울옙占쏙옙 占쏙옙占쏙옙占쏙옙占쏙옙트 projectUserList"+projectUserList);
 		ModelAndView mv = new ModelAndView();
 		mv.addObject("projectUserList",projectUserList);
-		mv.setViewName("project/projectUserInfo");
+		mv.setViewName("project/projectUserInfo_ch");
 		return mv;
 	}
 	
@@ -288,7 +287,7 @@ public class ProjectController implements Serializable {
 	}
 	
 	/**
-	 * 占쏙옙占쏙옙占쏙옙占쏙옙占쏙옙 占쏙옙占쏙옙占쌈뱄옙 占쏙옙占쏙옙
+	 * 조별과제 팀원별 역할 수정
 	 */
 	@RequestMapping("/updateProjectUserTask")
 	public String updateProjectUserTask(ProjectUserDTO projectUserDTO, HttpServletRequest req){
@@ -301,7 +300,7 @@ public class ProjectController implements Serializable {
 	}
 	
 	/**
-	 * 占쏙옙占쏙옙 占쏙옙占쏙옙
+	 * 조별과제 팀원 삭제
 	 */
 	@RequestMapping("/deleteProjectUser")
 	public String deleteProjectUser(ProjectUserDTO projectUserDTO, HttpServletRequest req){
