@@ -103,7 +103,7 @@
 				<div class="container-fluid">
 					<div class="row">
 						<c:choose>
-							<c:when test="${empty currentProList}"><!-- 진행중인 조별과제가 없으면 -->
+							<c:when test="${empty currentProList}&&${empty surveyingProList}"><!-- 진행중인,완료대기중인 조별과제가 없으면 -->
 								<div class="col-md-3">
 									<div class="bs bs-pricing">
 										<div class="cotent">
