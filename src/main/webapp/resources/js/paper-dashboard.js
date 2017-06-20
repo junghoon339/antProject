@@ -29,15 +29,31 @@ $(document).ready(function(){
 
     //  Activate the tooltips
     $('[rel="tooltip"]').tooltip();
-    $(document).on("click", ".nav li", function(){
-    	$(".nav li").find(".active").attr("class", "");
-    	$("#active-text").attr("id","");
-    	
-    	$(this).attr("class","active");
-    	$(this).find("p").attr("id", "active-text");
-    })
     
-    $(".navbar-brand").text($("#active-text").text());
+    /*$(document).on("click", ".nav li a", function(e){
+    	$(".nav li").removeClass('active');
+    	$(".active-text").removeClass('active-text');
+    	
+    	var parent = $(this).parent();
+    	
+    	if(!parent.hasClass('active')){
+    		parent.addClass('active');
+    		$(this).find("p").attr("class", "active-text");    		
+    	}
+    	e.preventDefault();
+    })
+    */
+    
+    $(".nav>li").each(function() {
+        var navItem = $(this);
+        if (navItem.find("a").attr("href") == location.pathname) {
+          navItem.addClass("active");
+          $(this).find("p").attr("class", "active-text");
+        }
+    });
+    
+    $(".navbar-brand").text($(".active-text").text());
+	
 });
 
 // activate collapse right menu when the windows is resized

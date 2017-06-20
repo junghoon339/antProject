@@ -19,10 +19,10 @@
       <ul class="nav">
          <c:choose>
             <c:when test="${projectNo==null}">
-               <li class="active">
+               <li>
                   <a href="${pageContext.request.contextPath}/project/home"> 
                      <i class="ti-pie-chart"></i>
-                     <p id="active-text">진행중 조별과제</p>
+                     <p>진행중 조별과제</p>
                   </a>
                </li>
                <li><a href="${pageContext.request.contextPath}/project/home"> <i class="ti-user"></i>
@@ -41,9 +41,9 @@
             
             
             <c:otherwise>
-               <li class="active"><a href="${pageContext.request.contextPath}/project/teamInfo"> <i
+               <li><a href="${pageContext.request.contextPath}/project/teamInfo"> <i
                      class="ti-pie-chart"></i>
-                     <p id="active-text">조별과제 정보</p>
+                     <p>조별과제 정보</p>
                </a></li>
                <li><a href="${pageContext.request.contextPath}/project/projectUserInfo"> <i class="ti-user"></i>
                      <p>조원 정보</p>

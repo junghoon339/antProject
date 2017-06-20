@@ -10,7 +10,7 @@
 
 		<nav class="navbar navbar-default">
             <div class="container-fluid">
-                <div class="navbar-header">
+                <div class="navbar-header" data-active-color="success">
                     <button type="button" class="navbar-toggle">
                         <span class="sr-only">Toggle navigation</span>
                         <span class="icon-bar bar1"></span>
@@ -44,7 +44,7 @@
                                <li><a href="${pageContext.request.contextPath}/user/chat">몰라</a></li>
 						<li><a href="#">절레절레</a></li>
 						<li class="divider"></li>
-						<li><a href="#">꾸꾸까까</a></li>
+						<li><a href="${pageContext.request.contextPath}/test/test">꾸꾸까까</a></li>
 						<li><a href="${pageContext.request.contextPath}/user/logout">로그인/로그아웃</a></li>
                               </ul>
                         </li>
