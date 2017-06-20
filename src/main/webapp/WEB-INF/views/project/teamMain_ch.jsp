@@ -91,7 +91,7 @@
 		</div>
 	</div>
 	
-	<c:import url="/project/chat"/>
+	<%-- <c:import url="/project/chat"/> --%>
 </body>
 
 <!--   Core JS Files   -->

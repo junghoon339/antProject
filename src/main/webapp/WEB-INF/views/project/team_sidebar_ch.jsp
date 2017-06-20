@@ -20,11 +20,11 @@
 		</div>
 
 		<ul class="nav">
-			<li class="active"><a href="dashboard.html"> <i
+			<li class="active"><a href="${pageContext.request.contextPath}/project/teamInfo"> <i
 					class="ti-pie-chart"></i>
 					<p>팀플정보</p>
 			</a></li>
-			<li><a href="user.html"> <i class="ti-user"></i>
+			<li><a href="${pageContext.request.contextPath}/project/projectUserInfo"> <i class="ti-user"></i>
 					<p>팀원정보</p>
 			</a></li>
 			<li><a href="table.html"> <i
