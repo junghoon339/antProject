@@ -170,10 +170,9 @@ CREATE TABLE timetable
    timetable_no          NUMBER CONSTRAINT timetable_no_pk primary key ,
    user_no               NUMBER CONSTRAINT timetable_user_no_fk references ant_user(user_no) on delete cascade ,
    timetable_subject     varchar2(20)  NOT NULL ,
-   timetable_day         number  default 0 , 
-   timetable_class       number  NOT NULL ,
-   timetable_location    varchar2(20)  NULL ,
-   timetable_teacher     varchar2(20)  NULL 
+   timetable_location    varchar2(30)  NOT NULL ,
+   timetable_class_info	 varchar2(100) not null,
+   timetable_color		 varchar2(100)
 );
 create sequence seq_timetable_no ;
 
@@ -204,7 +203,7 @@ create sequence seq_message_no;
 commit
 select * from message;
 
-insert into message values(seq_message_no.nextval,(select user_no from ant_user where user_id='13@naver.com'),'ÂÊÁöÀßµÇ³Ä',sysdate,null,0,13);
+insert into message values(seq_message_no.nextval,(select user_no from ant_user where user_id='13@naver.com'),'ï¿½ï¿½ï¿½ï¿½ï¿½ßµÇ³ï¿½',sysdate,null,0,13);
 
 
 CREATE TABLE storage
