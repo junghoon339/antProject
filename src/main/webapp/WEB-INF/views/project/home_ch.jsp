@@ -25,9 +25,7 @@
 <!--  Paper Dashboard core CSS    -->
 <link href="${pageContext.request.contextPath }/resources/css/paper-dashboard.css" rel="stylesheet" />
 
-<%--     <!--  CSS for Demo Purpose, don't include it in your project     -->
-    <link href="${pageContext.request.contextPath }/resources/css/demo.css" rel="stylesheet" />
- --%>
+
 <!--  Fonts and icons     -->
 <link href="http://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" rel="stylesheet">
 <link href='https://fonts.googleapis.com/css?family=Muli:400,300' rel='stylesheet' type='text/css'>
@@ -185,7 +183,7 @@
 									교수님 : <input class="form-control" type="text" name="projectTeacher"/><p></p>
 					                시작날짜:
 					            	<div class="input-group registration-date-time">
-					           		<input class="form-control" name="projectStartdate" id="reg|istration-date" type="date">
+					           		<input class="form-controsl" name="projectStartdate" id="reg|istration-date" type="date">
 					            	</div><p></p>
 						            종료날짜 :
 						            <div class="input-group registration-date-time">
@@ -217,29 +215,22 @@
 </body>
 
 <!--   Core JS Files   -->
-<script
-	src="${pageContext.request.contextPath }/resources/js/jquery-1.10.2.js"
-	type="text/javascript"></script>
-<script
-	src="${pageContext.request.contextPath }/resources/js/bootstrap.min.js"
-	type="text/javascript"></script>
+<script src="${pageContext.request.contextPath}/resources/js/jquery-1.10.2.js" type="text/javascript"></script>
+<script	src="${pageContext.request.contextPath }/resources/js/bootstrap.min.js" type="text/javascript"></script>
 
 <!--  Checkbox, Radio & Switch Plugins -->
 <script
 	src="${pageContext.request.contextPath }/resources/js/bootstrap-checkbox-radio.js"></script>
 
 <!--  Charts Plugin -->
-<script
-	src="${pageContext.request.contextPath }/resources/js/chartist.min.js"></script>
+<script	src="${pageContext.request.contextPath }/resources/js/chartist.min.js"></script>
 
 <!--  Notifications Plugin    -->
-<script
-	src="${pageContext.request.contextPath }/resources/js/bootstrap-notify.js"></script>
+<script	src="${pageContext.request.contextPath }/resources/js/bootstrap-notify.js"></script>
 
 
 <!-- Paper Dashboard Core javascript and methods for Demo purpose -->
-<script
-	src="${pageContext.request.contextPath }/resources/js/paper-dashboard.js"></script>
+<script	src="${pageContext.request.contextPath }/resources/js/paper-dashboard.js"></script>
 
 <!-- Paper Dashboard DEMO methods, don't include it in your project! -->
 <%-- <script src="${pageContext.request.contextPath }/resources/js/demo.js"></script> --%>
