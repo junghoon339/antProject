@@ -67,24 +67,6 @@
 					<div class="row">
 
 						<!-- 이곳에 내용작성!!!!!!!!!!!!!!!! -->
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 					</div>
 				</div>
 				<c:import url="${pageContext.request.contextPath}/project/chat" />
@@ -93,7 +75,7 @@
 			<jsp:include page="footer_ch.jsp" flush="false" />
 		</div>
 	</div>
-
+	<%-- <c:import url="/project/chat"/> --%>
 </body>
 
 <!--   Core JS Files   -->
