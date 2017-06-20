@@ -45,7 +45,6 @@
 <script>
 $(function() {
 	
-	
 	$("#insert").click(function(){
 		if( $("input[name='voteTitle']").val().trim()=="" ){
 			alert("투표 제목을 입력해주세요.\n입력된 투표내용 : "+$("input[name='voteTitle']").val().trim());

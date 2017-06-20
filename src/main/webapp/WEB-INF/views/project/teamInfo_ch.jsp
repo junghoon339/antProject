@@ -91,47 +91,10 @@ $(document).ready(function() {
 })
 
 	$(function() {
-		$("#Btn").click(
-						function() {
-
-							if ($("select[name='projectState']").val() == '1') {
-								$
-										.ajax({
-											url : "${pageContext.request.contextPath}/survey/",
-											type : "post",
-											dataType : "json",
-											data : "projectNo=1&"
-													+ $("#securityInfo").attr(
-															"name") + "="
-													+ $("#securityInfo").val(),
-											success : function(result) {
-
-												var str = "";
-												$
-														.each(
-																result,
-																function(index,
-																		item) {
-																	str += '<tr width="100%">';
-																	str += '<td name="nameTd" width="50%"><center>'
-																			+ item.userName
-																			+ '</center></td>';
-																	str += '<td name="scoreTd" width="15%"><input type="text" placeholder="점수를 입력해주세요." value=""/></td>';
-																	str += '<td name="updateTd" width="35%"><a href="#"><center>완료</center></a></td>';
-																	str += '</tr>';
-																})
-												$("#print").html(str);
-												$("#myModal").modal('show');
-
-											},
-											error : function(err) {
-												alert("teamInfo.jsp ERROR : "
-														+ err);
-											}
-										});
-							}
-						})
-	}) 
+		$("#Btn").click(function() {
+			$("#myModal").modal("show");							
+		})
+	})
 
 
 	//데이트 포멧 
@@ -148,6 +111,32 @@ $(document).ready(function() {
 
 </head>
 <body>
+
+<!-- **************************************************************** -->
+						<div id="myModal" class="modal fade in">
+					        <div class="modal-dialog modal-sm">
+					            <div class="modal-content">
+					                <div class="modal-header">
+					                    <h4 class="modal-title">주의!</h4>
+					                </div>
+					                <div class="modal-body">
+					                    <h4>정말 조별과제를 마감하시겠습니까?</h4>
+					                </div>
+					                <div class="modal-footer">
+					                <form action="${pageContext.request.contextPath}/survey/mainPage" method="post">
+					                	<input type=hidden id="securityInfo" name="${_csrf.parameterName}" value="${_csrf.token}">
+					                	<input type="hidden" name="hiddenVal" value="1">
+					                    <button type="submit" class="btn btn-warning"> 확인</button> 
+					                    <button type="button" class="btn btn-default" data-dismiss="modal"> 취소</button>
+					                </form>
+					                </div>
+					 
+					            </div><!-- /.modal-content -->
+					        </div><!-- /.modal-dalog -->
+					    </div><!-- /.modal -->
+						
+<!-- **************************************************************** -->
+
 	<div class="wrapper">
 		<jsp:include page="sidebar_ch.jsp" />
 		<div class="main-panel">

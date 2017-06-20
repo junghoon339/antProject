@@ -30,4 +30,5 @@ public interface SurveyService {
 	
 	int surveyDetailCreate(SurveyDetailDTO surveyDetailDTO);
 	
+	int updateTeamInfo(int projectNo);
 }
