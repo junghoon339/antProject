@@ -2,9 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
-<script>
-	//li클릭한거 class active로 바꿔주기!
-</script>
+
 <div class="sidebar" data-background-color="white"
 	data-active-color="danger">
 

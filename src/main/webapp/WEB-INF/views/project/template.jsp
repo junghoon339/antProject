@@ -29,7 +29,7 @@
 </head>
 <body>
 	<div class="wrapper">
-		<jsp:include page="/WEB-INF/views/project/team_sidebar_ch.jsp" />
+		<jsp:include page="sidebar_ch.jsp" />
 		<div class="main-panel">
 			<jsp:include page="header_ch.jsp" flush="false" /> <!-- </nav> -->
 			<div class="content">
@@ -39,7 +39,8 @@
 						작성할때 template.html 에서
 						<div class="row">부터 참고하면서 작성하면 됨
 					-->
-
+					
+					
 
 
 				</div>
