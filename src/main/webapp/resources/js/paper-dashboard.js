@@ -29,7 +29,17 @@ $(document).ready(function(){
 
     //  Activate the tooltips
     $('[rel="tooltip"]').tooltip();
-
+    
+    $(".nav li").click(function(){
+       $(".nav li").find(".active").attr("class", "");
+       $("#active-text").attr("id","");
+       
+       $(this).attr("class","active");
+       $(this).find("p").attr("id", "active-text");
+       
+    })
+    
+    $(".navbar-brand").text($("#active-text").text());
 });
 
 // activate collapse right menu when the windows is resized
@@ -144,14 +154,14 @@ pd = {
 // leading edge, instead of the trailing.
 
 function debounce(func, wait, immediate) {
-	var timeout;
-	return function() {
-		var context = this, args = arguments;
-		clearTimeout(timeout);
-		timeout = setTimeout(function() {
-			timeout = null;
-			if (!immediate) func.apply(context, args);
-		}, wait);
-		if (immediate && !timeout) func.apply(context, args);
-	};
+   var timeout;
+   return function() {
+      var context = this, args = arguments;
+      clearTimeout(timeout);
+      timeout = setTimeout(function() {
+         timeout = null;
+         if (!immediate) func.apply(context, args);
+      }, wait);
+      if (immediate && !timeout) func.apply(context, args);
+   };
 };

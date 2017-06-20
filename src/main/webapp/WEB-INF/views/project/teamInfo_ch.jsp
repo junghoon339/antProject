@@ -74,6 +74,22 @@
 }
 </style>
 <script>
+$(document).ready(function() {
+	
+	var startDate = dateToYYYYMMDD(new Date("${projectDTO.projectStartdate}"));
+	var endDate = dateToYYYYMMDD(new Date("${projectDTO.projectEnddate}"));
+
+	$("#start-date").attr("value", startDate);
+	$("#end-date").attr("value", endDate);
+
+	
+	//조원일경우
+	if ("${projectUserRole}" == "조장") {
+		$("#updateBtn").attr("style", "display:display");
+	}
+
+})
+
 	$(function() {
 		$("#Btn").click(
 						function() {
@@ -117,25 +133,7 @@
 						})
 	}) 
 
-	$(document).ready(function() {
-		if("${projectState}"==0) $("#ing").attr("selected","selected");
-		if("${projectState}"==1) $("#waiting").attr("selected","selected");
-		if("${projectState}"==2) $("#ed").attr("selected","selected");
-		
-		
-		var startDate = dateToYYYYMMDD(new Date("${projectDTO.projectStartdate}"));
-		var endDate = dateToYYYYMMDD(new Date("${projectDTO.projectEnddate}"));
 
-		$("#start-date").attr("value", startDate);
-		$("#end-date").attr("value", endDate);
-
-		//조원일경우
-		if ("${projectUserRole}" == "조장") {
-			$("#updateBtn").attr("style", "display:display");
-		}
-
-	})
-	
 	//데이트 포멧 
 	function dateToYYYYMMDD(date) {
 		function pad(num) {
@@ -152,13 +150,8 @@
 <body>
 	<div class="wrapper">
 		<jsp:include page="sidebar_ch.jsp" />
-
-
 		<div class="main-panel">
 			<jsp:include page="header_ch.jsp" flush="false" />
-
-
-
 			<div class="content">
 				<div class="container-fluid">
 					<div class="row">
@@ -189,18 +182,12 @@
 										type="date">
 								</div>
 								<p></p>
-								프로젝트 상태 : <select class="form-control" name="projectState">
-									<option value="0" id="ing">진행중</option>
-									<option value="1" id="waiting">완료대기중</option>
-									<option value="2" id="ed">완료됨</option>
-								</select>
-								<p></p>
-								<br />
+
+								<br/>
 								<button type="submit" class="btn btn-danger" id="updateBtn"	style="display: none">수정</button>
 								<button type="button" class="btn btn-danger" id="Btn">마감하기</button>
 							</form>
 						</div>
-
 
 					</div>
 				</div>
