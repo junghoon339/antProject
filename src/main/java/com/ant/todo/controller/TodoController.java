@@ -20,7 +20,7 @@ public class TodoController {
 	@RequestMapping("/list")
 	public ModelAndView todoList(){
 		ModelAndView mv=new ModelAndView();
-		mv.setViewName("todo/todo");
+		mv.setViewName("todo/todo_ch");
 		return mv;
 	}
 	

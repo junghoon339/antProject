@@ -10,6 +10,7 @@ import java.util.Map;
 import java.util.TreeMap;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.ant.user.dto.UserDTO;
 import com.ant.vote.dto.VoteDTO;
 import com.ant.vote.dto.VoteDetailDTO;
 import com.ant.vote.dto.VoteSelectorDTO;
@@ -31,8 +33,12 @@ public class VoteController {
 	VoteService voteService;
 	
 	@RequestMapping("/")
-	public String mainForm(HttpServletRequest request, Model model, int userNo) {
+	public String mainForm(HttpServletRequest request, Model model) {
 
+		HttpSession session = request.getSession();
+		UserDTO user = (UserDTO) session.getAttribute("userDTO");
+		int userNo = user.getUserNo();
+		
 		voteService.voteDateUpdate();
 		
 		// 진행중인 투표목록 0, 종료된 투표목록 1으로 각각 받아옵니다.
@@ -64,17 +70,21 @@ public class VoteController {
 		model.addAttribute("deleteResult", request.getAttribute("deleteResult"));
 		model.addAttribute("doingList", doingList);
 		model.addAttribute("doneList", doneList);
-		return "vote/voteForm";
+		return "vote/voteForm_ch";
 	}
 	
 	@RequestMapping("/CreateForm")
 	public String CreateForm() {
-		return "vote/voteCreateForm";
+		return "vote/voteCreateForm_ch";
 	}
 
 	@RequestMapping("/Create")
-	public String Create(int userNo, int projectNo, String voteTitle, String voteEndDate, String[] chk) {
+	public String Create(HttpSession session, String voteTitle, String voteEndDate, String[] chk) {
 
+		UserDTO user = (UserDTO) session.getAttribute("userDTO");
+		int userNo = user.getUserNo();
+		int projectNo = (int) session.getAttribute("projectNo");
+		
 		SimpleDateFormat sd = new SimpleDateFormat("MM/dd/yyyy", Locale.KOREA);
 		String nowDate = sd.format(new Date());
 
@@ -98,7 +108,7 @@ public class VoteController {
 			}
 		}
 
-		return "redirect:/vote/?userNo=1";
+		return "redirect:/vote/";
 	}
 
 	@RequestMapping("/Detail")
@@ -125,12 +135,12 @@ public class VoteController {
 		model.addAttribute("voteWriter", dto.getUserNo());
 		model.addAttribute("voteDetail", detailList);
 		model.addAttribute("userCount", userCount);
-		return "vote/voteDetailForm";
+		return "vote/voteDetailForm_ch";
 	}
 
 	@RequestMapping("/Detail/Initialized")
 	@ResponseBody
-	public Map<String, Object> DetailInitialized(int userNo, int voteNo, int[] columns) {
+	public Map<String, Object> DetailInitialized(HttpSession session, int voteNo, int[] columns) {
 		int participated = 0;
 		int voteCreater = 0;
 		int choiceCheck = 0;
@@ -139,6 +149,9 @@ public class VoteController {
 		int count = 0;
 		int countAll = voteService.selectVoteDetailCall(voteNo);
 
+		UserDTO user =	(UserDTO) session.getAttribute("userDTO"); 
+		int userNo = user.getUserNo();
+		
 		VoteDTO vote = voteService.selectVoteListByVoteNo(voteNo);
 		VoteDetailDTO detail = voteService.selectVoteDetail(userNo, voteNo);
 		List<VoteDetailDTO> detail2;
@@ -186,9 +199,13 @@ public class VoteController {
 
 	@RequestMapping("/Detail/Handling")
 	@ResponseBody
-	public int DetailHandling(int userNo, int voteNo, int column) {
+	public int DetailHandling(HttpSession session, int voteNo, int column) {
 		int participated = 0;
 		int getSelectorNovote = 0;
+		
+		UserDTO user = (UserDTO) session.getAttribute("userDTO");
+		int userNo = user.getUserNo();
+		
 
 		VoteDetailDTO voteDetailDTO = voteService.selectVoteDetail(userNo, voteNo);
 		if (voteDetailDTO != null) {
@@ -209,13 +226,17 @@ public class VoteController {
 	
 	@RequestMapping("/Detail/endVote")
 	@ResponseBody
-	public int DetailHandling(int userNo, int voteNo) {
+	public int DetailHandling(HttpSession session, int voteNo) {
+		
+		UserDTO user = (UserDTO) session.getAttribute("userDTO");
+		int userNo = user.getUserNo();
+		
 		System.out.println("userNo-->"+userNo+", voteNo-->"+voteNo);
 		return voteService.updateVote(userNo, voteNo);
 	}
 	
 	@RequestMapping("/delete")
-	public String delete(HttpServletRequest request, int userNo, int voteNo) {
+	public String delete(HttpServletRequest request, int voteNo) {
 		int result = voteService.deleteVote(voteNo);
 
 		request.setAttribute("deleteResult", result);
@@ -223,9 +244,12 @@ public class VoteController {
 	}
 	
 	@RequestMapping("/updateForm")
-	public String updateForm(Model model, int userNo, int voteNo) {
+	public String updateForm(HttpSession session, Model model, int voteNo) {
 		VoteDTO vote = voteService.selectVoteListByVoteNo(voteNo);
 		List<VoteDetailDTO> voteDetailList = new ArrayList<>();
+		
+		UserDTO user = (UserDTO) session.getAttribute("userDTO");
+		int userNo = user.getUserNo();
 		
 		for(VoteDetailDTO voteDetail : vote.getDetails()){
 			voteDetailList.add(voteDetail);
@@ -234,11 +258,14 @@ public class VoteController {
 		System.out.println(vote.getVoteTitle());
 		model.addAttribute("vote", vote);
 		model.addAttribute("voteDetailList", voteDetailList);
-		return "vote/voteUpdateForm";
+		return "vote/voteUpdateForm_ch";
 	}
 	
 	@RequestMapping("/update")
-	public String update(RedirectAttributes redirectAttr, int userNo, int projectNo , int voteNo, String[] chk) {
+	public String update(RedirectAttributes redirectAttr, HttpSession session, int projectNo , int voteNo, String[] chk) {
+		
+		UserDTO user = (UserDTO) session.getAttribute("userDTO");
+		int userNo = user.getUserNo();
 		
 		for(String s : chk){
 			voteService.insertVoteDetail(new VoteDetailDTO(0, voteNo, s));

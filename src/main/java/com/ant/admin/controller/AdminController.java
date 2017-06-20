@@ -36,22 +36,22 @@ public class AdminController {
 		
 		int curPage=Integer.parseInt(pageNumber);
 
-		int rowCount=2; //ÇÑ ÆäÀÌÁö¿¡ »Ñ·ÁÁú ·¹ÄÚµå¼ö
+		int rowCount=2; //ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ñ·ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Úµï¿½ï¿½
 		int startRow=(curPage-1)*rowCount+1;
 		int endRow=curPage*rowCount;
 		System.out.println("endRowwwwwwwww:"+endRow);
 		List<UserDTO> list=service.userSelectAll(startRow,endRow);
 		System.out.println("qqqqqqqqqqqqqq"+list.size());
 		
-		int totalRow=service.userTotalCount();//ÃÑ °Ô½Ã¹° °³¼ö
-		int pageSu=1; //»Ñ·ÁÁú ÆäÀÌÁö ¼ö
+		int totalRow=service.userTotalCount();//ï¿½ï¿½ ï¿½Ô½Ã¹ï¿½ ï¿½ï¿½ï¿½ï¿½
+		int pageSu=1; //ï¿½Ñ·ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½
 		int startPage=((curPage-1)/pageSu)*pageSu+1;
 		int endPage=startPage+pageSu-1;
 		
 		System.out.println("startPage:"+startPage);
 		System.out.println("endPage:"+endPage);
 		
-		boolean flag=false;//¸¶Áö¸· ÆäÀÌÁö¿¡ ³Ñ¾î°¡±â ¹öÆ° ¾ø¾Ö±â
+		boolean flag=false;//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ñ¾î°¡ï¿½ï¿½ ï¿½ï¿½Æ° ï¿½ï¿½ï¿½Ö±ï¿½
 		
 		int lastPageNum=totalRow%rowCount==0 ? totalRow/rowCount : totalRow/rowCount+1;	
 		if(lastPageNum<=endPage){
@@ -69,7 +69,7 @@ public class AdminController {
 		mv.addObject("pageSu",pageSu);
 		mv.addObject("curPage",curPage);
 		mv.addObject("rowCount",rowCount);
-		mv.setViewName("admin/admin-user");
+		mv.setViewName("admin/admin-user_ch");
 		return mv;
 	}
 	
@@ -88,7 +88,7 @@ public class AdminController {
 		
 		int curPage=Integer.parseInt(pageNumber);
 
-		int rowCount=2; //ÇÑ ÆäÀÌÁö¿¡ »Ñ·ÁÁú ·¹ÄÚµå¼ö
+		int rowCount=2; //ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ñ·ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Úµï¿½ï¿½
 		int startRow=(curPage-1)*rowCount+1;
 		int endRow=curPage*rowCount;
 		//System.out.println("endRowwwwwwwww:"+endRow);
@@ -100,7 +100,7 @@ public class AdminController {
 			list=service.projectSelectAll(projectState,startRow,endRow);
 			//System.out.println("qqqqqqqqqqqqqq"+list.size());
 			
-			totalRow=service.projectTotalCount(projectState);//ÃÑ °Ô½Ã¹° °³¼ö
+			totalRow=service.projectTotalCount(projectState);//ï¿½ï¿½ ï¿½Ô½Ã¹ï¿½ ï¿½ï¿½ï¿½ï¿½
 		}else{
 			System.out.println("Bbbbbbbbbbbbbbbbbbbbbb");
 			list=service.projectSelectAllBySearch(projectState,startRow,endRow,categoryNo,searchText);
@@ -109,14 +109,14 @@ public class AdminController {
 		}
 		
 		System.out.println("tttttttttttttrrrrrrrrrrrrrrrrr"+totalRow);
-		int pageSu=1; //»Ñ·ÁÁú ÆäÀÌÁö ¼ö
+		int pageSu=1; //ï¿½Ñ·ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½
 		int startPage=((curPage-1)/pageSu)*pageSu+1;
 		int endPage=startPage+pageSu-1;
 		
 		System.out.println("startPage:"+startPage);
 		System.out.println("endPage:"+endPage);
 		
-		boolean flag=false;//¸¶Áö¸· ÆäÀÌÁö¿¡ ³Ñ¾î°¡±â ¹öÆ° ¾ø¾Ö±â
+		boolean flag=false;//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ñ¾î°¡ï¿½ï¿½ ï¿½ï¿½Æ° ï¿½ï¿½ï¿½Ö±ï¿½
 	
 		
 		int lastPageNum=totalRow%rowCount==0 ? totalRow/rowCount : totalRow/rowCount+1;
@@ -202,7 +202,7 @@ public class AdminController {
 		mv.addObject("rowCount",rowCount);
 		mv.addObject("searchText",searchText);
 		
-		mv.setViewName("/admin/admin-notice");
+		mv.setViewName("/admin/adminNootice");
 		return mv;
 	}
 	
