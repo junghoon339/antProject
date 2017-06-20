@@ -47,11 +47,14 @@
 <link
 	href="${pageContext.request.contextPath }/resources/css/themify-icons.css"
 	rel="stylesheet">
-
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
+<link rel="stylesheet" type="text/css"
+	href="${pageContext.request.contextPath}/resources/css/chat.css" />
 </head>
 <body>
 	<div class="wrapper">
-		<jsp:include page="/WEB-INF/views/project/team_sidebar_ch.jsp" />
+		<jsp:include page="sidebar_ch.jsp" />
 
 
 		<div class="main-panel">
@@ -62,23 +65,22 @@
 			<div class="content">
 				<div class="container-fluid">
 					<div class="row">
-						
+
 						<!-- 이곳에 내용작성!!!!!!!!!!!!!!!! -->
 					</div>
 				</div>
+				<c:import url="${pageContext.request.contextPath}/project/chat" />
 			</div>
 
 			<jsp:include page="footer_ch.jsp" flush="false" />
 		</div>
 	</div>
-	
-	<c:import url="/project/chat"/>
+	<%-- <c:import url="/project/chat"/> --%>
 </body>
 
 <!--   Core JS Files   -->
-<script
-	src="${pageContext.request.contextPath }/resources/js/jquery-1.10.2.js"
-	type="text/javascript"></script>
+<script type="text/javascript"
+	src="${pageContext.request.contextPath}/resources/js/jquery-3.2.1.min.js"></script>
 <script
 	src="${pageContext.request.contextPath }/resources/js/bootstrap.min.js"
 	type="text/javascript"></script>
@@ -99,6 +101,13 @@
 <!-- Paper Dashboard Core javascript and methods for Demo purpose -->
 <script
 	src="${pageContext.request.contextPath }/resources/js/paper-dashboard.js"></script>
+<script type="text/javascript"
+	src="${pageContext.request.contextPath}/resources/js/jquery.timeago.js"></script>
+<script type="text/javascript"
+	src="${pageContext.request.contextPath}/resources/js/sockjs.js"></script>
+<script type="text/javascript"
+	src="${pageContext.request.contextPath}/resources/js/chat.js"></script>
+
 
 <!-- Paper Dashboard DEMO methods, don't include it in your project! -->
 <%-- <script src="${pageContext.request.contextPath }/resources/js/demo.js"></script> --%>

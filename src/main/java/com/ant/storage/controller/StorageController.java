@@ -43,9 +43,9 @@ public class StorageController {
 		
 		int curPage=Integer.parseInt(pageNumber);
 
-		int rowCount=7; //ÇÑ ÆäÀÌÁö¿¡ »Ñ·ÁÁú ·¹ÄÚµå¼ö
-		int startRow=(curPage-1)*rowCount+1; //ÇÑ ÆäÀÌÁö¿¡¼­ ½ÃÀÛµÇ´Â ¹øÈ£
-		int endRow=curPage*rowCount; //ÇÑ ÆäÀÌÁö¿¡¼­ ³¡³ª´Â ¹øÈ£
+		int rowCount=7; //ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ñ·ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Úµï¿½ï¿½
+		int startRow=(curPage-1)*rowCount+1; //ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ÛµÇ´ï¿½ ï¿½ï¿½È£
+		int endRow=curPage*rowCount; //ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½È£
 		List<StorageDTO> list = null;
 		int totalRow = 0;
 		if(categoryNo==-1){
@@ -57,11 +57,11 @@ public class StorageController {
 		}
 		
 		
-		int pageSu=5; //»Ñ·ÁÁú ÆäÀÌÁö ¼ö
+		int pageSu=5; //ï¿½Ñ·ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½
 		int startPage=((curPage-1)/pageSu)*pageSu+1;
 		int endPage=startPage+pageSu-1;
 		
-		boolean flag=false;//¸¶Áö¸· ÆäÀÌÁö¿¡ ³Ñ¾î°¡±â ¹öÆ° ¾ø¾Ö±â
+		boolean flag=false;//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ñ¾î°¡ï¿½ï¿½ ï¿½ï¿½Æ° ï¿½ï¿½ï¿½Ö±ï¿½
 		int lastPageNum=totalRow%rowCount==0 ? totalRow/rowCount : totalRow/rowCount+1;
 		if(lastPageNum<=endPage){
 			endPage=lastPageNum;
@@ -81,7 +81,8 @@ public class StorageController {
 		mv.addObject("categoryNo",categoryNo);
 		mv.addObject("searchText",searchText);
 		
-		mv.setViewName("storage/test");
+		/*mv.setViewName("storage/test");*/
+		mv.setViewName("storage/teamMain_ch");
 		return mv;
 	}
 	//paging~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~``

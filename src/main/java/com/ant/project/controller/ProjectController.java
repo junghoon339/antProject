@@ -80,7 +80,7 @@ public class ProjectController implements Serializable {
 		UserDTO userDTO = (UserDTO) req.getSession().getAttribute("userDTO");
 		int userNo = userDTO.getUserNo();
 
-		// 현재진행중, 완료대기중, 완료된 조별과제을 담은 map
+		// 현재진행중, 완료대기중, 완료된 조별과제를 담은 map
 		Map<String, List<ProjectDTO>> projectMap = projectService.selectProjectById(userNo);
 		List<ProjectDTO> currentProList = projectMap.get("currentProList");
 		List<ProjectDTO> surveyingProList = projectMap.get("surveyingProList");
@@ -238,7 +238,7 @@ public class ProjectController implements Serializable {
 		
 		ModelAndView mv = new ModelAndView();
 		mv.addObject("projectDTO",projectDTO);
-		mv.setViewName("project/teamInfo");
+		mv.setViewName("project/teamInfo_ch");
 		return mv;
 	}
 	
@@ -263,7 +263,7 @@ public class ProjectController implements Serializable {
 		
 		ModelAndView mv = new ModelAndView();
 		mv.addObject("projectUserList",projectUserList);
-		mv.setViewName("project/projectUserInfo");
+		mv.setViewName("project/projectUserInfo_ch");
 		return mv;
 	}
 	
