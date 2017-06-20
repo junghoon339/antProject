@@ -104,4 +104,20 @@
 		insert into notice values (seq_notice_no.nextval,#{noticeTitle},#{noticeContent},0,sysdate)
 	</insert>
 	
+	<select id="noticeDetail" parameterType="int" resultMap="noticeDTOMap">
+		select * from notice where notice_no=#{_parameter}
+	</select>
+	
+	<update id="readNumUpdate" parameterType="int">
+		 update notice set notice_readnum=notice_readnum+1 where notice_no=#{_parameter}
+	</update>
+	
+	<delete id="deleteNotice" parameterType="int">
+		delete from notice where notice_no=#{_parameter}
+	</delete>
+	
+	<update id="updateNotice" parameterType="noticeDTO">
+		update notice set notice_title=#{noticeTitle}, notice_content=#{noticeContent}, notice_writeday=sysdate where notice_no=#{noticeNo}
+	</update>
+	
 </mapper>
