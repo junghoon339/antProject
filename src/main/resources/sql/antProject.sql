@@ -117,6 +117,7 @@ create sequence seq_vote_selector_no;
 
 drop table user_calendar;
 
+select * from user_calendar;
 
 CREATE TABLE user_calendar
 (
@@ -143,8 +144,9 @@ to_date('2016-12-25 09:00:00', 'YYYY-MM-DD HH24:MI:SS'));
 
 select * from ant_user;
 
-
+select * from USER_CALENDAR;
 select * from project_calendar
+select * from project_user;
 
 CREATE TABLE project_calendar
 (

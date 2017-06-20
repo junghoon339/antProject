@@ -54,6 +54,6 @@ public class UserController {
 	 */
 	@RequestMapping("/timetable")
 	public String timeUpdate(){
-		return "timetable/timetable";
+		return "timetable/userTimetable"; 
 	}
 }
