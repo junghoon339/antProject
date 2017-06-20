@@ -13,7 +13,7 @@
       <title>서울대학교 시간표 : SNUTT</title>
       
       <!-- jQuery -->      
-      <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+      <script src="http://code.jquery.com/jquery-latest.min.js"></script>
       <link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/themes/smoothness/jquery-ui.css" />
       <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/jquery-ui.min.js"></script>
 
@@ -36,7 +36,8 @@
 
       ga('create', 'UA-67415846-1', 'auto');
       ga('send', 'pageview');
-
+	  
+      var commonUrl="${pageContext.request.contextPath}";
     </script>
     <style type="text/css">
     
@@ -213,13 +214,25 @@
       
       <div id="custom_lecture_modal">
          <form id="custom_lecture_form">
-            <input type="text" name="" id="custom_course_title" class="input-large" placeholder="교과목명을 입력하세요." /><br />
-            <input type="text" name="" id="custom_location" class="input-large" placeholder="강의동을 입력하세요." /><br />
-            <input type="hidden" name="" id="custom_class_time"/>
+         	<input type=hidden id="securityInfo" name="${_csrf.parameterName}" value="${_csrf.token}">
+         	<input type="text" name="timetableSubject" id="custom_course_title" class="input-large" placeholder="교과목명을 입력하세요." /><br />
+            <input type="text" name="timetableLocation" id="custom_location" class="input-large" placeholder="강의동을 입력하세요." /><br />
+            <input type="hidden" name="timetableClassInfo" id="custom_class_time"/>
+            <input type="hidden" name="timetableColor" id="timetableColor"/>
+            <input type="hidden" name="userNo" value="13"/> 
             <button type="submit" id="custom_lecture_add_button" class="btn btn-inverse">추가</button>
             <a id="custom_lecture_close_button" class="btn btn-inverse">취소</a>
          </form>
       </div>
+      
+     <%--  <form id="paramValues">
+      	<input type=hidden id="securityInfo" name="${_csrf.parameterName}" value="${_csrf.token}">
+        	<input type="hidden" name="timetableSubject" id="custom_course_title_param"/><br />
+            <input type="hidden" name="timetableLocation" id="custom_location_param"/><br />
+            <input type="hidden" name="timetableClassInfo" id="custom_class_time"/>
+            <input type="hidden" name="timetableColor" id="timetableColor"/>
+               
+      </form> --%>
    </body> 
 </html> 
     

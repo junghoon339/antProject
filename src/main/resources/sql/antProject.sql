@@ -177,10 +177,9 @@ CREATE TABLE timetable
    timetable_no          NUMBER CONSTRAINT timetable_no_pk primary key ,
    user_no               NUMBER CONSTRAINT timetable_user_no_fk references ant_user(user_no) on delete cascade ,
    timetable_subject     varchar2(20)  NOT NULL ,
-   timetable_day         number  default 0 , 
-   timetable_class       number  NOT NULL ,
-   timetable_location    varchar2(20)  NULL ,
-   timetable_teacher     varchar2(20)  NULL 
+   timetable_location    varchar2(30)  NOT NULL ,
+   timetable_class_info	 varchar2(100) not null,
+   timetable_color		 varchar2(100)
 );
 create sequence seq_timetable_no ;
 

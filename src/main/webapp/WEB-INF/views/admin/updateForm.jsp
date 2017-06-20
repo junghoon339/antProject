@@ -47,7 +47,7 @@
 <script type="text/javascript">
 	/* sumbit */
 	function submitHidden() {
-		$("#submitForm").attr("action","${pageContext.request.contextPath}/storage/update");
+		$("#submitForm").attr("action","${pageContext.request.contextPath}/admin/update");
 		$("#submitForm").submit();
 	}
 	
@@ -74,70 +74,33 @@
 					
 					<div class="portlet portlet-bordered" >
 					
-					<form action="" method="post" id="submitForm" enctype="multipart/form-data">
+					<form action="" method="post" id="submitForm">
+						<input type="hidden" id="securityInfo" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+					
 					<div class="portlet-title">
 						<div class="caption caption-red">
 							제목 - 
 							<%-- <span class="caption-subject text-uppercase"> ${dto.storageTitle}</span> --%>
 							
-							<input type="text" value="${storageDTO.storageTitle}" name="storageTitle">
+							<input type="text" value="${noticeDTO.noticeTitle}" name="noticeTitle">
 							<%-- <span class="caption-helper">작성일 - ${dto.writeDay}</span> --%>
-							<input type="hidden" value="${storageDTO.writeDay}" name="writeDay">
-							<input type="hidden" value="1" name="userNo">
+							<input type="hidden" value="${noticeDTO.writeDay}" name="writeDay">
+							<!-- <input type="hidden" value="1" name="userNo"> -->
 							<%-- <span class="caption-helper">작성자 - ${storageDTO.storageNo}</span> --%>
-							<input type="hidden" value="${storageDTO.userDTO.userName}" name="userName">
-							<input type="hidden" value="${storageDTO.storageNo}" name="storageNo">
+							<input type="hidden" value="${noticeDTO.noticeNo}" name="noticeNo">
 							
-							<input type="hidden" id="securityInfo" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 							
 						</div>
 						<div class="actions">
-						<c:if test="${dto.fileName!=null}">
-							<a href="javascript:;">
-								<i class="glyphicon glyphicon-paperclip"></i>
-							</a>
-							<a href="#">
-								${dto.fileName}
-							</a>
-							
-						</c:if>
+						
 						
 						</div>
 					</div>
 					<div class="portlet-body">
-						<h4><textarea cols="90" rows="12" name="storageContent">${storageDTO.storageContent}</textarea></h4>
+						<h4><textarea cols="90" rows="12" name="noticeContent">${noticeDTO.noticeContent}</textarea></h4>
 						
 					</div>
-					
-					<!-- file upload -->
-					<div class="input-group">
-    <span class="input-group-btn">
-		<button id="fake-file-button-browse" type="button" class="btn btn-default">
-			<span class="glyphicon glyphicon-file"></span>
-		</button>
-	</span>
-	<input type="file" id="files-input-upload" style="display:none" name="file">
-	<input type="text" id="fake-file-input-name" disabled="disabled" placeholder="File not selected" class="form-control" name="filePath">
-	<span class="input-group-btn">
-		<button type="button" class="btn btn-default" disabled="disabled" id="fake-file-button-upload">
-			<span class="glyphicon glyphicon-upload"></span>
-		</button>
-	</span>
-</div>
-<small class="pull-right">새로운 자료를 등록하세요</small>
-<script type="text/javascript">
-// Fake file upload
-document.getElementById('fake-file-button-browse').addEventListener('click', function() {
-	document.getElementById('files-input-upload').click();
-});
-
-document.getElementById('files-input-upload').addEventListener('change', function() {
-	document.getElementById('fake-file-input-name').value = this.value;
-	
-	document.getElementById('fake-file-button-upload').removeAttribute('disabled');
-});
-</script>
-					<!-- file upload -->
+					</form>
 					<br>
 					<a href="#" class="btn btn-block btn-lg btn-default" onclick="submitHidden()"><span class="glyphicon glyphicon-pencil"></span>수정하기</a>
 					

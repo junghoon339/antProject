@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.instrument.classloading.tomcat.TomcatLoadTimeWeaver;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
@@ -202,7 +203,7 @@ public class AdminController {
 		mv.addObject("rowCount",rowCount);
 		mv.addObject("searchText",searchText);
 		
-		mv.setViewName("/admin/adminNootice");
+		mv.setViewName("/admin/adminNotice");
 		return mv;
 	}
 	
@@ -211,4 +212,37 @@ public class AdminController {
 		service.insertNotice(noticeDTO);
 		return "redirect:/admin/adminNotice";
 	}
+	
+	@RequestMapping("/noticeDetail/{noticeNo}")
+	public ModelAndView noticeDetail(@PathVariable int noticeNo){
+		ModelAndView mv = new ModelAndView();
+		NoticeDTO dto = service.selectByNoticeNum(noticeNo);
+		mv.addObject("noticeDTO", dto);
+		mv.setViewName("admin/noticeDetailNew");
+		return mv;
+	}
+	
+	@RequestMapping("/delete/{noticeNo}")
+	public String noticeDelete(@PathVariable int noticeNo) throws Exception{
+		service.deleteNotice(noticeNo);
+		return "redirect:/admin/adminNotice";
+	}
+	
+	@RequestMapping("/updateForm")
+	public ModelAndView noticeUpdateForm(NoticeDTO noticeDTO){
+		ModelAndView mv = new ModelAndView();
+		mv.addObject("noticeDTO",noticeDTO);
+		mv.setViewName("admin/updateForm");
+		return mv;
+	}
+	
+	@RequestMapping("/update")
+	public String noticeUpdate(NoticeDTO noticeDTO) throws Exception{
+		System.out.println("여기오긴하냐");
+		System.out.println(noticeDTO.getNoticeNo());
+		service.updateNotice(noticeDTO);
+		return "redirect:/admin/adminNotice";
+	}
+	
+	
 }

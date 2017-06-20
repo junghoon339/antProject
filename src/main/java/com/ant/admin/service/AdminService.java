@@ -10,102 +10,107 @@ import com.ant.user.dto.UserDTO;
 
 public interface AdminService {
 	/**
-	 * È¸¿øÀüÃ¼Á¶È¸
+	 * È¸ï¿½ï¿½ï¿½ï¿½Ã¼ï¿½ï¿½È¸
 	 * */
 	public List<UserDTO> userSelectAll(int startRow,int endRow);
 	
 	/**
-	 * È¸¿øÀüÃ¼¼ö
+	 * È¸ï¿½ï¿½ï¿½ï¿½Ã¼ï¿½ï¿½
 	 * */
 	public int userTotalCount();
 	
 	/**
-	 * È¸¿ø»èÁ¦
+	 * È¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	 * */
 	public int userDelete(int userNo);
 	
 	/**
-	 * ÆÀÇÃÁ¶È¸(ÁøÇàÁß,¿Ï·á)
+	 * ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½È¸(ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½,ï¿½Ï·ï¿½)
 	 * */
 	public List<ProjectDTO> projectSelectAll(int projectState,int startRow,int endRow);
 	
 	/**
-	 * ÆÀÇÃÀüÃ¼°³¼ö(ÁøÇàÁß,¿Ï·á)
+	 * ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ã¼ï¿½ï¿½ï¿½ï¿½(ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½,ï¿½Ï·ï¿½)
 	 * */
 	public int projectTotalCount(int projectState);
 	
 	/**
-	 * ÆÀÇÃ°Ë»öÇÑÀüÃ¼Á¶È¸
+	 * ï¿½ï¿½ï¿½Ã°Ë»ï¿½ï¿½ï¿½ï¿½ï¿½Ã¼ï¿½ï¿½È¸
 	 * */
 	public List<ProjectDTO> projectSelectAllBySearch(int projectState,int startRow,int endRow,int categoryNo,String searchText);
 	
 	/**
-	 * ÆÀÇÃ°Ë»öÇÑÀüÃ¼°³¼ö
+	 * ï¿½ï¿½ï¿½Ã°Ë»ï¿½ï¿½ï¿½ï¿½ï¿½Ã¼ï¿½ï¿½ï¿½ï¿½
 	 * */
 	public int projectTotalCountBySearch(int projectState,int categoryNo,String searchText);
 	
 	/**
-	 * ÆÀÇÃ»èÁ¦(ÁøÇàÁß, ¿Ï·á) 
+	 * ï¿½ï¿½ï¿½Ã»ï¿½ï¿½ï¿½(ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½, ï¿½Ï·ï¿½) 
 	 * */
 	public int projectDelete(int projectNo);
 	
 	/**
-	 * ¹ŞÀºÂÊÁö ÀüÃ¼ °¡Á®¿À±â
+	 * ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ã¼ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	 * */
 	public List<MessageDTO> receiveMessageSelectAll();
 	
 	/**
-	 * º¸³½ÂÊÁö ÀüÃ¼ °¡Á®¿À±â
+	 * ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ã¼ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	 * */
 	public List<MessageDTO> sendMessageSelectAll();
 	
 	/**
-	 *º¸³½ÂÊÁö,¹ŞÀºÂÊÁö »ó¼¼ 
+	 *ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½,ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ 
 	 * */
 	public MessageDTO messageDetail(int messageNo);
 	
 	/**
-	 * ´äÀåÇÏ±â(message ·¹ÄÚµå»ğÀÔ)
+	 * ï¿½ï¿½ï¿½ï¿½ï¿½Ï±ï¿½(message ï¿½ï¿½ï¿½Úµï¿½ï¿½ï¿½ï¿½)
 	 * */
 	public int messageInsert(MessageDTO messageDTO);
 	
 	/**
-	 * º¸³½ÂÊÁö,¹ŞÀºÂÊÁö »èÁ¦
+	 * ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½,ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 	 * */
 	public int messageDelete(int messageNo);
 	
 	/**
-	 * 	°øÁö»çÇ× µî·Ï
+	 * 	ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
 	 * */
 	public int insertNotice(NoticeDTO noticeDTO) throws Exception;
 	
 	/**
-	 * 	°øÁö»çÇ× ¼öÁ¤
+	 * 	ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 	 * */
 	public int updateNotice(NoticeDTO noticeDTO) throws Exception;
 	
 	/**
-	 * 	°øÁö»çÇ× »èÁ¦
+	 * 	ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 	 * */
-	public int deleteNotice(int noticeNo,int userNo) throws Exception;
+	public int deleteNotice(int noticeNo) throws Exception;
 	
 	/**
-	 * 	°øÁö »çÇ× ÀüÃ¼ 
+	 * 	ë””í…Œì¼ ë³´ê¸°
+	 * */
+	public NoticeDTO selectByNoticeNum(int noticeNo);
+	
+	/**
+	 * 	ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ã¼ 
 	 * */
 	public List<NoticeDTO> noticeSelectAll(int startRow, int endRow);
 	
 	/**
-	 * 	°øÁö»çÇ× ÀüÃ¼ ¸®½ºÆ® °¹¼ö
+	 * 	ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ã¼ ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½
 	 * */
 	public int noticeTotalCount();
 	
 	/**
-	 * 	°øÁö »çÇ× °Ë»ö  
+	 * 	ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ë»ï¿½  
 	 * */
 	public List<NoticeDTO> noticeSelectBySearch(int startRow, int endRow, String searchText);
 	
 	/**
-	 * 	°øÁö»çÇ× °Ë»öµÈ ¸®½ºÆ® °¹¼ö
+	 * 	ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ë»ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½
 	 * */
 	public int noticeTotalCountBySearch(String searchText);
 }

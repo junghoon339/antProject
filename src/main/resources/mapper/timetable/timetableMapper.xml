@@ -1,9 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="timetableMapper">
+<resultMap type="timetableDTO" id="timetableDTOMap">
+	<id column="timetable_no" property="timetableNo"/>
+	<result column="user_no" property="userNo"/>
+	<result column="timetable_subject" property="timetableSubject"/>
+	<result column="timetable_location" property="timetableLocation"/>
+	<result column="timetable_class_info" property="timetableClassInfo"/>
+	<result column="timetable_color" property="timetableColor"/>
+</resultMap>
 
-<select id="selectTimetable" >
+<insert id="timetableInsert" parameterType="timetableDTO">
+	insert into timetable values(seq_timetable_no.nextval,#{userNo},#{timetableSubject},#{timetableLocation},#{timetableClassInfo},#{timetableColor})
+</insert>
 
+<select id="selectAll" parameterType="int" resultMap="timetableDTOMap">
+	select * from timetable where user_no=#{_parameter} order by timetable_no asc
 </select>
-
 </mapper>
