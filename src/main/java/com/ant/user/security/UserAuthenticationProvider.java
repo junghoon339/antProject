@@ -37,35 +37,34 @@ public class UserAuthenticationProvider implements AuthenticationProvider {
 			return null;
 		}
 		
-		// 1. ÀÎ¼ö·Î ¹ŞÀº userÁ¤º¸¸¦ °¡Áö°í DB¿¡ Á¸Àç ÇÏ´ÂÁö Ã¼Å©
+		// 1. ì¸ìˆ˜ë¡œ ë°›ì€ userì •ë³´ë¥¼ ê°€ì§€ê³  DBì— ì¡´ì¬ í•˜ëŠ”ì§€ ì²´í¬
 		String userId = auth.getName();
-		
 		UserDTO userDTO = userDAO.selectUserById(userId);
 		
-		if (userDTO == null) { // ID°¡ ¾ø´Â°æ¿ì
-			throw new UsernameNotFoundException("¾ÆÀÌµğ ¶Ç´Â ºñ¹Ğ¹øÈ£¸¦ ´Ù½Ã È®ÀÎÇÏ¼¼¿ä. \n<br>µî·ÏµÇÁö ¾ÊÀº ¾ÆÀÌµğÀÌ°Å³ª, ¾ÆÀÌµğ ¶Ç´Â ºñ¹Ğ¹øÈ£¸¦ Àß¸ø ÀÔ·ÂÇÏ¼Ì½À´Ï´Ù.");
+		if (userDTO == null) { // IDê°€ ì—†ëŠ” ê²½ìš°
+			throw new UsernameNotFoundException("ì•„ì´ë”” ë˜ëŠ” ë¹„ë°€ë²ˆí˜¸ë¥¼ ë‹¤ì‹œ í™•ì¸í•˜ì„¸ìš”. <br>ë“±ë¡ë˜ì§€ ì•Šì€ ì•„ì´ë””ì´ê±°ë‚˜, ì•„ì´ë”” ë˜ëŠ” ë¹„ë°€ë²ˆí˜¸ë¥¼ ì˜ëª» ì…ë ¥í•˜ì…¨ìŠµë‹ˆë‹¤.");
 		}
 		
 		int userNo = userDTO.getUserNo();
 		
 		
-		// 2. Á¸ÀçÇÏ¸é ºñ¹Ğ¹øÈ£ ºñ±³
+		// 2. ì¡´ì¬í•˜ë©´ ë¹„ë°€ë²ˆí˜¸ ë¹„êµ
 		String password = (String) auth.getCredentials();
 		
 		if (!passwordEncoder.matches(password, userDTO.getUserPassword())) {
-			throw new BadCredentialsException("¾ÆÀÌµğ ¶Ç´Â ºñ¹Ğ¹øÈ£¸¦ ´Ù½Ã È®ÀÎÇÏ¼¼¿ä. \n<br>µî·ÏµÇÁö ¾ÊÀº ¾ÆÀÌµğÀÌ°Å³ª, ¾ÆÀÌµğ ¶Ç´Â ºñ¹Ğ¹øÈ£¸¦ Àß¸ø ÀÔ·ÂÇÏ¼Ì½À´Ï´Ù.");
+			throw new BadCredentialsException("ì•„ì´ë”” ë˜ëŠ” ë¹„ë°€ë²ˆí˜¸ë¥¼ ë‹¤ì‹œ í™•ì¸í•˜ì„¸ìš”. <br>ë“±ë¡ë˜ì§€ ì•Šì€ ì•„ì´ë””ì´ê±°ë‚˜, ì•„ì´ë”” ë˜ëŠ” ë¹„ë°€ë²ˆí˜¸ë¥¼ ì˜ëª» ì…ë ¥í•˜ì…¨ìŠµë‹ˆë‹¤.");
 		}
 		
-		// ÀÎÁõ¿¡ ¼º°øÇÑ ÀÌÈÄ
-		// 3. ¸ğµÎ ÀÏÄ¡ÇÏ¸é AuthenticationÀ» ¸¸µé¾î¼­ ¸®ÅÏ
+		// ì¸ì¦ì— ì„±ê³µí•œ ì´í›„
+		// 3. ëª¨ë‘ ì¼ì¹˜í•˜ë©´ Authenticationì„ ë§Œë“¤ì–´ì„œ ë¦¬í„´
 		List<AuthorityDTO> list = authorityDAO.selectAuthorityByUserNo(userNo);
 		
 		if (list.isEmpty()) {
-			// ¾Æ¹« ±ÇÇÑÀÌ ¾øÀ¸¸é
-			throw new UsernameNotFoundException(userId + "´Â ¾Æ¹« ±ÇÇÑÀÌ ¾ø½À´Ï´Ù.");
+			// ì•„ë¬´ ê¶Œí•œì´ ì—†ìœ¼ë©´
+			throw new UsernameNotFoundException(userId + "ëŠ” ì•„ë¬´ ê¶Œí•œì´ ì—†ìŠµë‹ˆë‹¤.");
 		}
 		
-		// DB¿¡¼­ °¡Áö°í ¿Â ±ÇÇÑÀ» GrantedAuthority·Î º¯È¯ÇØ¾ß ÇÔ
+		// DBì—ì„œ ê°€ì§€ê³  ì˜¨ ê¶Œí•œì„ GrantedAuthorityë¡œ ë³€í™˜í•´ì•¼ í•¨
 		List<SimpleGrantedAuthority> authList = new ArrayList<>();
 
 		for (AuthorityDTO authority : list) {
@@ -75,10 +74,12 @@ public class UserAuthenticationProvider implements AuthenticationProvider {
 		return new UsernamePasswordAuthenticationToken(userDTO, null, authList);
 	}
 
+	/**
+	 * í•´ë‹¹ íƒ€ì…ì˜ Authentication ê°ì²´ë¥¼ ì´ìš©í•´ì„œ ì¸ì¦ ì²˜ë¦¬ë¥¼ í•  ìˆ˜ ìˆëŠ”ì§€ ì—¬ë¶€ë¥¼ ë¦¬í„´í•´ì£¼ëŠ” ë©”ì†Œë“œ
+	 */
 	@Override
 	public boolean supports(Class<?> authentication) {
-		// true = ÀÎÁõÃ³¸® °¡´ÉÇÏ´Ù false = ÀÎÁõ ÇÒ ¼ö ¾ø´Ù
-		
+		// true = ì¸ì¦ì²˜ë¦¬ ê°€ëŠ¥í•˜ë‹¤ false = ì¸ì¦ í•  ìˆ˜ ì—†ë‹¤
 		return UsernamePasswordAuthenticationToken.class.isAssignableFrom(authentication);	
 	}
 }

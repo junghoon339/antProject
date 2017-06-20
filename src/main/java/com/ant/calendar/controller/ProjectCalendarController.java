@@ -23,6 +23,8 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.ant.calendar.dto.ProjectCalendarDTO;
 import com.ant.calendar.service.ProjectCalendarService;
+import com.ant.project.dto.ProjectDTO;
+import com.ant.project.service.ProjectService;
 import com.ant.user.dto.UserDTO;
 import com.dhtmlx.planner.DHXEv;
 import com.dhtmlx.planner.DHXEvent;
@@ -37,6 +39,9 @@ public class ProjectCalendarController implements Serializable {
 	
 	@Autowired
 	private ProjectCalendarService calendarService;
+	
+	@Autowired
+	private ProjectService projectService;
 
 	public static String date_format = "MM/dd/yyyy HH:mm";
 	public static String filter_format = "yyyy-MM-dd";
@@ -80,12 +85,15 @@ public class ProjectCalendarController implements Serializable {
 
 		UserDTO userDTO = (UserDTO) session.getAttribute("userDTO");
 		int userNo = userDTO.getUserNo();
-		System.out.println("userNO : "+userNo);
+		System.out.println("�����ѹ� userNO : "+userNo);
 		
-		//ProjectDTO projectDTO = (ProjectDTO)session.getAttribute("projectDTO");
-		int projectNo = 1;
-		System.out.println("projectNo : "+projectNo);
+		int projectNo = (int) session.getAttribute("projectNo");
+		ProjectDTO projectDTO = projectService.selectProject(projectNo);
+		int nono = projectDTO.getProjectNo();
+		System.out.println("���� ���Ͷ�.. : " +nono);
+		/*int projectNo = projectDTO.getProjectNo();*/
 		
+
 		
 		// calendar����
 		DHXPlanner planner = new DHXPlanner(contextPath + "/resources/codebase/", DHXSkin.TERRACE);
@@ -261,15 +269,20 @@ public class ProjectCalendarController implements Serializable {
 		schedule.setUser_no(userDTO.getUserNo());
 		System.out.println("user_no " + userDTO.getUserNo());
 		
-		/*ProjectDTO projectDTO =(ProjectDTO)session.getAttribute("projectDTO");
-		System.out.println("project_no " + projectDTO.getProjectNo());*/
-		schedule.setProject_no(1);
+		
+		int projectNo = (int) session.getAttribute("projectNo");
+		ProjectDTO projectDTO = projectService.selectProject(projectNo);
+		int nono = projectDTO.getProjectNo();		
+		schedule.setProject_no(nono);
+		System.out.println("nono=??? : "+nono);
 		
 		schedule.setStart_date(start_date);
 		schedule.setEnd_date(end_date);
 		
-		/*schedule.setEvent_id(event.getId());*/
-		 System.out.println("event_getId:"+event.getId());
+		if(event.getId()!=null){
+			System.out.println("�̺�Ʈ ���̵� : "+event.getId());
+			schedule.setEvent_id(event.getId());			
+		}
 		 
 
 		if (status == DHXStatus.UPDATE) {
@@ -280,7 +293,7 @@ public class ProjectCalendarController implements Serializable {
 		} else if (status == DHXStatus.INSERT) {
 			System.out.println("projectCalendar insert ��Ʈ�ѷ�->���� ����");
 			calendarService.insertEvent(schedule);
-			event.setId(schedule.getEvent_id());
+			event.setId(schedule.getEvent_id()-1);
 
 		} else if (status == DHXStatus.DELETE) {
 			calendarService.deleteEvent(event.getId());
