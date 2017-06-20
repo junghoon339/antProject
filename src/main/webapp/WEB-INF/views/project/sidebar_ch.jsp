@@ -21,11 +21,11 @@
 		<ul class="nav">
 			<c:choose>
 				<c:when test="${projectNo==null}">
-					<li class="active"><a href="dashboard.html"> <i
+					<li class="active"><a href="${pageContext.request.contextPath}/project/home"> <i
 							class="ti-pie-chart"></i>
 							<p>진행중 조별과제</p>
 					</a></li>
-					<li><a href="user.html"> <i class="ti-user"></i>
+					<li><a href="${pageContext.request.contextPath}/project/home"> <i class="ti-user"></i>
 							<p>완료된 조별과제</p>
 					</a></li>
 					<li><a href="table.html"> <i class="ti-view-list-alt"></i>
@@ -38,6 +38,8 @@
 							<p>공지사항</p>
 					</a></li>
 				</c:when>
+				
+				
 				<c:otherwise>
 					<li class="active"><a href="${pageContext.request.contextPath}/project/teamInfo"> <i
 							class="ti-pie-chart"></i>
