@@ -1,5 +1,7 @@
 package com.ant.calendar.dto;
 
+import com.ant.project.dto.ProjectDTO;
+
 public class ProjectCalendarDTO {
 	private Integer event_id;
 	private Integer user_no;
@@ -7,6 +9,8 @@ public class ProjectCalendarDTO {
 	private String event_name;  
 	private String start_date;  
 	private String end_date;
+	
+	private ProjectDTO projectDTO;
 	
 	
 	public int getProject_no() {
@@ -44,6 +48,12 @@ public class ProjectCalendarDTO {
 	}
 	public void setEnd_date(String end_date) {
 		this.end_date = end_date;
+	}
+	public ProjectDTO getProjectDTO() {
+		return projectDTO;
+	}
+	public void setProjectDTO(ProjectDTO projectDTO) {
+		this.projectDTO = projectDTO;
 	}
 	
 }

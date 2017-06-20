@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.ant.calendar.dto.ProjectCalendarDTO;
+import com.ant.project.dto.ProjectDTO;
 import com.dhtmlx.planner.DHXEv;
 import com.dhtmlx.planner.DHXEvent;
 import com.dhtmlx.planner.DHXEventsManager;
@@ -34,8 +35,9 @@ public class ProjectCalendarDAOImpl implements ProjectCalendarDAO {
 			
 			evs.add(e);
 		}
+		
 		DHXEventsManager.date_format = "MM/dd/yyyy HH:mm";
-		System.out.println("projectCalendar select ï¿½Ù¿ï¿½->ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½");
+		System.out.println("projectCalendar select ë‹¤ì˜¤->ì„¸ì…˜ ì ‘ê·¼");
 		return evs;
 	}
 
@@ -47,7 +49,7 @@ public class ProjectCalendarDAOImpl implements ProjectCalendarDAO {
 	@Override
 	public void updateEvent(ProjectCalendarDTO schedule) {
 		sqlSession.update("projectCalendarMapper.updateEvent", schedule);
-		System.out.println("updateEvent ´Ù¿À->¼¼¼Ç Á¢±Ù");
+		System.out.println("updateEvent ï¿½Ù¿ï¿½->ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½");
 	}
 
 	@Override

@@ -295,7 +295,6 @@
 						success : function(result) {
 							if (result == 0) {
 								// 체크버튼을 띄워준다
-								$("#email").val( $("#email").val()+"VVV" )
 								console.log("사용가능한 이메일")	
 							} else {
 								console.log("이미 존재하는 이메일입니다")

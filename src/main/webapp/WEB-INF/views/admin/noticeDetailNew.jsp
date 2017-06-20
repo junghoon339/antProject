@@ -43,16 +43,34 @@
 
 <!-- 필요한 css는 이 밑에 넣어주면 됨 -->
 <!-- 스크립트는 body 맨 아래쪽에 -->
-</head>
 <script type="text/javascript">
-	/* sumbit */
+	/* 모달 */
+	$(document).ready(function() {
+		$("#mytable #checkall").click(function() {
+			if ($("#mytable #checkall").is(':checked')) {
+				$("#mytable input[type=checkbox]").each(function() {
+					$(this).prop("checked", true);
+				});
+
+			} else {
+				$("#mytable input[type=checkbox]").each(function() {
+					$(this).prop("checked", false);
+				});
+			}
+		});
+
+		$("[data-toggle=tooltip]").tooltip();
+	});
+	/* 모달 */
+
+</script>
+<script type="text/javascript">
 	function submitHidden() {
-		$("#submitForm").attr("action","${pageContext.request.contextPath}/storage/update");
+		$("#submitForm").attr("action","${pageContext.request.contextPath}/admin/updateForm");
 		$("#submitForm").submit();
 	}
-	
-	
 </script>
+</head>
 <body>
 	<div class="wrapper">
 		<jsp:include page="/WEB-INF/views/project/sidebar_ch.jsp" />
@@ -70,80 +88,62 @@
 
 
 
-			
-					
-					<div class="portlet portlet-bordered" >
-					
-					<form action="" method="post" id="submitForm" enctype="multipart/form-data">
-					<div class="portlet-title">
-						<div class="caption caption-red">
-							제목 - 
-							<%-- <span class="caption-subject text-uppercase"> ${dto.storageTitle}</span> --%>
-							
-							<input type="text" value="${storageDTO.storageTitle}" name="storageTitle">
-							<%-- <span class="caption-helper">작성일 - ${dto.writeDay}</span> --%>
-							<input type="hidden" value="${storageDTO.writeDay}" name="writeDay">
-							<input type="hidden" value="1" name="userNo">
-							<%-- <span class="caption-helper">작성자 - ${storageDTO.storageNo}</span> --%>
-							<input type="hidden" value="${storageDTO.userDTO.userName}" name="userName">
-							<input type="hidden" value="${storageDTO.storageNo}" name="storageNo">
-							
-							<input type="hidden" id="securityInfo" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-							
-						</div>
-						<div class="actions">
-						<c:if test="${dto.fileName!=null}">
-							<a href="javascript:;">
-								<i class="glyphicon glyphicon-paperclip"></i>
-							</a>
-							<a href="#">
-								${dto.fileName}
-							</a>
-							
-						</c:if>
-						
-						</div>
-					</div>
-					<div class="portlet-body">
-						<h4><textarea cols="90" rows="12" name="storageContent">${storageDTO.storageContent}</textarea></h4>
-						
-					</div>
-					
-					<!-- file upload -->
-					<div class="input-group">
-    <span class="input-group-btn">
-		<button id="fake-file-button-browse" type="button" class="btn btn-default">
-			<span class="glyphicon glyphicon-file"></span>
-		</button>
-	</span>
-	<input type="file" id="files-input-upload" style="display:none" name="file">
-	<input type="text" id="fake-file-input-name" disabled="disabled" placeholder="File not selected" class="form-control" name="filePath">
-	<span class="input-group-btn">
-		<button type="button" class="btn btn-default" disabled="disabled" id="fake-file-button-upload">
-			<span class="glyphicon glyphicon-upload"></span>
-		</button>
-	</span>
-</div>
-<small class="pull-right">새로운 자료를 등록하세요</small>
-<script type="text/javascript">
-// Fake file upload
-document.getElementById('fake-file-button-browse').addEventListener('click', function() {
-	document.getElementById('files-input-upload').click();
-});
 
-document.getElementById('files-input-upload').addEventListener('change', function() {
-	document.getElementById('fake-file-input-name').value = this.value;
-	
-	document.getElementById('fake-file-button-upload').removeAttribute('disabled');
-});
-</script>
-					<!-- file upload -->
-					<br>
-					<a href="#" class="btn btn-block btn-lg btn-default" onclick="submitHidden()"><span class="glyphicon glyphicon-pencil"></span>수정하기</a>
-					
-				</div>
-					
-					
+
+
+
+
+
+					<div class="col-md-12">
+						<div class="card card-plain">
+							<div class="header">
+								<div class="col-sm-6">
+									<h4 class="title">상세보기</h4>
+									<p class="category">detail</p>
+								</div>
+								<div style="text-align: right;" class="col-sm-6">
+									<a
+										href="${pageContext.request.contextPath}/admin/adminNotice">
+										리스트로 돌아가기 </a>
+								</div>
+
+								<div align="right" >
+									<a
+										href="${pageContext.request.contextPath}/admin/delete/${noticeDTO.noticeNo}"
+										class="btn btn-red btn-circle active"
+										class="btn btn-red btn-circle">삭제</a>
+									    
+										 <a href="#" class="btn btn-red btn-circle" onclick="submitHidden()">
+										수정
+										</a>
+								</div>
+
+										<form id="submitForm" method="post" action="">
+											<input type="hidden" id="securityInfo" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+											<input type="hidden" id="noticeNo" value="${noticeDTO.noticeNo}"> 
+											<input type="hidden" name="noticeTitle" value="${noticeDTO.noticeTitle}">
+											<input type="hidden" name="noticeContent" value="${noticeDTO.noticeContent}">
+										</form>
+							
+							</div>
+							<div class="content table-responsive table-full-width">
+								<table class="table table-hover">
+									<thead>
+										<th colspan="2">제목 - ${noticeDTO.noticeTitle}</th>
+										<th colspan="2">작성자 - 관리자</th>
+										<th colspan="2">작성일 - ${noticeDTO.writeDay}</th>
+									</thead>
+									<tbody>
+										<tr>
+											<td colspan="8" rowspan="4"><h1>${noticeDTO.noticeContent}</h1></td>
+										</tr>
+									</tbody>
+								</table>
+
+							</div>
+						</div>
+					</div>
+
 
 
 

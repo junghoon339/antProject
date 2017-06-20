@@ -82,7 +82,7 @@ public class StorageController {
 		mv.addObject("searchText",searchText);
 		
 		/*mv.setViewName("storage/test");*/
-		mv.setViewName("storage/teamMain_ch");
+		mv.setViewName("storage/storageMain");
 		return mv;
 	}
 	//paging~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~``
@@ -92,7 +92,7 @@ public class StorageController {
 		StorageDTO dto = service.selectByStorageNum(storageNo, true);
 		ModelAndView mv = new ModelAndView();
 		mv.addObject("dto", dto);
-		mv.setViewName("storage/storageDetail");
+		mv.setViewName("storage/detailNew");
 		return mv;
 	}
 	
