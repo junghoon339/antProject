@@ -47,7 +47,22 @@
 <link
 	href="${pageContext.request.contextPath }/resources/css/themify-icons.css"
 	rel="stylesheet">
-
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
+<link rel="stylesheet" type="text/css"
+	href="${pageContext.request.contextPath}/resources/css/chat.css" />
+<script type="text/javascript"
+	src="${pageContext.request.contextPath}/resources/js/jquery-3.2.1.min.js"></script>
+<script type="text/javascript"
+	src="${pageContext.request.contextPath}/resources/js/jquery.timeago.js"></script>
+<script type="text/javascript"
+	src="${pageContext.request.contextPath}/resources/js/sockjs.js"></script>
+<script type="text/javascript"
+	src="${pageContext.request.contextPath}/resources/js/chat.js"></script>
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
 </head>
 <body>
 	<div class="wrapper">
@@ -62,17 +77,17 @@
 			<div class="content">
 				<div class="container-fluid">
 					<div class="row">
-						
+
 						<!-- 이곳에 내용작성!!!!!!!!!!!!!!!! -->
 					</div>
 				</div>
+				<c:import url="${pageContext.request.contextPath}/project/chat" />
 			</div>
 
 			<jsp:include page="footer_ch.jsp" flush="false" />
 		</div>
 	</div>
-	
-	<c:import url="/project/chat"/>
+
 </body>
 
 <!--   Core JS Files   -->
