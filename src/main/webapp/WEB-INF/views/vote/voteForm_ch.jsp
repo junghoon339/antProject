@@ -44,13 +44,13 @@
 <script>
 	$(function(){
 
-		$(".obj").mouseenter(function(){
+/* 		$(".obj").mouseenter(function(){
 	        $(this).css("background-color", "#fff4f4");
 	    });
 		
 	    $(".obj").mouseleave(function(){
 	        $(this).css("background-color", "gray");
-	    });
+	    }); */
 	    
 	    $(".obj").dblclick(function(){
 	    	$(this).parent().submit();

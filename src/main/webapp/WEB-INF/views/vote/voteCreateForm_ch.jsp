@@ -164,8 +164,8 @@ $(function() {
 	type="text/javascript"></script>
 
 <!--  Checkbox, Radio & Switch Plugins -->
-<script
-	src="${pageContext.request.contextPath }/resources/js/bootstrap-checkbox-radio.js"></script>
+<%-- <script
+	src="${pageContext.request.contextPath }/resources/js/bootstrap-checkbox-radio.js"></script> --%>
 
 <!--  Charts Plugin -->
 <script

@@ -120,7 +120,6 @@ public class ProjectController implements Serializable {
 			dday = dday/1000/60/60/24;
 			
 			dto.setDday((int)dday+1);
-			System.out.println("디데이 : "+dday);
 		}
 		
 
@@ -180,7 +179,7 @@ public class ProjectController implements Serializable {
 		
 		req.getSession().setAttribute("projectUserRole", projectUserRole);
 		
-		return "/project/teamMain";
+		return "/project/teamMain_ch";
 	}
 
 	/**
@@ -249,6 +248,7 @@ public class ProjectController implements Serializable {
 	public String updateTeamInfo(ProjectDTO projectDTO,HttpServletRequest req){
 		int projectNo = (int) req.getSession().getAttribute("projectNo");	
 		projectDTO.setProjectNo(projectNo);
+		System.out.println("수정하려고하는 프로젝트 상태 : "+projectDTO.getProjectState());
 		int result = projectService.updateTeamInfo(projectDTO);
 		return "redirect:/project/teamInfo";
 	}

@@ -209,7 +209,7 @@
 		<%-- 
 		관리자로 쪽지함들어왔을때
 		<jsp:include page="/WEB-INF/views/admin/admin_sidebar_ch.jsp" /> --%>
-		<jsp:include page="/WEB-INF/views/project/team_sidebar_ch.jsp" />
+		<jsp:include page="/WEB-INF/views/project/sidebar_ch.jsp" />
 
 
 		<div class="main-panel">

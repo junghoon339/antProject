@@ -50,7 +50,7 @@ var columns = new Array();
 $(function() {
 	$(".ifEndLabel").hide();
 		
-	$(".radio").each(function(index,item){
+	$(".regular-radio").each(function(index,item){
 		columns[index] = $(item).val();
 	})
 	
@@ -58,15 +58,15 @@ $(function() {
 	
 	//초기설정 함수 init()호출
 	init();
-		
 	if(${voteState}==1){
 		$(".ifEnd").hide();
 		$(".ifEndLabel").show();
 		$(".ifEndLabelDate").html("${voteEndDate}");
-		$("#well").css("color", "gray");
-		$(".radio").each(function(index,item){
-			$(item).off();
+		$(".regular-radio").each(function(index,item){
+			console.log(index+","+item);
+			$(item).hide();
 		})
+		$("#well").css("color", "gray");
 	}
 	
 	$("#vote").on('click', function() {
@@ -105,7 +105,7 @@ $(function() {
 			url : "${pageContext.request.contextPath}/vote/Detail/endVote",
 			type : "post",
 			dataType : "json",
-			data : "userNo="+${sessionScope.userDTO.userNo}+"&voteNo="+${voteNo}+"&"+$("#securityInfo").attr("name")+"="+$("#securityInfo").val() ,
+			data : "voteNo="+${voteNo}+"&"+$("#securityInfo").attr("name")+"="+$("#securityInfo").val() ,
 			success : function(result) {
 				if(result!='0'){
 					alert("투표가 마감되었습니다.");
@@ -113,10 +113,13 @@ $(function() {
 				$(".ifEnd").hide();
 				$(".ifEndLabel").show();
 				$(".ifEndLabelDate").html(dateToYYYYMMDD(new Date()));
-				$("#well").css("color", "gray");
-				$(".radio").each(function(index,item){
-					$(item).off();
+				console.log("라디오클래스 접근");
+				$(".regular-radio").each(function(index,item){
+					console.log(index+","+item);
+					$(item).hide();
 				})
+				console.log("well아이디 접근");
+				$("#well").css("color", "gray");
 			},
 			error : function(err) {
 				alert("오류 발생 이니셜라이즈 : " + err);
@@ -130,7 +133,7 @@ function init(){
 		url : "${pageContext.request.contextPath}/vote/Detail/Initialized",
 		type : "post",
 		dataType : "json",
-		data : "userNo=${sessionScope.userDTO.userNo}&voteNo="+${voteNo}+"&columns="+columns+"&"+$("#securityInfo").attr("name")+"="+$("#securityInfo").val() , // $("#voteNo").val()
+		data : "voteNo="+${voteNo}+"&columns="+columns+"&"+$("#securityInfo").attr("name")+"="+$("#securityInfo").val() , // $("#voteNo").val()
 		success : function(result) {
 			console.log("성공햇지롱1   리턴값 --->: " + result);
 			
@@ -140,7 +143,7 @@ function init(){
 			$("#userCount").html('<font color="#c3c3c3">참여 '+result.userCount+'</font>');
 			
 			$.each(result.gauge,function(index2, item2){
-				$(".radio").each(function(index,item){
+				$(".regular-radio").each(function(index,item){
 					if(item.value==index2){
 						$(item).parent().parent().next().children().children().children().css("width",(item2+"%"));
 						$(item).parent().parent().next().children().next().text("　"+item2+"%");
@@ -153,8 +156,8 @@ function init(){
 			if(selectChk=="0"){
 				$("#vote").text("투표하기");
 			}else{
-				$(".radio").hide();
-				$(".radioTd").hide();
+				$(".regular-radio").hide();
+				$(".radiTd").hide();
 				$(".valueTd").attr('width', '90%');
 				$("#vote").text("다시 투표하기");
 			}
@@ -186,13 +189,13 @@ function btnEvent(a){
 			url : "${pageContext.request.contextPath}/vote/Detail/Handling",
 			type : "post",
 			dataType : "text",
-			data : "userNo="+${sessionScope.userDTO.userNo}+"&voteNo="+${voteNo}+"&column="+choice+"&"+$("#securityInfo").attr("name")+"="+$("#securityInfo").val() , // $("#voteNo").val()
+			data : "voteNo="+${voteNo}+"&column="+choice+"&"+$("#securityInfo").attr("name")+"="+$("#securityInfo").val() , // $("#voteNo").val()
 			success : function(result) {
 				location.reload();
 				console.log("성공햇지롱2" + result);
 				
-				$(".radio").hide();
-				$(".radioTd").hide();
+				$(".regular-radio").hide();
+				$(".radiTd").hide();
 				$(".valueTd").attr('width', '90%');
 				$("#vote").text("다시 투표하기");
 			},
@@ -201,8 +204,8 @@ function btnEvent(a){
 			}
 		});
 	} else if( $(a).text()=='다시 투표하기') {
-		$(".radio").show();
-		$(".radioTd").show();
+		$(".regular-radio").show();
+		$(".radiTd").show();
 		$(".valueTd").attr('width', '80%');
 		$("#vote").text("투표하기");	
 
@@ -228,19 +231,16 @@ function dateToYYYYMMDD(date){
 table {
 	width: 100%;
 }
-
 td {
 	height: 40px;
 }
 
-.btn span.glyphicon {
-	opacity: 0;
-}
-
-.btn.active span.glyphicon {
-	opacity: 1;
-}
-
+.radio-primary input[type="radio"] + label::after {
+    background-color: #428bca; }
+.radio-primary input[type="radio"]:checked + label::before {
+    border-color: #428bca; }
+.radio-primary input[type="radio"]:checked + label::after {
+    background-color: #428bca; }
 </style>
 </head>
 <body>
@@ -257,7 +257,7 @@ td {
 					                </div>
 					                <div class="modal-footer">
 					                	<input type=hidden id="securityInfo" name="${_csrf.parameterName}" value="${_csrf.token}">	
-					                    <button class="btn btn-warning" onclick="location.href='${pageContext.request.contextPath}/vote/delete?voteNo=${voteNo}&userNo=${sessionScope.userDTO.userNo}'"> 확인</button> 
+					                    <button class="btn btn-warning" onclick="location.href='${pageContext.request.contextPath}/vote/delete?voteNo=${voteNo}'"> 확인</button> 
 					                    <button class="btn btn-default" data-dismiss="modal"> 취소</button>
 					                </div>
 					 
@@ -291,7 +291,7 @@ td {
 											<ul class="dropdown-menu">
 												<c:choose>
 							                		<c:when test="${voteWriter==sessionScope.userDTO.userNo}">
-							                    		<li><a href='${pageContext.request.contextPath}/vote/updateForm?voteNo=${voteNo}&userNo=${sessionScope.userDTO.userNo}'>수정하기</a></li>
+							                    		<li><a href='${pageContext.request.contextPath}/vote/updateForm?voteNo=${voteNo}'>수정하기</a></li>
 														<li><a data-toggle="modal" href="#myModal">삭제하기</a></li>
 							                    	</c:when>
 							                    	<c:otherwise>
@@ -313,8 +313,10 @@ td {
 									<table>
 										<tr>
 											<td rowspan="2" width="3%"/>
-											<td rowspan="2" width="10%" align="center"  class="radioTd">
-											 <input type="radio" name="voteChk" id="radio" class="radio" value="${voteDetailList.voteDetailNo}">
+											<td rowspan="2" width="10%" align="center"  class="radiTd">
+												<div class="radio radio-primary">
+											 		<input type="radio" name="radio" id="radio" class="regular-radio" value="${voteDetailList.voteDetailNo}" />
+											 	</div>
 											</td>
 											<td width="80%" valign="bottom" class="valueTd">${voteDetailList.voteDetailColumn}</td>
 											<td width="20px">
@@ -327,7 +329,7 @@ td {
 										<tr>
 											<td valign="middle" align="center">
 												<div class="progress progress-striped">
-													<div class="progress-bar progress-bar-success"
+													<div class="progress-bar progress-bar-warning progress-bar-striped active"
 														role="progressbar" aria-valuenow="1" aria-valuemin="0"
 														aria-valuemax="100" style="width: 0%"></div>
 												</div>
@@ -370,8 +372,8 @@ td {
 	src="${pageContext.request.contextPath }/resources/js/bootstrap.min.js" type="text/javascript"></script>
 
 <!--  Checkbox, Radio & Switch Plugins -->
-<script
-	src="${pageContext.request.contextPath }/resources/js/bootstrap-checkbox-radio.js"></script>
+<%-- <script
+	src="${pageContext.request.contextPath }/resources/js/bootstrap-checkbox-radio.js"></script> --%>
 
 <!--  Charts Plugin -->
 <script

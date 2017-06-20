@@ -120,6 +120,7 @@
 												<div class="bs bs-pricing">
 													<div class="cotent">
 														<h3 class="category">${projectDTO.projectName}</h3>
+														<a href="#" style="color:#BCE55C;">설문조사해라</a>
 														<h1 class="bs-caption">
 															<small>D-</small>${projectDTO.dday}
 														</h1>
@@ -176,7 +177,7 @@
 					<div class="container" style="margin-top:10px;">
 						<div class="row">
 							<div class="">
-						        <form id="projectForm" class="form-horizontal col-sm-7 col-sm-offset-1" action="${pageContext.request.contextPath}/project/insertProject" method="post">
+						        <form id="projectForm" name="fr" class="form-horizontal col-sm-7 col-sm-offset-1" action="${pageContext.request.contextPath}/project/insertProject" method="post">
 									<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" >
 						        	*새로운 조별과제를 만드는 분이 자동으로 조장으로 지정됩니다.<p></p>
 									팀플명 : <input class="form-control" type="text" name="projectName" /><p></p>
