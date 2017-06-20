@@ -44,7 +44,7 @@
 			<ul class="nav sidebar-nav">
 				<li class="sidebar-brand"><a href="#"> Brand </a></li>
 				<li><a href="${pageContext.request.contextPath}/timetable/projectTimetable">팀시간표</a></li>
-				<li><a href="${pageContext.request.contextPath}/calendar/projectCalendar">팀캘린더</a></li>
+				<li><a href="${pageContext.request.contextPath}/projectCalendar/projectCalendar">팀캘린더</a></li>
 				<li><a href="${pageContext.request.contextPath}/storage/storageTable/1">자료실</a></li>
 				<li><a href="#">to do board</a></li>
 				<li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">팀플정보 <span class="caret"></span></a>

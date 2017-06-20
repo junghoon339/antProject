@@ -133,7 +133,7 @@ public class ProjectController implements Serializable {
 		int userNo = userDTO.getUserNo();*/
 
 		// calendar!!!
-		DHXPlanner planner = new DHXPlanner(contextPath + "/resources/codebase/", DHXSkin.TERRACE);
+		/*DHXPlanner planner = new DHXPlanner(contextPath + "/resources/codebase/", DHXSkin.TERRACE);
 		planner.localizations.set("cr");
 		planner.setWidth(900);
 
@@ -154,10 +154,10 @@ public class ProjectController implements Serializable {
 
 		planner.data.dataprocessor
 				.setURL(contextPath + "/project/events?" + token.getParameterName() + "=" + token.getToken());
-		planner.parse(calendarService.getEvent(userNo));
+		planner.parse(calendarService.getEvent(userNo));*/
 
 		ModelAndView mv = new ModelAndView();
-		mv.addObject("schedule", planner.render());
+		//mv.addObject("schedule", planner.render());
 		mv.setViewName("project/home_ch");
 		mv.addObject("currentProList",currentProList);
 		mv.addObject("surveyingProList",surveyingProList);
