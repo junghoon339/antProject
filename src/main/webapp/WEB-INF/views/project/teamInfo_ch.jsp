@@ -145,37 +145,6 @@ $(document).ready(function() {
 				<div class="container-fluid">
 					<div class="row">
 
-						<!-- 이곳에 내용작성!!!!!!!!!!!!!!!! -->
-<%-- 						<div class="col-lg-8 col-lg-offset-2">
-							<h1>팀플 정보</h1>
-							<hr>
-							<form name="projectForm" class="" action="${pageContext.request.contextPath}/project/updateTeamInfo" method="post">
-								<input type="hidden" id="securityInfo" name="${_csrf.parameterName}" value="${_csrf.token}">
-								<p></p>
-								팀플명 : <input class="form-control" type="text" name="projectName" value="${projectDTO.projectName}" />
-								<p></p>
-								과목명 : <input class="form-control" type="text" name="projectSubject" value="${projectDTO.projectSubject}" />
-								<p></p>
-								교수님 : <input class="form-control" type="text" name="projectTeacher" value="${projectDTO.projectTeacher}" />
-								<p></p>
-								시작날짜:
-								<div class="input-group registration-date-time">
-									<fmt:parseDate var="startDate" value="${projectDTO.projectStartdate}" pattern="yyyy-MM-dd"></fmt:parseDate>
-
-									<input class="form-control" name="projectStartdate"	id="start-date" type="date">
-								</div>
-								<p></p>
-								종료날짜 :
-								<div class="input-group registration-date-time">
-									<input class="form-control" name="projectEnddate" id="end-date"	type="date">
-								</div>
-								<p></p>
-
-								<br/>
-								<button type="submit" class="btn btn-danger" id="updateBtn"	style="display: none">수정</button>
-								<button type="button" class="btn btn-danger" id="Btn">마감하기</button>
-							</form>
-						</div> --%>
                     <div class="col-lg-8 col-md-7">
                         <div class="card">
                             <div class="header">

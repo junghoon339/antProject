@@ -2,22 +2,20 @@
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
-
-<%-- <%@ page
-	import="org.springframework.security.core.context.SecurityContextHolder"%>
+<%@ page import="org.springframework.security.core.context.SecurityContextHolder"%>
 <%@ page import="org.springframework.security.core.Authentication"%>
-<%@ page import="com.ant.user.dto.UserDTO"%> --%>
+<%@ page import="com.ant.user.dto.UserDTO"%>
 
 		<nav class="navbar navbar-default">
             <div class="container-fluid">
-                <div class="navbar-header">
+                <div class="navbar-header" data-active-color="success">
                     <button type="button" class="navbar-toggle">
                         <span class="sr-only">Toggle navigation</span>
                         <span class="icon-bar bar1"></span>
                         <span class="icon-bar bar2"></span>
                         <span class="icon-bar bar3"></span>
                     </button>
-                    <a class="navbar-brand" href="${pageContext.request.contextPath}/project/home">The Ants and Grasshopper</a>
+                    <a class="navbar-brand" href="${pageContext.request.contextPath}/project/home"></a>
                 </div>
                 <div class="collapse navbar-collapse">
                     <ul class="nav navbar-nav navbar-right">
@@ -44,7 +42,7 @@
                                <li><a href="${pageContext.request.contextPath}/user/chat">몰라</a></li>
 						<li><a href="#">절레절레</a></li>
 						<li class="divider"></li>
-						<li><a href="#">꾸꾸까까</a></li>
+						<li><a href="${pageContext.request.contextPath}/test/test">꾸꾸까까</a></li>
 						<li><a href="${pageContext.request.contextPath}/user/logout">로그인/로그아웃</a></li>
                               </ul>
                         </li>

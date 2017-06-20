@@ -101,16 +101,15 @@ public class UserController {
 		
 		ModelAndView mv = new ModelAndView("user/sendEmail");
 		
-		// id�� ã�� �ֳ�����
 		UserDTO dto = userService.selectUserById(emailAddr);
 		if (dto == null) {
-			mv.addObject("msg", "�������� �ʴ� ���̵��Դϴ�.");
+			mv.addObject("msg", "존재하지 않는 이메일 주소입니다.");
 			return mv;
 		}
 
 		email.setReceiver(emailAddr);
-		email.setSubject("���̿� ��¯�� ��й�ȣ ã�� �����Դϴ�.");
-		email.setContent("�ӽ� ��й�ȣ�� " + pw + " �Դϴ�.");
+		email.setSubject("[Ants and Grasshopper] 개미와 베짱이 계정 비밀번호가 재설정 되었습니다.");
+		email.setContent("임시 비밀번호는 [ " + pw + " ] 입니다. <br>마이 페이지에서 비밀번호를 변경해주세요.");
 
 		userService.updateTempPassword(dto.getUserNo(), pw);
 		
