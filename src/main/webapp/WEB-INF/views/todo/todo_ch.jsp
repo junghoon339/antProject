@@ -66,31 +66,36 @@ $(function(){
 				dataType:"json",
 				success:function(re){
 					//re.userNo == 현재 userNo같으면! else{alert('메모변경은 메모를 등록한사람만 가능합니다.')}
-					if(re!=null){
-						var updateVal=prompt("포스트잇에 적을 내용을 입력해주세요",re.todoContent);
-						if(updateVal!=null){
-							$("#todoNo").val(postitSu[1]);
-							$("#todoContent").val(updateVal);
-							$.ajax({
-								url:url+"/todo/todoUpdate",
-								type:"post",
-								data:$("#todoForm").serialize(),
-								dataType:"text",
-								success:function(re){
-									if(re>0){
-										alert("수정됫네?ㅎㅎ");
-										todoSelectAll();
-									}else{
-										alert("수정안됫으");
+					if("${sessionScope.userDTO.userNo}"==re.userNo){
+						if(re!=null){
+							var updateVal=prompt("포스트잇에 적을 내용을 입력해주세요",re.todoContent);
+							if(updateVal!=null){
+								$("#todoNo").val(postitSu[1]);
+								$("#todoContent").val(updateVal);
+								$.ajax({
+									url:url+"/todo/todoUpdate",
+									type:"post",
+									data:$("#todoForm").serialize(),
+									dataType:"text",
+									success:function(re){
+										if(re>0){
+											alert("수정됫네?ㅎㅎ");
+											todoSelectAll();
+										}else{
+											alert("수정안됫으");
+										}
+									},
+									error:function(err){
+										alert("에러발생 : "+err);
 									}
-								},
-								error:function(err){
-									alert("에러발생 : "+err);
-								}
-							});
+								});
+							}
+							
 						}
-						
+					}else{
+						alert("메모변경은 메모를 등록한 사람만 가능합니다.");
 					}
+					
 				},
 				error:function(err){
 					alert("에러발생 : "+err);
@@ -115,7 +120,7 @@ var url="${pageContext.request.contextPath}";
 </head>
 <body>
 	<div class="wrapper">
-		<jsp:include page="/WEB-INF/views/project/team_sidebar_ch.jsp" />
+		<jsp:include page="/WEB-INF/views/project/sidebar_ch.jsp" />
 
 
 		<div class="main-panel">
@@ -177,8 +182,8 @@ var url="${pageContext.request.contextPath}";
 	<form id="todoForm" method=post action="">
 	    <input type=hidden id="securityInfo" name="${_csrf.parameterName}" value="${_csrf.token}">
 	    <input type=hidden id="todoNo" name="todoNo" value="0"/>
-		<input type=hidden id="projectNo" name="projectNo" value="1">
-		<input type=hidden id="userNo" name="userNo" value="1">
+		<input type=hidden id="projectNo" name="projectNo" value="${sessionScope.projectNo }">
+		<input type=hidden id="userNo" name="userNo" value="${sessionScope.userDTO.userNo }">
 		<input type=hidden id="todoLocation" name="todoLocation" value="-1">
 		<input type=hidden id="todoContent" name="todoContent" value="">
 		

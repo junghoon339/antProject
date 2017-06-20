@@ -20,30 +20,30 @@
 		</div>
 
 		<ul class="nav">
-			<li class="active"><a href="dashboard.html"> <i
+			<li class="active"><a href="${pageContext.request.contextPath }/admin/user"> <i
 					class="ti-pie-chart"></i>
-					<p>팀플정보</p>
+					<p>회원관리</p>
 			</a></li>
-			<li><a href="user.html"> <i class="ti-user"></i>
-					<p>팀원정보</p>
+			<li><a href="${pageContext.request.contextPath }/admin/adminProject"> <i class="ti-user"></i>
+					<p>프로젝트관리</p>
 			</a></li>
-			<li><a href="table.html"> <i
+			<li><a href="${pageContext.request.contextPath }/admin/adminNotice"> <i
 					class="ti-view-list-alt"></i>
-					<p>팀시간표</p>
+					<p>공지사항관리</p>
 			</a></li>
-			<li><a href="typography.html"> <i class="ti-text"></i>
-					<p>팀캘린더</p>
+			<!-- <li><a href="typography.html"> <i class="ti-text"></i>
+					<p>My Calendar</p>
 			</a></li>
 			<li><a href="icons.html"> <i class="ti-pencil-alt2"></i>
-					<p>자료실</p>
-			</a></li>
-			 <li>
+					<p>공지사항</p>
+			</a></li> -->
+			<!--  <li>
                     <a href="maps.html">
                         <i class="ti-map"></i>
-                        <p>투표</p>
+                        <p>Maps</p>
                     </a>
                 </li>
-              <!--   <li>
+                <li>
                     <a href="notifications.html">
                         <i class="ti-bell"></i>
                         <p>Notifications</p>

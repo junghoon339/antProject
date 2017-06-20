@@ -11,12 +11,11 @@ import org.springframework.security.web.authentication.AuthenticationFailureHand
 import org.springframework.stereotype.Component;
 
 /**
- * ½ºÇÁ¸µ ½ÃÅ¥¸®Æ¼¿¡¼­ ·Î±×ÀÎ ½ÇÆĞ½Ã È£ÃâµÇ´Â ÀÌº¥Æ® ÇÚµé·¯ÀÓ
+ * ìŠ¤í”„ë§ ì‹œíë¦¬í‹°ì—ì„œ ë¡œê·¸ì¸ ì‹¤íŒ¨ì‹œ í˜¸ì¶œë˜ëŠ” ì´ë²¤íŠ¸ í•¸ë“¤ëŸ¬ì„
  * 
- * springBean ¼³Á¤ ¹®¼­¿¡¼­ <security:form-login ÅÂ±×¿¡ authentication-failure-ref Ãß°¡ÇÏ¸é
- * ·Î±×ÀÎ ½ÇÆĞ½Ã onAuthentiationFailure ¸Ş¼Òµå°¡ ÀÚµ¿ È£ÃâµÊ
+ * springBean ì„¤ì • ë¬¸ì„œì—ì„œ <security:form-login íƒœê·¸ì— authentication-failure-ref ì¶”ê°€í•˜ë©´
+ * ë¡œê·¸ì¸ ì‹¤íŒ¨ì‹œ onAuthentiationFailure ë©”ì†Œë“œê°€ ìë™ í˜¸ì¶œë¨
  * @author Hwick
- *
  */
 @Component // id=memberAuthenticationFailureHandler
 public class UserAuthenticationFailureHandler implements AuthenticationFailureHandler{

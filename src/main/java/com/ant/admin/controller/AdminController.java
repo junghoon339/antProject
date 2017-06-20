@@ -69,7 +69,7 @@ public class AdminController {
 		mv.addObject("pageSu",pageSu);
 		mv.addObject("curPage",curPage);
 		mv.addObject("rowCount",rowCount);
-		mv.setViewName("admin/admin-user");
+		mv.setViewName("admin/admin-user_ch");
 		return mv;
 	}
 	
