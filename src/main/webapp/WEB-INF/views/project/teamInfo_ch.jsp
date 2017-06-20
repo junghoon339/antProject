@@ -74,10 +74,24 @@
 }
 </style>
 <script>
-	$(function() {
+$(document).ready(function() {
+	
+	var startDate = dateToYYYYMMDD(new Date("${projectDTO.projectStartdate}"));
+	var endDate = dateToYYYYMMDD(new Date("${projectDTO.projectEnddate}"));
 
-		$("#Btn")
-				.click(
+	$("#start-date").attr("value", startDate);
+	$("#end-date").attr("value", endDate);
+
+	
+	//조원일경우
+	if ("${projectUserRole}" == "조장") {
+		$("#updateBtn").attr("style", "display:display");
+	}
+
+})
+
+	$(function() {
+		$("#Btn").click(
 						function() {
 
 							if ($("select[name='projectState']").val() == '1') {
@@ -117,28 +131,9 @@
 										});
 							}
 						})
-	})
+	}) 
 
-	$(document).ready(
-			function() {
-				var startDate = dateToYYYYMMDD(new Date(
-						"${projectDTO.projectStartdate}"));
-				var endDate = dateToYYYYMMDD(new Date(
-						"${projectDTO.projectEnddate}"));
-				//alert(startDate);
-				//var startDate = dateToYYYYMMDD("${projectDTO.projectStartdate}");
-				//var endDate = dateToYYYYMMDD("${projectDTO.projectEnddate}");
 
-				$("#start-date").attr("value", startDate);
-				$("#end-date").attr("value", endDate);
-
-				//조원일경우
-				if ("${projectUserRole}" == "조장") {
-					//$("input, select").attr("readonly","readonly");
-					$("#updateBtn").attr("style", "display:display");
-				}
-
-			})
 	//데이트 포멧 
 	function dateToYYYYMMDD(date) {
 		function pad(num) {
@@ -155,13 +150,8 @@
 <body>
 	<div class="wrapper">
 		<jsp:include page="sidebar_ch.jsp" />
-
-
 		<div class="main-panel">
 			<jsp:include page="header_ch.jsp" flush="false" />
-
-
-
 			<div class="content">
 				<div class="container-fluid">
 					<div class="row">
@@ -170,8 +160,7 @@
 						<div class="col-lg-8 col-lg-offset-2">
 							<h1>팀플 정보</h1>
 							<hr>
-							<form name="projectForm" class="" action="${pageContext.request.contextPath}/project/updateTeamInfo"
-								method="post">
+							<form name="projectForm" class="" action="${pageContext.request.contextPath}/project/updateTeamInfo" method="post">
 								<input type="hidden" id="securityInfo" name="${_csrf.parameterName}" value="${_csrf.token}">
 								<p></p>
 								팀플명 : <input class="form-control" type="text" name="projectName" value="${projectDTO.projectName}" />
@@ -193,19 +182,12 @@
 										type="date">
 								</div>
 								<p></p>
-								프로젝트 상태 : <select class="form-control" name="projectState">
-									<option value="0">진행중</option>
-									<option value="1">완료대기중</option>
-									<option value="2">완료됨</option>
-								</select>
-								<p></p>
-								<br />
-								<button type="submit" class="btn btn-danger" id="updateBtn"
-									style="display: none">수정</button>
+
+								<br/>
+								<button type="submit" class="btn btn-danger" id="updateBtn"	style="display: none">수정</button>
 								<button type="button" class="btn btn-danger" id="Btn">마감하기</button>
 							</form>
 						</div>
-
 
 					</div>
 				</div>

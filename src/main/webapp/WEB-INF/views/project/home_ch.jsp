@@ -120,6 +120,7 @@
 												<div class="bs bs-pricing">
 													<div class="cotent">
 														<h3 class="category">${projectDTO.projectName}</h3>
+														<a href="#" style="color:#BCE55C;">설문조사해라</a>
 														<h1 class="bs-caption">
 															<small>D-</small>${projectDTO.dday}
 														</h1>
