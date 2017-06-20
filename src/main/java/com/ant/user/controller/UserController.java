@@ -46,7 +46,7 @@ public class UserController {
 		return "index";
 	}
 
-	// ¿ìµ¿ÀÌ°¡ »èÁ¦ÇÏ°í ÀÌºÎºÐÀ» ÀÌÁ¦ projectController¿¡¼­ ÇÏµµ·Ï ÇÏ°Ú½À´Ï´Ù!
+	// ï¿½ìµ¿ï¿½Ì°ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï°ï¿½ ï¿½ÌºÎºï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ projectControllerï¿½ï¿½ï¿½ï¿½ ï¿½Ïµï¿½ï¿½ï¿½ ï¿½Ï°Ú½ï¿½ï¿½Ï´ï¿½!
 	/*
 	 * @RequestMapping("/main") public String afterLogin() { return
 	 * "project/home"; }
@@ -56,8 +56,8 @@ public class UserController {
 	 * return "project/teamMain";///WEB-INF/views/project/teamMain.jsp }
 	 */
 	@RequestMapping("/timetable")
-	public String timeUpdate() {
-		return "timetable/timetable";
+	public String timeUpdate(){
+		return "timetable/userTimetable"; 
 	}
 
 	@RequestMapping("/idCheck")
@@ -96,21 +96,21 @@ public class UserController {
 
 	@RequestMapping("/sendEmail")
 	public ModelAndView sendEmail(String emailAddr) throws Exception {
-		// ÀÓ½Ãºñ¹Ð¹øÈ£´Â 8ÀÚ
+		// ï¿½Ó½Ãºï¿½Ð¹ï¿½È£ï¿½ï¿½ 8ï¿½ï¿½
 		String pw=emailSender.temporaryPassword(8);
 		
 		ModelAndView mv = new ModelAndView("user/sendEmail");
 		
-		// id¸¦ Ã£À½ ÀÖ³ª¾ø³ª
+		// idï¿½ï¿½ Ã£ï¿½ï¿½ ï¿½Ö³ï¿½ï¿½ï¿½ï¿½ï¿½
 		UserDTO dto = userService.selectUserById(emailAddr);
 		if (dto == null) {
-			mv.addObject("msg", "Á¸ÀçÇÏÁö ¾Ê´Â ¾ÆÀÌµðÀÔ´Ï´Ù.");
+			mv.addObject("msg", "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ê´ï¿½ ï¿½ï¿½ï¿½Ìµï¿½ï¿½Ô´Ï´ï¿½.");
 			return mv;
 		}
 
 		email.setReceiver(emailAddr);
-		email.setSubject("°³¹Ì¿Í º£Â¯ÀÌ ºñ¹Ð¹øÈ£ Ã£±â ¸ÞÀÏÀÔ´Ï´Ù.");
-		email.setContent("ÀÓ½Ã ºñ¹Ð¹øÈ£´Â " + pw + " ÀÔ´Ï´Ù.");
+		email.setSubject("ï¿½ï¿½ï¿½Ì¿ï¿½ ï¿½ï¿½Â¯ï¿½ï¿½ ï¿½ï¿½Ð¹ï¿½È£ Ã£ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ô´Ï´ï¿½.");
+		email.setContent("ï¿½Ó½ï¿½ ï¿½ï¿½Ð¹ï¿½È£ï¿½ï¿½ " + pw + " ï¿½Ô´Ï´ï¿½.");
 
 		userService.updateTempPassword(dto.getUserNo(), pw);
 		
