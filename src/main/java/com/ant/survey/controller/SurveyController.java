@@ -29,16 +29,22 @@ public class SurveyController {
 	
 	@RequestMapping("/")
 	@ResponseBody
-	public List<UserDTO> survey(int projectNo){
-		System.out.println(1111);
-		System.out.println("값받아와버리기~"+projectNo);
+	public List<UserDTO> survey(HttpSession session, int projectNo){
+		UserDTO user = (UserDTO) session.getAttribute("userDTO");
+		int userNo = user.getUserNo();
+		String userName = user.getUserName();
+		List<UserDTO> users = new ArrayList<>();
 		List<UserDTO> projectUserList = projectService.selectProjectUsers(projectNo);
 		
+		
 		for(UserDTO u : projectUserList){
-			System.out.println("이름----> "+u.getUserName());
+			System.out.println(u.getUserName()+"=="+userName+"? --->"+!(u.getUserName().equals(userName)));
+			if(!u.getUserName().equals(userName)){
+				users.add(u);
+			}
 		}
 		
-		return projectUserList;
+		return users;
 	}
 	
 	@RequestMapping("/mainPage")
