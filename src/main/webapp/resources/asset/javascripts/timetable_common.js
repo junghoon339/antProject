@@ -1042,7 +1042,7 @@ $(function(){
     
     alert( $("#custom_class_time").val());
     $.ajax({
-    	url: "${pageContext.request.contextPath}/timetable/main",
+    	url: "${pageContext.request.contextPath}/timetable/insert",
     	type:"post",
     	data:$("#custom_lecture_form").serialize(),
     	dataType:"json",

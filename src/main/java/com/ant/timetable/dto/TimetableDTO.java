@@ -1,12 +1,12 @@
 package com.ant.timetable.dto;
 
 public class TimetableDTO {
-	private int userNo; //È¸¿ø¹øÈ£
-	private String timetableSubject; //°ú¸ñ¸í
-	private String timetableDay; //¿äÀÏ
-	private String timetableClass; //±³½Ã
-	private String timetableLocation; //°­ÀÇ½ÇÀ§Ä¡
-	private String timetableTeacher; //±³¼ö´Ô
+	private int userNo; //È¸ï¿½ï¿½ï¿½ï¿½È£
+	private String timetableSubject; //ê³¼ëª©ëª…
+	private String timetableDay; //ìš”ì¼
+	private String timetableClass; //ì‹œê°„
+	private String timetableLocation; //ìœ„ì¹˜
+	private String timetableTeacher; //êµìˆ˜ëª…
 	
 	public TimetableDTO(){}
 	public TimetableDTO(int userNo, String timetableSubject, String timetableDay, String timetableClass,

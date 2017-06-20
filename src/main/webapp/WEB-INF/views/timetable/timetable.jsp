@@ -213,6 +213,7 @@
 		
 		<div id="custom_lecture_modal">
 			<form id="custom_lecture_form">
+				<input type=hidden id="securityInfo" name="${_csrf.parameterName}" value="${_csrf.token}">
 				<input type="text" name="" id="custom_course_title" class="input-large" placeholder="교과목명을 입력하세요." /><br />
 				<input type="text" name="" id="custom_location" class="input-large" placeholder="강의동을 입력하세요." /><br />
 				<input type="hidden" name="" id="custom_class_time"/>
