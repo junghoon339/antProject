@@ -115,6 +115,9 @@
 		FROM project_user 
 		WHERE project_no=#{projectNo} and user_no=#{userNo}
 	</select>
+	
+	<!-- projectEnddate가 현재날짜일때 projectState변경 -->
+	
 
 
 </mapper>

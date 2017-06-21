@@ -34,182 +34,51 @@
 <link href='https://fonts.googleapis.com/css?family=Muli:400,300' rel='stylesheet' type='text/css'>
 <link href="${pageContext.request.contextPath }/resources/css/themify-icons.css" rel="stylesheet">
 
-<link rel="stylesheet" type="text/css"	href="${pageContext.request.contextPath}/resources/css/room.css" />
-
-
-<script type="text/javascript">
-	var header = $("meta[name='_csrf_header']").attr("content");
-	var token = $("meta[name='_csrf']").attr("content");
-
-	$(document)
-			.ready(
-					function() {
-						//tabModule.init();
-
-						$("#plusImg").click(function() {
-							$('div.modal').modal();
-						})
-
-						/* 		$(document).on("click","#addMember",function(){
-						 //input추가
-						 }); */
-
-						$("#addBtn")
-								.click(
-										function() {
-											var addInputbox = "<input class='' type='text'  name='invitedUser' placeholder='초대할 팀원을 입력하세요.'><button type='button' class='btn btn-danger' id='delMemberbtn'>삭제</button></input><p></p>";
-											$("#invitedMemberDiv").append(
-													addInputbox);
-											num = num + 1;
-										})
-
-						$("#projectForm").submit(function() {
-							alert("새로운 조별과제가 등록되었습니다.");
-						});
-						$("#insertProjectBtn").click(function() {
-							//alert("팀플생성버튼눌림");
-							if (check() == true)
-								$("#projectForm").submit();
-
-						});
-
-						$(".survey")
-								.click(
-										function() {
-											alert($(this).parent().children()
-													.next().val());
-											$
-													.ajax({
-														url : "${pageContext.request.contextPath}/survey/",
-														type : "post",
-														beforeSend : function(
-																xhr) {
-															xhr
-																	.setRequestHeader(
-																			header,
-																			token);
-														},
-														dataType : "json",
-														data : "projectNo="
-																+ $(this)
-																		.parent()
-																		.children()
-																		.next()
-																		.val(),
-														success : function(
-																result) {
-
-															var str = "";
-															$
-																	.each(
-																			result,
-																			function(
-																					index,
-																					item) {
-																				str += '<tr width="100%">';
-																				str += '<td name="nameTd" width="50%"><center>'
-																						+ item.userName
-																						+ '</center></td>';
-																				str += '<td name="scoreTd" width="15%"><input type="text" placeholder="점수를 입력해주세요." value=""/></td>';
-																				str += '<td name="updateTd" width="35%"><a href="#"><center>완료</center></a></td>';
-																				str += '</tr>';
-																			})
-															$("#print").html(
-																	str);
-															$("#myModal2")
-																	.modal(
-																			'show');
-
-														},
-														error : function(err) {
-															alert("teamInfo.jsp ERROR : "
-																	+ err);
-														}
-													});
-										})
-					});
-
-	function check() {
-		if (fr.projectName.value == "") {
-			alert("조별과제명을 입력해 주세요.");
-			fr.projectName.focus();
-			return false;
-		} else if (fr.projectSubject.value == "") {
-			alert("과목명을 입력해 주세요.");
-			fr.projectSubject.focus();
-			return false;
-		} else if (fr.projectTeacher.value == "") {
-			alert("교수님 성함을 입력해 주세요.");
-			fr.projectTeacher.focus();
-			return false;
-		} else if (fr.projectStartdate.value == "") {
-			alert("조별과제 시작날짜를 입력해 주세요.");
-			fr.projectStartdate.focus();
-			return false;
-		} else if (fr.projectEnddate.value == "") {
-			alert("조별과제 종료날짜를 입력해 주세요.");
-			fr.projectEnddate.focus();
-			return false;
-		} else
-			return true;
-	}
-</script>
 </head>
 <body>
-	<div class="wrapper">
+<div class="wrapper">
 		<jsp:include page="/WEB-INF/views/project/sidebar_ch.jsp" />
-
 		<div class="main-panel">
 			<jsp:include page="header_ch.jsp" flush="false" />
-
 			<div class="content">
 				<div class="container-fluid">
 					<div class="row">
-						<div class="col-md-12">
-							<div class="card">
-								<div class="header">
-									<h4 class="title">완료된 조별과제</h4>
-								</div>
-								<div class="content">
-									 
-									<c:choose>
-									<c:when test="${empty completedProList}"><!-- 완료된 조별과제가 없으면 -->
-										<div class="col-md-3">
-											<div class="bs bs-pricing">
-												<div class="cotent">
-													완료된 조별과제가 없습니다.</h4>
-												</div>
-											</div>
-										</div>
-									</c:when>
-									<c:otherwise><!-- 완료된 조별과제가 있으면 -->
-										<c:forEach items="${completedProList}" var="projectDTO">
-											<div class="col-md-3">
-												<div class="bs bs-pricing">
-													<div class="cotent">
-														<h3 class="category">${projectDTO.projectName}</h3>
-														<h1 class="bs-caption">
-															<small>D-</small>11
-														</h1>
-														<a href="${pageContext.request.contextPath}/project/teamMain/${projectDTO.projectNo}" class="btn btn-danger">Enter</a>
-													</div>
-												</div>
-											</div>
-										</c:forEach>
-									</c:otherwise>
+						<c:choose>
+							<c:when	test="${empty completedProList}"><!-- 완료된 조별과제가 없으면 -->
+								<h4>완료된 조별과제가 없습니다.</h4>
+							</c:when>
+							<c:otherwise><!-- 완료된 조별과제가 있으면 -->
+								<c:forEach items="${completedProList}" var="projectDTO"><!-- 완료된 조별과제 -->
+									<div class="col-lg-3 col-sm-6">
+				                        <div class="card">
+				                            <div class="content">
+				                                <div class="row">
+				                                    <div class="col-md-11">
+				                                        <div class="numbers">
+				                                            ${projectDTO.projectName}
+				                                        </div>
+				                                    </div>
+				                                </div>
+				                                <hr/>
+				                               <div class="row">
+													<div class="col-md-2 col-md-offset-8">
+					                              		<a href="${pageContext.request.contextPath}/project/teamMain/${projectDTO.projectNo}" class="btn btn-primary btn-simple">Enter</a>
+					                                 </div>
+				                                </div>
+				                            </div>
+				                        </div>
+				                    </div>
+								</c:forEach>
+							</c:otherwise>
+						</c:choose>
 
-								</c:choose>
-								</div>
-							</div>
-						</div>
-
+						
 						<jsp:include page="footer_ch.jsp" flush="false" />
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
-
 
 
 </body>
