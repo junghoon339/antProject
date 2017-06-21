@@ -68,11 +68,12 @@ public class ProjectController implements Serializable {
 	private Boolean dynFilter;
 	private List<String> chatList;
 	/**
-	 * 홈화면(로그인하면 나오는 페이지)
+	 * 진행중인 조별과제 홈화면(로그인하면 나오는 페이지)
+	 * @throws ParseException 
 	 * @throws Exception
 	 */
 	@RequestMapping("/home")
-	public ModelAndView home(HttpServletRequest req) throws Exception {
+	public ModelAndView home(HttpServletRequest req) throws ParseException{
 		//홈화면 진입시 projectNo에 null을 담음
 		req.getSession().setAttribute("projectNo", null);
 		
@@ -84,8 +85,7 @@ public class ProjectController implements Serializable {
 		Map<String, List<ProjectDTO>> projectMap = projectService.selectProjectById(userNo);
 		List<ProjectDTO> currentProList = projectMap.get("currentProList");
 		List<ProjectDTO> surveyingProList = projectMap.get("surveyingProList");
-		List<ProjectDTO> completedProList = projectMap.get("completedProList");
-		//System.out.println("completedProList: " + completedProList.isEmpty());
+		//List<ProjectDTO> completedProList = projectMap.get("completedProList");
 		
 		for(ProjectDTO dto:currentProList){
 			Calendar startCal = Calendar.getInstance();
@@ -102,7 +102,7 @@ public class ProjectController implements Serializable {
 			long dday = (goalTime-startTime);
 			dday = dday/1000/60/60/24;
 			
-			dto.setDday((int)dday+1);
+			dto.setDday((int)dday);
 		}
 		for(ProjectDTO dto:surveyingProList){
 			Calendar startCal = Calendar.getInstance();
@@ -126,6 +126,28 @@ public class ProjectController implements Serializable {
 		mv.setViewName("project/home_ch");
 		mv.addObject("currentProList",currentProList);
 		mv.addObject("surveyingProList",surveyingProList);
+		//mv.addObject("completedProList",completedProList);
+		return mv;
+	}
+	
+	/**
+	 * 완료된 조별과제 
+	 */
+	@RequestMapping("/completedProject")
+	public ModelAndView completedProject(HttpServletRequest req){
+				
+		// 현재 로그인된 userNo
+		UserDTO userDTO = (UserDTO) req.getSession().getAttribute("userDTO");
+		int userNo = userDTO.getUserNo();
+
+		// 현재진행중, 완료대기중, 완료된 조별과제를 담은 map
+		Map<String, List<ProjectDTO>> projectMap = projectService.selectProjectById(userNo);
+		List<ProjectDTO> completedProList = projectMap.get("completedProList");
+		
+		ModelAndView mv = new ModelAndView();
+		mv.setViewName("project/completedProject_ch");
+		//mv.addObject("currentProList",currentProList);
+		//mv.addObject("surveyingProList",surveyingProList);
 		mv.addObject("completedProList",completedProList);
 		return mv;
 	}

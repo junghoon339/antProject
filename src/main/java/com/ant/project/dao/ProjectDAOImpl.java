@@ -42,7 +42,7 @@ public class ProjectDAOImpl implements ProjectDAO {
 		return invitedUserNolist;
 	}
 	
-	//Á¶¿ø»ğÀÔ
+	//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	@Override
 	public int insertProjectMember(ProjectUserDTO projectUserDTO) {
 		return sqlSession.insert("projectMapper.insertProjectMember", projectUserDTO);
@@ -55,18 +55,18 @@ public class ProjectDAOImpl implements ProjectDAO {
 		map.put("projectState", 0);
 		map.put("userNo", userNo);
 		
-		//ÇöÀçÁøÇàÁß Á¶º°°úÁ¦
+		//ì§„í–‰ì¤‘ì¸ ì¡°ë³„ê³¼ì œ projectDTOë¥¼ ë‹´ì€ LIST
 		List<ProjectDTO> currentProList = sqlSession.selectList("projectMapper.selectProjectById", map);
 
-		//¿Ï·á´ë±âÁß Á¶º°°úÁ¦
+		//ì™„ë£ŒëŒ€ê¸°ì¤‘ì¸ ì¡°ë³„ê³¼ì œ 
 		map.put("projectState", 1);
 		List<ProjectDTO> surveyingProList = sqlSession.selectList("projectMapper.selectProjectById", map);
 		
-		//¿Ï·áµÈ Á¶º°°úÁ¦
+		//ì™„ë£Œëœ ì¡°ë³„ê³¼ì œ
 		map.put("projectState", 2);
 		List<ProjectDTO> completedProList = sqlSession.selectList("projectMapper.selectProjectById", map);
 
-		//projectMap¿¡ currentProList,completedProList¸¦ ´ãÀ½
+		//projectMapì— currentProList,completedProListë‹´ê¸°
 		Map<String, List<ProjectDTO>> projectMap = new HashMap<>();
 		projectMap.put("currentProList", currentProList);
 		projectMap.put("surveyingProList", surveyingProList);

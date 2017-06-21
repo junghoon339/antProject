@@ -23,7 +23,7 @@
 							<i class="ti-pie-chart"></i>
 							<p>진행중 조별과제</p>
 					</a></li>
-					<li><a href="${pageContext.request.contextPath}/project/home">
+					<li><a href="${pageContext.request.contextPath}/project/completedProject">
 							<i class="ti-user"></i>
 							<p>완료된 조별과제</p>
 					</a></li>
@@ -56,7 +56,7 @@
 					<li><a
 						href="${pageContext.request.contextPath}/projectCalendar/projectCalendar">
 							<i class="ti-text"></i>
-							<p>조별과제 달력</p>
+							<p>조별과제 달력</p> 
 					</a></li>
 					<li><a
 						href="${pageContext.request.contextPath}/storage/storageTable/1">

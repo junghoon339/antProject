@@ -22,7 +22,7 @@
 	<link href="http://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" rel="stylesheet">
 	<link href='https://fonts.googleapis.com/css?family=Muli:400,300' rel='stylesheet' type='text/css'>
 	<link href="${pageContext.request.contextPath }/resources/css/themify-icons.css" rel="stylesheet">
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
+
 	
 	<!-- 필요한 css는 이 밑에 넣어주면 됨 -->
 	<!-- 스크립트는 body 맨 아래쪽에 -->
@@ -39,9 +39,8 @@
 						작성할때 template.html 에서
 						<div class="row">부터 참고하면서 작성하면 됨
 					-->
-					<h3>${projectDTO.dday}</h3>
-					${schedule}
 
+					${schedule}
 
 				</div>
 			</div>
