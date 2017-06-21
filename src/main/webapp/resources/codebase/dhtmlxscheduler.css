@@ -14,7 +14,7 @@
 
 	margin:5px;
 	margin-bottom:10px;
-
+.dhx_cal_event_line
 	-webkit-transition: all .5s ease;
     -moz-transition: all .5s ease;
     -o-transition: all .5s ease;
@@ -469,7 +469,7 @@ div.dhx_modal_cover {
 	position: relative;
 }
 .dhx_cal_event_line{
-	background-color:#FFE763;
+	background-color:#8aca86;
 	border:1px solid #B7A543;
 	border-radius:3px;
 	font-family:Tahoma;
@@ -1631,7 +1631,7 @@ div.dhx_menu_head, div.dhx_menu_icon {
 
 .dhx_cal_event_line {
 	border: 1px solid transparent;
-	background-color: #1796b0;
+	background-color: #8aca86;
 	color: white;
 	height: 17px;
 	line-height: 17px;
@@ -1850,11 +1850,11 @@ div.dhx_menu_head, div.dhx_menu_icon {
 	border-bottom: 1px solid #CECECE;
 }
 .dhx_now .dhx_month_head, .dhx_now .dhx_month_body {
-	background-color: #FFF3A1;
+	background-color: hsla(36, 100%, 50%, 0.3);
 	font-weight: normal;
 }
 .dhx_cal_event_clear {
-	color: #0E64A0;
+	color: grey;
 }
 /* month view end */
 

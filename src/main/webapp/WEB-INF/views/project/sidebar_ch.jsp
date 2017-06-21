@@ -56,7 +56,7 @@
 					<li><a
 						href="${pageContext.request.contextPath}/projectCalendar/projectCalendar">
 							<i class="ti-text"></i>
-							<p>조별과제 달력</p>
+							<p>조별과제 달력</p> 
 					</a></li>
 					<li><a
 						href="${pageContext.request.contextPath}/storage/storageTable/1">

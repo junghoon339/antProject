@@ -25,10 +25,6 @@
 <link
 	href="${pageContext.request.contextPath }/resources/css/animate.min.css"
 	rel="stylesheet" />
-<!--  Paper Dashboard core CSS    -->
-<link
-	href="${pageContext.request.contextPath }/resources/css/paper-dashboard.css"
-	rel="stylesheet" />
 <!--  Fonts and icons     -->
 <link
 	href="http://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css"
@@ -38,9 +34,10 @@
 <link
 	href="${pageContext.request.contextPath }/resources/css/themify-icons.css"
 	rel="stylesheet">
-<link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
-
+<!--  Paper Dashboard core CSS    -->
+<link
+	href="${pageContext.request.contextPath }/resources/css/paper-dashboard.css"
+	rel="stylesheet" />
 <!-- 필요한 css는 이 밑에 넣어주면 됨 -->
 <!-- 스크립트는 body 맨 아래쪽에 -->
 </head>
@@ -248,7 +245,28 @@
 
 
 	<!-- script -->
-	<script type="text/javascript">
+
+
+	<!--   Core JS Files   -->
+	<script type="text/javascript"
+		src="${pageContext.request.contextPath}/resources/js/jquery-3.2.1.min.js"></script>
+	<script
+		src="${pageContext.request.contextPath }/resources/js/bootstrap.min.js"
+		type="text/javascript"></script>
+	<!--  Checkbox, Radio & Switch Plugins -->
+	<script
+		src="${pageContext.request.contextPath }/resources/js/bootstrap-checkbox-radio.js"></script>
+	<!--  Charts Plugin -->
+	<script
+		src="${pageContext.request.contextPath }/resources/js/chartist.min.js"></script>
+	<!--  Notifications Plugin    -->
+	<script
+		src="${pageContext.request.contextPath }/resources/js/bootstrap-notify.js"></script>
+	<!-- Paper Dashboard Core javascript and methods for Demo purpose -->
+	<script
+		src="${pageContext.request.contextPath }/resources/js/paper-dashboard.js"></script>
+	<!-- 필요한 자바스크립트 파일은 여기에 넣어주면 됨 -->
+		<script type="text/javascript">
 		$(document).ready(function() {
 			$("[data-toggle=tooltip]").tooltip();
 
@@ -271,27 +289,6 @@
 			})
 		});
 	</script>
-
-	<!--   Core JS Files   -->
-	<script type="text/javascript"
-		src="${pageContext.request.contextPath}/resources/js/jquery-3.2.1.min.js"></script>
-	<script
-		src="${pageContext.request.contextPath }/resources/js/bootstrap.min.js"
-		type="text/javascript"></script>
-	<!--  Checkbox, Radio & Switch Plugins -->
-	<script
-		src="${pageContext.request.contextPath }/resources/js/bootstrap-checkbox-radio.js"></script>
-	<!--  Charts Plugin -->
-	<script
-		src="${pageContext.request.contextPath }/resources/js/chartist.min.js"></script>
-	<!--  Notifications Plugin    -->
-	<script
-		src="${pageContext.request.contextPath }/resources/js/bootstrap-notify.js"></script>
-	<!-- Paper Dashboard Core javascript and methods for Demo purpose -->
-	<script
-		src="${pageContext.request.contextPath }/resources/js/paper-dashboard.js"></script>
-	<!-- 필요한 자바스크립트 파일은 여기에 넣어주면 됨 -->
-
 
 </body>
 </html>
