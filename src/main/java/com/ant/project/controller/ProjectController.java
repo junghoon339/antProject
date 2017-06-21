@@ -102,7 +102,7 @@ public class ProjectController implements Serializable {
 			long dday = (goalTime-startTime);
 			dday = dday/1000/60/60/24;
 			
-			dto.setDday((int)dday+1);
+			dto.setDday((int)dday);
 		}
 		for(ProjectDTO dto:surveyingProList){
 			Calendar startCal = Calendar.getInstance();

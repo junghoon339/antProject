@@ -34,9 +34,6 @@
 <link href='https://fonts.googleapis.com/css?family=Muli:400,300' rel='stylesheet' type='text/css'>
 <link href="${pageContext.request.contextPath }/resources/css/themify-icons.css" rel="stylesheet">
 
-<link rel="stylesheet" type="text/css"	href="${pageContext.request.contextPath}/resources/css/room.css" />
-
-
 <script type="text/javascript">
 	var header = $("meta[name='_csrf_header']").attr("content");
 	var token = $("meta[name='_csrf']").attr("content");
@@ -145,14 +142,14 @@
 				                                    <div class="col-md-11">
 				                                        <div class="numbers">
 				                                            ${projectDTO.projectName}
-				                                            <p>D-${projectDTO.dday}</p>
+				                                            <p>-완료대기중-</p>
 				                                        </div>
 				                                    </div>
 				                                </div>
 				                                <hr/>
 				                                <div class="row">
 					                                <div class="col-md-8">
-					                                 	<span class="label label-info "><a href="#" style="color: #FFFFFF;" class="survey">설문조사해라${projectDTO.projectNo}</a></span>
+					                                 	<span class="label label-info "><a href="#" style="color: #FFFFFF;" class="survey">설문조사 ${projectDTO.projectNo}</a></span>
 					                                 	<input type="hidden" value="${projectDTO.projectNo}">
 					                             	</div>
 					                                 <div class="col-md-2">
@@ -163,6 +160,7 @@
 				                        </div>
 				                    </div>
 								</c:forEach>
+								
 								<c:forEach items="${currentProList}" var="projectDTO"><!-- 진행중인 조별과제 -->	
 									<div class="col-lg-3 col-sm-6">
 				                        <div class="card">
