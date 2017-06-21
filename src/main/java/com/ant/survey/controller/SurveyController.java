@@ -1,9 +1,12 @@
 package com.ant.survey.controller;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
@@ -14,6 +17,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ant.project.service.ProjectService;
+import com.ant.survey.dto.SurveyDTO;
+import com.ant.survey.dto.SurveyDetailDTO;
+import com.ant.survey.dto.SurveyUserDTO;
 import com.ant.survey.service.SurveyService;
 import com.ant.user.dto.UserDTO;
 
@@ -29,23 +35,94 @@ public class SurveyController {
 	
 	@RequestMapping("/")
 	@ResponseBody
-	public List<UserDTO> survey(int projectNo){
-		System.out.println(1111);
-		System.out.println("값받아와버리기~"+projectNo);
+	public List<UserDTO> survey(HttpSession session, int projectNo){
+		
+		UserDTO user = (UserDTO) session.getAttribute("userDTO");
+		int userNo = user.getUserNo();
+		
+		SurveyDTO survey = surveyService.surveySelectByProjectNo(projectNo);
+		int surveyNo = survey.getSurveyNo();
+		
+		SurveyUserDTO surveyUser = surveyService.surveyUserSelect(surveyNo, userNo);
+		List<UserDTO> users = new ArrayList<>();
+		
+		if(surveyUser.getSurveyUserState()==1){
+			return users;
+		}
+		
+		String userName = user.getUserName();
+		
 		List<UserDTO> projectUserList = projectService.selectProjectUsers(projectNo);
 		
 		for(UserDTO u : projectUserList){
-			System.out.println("이름----> "+u.getUserName());
+			if(!u.getUserName().equals(userName)){
+				users.add(u);
+			}
 		}
 		
-		return projectUserList;
+		return users;
 	}
 	
 	@RequestMapping("/mainPage")
 	public String mainPage(HttpSession session){
+		
 		int projectNo = (int) session.getAttribute("projectNo");
 		
+		String surveyStartDate ;
+		String surveyEndDate ;
+		
+		SimpleDateFormat sd = new SimpleDateFormat("MM/dd/yyyy", Locale.KOREA);
+		Date now = new Date();
+		
+		Calendar startCal = Calendar.getInstance();
+		Calendar endCal = Calendar.getInstance();
+		
+		startCal.setTime(now);
+		endCal.setTime(now);
+		endCal.add(Calendar.DATE, 1);
+		
+		surveyStartDate = sd.format(startCal.getTime());
+		surveyEndDate = sd.format(endCal.getTime());
+		
+		// 마감하기 이후, State 1로 변경하는 부분,,
 		surveyService.updateTeamInfo(projectNo);
+		
+		//마감하기 이후, 프로젝트 종료시간을 변경하는 부분,,
+		surveyService.closingProject(projectNo, surveyEndDate);
+		
+		surveyService.surveyCreate(new SurveyDTO(0, projectNo, surveyStartDate, surveyEndDate, 0));
+		
+		SurveyDTO survey = surveyService.surveySelectByProjectNo(projectNo);
+		int surveyNo = survey.getSurveyNo();
+		
+		List<UserDTO> projectUserList = projectService.selectProjectUsers(projectNo);
+		
+		for(UserDTO u : projectUserList){
+			int userNo = u.getUserNo();
+			surveyService.surveyUserCreate(new SurveyUserDTO(0, surveyNo, userNo, 0));
+		}
+		
+		return "redirect:/project/home";
+	}
+	
+	@RequestMapping("/insertSurveyDetail")
+	public String createSurveyUser(HttpSession session, int projectNo, String[] userName, String[] userScore){
+		
+		UserDTO user = (UserDTO) session.getAttribute("userDTO");
+		int userNo = user.getUserNo();
+		
+		SurveyDTO survey = surveyService.surveySelectByProjectNo(projectNo);
+		int surveyNo = survey.getSurveyNo();
+		
+		SurveyUserDTO surveyUser = surveyService.surveyUserSelect(surveyNo, userNo);
+		int surveyUserNo = surveyUser.getSurveyUserNo();
+		
+		for(int i=0; i<userName.length;i++){
+			surveyService.surveyDetailCreate(new SurveyDetailDTO(0, surveyNo, surveyUserNo, userName[i], userScore[i]));
+		}
+		
+		surveyService.surveyUserUpdate(surveyNo, userNo);
+		
 		return "redirect:/project/home";
 	}
 }

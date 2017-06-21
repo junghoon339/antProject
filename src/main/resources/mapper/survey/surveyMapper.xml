@@ -61,7 +61,7 @@
 	
 	<insert id="surveyCreate" parameterType="surveyDTO">
 		INSERT INTO survey
-		VALUES(seq_survey_no.nextval, #{surveyNo}, #{surveyStartdate}, #{surveyEnddate}, #{surveyState})
+		VALUES(seq_survey_no.nextval, #{projectNo}, to_date(#{surveyStartDate}, 'mm/dd/yyyy'), to_date(#{surveyEndDate}, 'mm/dd/yyyy'), #{surveyState})
 	</insert>
 	
 	<update id="surveyUpdate" parameterType="int">
@@ -82,21 +82,40 @@
 	</update>
 	
 	<insert id="surveyDetailCreate" parameterType="surveyDetailDTO">
-		INSERT INTO survey_detail
+		INSERT INTO survey_detail(survey_detail_no, survey_no, survey_user_no, survey_detail_username, survey_detail_userscore)
 		VALUES(seq_survey_detail_no.nextval, #{surveyNo}, #{surveyUserNo}, #{surveyDetailUserName}, #{surveyDetailUserScore})
 	</insert>
 	
-	<select id="surveySelectByProjectNo" parameterType="int" resultMap="surveyDTOCollection">
+	<select id="surveySelect1" parameterType="int" resultMap="surveyDTOMap">
 		SELECT *
+		FROM survey
+		WHERE project_no = #{_parameter}
+	</select>
+	
+	<select id="surveySelect2" parameterType="int" resultMap="surveyDTOCollection">
+		SELECT s.survey_no, s.project_no, s.survey_startdate, s.survey_enddate, s.survey_state, su.survey_user_no, su.survey_no, su.user_no, su.survey_user_state
 		FROM survey s JOIN survey_user su
 		ON s.survey_no = su.survey_no
-		AND survey_no = #{_parameter}
+		AND project_no = #{_parameter}
+	</select>
+	
+	<select id="surveyUserSelect" parameterType="map" resultMap="surveyUserDTOMap">
+		SELECT *
+		FROM survey_user
+		WHERE survey_no = #{surveyNo} 
+		AND user_no = #{userNo}
 	</select>
 	
 	<update id="updateTeamInfo" parameterType="int">
 		UPDATE project
 		SET project_state=1
 		WHERE project_no=#{_parameter}
+	</update>
+	
+	<update id="closingProject" parameterType="Map">
+		UPDATE project
+		SET project_enddate = to_date(#{endDate}, 'yy/MM/dd')
+		WHERE project_no = #{projectNo}
 	</update>
 	
 </mapper>

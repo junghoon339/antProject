@@ -1921,17 +1921,16 @@ div.dhx_menu_head, div.dhx_menu_icon {
 .dhx_save_btn_set {
 	border: 1px solid #22A1BC;
 	color: white;
-	text-shadow:0px -1px 0px #6F6F6F;
-	background-color: #22A1BC;
+	text-shadow:0px -1px 0px rgba(111, 111, 111, 0);
+	background-color: #7cb679;
 }
 .dhx_btn_set, .dhx_cancel_btn_set {
 	border: 1px solid #CECECE;
 }
 .dhx_delete_btn_set {
-	border: 1px solid #FF8831;
-	background-color: #FF8831;
-	color: white;
-	text-shadow:0px -1px 0px #93755F;
+	border: 1px solid #CECECE;
+	background-color: blanchedalmond;
+	color: #332f2f;
 }
 .dhx_cal_ltitle {
 	height: 30px;

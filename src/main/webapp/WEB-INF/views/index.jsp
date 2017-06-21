@@ -141,11 +141,11 @@
 												value="${_csrf.token}">
 											<div class="form-group">
 												<input type="text" name="userId" id="userId"
-													class="form-control" placeholder="Email Address" value="">
+													class="form-control" placeholder="이메일 주소" value="">
 											</div>
 											<div class="form-group">
 												<input type="password" name="userPassword" id="userPassword"
-													class="form-control" placeholder="Password">
+													class="form-control" placeholder="비밀번호">
 											</div>
 											<div class="form-group text-center">
 												<!-- <input type="checkbox"  class=""
@@ -165,7 +165,7 @@
 													<div class="col-lg-12">
 														<div class="text-center">
 															<a href="${pageContext.request.contextPath}/user/forgotPassword"
-																class="forgot-password">비밀번호 찾기</a>
+																class="forgot-password" style="text-decoration: none">비밀번호 찾기</a>
 														</div>
 													</div>
 												</div>

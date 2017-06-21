@@ -88,9 +88,11 @@ $(function() {
 						<section>
 						<div class="container">
 							<div class="row">
-					<%@include file="header.jsp"%>
+					
 					
 						<div class="col-lg-9 col-lg-offset-2">
+						<div class="card">
+						<%@include file="header.jsp"%>
 							<div class="well well-lg">
 								<div class="form-group" style="padding: 12px;">
 									<form action="${pageContext.request.contextPath}/vote/update" id="createForm" method="post">
@@ -122,6 +124,7 @@ $(function() {
 									</form>
 								</div>
 							</div>
+						</div>
 						</div>
 						</div></div></section>
 						
