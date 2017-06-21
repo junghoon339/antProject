@@ -38,6 +38,8 @@ import com.ant.message.service.MessageService;
 import com.ant.project.dto.ProjectDTO;
 import com.ant.project.dto.ProjectUserDTO;
 import com.ant.project.service.ProjectService;
+import com.ant.survey.controller.SurveyController;
+import com.ant.survey.service.SurveyService;
 import com.ant.user.dto.UserDTO;
 import com.dhtmlx.planner.DHXEv;
 import com.dhtmlx.planner.DHXEvent;
@@ -58,7 +60,10 @@ public class ProjectController implements Serializable {
 	
 	@Autowired
 	private MessageService messageService;
-
+	
+	@Autowired
+	private SurveyController surveyController;
+	
 	public static String date_format = "MM/dd/yyyy HH:mm";
 	public static String filter_format = "yyyy-MM-dd";
 	public DHXSecurity security;
@@ -83,6 +88,9 @@ public class ProjectController implements Serializable {
 
 		// projectEnddate가 현재날짜일때 projectState변경
 		int updateResult = projectService.updateProjectState(userNo);
+		// surveyController호출???????????★★★★★★★★★★★★★★★★★★★★★★★★★★★★★
+		//surveyController.mainPage(session);
+		
 		
 		// 현재진행중, 완료대기중 조별과제를 담은 map
 		Map<String, List<ProjectDTO>> projectMap = projectService.selectProjectById(userNo);
@@ -229,6 +237,7 @@ public class ProjectController implements Serializable {
 		ModelAndView mv = new ModelAndView();
 		mv.addObject("projectDTO",projectDTO);
 		mv.setViewName("project/teamInfo_ch");
+		
 		return mv;
 	}
 	

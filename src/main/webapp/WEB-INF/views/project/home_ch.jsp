@@ -53,105 +53,72 @@
 	var header = $("meta[name='_csrf_header']").attr("content");
 	var token = $("meta[name='_csrf']").attr("content");
 
-	$(document)
-			.ready(
-					function() {
-						$("#plusImg").click(function() {
-							$("#myModal").modal(); //우동이가 수정함. 이걸로!!
+	$(document).ready(function() {
+		$("#plusImg").click(function() {
+			$("#myModal").modal(); 
+		})
+	
+		$("#addBtn").click(function() {
+							var addInputbox = "<input class='' type='text'  name='invitedUser' placeholder='초대할 팀원을 입력하세요.'><button type='button' class='btn btn-danger' id='delMemberbtn'>삭제</button></input><p></p>";
+							$("#invitedMemberDiv").append(
+									addInputbox);
+							num = num + 1;
 						})
+	
+		$("#projectForm").submit(function() {
+			alert("새로운 조별과제가 등록되었습니다.");
+		});
+		$("#insertProjectBtn").click(function() {
+			if (check() == true)
+				$("#projectForm").submit();
+	
+		});
+	
+		$(".survey").click(function() {
+			$.ajax({
+					url : "${pageContext.request.contextPath}/survey/",
+					type : "post",
+					beforeSend : function(xhr) {
+									xhr.setRequestHeader(header,token);
+					},
+					dataType : "json",
+					data : "projectNo="+ $(this).parent().next().val(),
+					success : function(result) {
 
-						$("#addBtn")
-								.click(
-										function() {
-											var addInputbox = "<input class='' type='text'  name='invitedUser' placeholder='초대할 팀원을 입력하세요.'><button type='button' class='btn btn-danger' id='delMemberbtn'>삭제</button></input><p></p>";
-											$("#invitedMemberDiv").append(
-													addInputbox);
-											num = num + 1;
-										})
+								if ($(result).size()==0) {
+									alert("이미 설문조사에 참여하였습니다.");
+									return;
+								}
+		
+								var str = "";
+								$.each(result,function(index,item) {
+													str += '<tr width="100%">';
+													str += '<td name="nameTd" width="50%"><center>'+ item.userName + '</center></td>';
+													str += '<input type="hidden" name="userName" value="'+item.userName+'" />';
+													str += '<input type="hidden" name="projectNo" value="'+ $(".survey").parent().next().val() + '" />';
+													str += '<td name="scoreTd" width="15%"><input type="text" name="userScore" placeholder="점수를 입력해주세요." value=""/></td>';
+													str += '<td name="updateTd" width="35%"><a href="#"><center>완료</center></a></td>';
+													str += '</tr>';
+												})
+								$("#print").html(
+										str);
+								$("#myModal2").modal('show');
 
-						$("#projectForm").submit(function() {
-							alert("새로운 조별과제가 등록되었습니다.");
-						});
-						$("#insertProjectBtn").click(function() {
-							if (check() == true)
-								$("#projectForm").submit();
+					},
+					error : function(err) {
+						alert("teamInfo.jsp ERROR : "
+								+ err);
+					}
+				});
+		})
+	
+		$("#okayBtn").click(function() {
+			alert("dd확인뉴름ㅎㅎ");
+			$("input")
+			$("#ffform").submit();
+		})
 
-						});
-
-						$(".survey")
-								.click(
-										function() {
-											$
-													.ajax({
-														url : "${pageContext.request.contextPath}/survey/",
-														type : "post",
-														beforeSend : function(
-																xhr) {
-															xhr
-																	.setRequestHeader(
-																			header,
-																			token);
-														},
-														dataType : "json",
-														data : "projectNo="
-																+ $(this)
-																		.parent()
-																		.next()
-																		.val(),
-														success : function(
-																result) {
-
-															if ($(result)
-																	.empty()) {
-																alert("이미 설문조사에 참여하였습니다.");
-																return;
-															}
-
-															var str = "";
-															$
-																	.each(
-																			result,
-																			function(
-																					index,
-																					item) {
-																				str += '<tr width="100%">';
-																				str += '<td name="nameTd" width="50%"><center>'
-																						+ item.userName
-																						+ '</center></td>';
-																				str += '<input type="hidden" name="userName" value="'+item.userName+'" />';
-																				str += '<input type="hidden" name="projectNo" value="'
-																						+ $(
-																								".survey")
-																								.parent()
-																								.children()
-																								.next()
-																								.val()
-																						+ '" />';
-																				str += '<td name="scoreTd" width="15%"><input type="text" name="userScore" placeholder="점수를 입력해주세요." value=""/></td>';
-																				str += '<td name="updateTd" width="35%"><a href="#"><center>완료</center></a></td>';
-																				str += '</tr>';
-																			})
-															$("#print").html(
-																	str);
-															$("#myModal2")
-																	.modal(
-																			'show');
-
-														},
-														error : function(err) {
-															alert("teamInfo.jsp ERROR : "
-																	+ err);
-														}
-													});
-										})
-
-						$("#okayBtn").click(function() {
-							alert("dd확인뉴름ㅎㅎ");
-							$("input")
-							$("#ffform").submit();
-						})
-
-					});
+	});
 
 	function check() {
 		if (fr.projectName.value == "") {
@@ -220,15 +187,11 @@
 												<hr />
 												<div class="row">
 													<div class="col-md-8">
-														<span class="label label-info "><a href="#"
-															style="color: #FFFFFF;" class="survey">설문조사
-																${projectDTO.projectNo}</a></span> <input type="hidden"
-															value="${projectDTO.projectNo}">
+														<span class="label label-info "><a href="#"	style="color: #FFFFFF;" class="survey">설문조사${projectDTO.projectNo}</a></span> 
+														<input type="hidden" value="${projectDTO.projectNo}">
 													</div>
 													<div class="col-md-2">
-														<a
-															href="${pageContext.request.contextPath}/project/teamMain/${projectDTO.projectNo}"
-															class="btn btn-primary btn-simple">Enter</a>
+														<a href="${pageContext.request.contextPath}/project/teamMain/${projectDTO.projectNo}" class="btn btn-primary btn-simple">Enter</a>
 													</div>
 												</div>
 											</div>

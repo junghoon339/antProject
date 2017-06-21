@@ -59,8 +59,8 @@ public class SurveyController {
 				users.add(u);
 			}
 		}
-		
 		return users;
+		
 	}
 	
 	@RequestMapping("/mainPage")
@@ -70,8 +70,10 @@ public class SurveyController {
 		
 		String surveyStartDate ;
 		String surveyEndDate ;
+		String surveyEndDate2 ;
 		
 		SimpleDateFormat sd = new SimpleDateFormat("MM/dd/yyyy", Locale.KOREA);
+		SimpleDateFormat sd2 = new SimpleDateFormat("yy/MM/dd", Locale.KOREA);
 		Date now = new Date();
 		
 		Calendar startCal = Calendar.getInstance();
@@ -83,12 +85,13 @@ public class SurveyController {
 		
 		surveyStartDate = sd.format(startCal.getTime());
 		surveyEndDate = sd.format(endCal.getTime());
+		surveyEndDate2 = sd2.format(endCal.getTime());
 		
 		// 마감하기 이후, State 1로 변경하는 부분,,
 		surveyService.updateTeamInfo(projectNo);
 		
 		//마감하기 이후, 프로젝트 종료시간을 변경하는 부분,,
-		surveyService.closingProject(projectNo, surveyEndDate);
+		surveyService.closingProject(projectNo, surveyEndDate2);
 		
 		surveyService.surveyCreate(new SurveyDTO(0, projectNo, surveyStartDate, surveyEndDate, 0));
 		
