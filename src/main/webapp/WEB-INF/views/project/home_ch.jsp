@@ -35,7 +35,6 @@
 <link href="${pageContext.request.contextPath }/resources/css/themify-icons.css" rel="stylesheet">
 
 <link rel="stylesheet" type="text/css"	href="${pageContext.request.contextPath}/resources/css/room.css" />
-<link rel="stylesheet" type="text/css"	href="${pageContext.request.contextPath}/resources/css/main.css" />
 
 
 <script type="text/javascript">
@@ -155,6 +154,9 @@
 			return true;
 	}
 </script>
+<style type="text/css">
+ 	.card{ height: 190px; }
+</style>
 </head>
 <body>
 	<div class="wrapper">
@@ -166,72 +168,81 @@
 			<div class="content">
 				<div class="container-fluid">
 					<div class="row">
-						<div class="col-md-12">
-							<div class="card">
-								<div class="header">
-									<h4 class="title">진행중인 조별과제</h4>
-								</div>
-								<div class="content">
-									<c:choose>
-										<c:when	test="${empty currentProList}&&${empty surveyingProList}">
-											<!-- 진행중인,완료대기중인 조별과제가 없으면 -->
-											<div class="col-md-3">
-												<div class="bs bs-pricing">
-													<div class="cotent">
-														<h4>진행중인 조별과제가 없습니다.</h4>
-													</div>
-												</div>
-											</div>
-										</c:when>
-										<c:otherwise>
-											<!-- 진행중인 조별과제가 있으면 -->
-											<c:forEach items="${surveyingProList}" var="projectDTO">
-												<div class="col-md-3">
-													<div class="bs bs-pricing">
-														<div class="cotent">
-															<h3 class="category">${projectDTO.projectName}</h3>
-															<input type="hidden" name="${projectDTO.projectNo}"
-																value="${projectDTO.projectNo}" /> <a href="#"
-																style="color: #BCE55C;" class="survey">설문조사해라${projectDTO.projectNo}</a>
-															<h1 class="bs-caption">
-																<small>D-</small>${projectDTO.dday}
-															</h1>
-															<a
-																href="${pageContext.request.contextPath}/project/teamMain/${projectDTO.projectNo}"
-																class="btn btn-danger">Enter</a>
-														</div>
-													</div>
-												</div>
-											</c:forEach>
-											<c:forEach items="${currentProList}" var="projectDTO">
-												<div class="col-md-3">
-													<div class="bs bs-pricing">
-														<div class="cotent">
-															<h3 class="category">${projectDTO.projectName}</h3>
-															<h1 class="bs-caption">
-																<small>D-</small>${projectDTO.dday}
-															</h1>
-															<a
-																href="${pageContext.request.contextPath}/project/teamMain/${projectDTO.projectNo}"
-																class="btn btn-danger">Enter</a>
-														</div>
-													</div>
-												</div>
-											</c:forEach>
-										</c:otherwise>
-									</c:choose>
-									<div class="col-md-3">
-										<!-- 플러스아이콘 -->
-										<div class="bs bs-pricing">
+						<c:choose>
+							<c:when	test="${empty currentProList}&&${empty surveyingProList}"><!-- 진행중인,완료대기중인 조별과제가 없으면 -->
+								<h4>진행중인 조별과제가 없습니다.</h4>
+							</c:when>
+							<c:otherwise><!-- 조별과제가 있으면 -->
+								<c:forEach items="${surveyingProList}" var="projectDTO"><!-- 완료대기중 조별과제 -->
+									<div class="col-lg-3 col-sm-6">
+				                        <div class="card">
+				                            <div class="content">
+				                                <div class="row">
+				                                    <div class="col-md-11">
+				                                        <div class="numbers">
+				                                            ${projectDTO.projectName}
+				                                            <p>D-${projectDTO.dday}</p>
+				                                        </div>
+				                                    </div>
+				                                </div>
+				                                <hr/>
+				                                <div class="row">
+					                                <div class="col-md-8">
+					                                 	<span class="label label-info "><a href="#" style="color: #FFFFFF;" class="survey">설문조사해라${projectDTO.projectNo}</a></span>
+					                             	</div>
+					                                 <div class="col-md-2">
+					                              		<a href="${pageContext.request.contextPath}/project/teamMain/${projectDTO.projectNo}" class="btn btn-primary btn-simple">Enter</a>
+					                                 </div>
+				                                </div>
+				                            </div>
+				                        </div>
+				                    </div>
+								</c:forEach>
+								<c:forEach items="${currentProList}" var="projectDTO"><!-- 진행중인 조별과제 -->	
+									<div class="col-lg-3 col-sm-6">
+				                        <div class="card">
+				                            <div class="content">
+				                                <div class="row">
+				                                    <div class="col-xs-11">
+				                                        <div class="numbers">
+				                                            ${projectDTO.projectName}
+				                                            <p>D-${projectDTO.dday}</p>
+				                                        </div>
+				                                    </div>
+				                                </div>
+			                                    <hr/>
+				                                <div class="row">
+													<div class="col-md-2 col-md-offset-8">
+					                              		<a href="${pageContext.request.contextPath}/project/teamMain/${projectDTO.projectNo}" class="btn btn-primary btn-simple">Enter</a>
+					                                 </div>
+				                                </div>
+				                            </div>
+				                        </div>
+				                    </div>
+								</c:forEach>
+							</c:otherwise>
+						</c:choose><!-- 플러스이미지 -->
+						<div class="col-lg-3 col-sm-6">
+				        	<div class="card">
+				        		<div class="content">
+				                	<div class="row">
+				                    	<div class="col-md-11">
 											<div class="cotent" id="plusImg">
-												<img
-													src="${pageContext.request.contextPath}/resources/img/plus.png">
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
+												<img style="width:100%; heigt:100%;" src="${pageContext.request.contextPath}/resources/img/plus.png">
+<%--  											<img style="background-image:url(${pageContext.request.contextPath}/resources/img/plus.png); width:100%; heigt:100%;">
+ --%>											</div>
+				                        </div>
+				                     </div>
+				                     <hr/>
+				                 </div>
+				        	</div>
+				        </div>
+					
+<!-- --------------------------------------------------------------------------------------------------------- -->
+					
+
+						
+<!-- --------------------------------------------------------------------------------------------------------- -->
 
 						<jsp:include page="footer_ch.jsp" flush="false" />
 					</div>
