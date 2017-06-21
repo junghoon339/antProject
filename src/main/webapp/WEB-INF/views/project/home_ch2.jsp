@@ -66,7 +66,8 @@ var token = $("meta[name='_csrf']").attr("content");
 		
 	    
 	    $(".survey").click(function(){
-	    	$.ajax({
+	    	alert( $(this).parent().children().next().val() );
+			$.ajax({
 				url : "${pageContext.request.contextPath}/survey/",
 				type : "post",
 				beforeSend : function(xhr){
@@ -75,19 +76,12 @@ var token = $("meta[name='_csrf']").attr("content");
 				dataType : "json",
 				data : "projectNo="+$(this).parent().children().next().val(),
 				success : function(result) {
-
-					if($(result).empty()){
-						alert("이미 설문조사에 참여하였습니다.");
-						return;
-					}
 					
 					var str = "";
 					$.each(result, function(index, item){
 						str += '<tr width="100%">';
 						str +='<td name="nameTd" width="50%"><center>'+item.userName+'</center></td>';
-						str +='<input type="hidden" name="userName" value="'+item.userName+'" />';
-						str +='<input type="hidden" name="projectNo" value="'+$(".survey").parent().children().next().val()+'" />';
-						str +='<td name="scoreTd" width="15%"><input type="text" name="userScore" placeholder="점수를 입력해주세요." value=""/></td>';
+						str +='<td name="scoreTd" width="15%"><input type="text" placeholder="점수를 입력해주세요." value=""/></td>';
 						str +='<td name="updateTd" width="35%"><a href="#"><center>완료</center></a></td>';
 						str +='</tr>';
 					})
@@ -98,13 +92,6 @@ var token = $("meta[name='_csrf']").attr("content");
 				error : function(err) { alert("teamInfo.jsp ERROR : "+err); }
 			});
 	    })
-	    
-	    $("#okayBtn").click(function(){
-	    	alert("dd확인뉴름ㅎㅎ");
-	    	$("input")
-	    	$("#ffform").submit();
-	    })
-	    
 	});
 	
 	function check() {
@@ -165,7 +152,7 @@ var token = $("meta[name='_csrf']").attr("content");
 													<div class="cotent">
 														<h3 class="category">${projectDTO.projectName}</h3>
 														<input type="hidden" name="${projectDTO.projectNo}" value="${projectDTO.projectNo}"/>
-														<a href="#" style="color:#BCE55C;" class="survey">설문조사해라</a>
+														<a href="#" style="color:#BCE55C;" class="survey">설문조사해라${projectDTO.projectNo}</a>
 														<h1 class="bs-caption">
 															<small>D-</small>${projectDTO.dday}
 														</h1>
@@ -216,20 +203,25 @@ var token = $("meta[name='_csrf']").attr("content");
         <button type="button" class="close" data-dismiss="modal">×</button>
         <h4 class="modal-title">조원 점수평가</h4>
       </div>
-      <form id="ffform" action="${pageContext.request.contextPath}/survey/insertSurveyDetail" method="post">
-      <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" >
       <div class="modal-body">
       <table>
       		<div id="print">
       			
       		</div>
       </table>
+      		<%-- <center>
+      		<p>
+			유인재 <font color="orange">☆☆☆☆☆</font> <a href="#">[편집]</a><p>
+			김정훈 <font color="orange">☆☆☆☆☆</font> <a href="#">[편집]</a><p>
+			황유정 <font color="orange">☆☆☆☆☆</font> <a href="#">[편집]</a><p>
+			김지현 <font color="orange">☆☆☆☆☆</font> <a href="#">[편집]</a><p>
+			정해찬 <font color="orange">☆☆☆☆☆</font> <a href="#">[편집]</a><p>
+			</center> --%>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal" id="okayBtn">확인</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal">확인</button>
         <button type="button" class="btn btn-default" data-dismiss="modal">취소</button>
       </div>
-      </form>
     </div>
 
   </div>

@@ -57,7 +57,8 @@
 	<select id="voteSelect" parameterType="int" resultMap="voteDTOMap">
 		select vote_no, project_no, vote_title, vote_adddate, vote_enddate, vote_state
 		from vote 
-		where vote_state = #{_parameter} order by vote_no
+		where vote_state = #{voteState}
+		AND project_no = #{projectNo} order by vote_no
 	</select>
 
 	<!--
