@@ -9,65 +9,70 @@ import com.ant.user.dto.UserDTO;
 
 public interface ProjectDAO {
 	/**
-	 * 1. »õ·Î¿îÆÀÇÃ¹æ»ı¼º
+	 * 1. ï¿½ï¿½ï¿½Î¿ï¿½ï¿½ï¿½ï¿½Ã¹ï¿½ï¿½ï¿½ï¿½
 	 */
 	public int insertProject(ProjectDTO projectDTO);
 
 	/**
-	 * 2.¹æ±İ »ğÀÔµÈ Á¶º°°úÁ¦ÀÇ ¹øÈ£ °Ë»ö
-	 * @param:¾øÀ½
+	 * 2.ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ôµï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½È£ ï¿½Ë»ï¿½
+	 * @param:ï¿½ï¿½ï¿½ï¿½
 	 */
 	public int selectProjectNo();
 	
 	/**
-	 * 3.Á¶Àå »ğÀÔ
+	 * 3.ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 	 * @param: ProjectUserDTO -	projectUserNo, projectNo, userNo, projectUserRole
 	 */
 	public int insertProjectLeader(ProjectUserDTO projectUserDTO);
 	
 	/**
-	 * 4.ÆÀ¿øID¸¦ °®°í userno °Ë»ö
-	 * @param: list(ÆÀ¹æ¿¡ ÃÊ´ëµÈ userIdµé)
+	 * 4.ï¿½ï¿½ï¿½ï¿½IDï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ userno ï¿½Ë»ï¿½
+	 * @param: list(ï¿½ï¿½ï¿½æ¿¡ ï¿½Ê´ï¿½ï¿½ userIdï¿½ï¿½)
 	 */
 	public List<Integer> selectUserNoById(List<String> invitedUserIdList);
 	
 	/**
-	 * Á¶¿ø »ğÀÔ 
+	 * ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ 
 	 */
 	public int insertProjectMember(ProjectUserDTO projectUserDTO);
 	
 	/**
-	 * 5. ÇöÀç ÁøÇàÁß/¿Ï·áµÈ ÇÁ·ÎÁ§Æ® °Ë»ö
+	 * projectEnddateê°€ í˜„ì¬ë‚ ì§œì¼ë•Œ projectStateë³€ê²½
+	 */
+	public int updateProjectState(int userNo);
+	
+	/**
+	 * 5. ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½/ï¿½Ï·ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ® ï¿½Ë»ï¿½
 	 */
 	public Map<String, List<ProjectDTO>> selectProjectById(int userNo);
 	
 	/**
-	 * ÆÀÇÃ Á¤º¸ °Ë»ö
+	 * ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ë»ï¿½
 	 */
 	public ProjectDTO selectProject(int projectNo);
 	
 	/**
-	 * ÆÀÇÃ Á¤º¸ ¼öÁ¤
+	 * ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 	 */
 	public int updateTeamInfo(ProjectDTO projectDTO);
 	
 	/**
-	 * ÆÀ¿ø Á¤º¸ °Ë»ö
+	 * ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ë»ï¿½
 	 */
 	public List<UserDTO> selectProjectUsers(int projectNo);
 	
 	/**
-	 * ÆÀ¿øÁ¤º¸Áß ¸ÃÀºÀÓ¹« ¼öÁ¤
+	 * ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ó¹ï¿½ ï¿½ï¿½ï¿½ï¿½
 	 */
 	public int updateProjectUserTask(ProjectUserDTO projectUserDTO);
 	
 	/**
-	 * ÆÀ¿ø »èÁ¦
+	 * ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 	 */
 	public int deleteProjectUser(ProjectUserDTO projectUserDTO);
 	
 	/**
-	 * ÇØ´çÇÁ·ÎÁ§Æ®ÀÇ ¿ªÇÒ(Á¶¿øorÁ¶Àå) °Ë»ö
+	 * ï¿½Ø´ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½(ï¿½ï¿½ï¿½ï¿½orï¿½ï¿½ï¿½ï¿½) ï¿½Ë»ï¿½
 	 */
 	public String selectProjectUserRole(ProjectUserDTO projectUserDTO);
 }

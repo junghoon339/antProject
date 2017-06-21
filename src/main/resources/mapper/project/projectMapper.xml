@@ -117,7 +117,16 @@
 	</select>
 	
 	<!-- projectEnddate가 현재날짜일때 projectState변경 -->
-	
+	<update id="updateProjectState" parameterType="int">
+	UPDATE project
+	SET project_state=1
+	WHERE project_no in (SELECT p.project_no
+	                     FROM project p JOIN project_user pu
+	                     ON p.project_no = pu.project_no
+	                     <![CDATA[ 
+	                     WHERE pu.user_no=#{userNo} AND to_char(project_enddate) <= to_char(sysdate))
+	                     ]]>
+	</update>
 
 
 </mapper>

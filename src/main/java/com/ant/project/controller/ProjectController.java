@@ -81,7 +81,10 @@ public class ProjectController implements Serializable {
 		UserDTO userDTO = (UserDTO) req.getSession().getAttribute("userDTO");
 		int userNo = userDTO.getUserNo();
 
-		// 현재진행중, 완료대기중, 완료된 조별과제를 담은 map
+		// projectEnddate가 현재날짜일때 projectState변경
+		int updateResult = projectService.updateProjectState(userNo);
+		
+		// 현재진행중, 완료대기중 조별과제를 담은 map
 		Map<String, List<ProjectDTO>> projectMap = projectService.selectProjectById(userNo);
 		List<ProjectDTO> currentProList = projectMap.get("currentProList");
 		List<ProjectDTO> surveyingProList = projectMap.get("surveyingProList");
@@ -140,7 +143,7 @@ public class ProjectController implements Serializable {
 		UserDTO userDTO = (UserDTO) req.getSession().getAttribute("userDTO");
 		int userNo = userDTO.getUserNo();
 
-		// 현재진행중, 완료대기중, 완료된 조별과제를 담은 map
+		//완료된 조별과제를 담은 map
 		Map<String, List<ProjectDTO>> projectMap = projectService.selectProjectById(userNo);
 		List<ProjectDTO> completedProList = projectMap.get("completedProList");
 		
