@@ -161,9 +161,9 @@
 				                                <div class="row">
 				                                    <div class="col-md-11">
 				                                        <div class="numbers">
-				                                            ${projectDTO.projectName}
-				                                            <p>-완료대기중-</p>
-				                                        </div>
+															<h5>${projectDTO.projectName}</h5>
+															<p><i class="ti-timer"></i>&nbsp;&nbsp;완료 대기중</p>
+														</div>
 				                                    </div>
 				                                </div>
 				                                <hr/>
@@ -189,7 +189,7 @@
 													<div class="col-xs-11">
 														<div class="numbers">
 															<h5>${projectDTO.projectName}</h5>
-															<p><i class="ti-timer"></i>&nbsp;D-${projectDTO.dday}</p>
+															<p><i class="ti-timer"></i>&nbsp;&nbsp;D-${projectDTO.dday}</p>
 														</div>
 													</div>
 												</div>
@@ -211,11 +211,11 @@
 						<div id="row">
 							<div class="col-lg-3 col-sm-6">
 								<div class="card">
-									<div class="content">
+									<div class="header">
 										<div class="row">
-											<div class="col-lg-6 col-lg-offset-3 col-sm-6 col-sm-offset-3 col-xs-6 col-xs-offset-3">
-												<div class="content" id="plusImg" align="center">
-													<img style="width: 100%; heigt: 100%;"
+											<div class="col-lg-6 col-lg-offset-3">
+												<div class="content" id="plusImg">
+													<img style="width: 100%; height: 100%; margin:auto;"
 														src="${pageContext.request.contextPath}/resources/img/plus.png">
 												</div>
 											</div>
