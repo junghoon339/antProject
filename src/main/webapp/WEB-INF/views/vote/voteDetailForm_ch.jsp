@@ -149,7 +149,6 @@ function init(){
 						$(item).parent().parent().next().children().next().text("　"+item2+"%");
 						$(item).parent().next().next().children().next().children().text(Math.round(item2*${userCount})/100);
 					}
-					  console.log(index+","+item.value+", "+index2+", "+item2)
 				})
 			})
 			
@@ -192,7 +191,6 @@ function btnEvent(a){
 			data : "voteNo="+${voteNo}+"&column="+choice+"&"+$("#securityInfo").attr("name")+"="+$("#securityInfo").val() , // $("#voteNo").val()
 			success : function(result) {
 				location.reload();
-				console.log("성공햇지롱2" + result);
 				
 				$(".regular-radio").hide();
 				$(".radiTd").hide();
@@ -200,7 +198,7 @@ function btnEvent(a){
 				$("#vote").text("다시 투표하기");
 			},
 			error : function(err) {
-				alert("오류 발생ㅋㅋㄴ : " + err);
+				alert("오류 발생zx : " + err);
 			}
 		});
 	} else if( $(a).text()=='다시 투표하기') {
@@ -282,6 +280,7 @@ td {
 							<div class="row">
 						
 						<div class="col-lg-9 col-lg-offset-1">
+						<div class="card">
 						<%@include file="header.jsp"%>
 							<input type=hidden id="securityInfo" name="${_csrf.parameterName}" value="${_csrf.token}"> <input type=hidden id="voteNo" value="${voteNo}" />
 									<div align="right" style="vertical-align: middle;">
@@ -314,9 +313,7 @@ td {
 										<tr>
 											<td rowspan="2" width="3%"/>
 											<td rowspan="2" width="10%" align="center"  class="radiTd">
-												<div class="radio radio-primary">
-											 		<input type="radio" name="radio" id="radio" class="regular-radio" value="${voteDetailList.voteDetailNo}" />
-											 	</div>
+											 	<input type="radio" name="radio" id="radio" class="regular-radio" value="${voteDetailList.voteDetailNo}" />
 											</td>
 											<td width="80%" valign="bottom" class="valueTd">${voteDetailList.voteDetailColumn}</td>
 											<td width="20px">
@@ -354,6 +351,7 @@ td {
 											<span class="glyphicon glyphicon-minus-sign"> </span>투표종료</a>
 										</span>
 									</div>
+						</div>
 						</div>
 						</div></div></section>
 					</div>

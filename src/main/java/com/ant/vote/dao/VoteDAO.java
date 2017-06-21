@@ -13,7 +13,7 @@ public interface VoteDAO {
 	 * 0 : 진행중인 투표 / 1 : 종료된 투표
 	 * select * from vote where vote_state = #{_parameter}
 	 * */
-	public List<VoteDTO> selectVoteList(int voteState);
+	public List<VoteDTO> selectVoteList(int projectNo, int voteState);
 	
 	/**
 	 * 마감시간이 되면 vote_state를 1로 변경 처리하는 메서드

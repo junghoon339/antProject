@@ -111,6 +111,7 @@ $(function() {
 							<div class="row">
 					
 							<div class="col-lg-9 col-lg-offset-1">
+							<div class="card">
 							<%@include file="header.jsp"%>
 								<div class="well well-lg">
 									<div class="form-group" style="padding: 12px;">
@@ -143,6 +144,7 @@ $(function() {
 										</form>
 									</div>
 								</div>
+							</div>
 							</div>
 						</div></div></section>
 					</div>

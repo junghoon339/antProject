@@ -7,6 +7,7 @@ public class VoteDetailDTO {
 	private int voteDetailNo;
 	private int voteNo;
 	private String voteDetailColumn;
+	private int userCount;
 
 	private List<VoteSelectorDTO> selectors;
 	
@@ -17,6 +18,12 @@ public class VoteDetailDTO {
 		this.voteDetailColumn = voteDetailColumn;
 	}
 
+	public int getUserCount() {
+		return userCount;
+	}
+	public void setUserCount(int userCount) {
+		this.userCount = userCount;
+	}
 	public List<VoteSelectorDTO> getSelectors() {
 		return selectors;
 	}

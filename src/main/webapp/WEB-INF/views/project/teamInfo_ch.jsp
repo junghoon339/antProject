@@ -124,7 +124,7 @@ $(document).ready(function() {
 					                </div>
 					                <div class="modal-footer">
 					                <form action="${pageContext.request.contextPath}/survey/mainPage" method="post">
-					                	<input type=hidden id="securityInfo" name="${_csrf.parameterName}" value="${_csrf.token}">
+					                	<input type="hidden" id="securityInfo" name="${_csrf.parameterName}" value="${_csrf.token}">
 					                	<input type="hidden" name="hiddenVal" value="1">
 					                    <button type="submit" class="btn btn-warning"> 확인</button> 
 					                    <button type="button" class="btn btn-default" data-dismiss="modal"> 취소</button>

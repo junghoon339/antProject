@@ -99,6 +99,7 @@ td {
 							<div class="row">
 						
 						<div class="col-lg-9 col-lg-offset-1">
+						<div class="card">
 						<%@include file="header.jsp"%>
 							<div class="well">
 								<h4>진행중인 투표</h4>
@@ -172,6 +173,7 @@ td {
 									</c:forEach>
 							</div>
 							<p>
+						</div>
 						</div>
 						</div></div>
 						</section>
