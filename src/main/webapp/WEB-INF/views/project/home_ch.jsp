@@ -169,10 +169,9 @@
 						<div class="col-md-12">
 							<div class="card">
 								<div class="header">
-									<h4 class="title">조별과제 정보</h4>
+									<h4 class="title">진행중인 조별과제</h4>
 								</div>
 								<div class="content">
-									 여기 어디야
 									<c:choose>
 										<c:when	test="${empty currentProList}&&${empty surveyingProList}">
 											<!-- 진행중인,완료대기중인 조별과제가 없으면 -->

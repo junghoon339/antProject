@@ -13,16 +13,15 @@
 	<link rel="apple-touch-icon" sizes="76x76" href="assets/img/apple-icon.png">
 	<link rel="icon" type="image/png" sizes="96x96" href="assets/img/favicon.png">
 	<!-- Bootstrap core CSS     -->
-	<link href="${pageContext.request.contextPath }/resources/css/bootstrap.min.css" rel="stylesheet" />
+	<link href="${pageContext.request.contextPath}/resources/css/bootstrap.min.css" rel="stylesheet" />
 	<!-- Animation library for notifications   -->
-	<link href="${pageContext.request.contextPath }/resources/css/animate.min.css" rel="stylesheet" />
+	<link href="${pageContext.request.contextPath}/resources/css/animate.min.css" rel="stylesheet" />
 	<!--  Paper Dashboard core CSS    -->
-	<link href="${pageContext.request.contextPath }/resources/css/paper-dashboard.css" rel="stylesheet" />
+	<link href="${pageContext.request.contextPath}/resources/css/paper-dashboard.css" rel="stylesheet" />
 	<!--  Fonts and icons     -->
 	<link href="http://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" rel="stylesheet">
 	<link href='https://fonts.googleapis.com/css?family=Muli:400,300' rel='stylesheet' type='text/css'>
-	<link href="${pageContext.request.contextPath }/resources/css/themify-icons.css" rel="stylesheet">
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
+	<link href="${pageContext.request.contextPath}/resources/css/themify-icons.css" rel="stylesheet">
 	
 	<!-- 필요한 css는 이 밑에 넣어주면 됨 -->
 	<!-- 스크립트는 body 맨 아래쪽에 -->

@@ -8,7 +8,7 @@
 
 		<nav class="navbar navbar-default">
             <div class="container-fluid">
-                <div class="navbar-header" data-active-color="success">
+                <div class="navbar-header">
                     <button type="button" class="navbar-toggle">
                         <span class="sr-only">Toggle navigation</span>
                         <span class="icon-bar bar1"></span>
