@@ -41,89 +41,52 @@
 	var header = $("meta[name='_csrf_header']").attr("content");
 	var token = $("meta[name='_csrf']").attr("content");
 
-	$(document)
-			.ready(
-					function() {
-						//tabModule.init();
+	$(document).ready(function() {
 
 						$("#plusImg").click(function() {
-							$('div.modal').modal();
+							$("#myModal").modal(); //우동이가 수정함. 이걸로!!
 						})
 
-						/* 		$(document).on("click","#addMember",function(){
-						 //input추가
-						 }); */
-
-						$("#addBtn")
-								.click(
-										function() {
+						$("#addBtn").click(function() {
 											var addInputbox = "<input class='' type='text'  name='invitedUser' placeholder='초대할 팀원을 입력하세요.'><button type='button' class='btn btn-danger' id='delMemberbtn'>삭제</button></input><p></p>";
-											$("#invitedMemberDiv").append(
-													addInputbox);
+											$("#invitedMemberDiv").append(addInputbox);
 											num = num + 1;
-										})
+						})
 
 						$("#projectForm").submit(function() {
 							alert("새로운 조별과제가 등록되었습니다.");
 						});
 						$("#insertProjectBtn").click(function() {
-							//alert("팀플생성버튼눌림");
 							if (check() == true)
 								$("#projectForm").submit();
 
 						});
 
-						$(".survey")
-								.click(
-										function() {
-											alert($(this).parent().children()
-													.next().val());
-											$
-													.ajax({
+						$(".survey").click(function() {
+											alert($(this).parent().next().val());
+											$.ajax({
 														url : "${pageContext.request.contextPath}/survey/",
 														type : "post",
-														beforeSend : function(
-																xhr) {
-															xhr
-																	.setRequestHeader(
-																			header,
-																			token);
-														},
+														beforeSend : function(xhr) {
+																	xhr.setRequestHeader(header, token);
+																	},
 														dataType : "json",
-														data : "projectNo="
-																+ $(this)
-																		.parent()
-																		.children()
-																		.next()
-																		.val(),
-														success : function(
-																result) {
-
-															var str = "";
-															$
-																	.each(
-																			result,
-																			function(
-																					index,
-																					item) {
+														data : "projectNo="+ $(this).parent().next().val(),
+														success : function(result) {
+																	var str = "";
+																	$.each(result,function(index,item) {
 																				str += '<tr width="100%">';
-																				str += '<td name="nameTd" width="50%"><center>'
-																						+ item.userName
-																						+ '</center></td>';
+																				str += '<td name="nameTd" width="50%"><center>'	+ item.userName	+ '</center></td>';
 																				str += '<td name="scoreTd" width="15%"><input type="text" placeholder="점수를 입력해주세요." value=""/></td>';
 																				str += '<td name="updateTd" width="35%"><a href="#"><center>완료</center></a></td>';
 																				str += '</tr>';
 																			})
-															$("#print").html(
-																	str);
-															$("#myModal2")
-																	.modal(
-																			'show');
+															$("#print").html(str);
+															$("#myModal2").modal('show');
 
 														},
 														error : function(err) {
-															alert("teamInfo.jsp ERROR : "
-																	+ err);
+															alert("teamInfo.jsp ERROR : "+ err);
 														}
 													});
 										})
@@ -168,6 +131,7 @@
 			<div class="content">
 				<div class="container-fluid">
 					<div class="row">
+<!-- ----------------------------------------------------------------------------------------------우동 시작 -->
 						<c:choose>
 							<c:when	test="${empty currentProList}&&${empty surveyingProList}"><!-- 진행중인,완료대기중인 조별과제가 없으면 -->
 								<h4>진행중인 조별과제가 없습니다.</h4>
@@ -189,6 +153,7 @@
 				                                <div class="row">
 					                                <div class="col-md-8">
 					                                 	<span class="label label-info "><a href="#" style="color: #FFFFFF;" class="survey">설문조사해라${projectDTO.projectNo}</a></span>
+					                                 	<input type="hidden" value="${projectDTO.projectNo}">
 					                             	</div>
 					                                 <div class="col-md-2">
 					                              		<a href="${pageContext.request.contextPath}/project/teamMain/${projectDTO.projectNo}" class="btn btn-primary btn-simple">Enter</a>
@@ -237,12 +202,10 @@
 				                 </div>
 				        	</div>
 				        </div>
-					
-<!-- --------------------------------------------------------------------------------------------------------- -->
-					
+									
 
 						
-<!-- --------------------------------------------------------------------------------------------------------- -->
+<!-- ---------------------------------------------------------------------------------------------우동끝 -->
 
 						<jsp:include page="footer_ch.jsp" flush="false" />
 					</div>
@@ -284,13 +247,11 @@
 	</div>
 
 	<!-- Modal -->
-	<div class="modal fade" id="myModal" tabindex="-1" role="dialog"
-		aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 		<div class="modal-dialog">
 			<div class="modal-content">
 				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal"
-						aria-label="Close">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 						<span aria-hidden="true">&times;</span>
 					</button>
 					<h4 class="modal-title" id="myModalLabel">새로운 조별과제 등록</h4>
