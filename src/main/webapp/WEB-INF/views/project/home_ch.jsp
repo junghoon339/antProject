@@ -180,10 +180,11 @@ var token = $("meta[name='_csrf']").attr("content");
 						<div class="col-md-3"><!-- 플러스아이콘 -->
 							<div class="bs bs-pricing">
 								<div class="cotent" id="plusImg">
-									<img src="${pageContext.request.contextPath}/resources/img/plus.png">
+									<img src="${pageContext.request.contextPath}/resources/img/hear.png" width="150px" align="middle">
 								</div>
 							</div>
 						</div>
+						
 					</div>
 				</div>
 			</div>
@@ -250,7 +251,7 @@ var token = $("meta[name='_csrf']").attr("content");
 									교수님 : <input class="form-control" type="text" name="projectTeacher"/><p></p>
 					                시작날짜:
 					            	<div class="input-group registration-date-time">
-					           		<input class="form-controsl" name="projectStartdate" id="reg|istration-date" type="date">
+					           		<input class="form-control" name="projectStartdate" id="registration-date" type="date">
 					            	</div><p></p>
 						            종료날짜 :
 						            <div class="input-group registration-date-time">
