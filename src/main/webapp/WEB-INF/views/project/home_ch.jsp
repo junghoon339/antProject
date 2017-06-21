@@ -9,32 +9,48 @@
 <head>
 <meta charset="utf-8" />
 <security:csrfMetaTags />
-<link rel="apple-touch-icon" sizes="76x76"	href="assets/img/apple-icon.png">
-<link rel="icon" type="image/png" sizes="96x96"	href="assets/img/favicon.png">
+<link rel="apple-touch-icon" sizes="76x76"
+	href="assets/img/apple-icon.png">
+<link rel="icon" type="image/png" sizes="96x96"
+	href="assets/img/favicon.png">
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 
 <title>Paper Dashboard by Creative Tim</title>
 
-<meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
+<meta
+	content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0'
+	name='viewport' />
 <meta name="viewport" content="width=device-width" />
 
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 <!-- Bootstrap core CSS     -->
-<link href="${pageContext.request.contextPath }/resources/css/bootstrap.min.css" rel="stylesheet" />
+<link
+	href="${pageContext.request.contextPath }/resources/css/bootstrap.min.css"
+	rel="stylesheet" />
 
 <!-- Animation library for notifications   -->
-<link href="${pageContext.request.contextPath }/resources/css/animate.min.css" rel="stylesheet" />
+<link
+	href="${pageContext.request.contextPath }/resources/css/animate.min.css"
+	rel="stylesheet" />
 
 <!--  Paper Dashboard core CSS    -->
-<link href="${pageContext.request.contextPath }/resources/css/paper-dashboard.css" rel="stylesheet" />
+<link
+	href="${pageContext.request.contextPath }/resources/css/paper-dashboard.css"
+	rel="stylesheet" />
 
 
 <!--  Fonts and icons  -->
-<link href="http://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" rel="stylesheet">
-<link href='https://fonts.googleapis.com/css?family=Muli:400,300' rel='stylesheet' type='text/css'>
-<link href="${pageContext.request.contextPath }/resources/css/themify-icons.css" rel="stylesheet">
+<link
+	href="http://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css"
+	rel="stylesheet">
+<link href='https://fonts.googleapis.com/css?family=Muli:400,300'
+	rel='stylesheet' type='text/css'>
+<link
+	href="${pageContext.request.contextPath }/resources/css/themify-icons.css"
+	rel="stylesheet">
 
-<link rel="stylesheet" type="text/css"	href="${pageContext.request.contextPath}/resources/css/room.css" />
+<link rel="stylesheet" type="text/css"
+	href="${pageContext.request.contextPath}/resources/css/room.css" />
 
 
 <script type="text/javascript">
@@ -155,7 +171,9 @@
 	}
 </script>
 <style type="text/css">
- 	.card{ height: 190px; }
+.card {
+	height: 190px;
+}
 </style>
 </head>
 <body>
@@ -169,85 +187,96 @@
 				<div class="container-fluid">
 					<div class="row">
 						<c:choose>
-							<c:when	test="${empty currentProList}&&${empty surveyingProList}"><!-- 진행중인,완료대기중인 조별과제가 없으면 -->
+							<c:when test="${empty currentProList}&&${empty surveyingProList}">
+								<!-- 진행중인,완료대기중인 조별과제가 없으면 -->
 								<h4>진행중인 조별과제가 없습니다.</h4>
 							</c:when>
-							<c:otherwise><!-- 조별과제가 있으면 -->
-								<c:forEach items="${surveyingProList}" var="projectDTO"><!-- 완료대기중 조별과제 -->
+							<c:otherwise>
+								<!-- 조별과제가 있으면 -->
+								<c:forEach items="${surveyingProList}" var="projectDTO">
+									<!-- 완료대기중 조별과제 -->
 									<div class="col-lg-3 col-sm-6">
-				                        <div class="card">
-				                            <div class="content">
-				                                <div class="row">
-				                                    <div class="col-md-11">
-				                                        <div class="numbers">
-				                                            ${projectDTO.projectName}
-				                                            <p>D-${projectDTO.dday}</p>
-				                                        </div>
-				                                    </div>
-				                                </div>
-				                                <hr/>
-				                                <div class="row">
-					                                <div class="col-md-8">
-					                                 	<span class="label label-info "><a href="#" style="color: #FFFFFF;" class="survey">설문조사해라${projectDTO.projectNo}</a></span>
-					                             	</div>
-					                                 <div class="col-md-2">
-					                              		<a href="${pageContext.request.contextPath}/project/teamMain/${projectDTO.projectNo}" class="btn btn-primary btn-simple">Enter</a>
-					                                 </div>
-				                                </div>
-				                            </div>
-				                        </div>
-				                    </div>
+										<div class="card">
+											<div class="content">
+												<div class="row">
+													<div class="col-md-11">
+														<div class="numbers">
+															${projectDTO.projectName}
+															<p>D-${projectDTO.dday}</p>
+														</div>
+													</div>
+												</div>
+												<hr />
+												<div class="row">
+													<div class="col-md-8">
+														<span class="label label-info "><a href="#"
+															style="color: #FFFFFF;" class="survey">설문조사해라${projectDTO.projectNo}</a></span>
+													</div>
+													<div class="col-md-2">
+														<a
+															href="${pageContext.request.contextPath}/project/teamMain/${projectDTO.projectNo}"
+															class="btn btn-primary btn-simple">Enter</a>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
 								</c:forEach>
-								<c:forEach items="${currentProList}" var="projectDTO"><!-- 진행중인 조별과제 -->	
+								<c:forEach items="${currentProList}" var="projectDTO">
+									<!-- 진행중인 조별과제 -->
 									<div class="col-lg-3 col-sm-6">
-				                        <div class="card">
-				                            <div class="content">
-				                                <div class="row">
-				                                    <div class="col-xs-11">
-				                                        <div class="numbers">
-				                                            ${projectDTO.projectName}
-				                                            <p>D-${projectDTO.dday}</p>
-				                                        </div>
-				                                    </div>
-				                                </div>
-			                                    <hr/>
-				                                <div class="row">
+										<div class="card">
+											<div class="content">
+												<div class="row">
+													<div class="col-xs-11">
+														<div class="numbers">
+															<h5>${projectDTO.projectName}</h5>
+															<p><i class="ti-timer"></i>&nbsp;D-${projectDTO.dday}</p>
+														</div>
+													</div>
+												</div>
+												<hr />
+												<div class="row">
 													<div class="col-md-2 col-md-offset-8">
-					                              		<a href="${pageContext.request.contextPath}/project/teamMain/${projectDTO.projectNo}" class="btn btn-primary btn-simple">Enter</a>
-					                                 </div>
-				                                </div>
-				                            </div>
-				                        </div>
-				                    </div>
+														<a
+															href="${pageContext.request.contextPath}/project/teamMain/${projectDTO.projectNo}"
+															class="btn btn-primary btn-simple">Enter</a>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
 								</c:forEach>
 							</c:otherwise>
-						</c:choose><!-- 플러스이미지 -->
-						<div class="col-lg-3 col-sm-6">
-				        	<div class="card">
-				        		<div class="content">
-				                	<div class="row">
-				                    	<div class="col-md-11">
-											<div class="cotent" id="plusImg">
-												<img style="width:100%; heigt:100%;" src="${pageContext.request.contextPath}/resources/img/plus.png">
-<%--  											<img style="background-image:url(${pageContext.request.contextPath}/resources/img/plus.png); width:100%; heigt:100%;">
- --%>											</div>
-				                        </div>
-				                     </div>
-				                     <hr/>
-				                 </div>
-				        	</div>
-				        </div>
-					
-<!-- --------------------------------------------------------------------------------------------------------- -->
-					
+						</c:choose>
+						<!-- 플러스이미지 -->
+						<div id="row">
+							<div class="col-lg-3 col-sm-6">
+								<div class="card">
+									<div class="content">
+										<div class="row">
+											<div class="col-lg-6 col-lg-offset-3 col-sm-6 col-sm-offset-3 col-xs-6 col-xs-offset-3">
+												<div class="content" id="plusImg" align="center">
+													<img style="width: 100%; heigt: 100%;"
+														src="${pageContext.request.contextPath}/resources/img/plus.png">
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
 
-						
-<!-- --------------------------------------------------------------------------------------------------------- -->
-
-						<jsp:include page="footer_ch.jsp" flush="false" />
+						</div>
 					</div>
+					<!-- --------------------------------------------------------------------------------------------------------- -->
+
+
+
+					<!-- --------------------------------------------------------------------------------------------------------- -->
+
 				</div>
 			</div>
+			<jsp:include page="footer_ch.jsp" flush="false" />
 		</div>
 	</div>
 
@@ -303,8 +332,9 @@
 									class="form-horizontal col-sm-7 col-sm-offset-1"
 									action="${pageContext.request.contextPath}/project/insertProject"
 									method="post">
-									<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"> 
-									*새로운 조별과제를 만드는 분이 자동으로 조장으로 지정됩니다.
+									<input type="hidden" name="${_csrf.parameterName}"
+										value="${_csrf.token}"> *새로운 조별과제를 만드는 분이 자동으로 조장으로
+									지정됩니다.
 									<p></p>
 									팀플명 : <input class="form-control" type="text"
 										name="projectName" />
