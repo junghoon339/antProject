@@ -148,7 +148,7 @@
 					<div class="modal-body">
 						<div class="form-group" id="userName"></div>
 						<div class="form-group">
-							<input class="form-control border-input" type="text" name="projectUserTask" id="projectUserTask" value="" style="width:550px">
+							<input class="form-control border-input" type="text" name="projectUserTask" id="projectUserTask" value="" style="width:100%">
 						</div>
 						<input type="hidden" name="userNo" id="userNo" value="">
 					</div>
@@ -226,7 +226,7 @@
 					<div class="modal-body">
 						<div class="form-group">
 							초대할 팀원의 아이디를 입력해 주세요<p><p/>
-							<input class="form-control border-input" type="text" name="userId" style="width:550px;"/>
+							<input class="form-control border-input" type="text" name="userId" style="width:100%;"/>
 							<p></p>
 						</div>
 					</div>
