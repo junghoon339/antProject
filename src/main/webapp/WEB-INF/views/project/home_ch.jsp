@@ -72,6 +72,7 @@
 						$("#projectForm").submit(function() {
 							alert("새로운 조별과제가 등록되었습니다.");
 						});
+						
 						$("#insertProjectBtn").click(function() {
 							if (check() == true)
 								$("#projectForm").submit();
@@ -123,7 +124,6 @@
 																						+ $(
 																								".survey")
 																								.parent()
-																								.children()
 																								.next()
 																								.val()
 																						+ '" />';
@@ -226,9 +226,7 @@
 															value="${projectDTO.projectNo}">
 													</div>
 													<div class="col-md-2">
-														<a
-															href="${pageContext.request.contextPath}/project/teamMain/${projectDTO.projectNo}"
-															class="btn btn-primary btn-simple">Enter</a>
+														<a href="${pageContext.request.contextPath}/project/teamMain/${projectDTO.projectNo}" class="btn btn-primary btn-simple">Enter</a>
 													</div>
 												</div>
 											</div>

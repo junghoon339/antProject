@@ -84,7 +84,7 @@
 													<div class="col-lg-12">
 														<div class="text-center">
 															<a href="https://phpoll.com/recover"
-																class="forgot-password">로그인 하기</a>
+																class="forgot-password" style="text-decoration: none">로그인 하기</a>
 														</div>
 													</div>
 												</div>
