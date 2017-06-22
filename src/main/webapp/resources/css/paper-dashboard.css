@@ -58,7 +58,9 @@ h5, .h5 {
   font-size: 1.25em;
   font-weight: 400;
   line-height: 1.4em;
-  margin-bottom: 15px; }
+  margin-bottom: 15px;
+  font-family: 나눔고딕코딩;
+  }
 
 h6, .h6 {
   font-size: 0.9em;
@@ -67,7 +69,9 @@ h6, .h6 {
 
 p {
   font-size: 16px;
-  line-height: 1.4em; }
+  line-height: 1.4em;
+  font-family: 나눔고딕코딩;
+  }
 
 h1 small, h2 small, h3 small, h4 small, h5 small, h6 small, .h1 small, .h2 small, .h3 small, .h4 small, .h5 small, .h6 small, h1 .small, h2 .small, h3 .small, h4 .small, h5 .small, h6 .small, .h1 .small, .h2 .small, .h3 .small, .h4 .small, .h5 .small, .h6 .small {
   color: #9A9A9A;
@@ -302,7 +306,9 @@ hr {
       line-height: 30px;
       font-size: 12px;
       font-weight: 600;
-      text-transform: uppercase; }
+      text-transform: uppercase;
+      font-family: 나눔고딕코딩;
+      }
     .sidebar .nav i,
     .off-canvas-sidebar .nav i {
       font-size: 24px;
@@ -1163,7 +1169,9 @@ textarea.form-control {
     font-weight: 600;
     margin: 5px 0px;
     padding: 20px 15px;
-    font-size: 20px; }
+    font-size: 20px;
+    font-family: 나눔고딕코딩;
+    }
   .navbar .navbar-nav > li > a {
     line-height: 1.42857;
     margin: 15px 0px;
