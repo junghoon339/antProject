@@ -1,14 +1,14 @@
 @import url(http://fonts.googleapis.com/earlyaccess/nanumgothic.css);
 
 * {
-	font-family:'Nanum Gothic', serif,verdana !important; 
-	font-weight:normal;
+	/*  font-family:'Nanum Gothic', serif,verdana !important; 
+	 */font-weight:normal;
 	box-shadow:none !important;
 	text-shadow:none !important;
-	color: red
+	
 }
 
-body {padding-top:61px;}
+/* body {padding-top:61px;} */
 
 .selected-semester-li {background-color:#ccf;}
 
@@ -87,7 +87,7 @@ button.btn.well {padding:6px 12px;margin:0px;border:1px solid #aaa;background:no
 #search_result_table tr.selected {background-color:#ccf}
 #my_courses_table tr.selected {background-color:#ccf}
 #timetable {width:100%;}
-#timetable th, #timetable td{text-align:center;vertical-align:middle;border:1px solid #ddd;border-right:1px solid #f3f3f3;padding:0;}
+#timetable th, #timetable td{text-align:center;vertical-align:middle;border:1px solid #ddd;border-right:1px solid #e2d9d9;padding:0;}
 #timetable tr td:last-child, #timetable tr th:last-child{border-right:1px solid #ddd;}
 #timetable .halftimetr td{border-top:1px dashed #ddd;}
 #timetable tr:not(.halftimetr) td{border-bottom-style:none;}
@@ -96,7 +96,7 @@ button.btn.well {padding:6px 12px;margin:0px;border:1px solid #aaa;background:no
 #timetable tbody td {height:18px;}
 #timetable .period {font-size:1.2em;}
 #timetable .time {font-size:0.8em;}
-.timecell-container {position:absolute; z-index:100; }
+.timecell-container {position:absolute; z-index:100;}
 .timecell {position:relative;border-style:none;border-radius:8px;text-align:center;cursor:pointer;font-size:10px;opacity:0.55;}
 th {font-size:10px;}
 @media (min-width:768px) {

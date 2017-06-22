@@ -25,7 +25,7 @@ public class TimetableController {
 	
 	@RequestMapping("/main")
 	public String main (){
-		return "timetable/userTimetable";
+		return "timetable/userTimetable_ch";
 	}
 	
 	@RequestMapping("/timetableInsert")

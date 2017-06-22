@@ -224,15 +224,7 @@
             <a id="custom_lecture_close_button" class="btn btn-inverse">취소</a>
          </form>
       </div>
-      
-     <%--  <form id="paramValues">
-      	<input type=hidden id="securityInfo" name="${_csrf.parameterName}" value="${_csrf.token}">
-        	<input type="hidden" name="timetableSubject" id="custom_course_title_param"/><br />
-            <input type="hidden" name="timetableLocation" id="custom_location_param"/><br />
-            <input type="hidden" name="timetableClassInfo" id="custom_class_time"/>
-            <input type="hidden" name="timetableColor" id="timetableColor"/>
-               
-      </form> --%>
+    
    </body> 
 </html> 
     
