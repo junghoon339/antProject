@@ -1,5 +1,7 @@
 package com.ant.survey.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,12 +18,21 @@ public class SurveyServiceImpl implements SurveyService{
 
 	@Override
 	public SurveyDTO surveySelectByProjectNo(int projectNo) {
-		// TODO Auto-generated method stub
-		return null;
+		return surveyDAO.surveySelectByProjectNo(projectNo);
+	}
+	
+	@Override
+	public List<SurveyUserDTO> surveyUserSelect(int surveyNo) {
+		return surveyDAO.surveyUserSelect(surveyNo);
 	}
 
 	@Override
-	public SurveyDetailDTO surveyDetailSelectBySurveyNo(int surveyNo) {
+	public SurveyUserDTO surveyUserSelect(int surveyNo, int userNo) {
+		return surveyDAO.surveyUserSelect(surveyNo, userNo);
+	}
+
+	@Override
+	public SurveyDetailDTO surveyDetailSelectBySurveyNo(int surveyNo, int surveyUserNo) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -54,6 +65,16 @@ public class SurveyServiceImpl implements SurveyService{
 	@Override
 	public int updateTeamInfo(int projectNo) {
 		return surveyDAO.updateTeamInfo(projectNo);
+	}
+
+	@Override
+	public int closingProject(int projectNo, String endDate) {
+		return surveyDAO.closingProject(projectNo, endDate);
+	}
+
+	@Override
+	public int closedProject(int projectNo) {
+		return surveyDAO.closedProject(projectNo);
 	}
 	
 }

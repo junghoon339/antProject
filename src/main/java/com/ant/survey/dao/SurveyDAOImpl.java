@@ -1,7 +1,9 @@
 package com.ant.survey.dao;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.TreeMap;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,11 +21,27 @@ public class SurveyDAOImpl implements SurveyDAO{
 	
 	@Override
 	public SurveyDTO surveySelectByProjectNo(int projectNo) {
-		return null;
+		return session.selectOne("surveyMapper.surveySelect1",projectNo);
 	}
 	
 	@Override
-	public SurveyDetailDTO surveyDetailSelectBySurveyNo(int surveyNo) {
+	public List<SurveyUserDTO> surveyUserSelect(int surveyNo) {
+		Map<String, Integer> map = new TreeMap<>();
+		map.put("surveyNo", surveyNo);
+		map.put("userNo", 0);
+		return session.selectList("surveyMapper.surveyUserSelect", map);
+	}
+
+	@Override
+	public SurveyUserDTO surveyUserSelect(int surveyNo, int userNo) {
+		Map<String, Integer> map = new TreeMap<>();
+		map.put("surveyNo", surveyNo);
+		map.put("userNo", userNo);
+		return session.selectOne("surveyMapper.surveyUserSelect", map);
+	}
+
+	@Override
+	public SurveyDetailDTO surveyDetailSelectBySurveyNo(int surveyNo, int surveyUserNo) {
 		return null;
 	}
 
@@ -59,6 +77,19 @@ public class SurveyDAOImpl implements SurveyDAO{
 	@Override
 	public int updateTeamInfo(int projectNo) {
 		return session.update("surveyMapper.updateTeamInfo", projectNo);
+	}
+
+	@Override
+	public int closingProject(int projectNo, String endDate) {
+		Map<String, Object> map = new TreeMap<>();
+		map.put("projectNo", projectNo);
+		map.put("endDate", endDate);
+		return session.update("surveyMapper.closingProject", map);
+	}
+
+	@Override
+	public int closedProject(int projectNo) {
+		return session.update("surveyMapper.colsedProject", projectNo);
 	}
 	
 }

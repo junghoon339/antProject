@@ -19,8 +19,11 @@ public class VoteDAOImpl implements VoteDAO {
 	SqlSession session;
 	
 	@Override
-	public List<VoteDTO> selectVoteList(int voteState) {
-		List<VoteDTO> list = session.selectList("voteMapper.voteSelect", voteState);
+	public List<VoteDTO> selectVoteList(int projectNo, int voteState) {
+		Map<String, Integer> map = new HashMap<>();
+		map.put("projectNo", projectNo);
+		map.put("voteState", voteState);
+		List<VoteDTO> list = session.selectList("voteMapper.voteSelect", map);
 		return list;
 
 	}

@@ -38,12 +38,13 @@ public class VoteController {
 		HttpSession session = request.getSession();
 		UserDTO user = (UserDTO) session.getAttribute("userDTO");
 		int userNo = user.getUserNo();
+		int projectNo = (int) session.getAttribute("projectNo");
 		
 		voteService.voteDateUpdate();
 		
 		// 진행중인 투표목록 0, 종료된 투표목록 1으로 각각 받아옵니다.
-		List<VoteDTO> doingList = voteService.selectVoteList(0);
-		List<VoteDTO> doneList = voteService.selectVoteList(1);
+		List<VoteDTO> doingList = voteService.selectVoteList(projectNo, 0);
+		List<VoteDTO> doneList = voteService.selectVoteList(projectNo, 1);
 
 		
 		for(VoteDTO vote : doingList){
@@ -200,6 +201,7 @@ public class VoteController {
 	@RequestMapping("/Detail/Handling")
 	@ResponseBody
 	public int DetailHandling(HttpSession session, int voteNo, int column) {
+		
 		int participated = 0;
 		int getSelectorNovote = 0;
 		
@@ -220,7 +222,7 @@ public class VoteController {
 			voteSelectorDTO = new VoteSelectorDTO(0, userNo, column);
 			participated = voteService.voteSelectorInsert(voteSelectorDTO);
 		}
-
+		
 		return participated;
 	}
 	
@@ -262,17 +264,19 @@ public class VoteController {
 	}
 	
 	@RequestMapping("/update")
-	public String update(RedirectAttributes redirectAttr, HttpSession session, int projectNo , int voteNo, String[] chk) {
+	public String update(HttpServletRequest request, HttpSession session, int projectNo , int voteNo, String[] chk) {
 		
 		UserDTO user = (UserDTO) session.getAttribute("userDTO");
 		int userNo = user.getUserNo();
 		
 		for(String s : chk){
-			voteService.insertVoteDetail(new VoteDetailDTO(0, voteNo, s));
+			if(!s.trim().equals("")){
+				voteService.insertVoteDetail(new VoteDetailDTO(0, voteNo, s));
+			}
 		}
 		
-		redirectAttr.addAttribute("voteNo", voteNo);
-		redirectAttr.addAttribute("userCount", voteService.selectVoteDetailCall(voteNo));
-		return "redirect:/vote/detail";
+//		request.setAttribute("voteNo", voteNo);
+//		request.setAttribute("userCount", voteService.selectVoteDetailCall(voteNo));
+		return "redirect:/vote/";
 	}
 }

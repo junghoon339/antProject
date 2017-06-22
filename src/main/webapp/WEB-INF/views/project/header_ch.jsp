@@ -8,7 +8,7 @@
 
 		<nav class="navbar navbar-default">
             <div class="container-fluid">
-                <div class="navbar-header" data-active-color="success">
+                <div class="navbar-header">
                     <button type="button" class="navbar-toggle">
                         <span class="sr-only">Toggle navigation</span>
                         <span class="icon-bar bar1"></span>
@@ -20,15 +20,9 @@
                 <div class="collapse navbar-collapse">
                     <ul class="nav navbar-nav navbar-right">
                         <li>
-                        	<a href="#" class="dropdown-toggle" data-toggle="dropdown">
-								<p>${userDTO.userName}님</p>
-							</a>
-                        </li>
-                       
-                        <li>
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                <i class="ti-panel"></i>
-								<p>Stats</p>
+                                <i class="ti-email"></i>
+								<p>Message</p>
                             </a>
                         </li>
                         <li class="dropdown">
@@ -48,8 +42,8 @@
                         </li>
 						<li>
                             <a href="#">
-								<i class="ti-settings"></i>
-								<p>Settings</p>
+								<i class="ti-reddit"></i>
+								<p>${userDTO.userName}님</p>
                             </a>
                         </li>
                     </ul>

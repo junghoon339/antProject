@@ -63,6 +63,11 @@ public class ProjectServiceImpl implements ProjectService {
 	public int insertProjectMember(ProjectUserDTO projectUserDTO) {
 		return projectDAO.insertProjectMember(projectUserDTO);
 	}
+	
+	@Override
+	public int updateProjectState(int userNo) {
+		return projectDAO.updateProjectState(userNo);
+	}
 
 	@Override
 	public Map<String, List<ProjectDTO>> selectProjectById(int userNo) {
@@ -106,4 +111,10 @@ public class ProjectServiceImpl implements ProjectService {
 		String projectUserRole = projectDAO.selectProjectUserRole(projectUserDTO);
 		return projectUserRole;
 	}
+	
+	@Override
+	public List<ProjectDTO> selectIfProjectState1(int userNo) {
+		return projectDAO.selectIfProjectState1(userNo);
+	}
+
 }

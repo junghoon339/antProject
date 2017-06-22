@@ -47,7 +47,7 @@ $(function() {
 	
 	$("#insert").click(function(){
 		if( $("input[name='voteTitle']").val().trim()=="" ){
-			alert("투표 제목을 입력해주세요.\n입력된 투표내용 : "+$("input[name='voteTitle']").val().trim());
+			alert("투표 제목을 입력해주세요.");
 			return;
 		}
 		else{
@@ -64,7 +64,7 @@ $(function() {
 				return;
 			}
 			else {
-				alert("항목 2개이상 입력 완료..");
+
 			}
 		}
 		
@@ -76,7 +76,6 @@ $(function() {
 	$("#datepicker").datepicker();
 
 	$("#addBtn").click(function() {
-		alert(1);
 		var code = "<input type='text' class='form-control' name='chk' placeholder='항목을 입력하세요.''/><p>";
 		$("#addArticle").append(code);
 	})
@@ -111,6 +110,7 @@ $(function() {
 							<div class="row">
 					
 							<div class="col-lg-9 col-lg-offset-1">
+							<div class="card">
 							<%@include file="header.jsp"%>
 								<div class="well well-lg">
 									<div class="form-group" style="padding: 12px;">
@@ -144,6 +144,7 @@ $(function() {
 									</div>
 								</div>
 							</div>
+							</div>
 						</div></div></section>
 					</div>
 				</div>
@@ -163,8 +164,8 @@ $(function() {
 	type="text/javascript"></script>
 
 <!--  Checkbox, Radio & Switch Plugins -->
-<%-- <script
-	src="${pageContext.request.contextPath }/resources/js/bootstrap-checkbox-radio.js"></script> --%>
+<script
+	src="${pageContext.request.contextPath }/resources/js/bootstrap-checkbox-radio.js"></script>
 
 <!--  Charts Plugin -->
 <script

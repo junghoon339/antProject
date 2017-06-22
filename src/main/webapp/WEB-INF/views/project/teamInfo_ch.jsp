@@ -83,10 +83,18 @@ $(document).ready(function() {
 	$("#end-date").attr("value", endDate);
 
 	
-	//조원일경우
-	if ("${projectUserRole}" == "조장") {
+	//조장일경우 팀플정보 수정,마감하기 버튼 보이기
+  	if ("${projectUserRole}" == "조장") {
 		$("#updateBtn").attr("style", "display:display");
+		$("#Btn").attr("style","display:display");
 	}
+	
+	//projectState=1일 경우 마감하기 버튼 비활성화
+	if("${projectDTO.projectState}"=="1"){
+		$("#Btn").attr("disabled","disabled");
+	}
+	
+	//alert("${projectDTO.projectState}"=="1");
 
 })
 
@@ -124,7 +132,7 @@ $(document).ready(function() {
 					                </div>
 					                <div class="modal-footer">
 					                <form action="${pageContext.request.contextPath}/survey/mainPage" method="post">
-					                	<input type=hidden id="securityInfo" name="${_csrf.parameterName}" value="${_csrf.token}">
+					                	<input type="hidden" id="securityInfo" name="${_csrf.parameterName}" value="${_csrf.token}">
 					                	<input type="hidden" name="hiddenVal" value="1">
 					                    <button type="submit" class="btn btn-warning"> 확인</button> 
 					                    <button type="button" class="btn btn-default" data-dismiss="modal"> 취소</button>
@@ -194,8 +202,8 @@ $(document).ready(function() {
                                         </div>
                                     </div>
                                     <div class="text-center">
-                                        <button type="submit" class="btn btn-info btn-fill btn-wd" id="updateBtn" style="display: none">수정</button>
-										<button type="button" class="btn btn-info btn-fill btn-wd" id="Btn">마감하기</button>
+                                        <button type="submit" class="btn btn-info btn-fill btn-wd" id="updateBtn" style="display:none">수정하기</button>
+										<button type="button" class="btn btn-info btn-fill btn-wd" id="Btn" style="display:none">마감하기</button>
                                     </div>
                                     <div class="clearfix"></div>
                                 </form>

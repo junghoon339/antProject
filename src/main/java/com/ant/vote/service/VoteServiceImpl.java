@@ -17,8 +17,8 @@ public class VoteServiceImpl implements VoteService {
 	private VoteDAO voteDAO;
 
 	@Override
-	public List<VoteDTO> selectVoteList(int voteState) {
-		return voteDAO.selectVoteList(voteState);
+	public List<VoteDTO> selectVoteList(int projectNo, int voteState) {
+		return voteDAO.selectVoteList(projectNo, voteState);
 	}
 
 	@Override

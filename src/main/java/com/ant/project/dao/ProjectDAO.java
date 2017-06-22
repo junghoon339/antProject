@@ -9,65 +9,74 @@ import com.ant.user.dto.UserDTO;
 
 public interface ProjectDAO {
 	/**
-	 * 1. »õ·Î¿îÆÀÇÃ¹æ»ı¼º
+	 * 1.ì¡°ë³„ê³¼ì œë°© ìƒì„±
 	 */
 	public int insertProject(ProjectDTO projectDTO);
 
 	/**
-	 * 2.¹æ±İ »ğÀÔµÈ Á¶º°°úÁ¦ÀÇ ¹øÈ£ °Ë»ö
-	 * @param:¾øÀ½
+	 * 2.ë°©ê¸ˆìƒì„±ëœ ì¡°ë³„ê³¼ì œ projectNo ê²€ìƒ‰
 	 */
 	public int selectProjectNo();
 	
 	/**
-	 * 3.Á¶Àå »ğÀÔ
+	 * 3.ì¡°ì¥ì‚½ì…
 	 * @param: ProjectUserDTO -	projectUserNo, projectNo, userNo, projectUserRole
 	 */
 	public int insertProjectLeader(ProjectUserDTO projectUserDTO);
 	
 	/**
-	 * 4.ÆÀ¿øID¸¦ °®°í userno °Ë»ö
-	 * @param: list(ÆÀ¹æ¿¡ ÃÊ´ëµÈ userIdµé)
+	 * 4.ì´ˆëŒ€ëœ íšŒì›ë“¤ì˜ idë¡œ userNo ê²€ìƒ‰
+	 * @param: list(ï¿½ï¿½ï¿½æ¿¡ ï¿½Ê´ï¿½ï¿½ userIdï¿½ï¿½)
 	 */
 	public List<Integer> selectUserNoById(List<String> invitedUserIdList);
 	
 	/**
-	 * Á¶¿ø »ğÀÔ 
+	 * 5.ì¡°ì› ë“±ë¡
 	 */
 	public int insertProjectMember(ProjectUserDTO projectUserDTO);
 	
 	/**
-	 * 5. ÇöÀç ÁøÇàÁß/¿Ï·áµÈ ÇÁ·ÎÁ§Æ® °Ë»ö
+	 * projectEnddateê°€ í˜„ì¬ë‚ ì§œì¼ë•Œ projectStateë³€ê²½
+	 */
+	public int updateProjectState(int userNo);
+	
+	/**
+	 * ì¡°ë³„ê³¼ì œëª©ë¡ì„ ê²€ìƒ‰ (mapì— ë‹´ì•„)
 	 */
 	public Map<String, List<ProjectDTO>> selectProjectById(int userNo);
 	
 	/**
-	 * ÆÀÇÃ Á¤º¸ °Ë»ö
+	 * ì¡°ë³„ê³¼ì œ ì •ë³´ ê²€ìƒ‰
 	 */
 	public ProjectDTO selectProject(int projectNo);
 	
 	/**
-	 * ÆÀÇÃ Á¤º¸ ¼öÁ¤
+	 * ì¡°ë³„ê³¼ì œ ì •ë³´ë¥¼ ìˆ˜ì •
 	 */
 	public int updateTeamInfo(ProjectDTO projectDTO);
 	
 	/**
-	 * ÆÀ¿ø Á¤º¸ °Ë»ö
+	 * ì¡°ì›ì •ë³´ ê²€ìƒ‰
 	 */
 	public List<UserDTO> selectProjectUsers(int projectNo);
 	
 	/**
-	 * ÆÀ¿øÁ¤º¸Áß ¸ÃÀºÀÓ¹« ¼öÁ¤
+	 * ì¡°ì› ì—­í•  ìˆ˜ì •
 	 */
 	public int updateProjectUserTask(ProjectUserDTO projectUserDTO);
 	
 	/**
-	 * ÆÀ¿ø »èÁ¦
+	 * ì¡°ì› ì‚­ì œ
 	 */
 	public int deleteProjectUser(ProjectUserDTO projectUserDTO);
 	
 	/**
-	 * ÇØ´çÇÁ·ÎÁ§Æ®ÀÇ ¿ªÇÒ(Á¶¿øorÁ¶Àå) °Ë»ö
+	 * ìì‹ ì´ í•´ë‹¹ì¡°ë³„ê³¼ì œì˜ ì¡°ì¥ì¸ì§€ ì¡°ì›ì¸ì§€ ê²€ìƒ‰
 	 */
 	public String selectProjectUserRole(ProjectUserDTO projectUserDTO);
+	
+	/**
+	 * project stateê°€ 1ì¸ projectë“¤ì„ ê²€ìƒ‰
+	 * */
+	public List<ProjectDTO> selectIfProjectState1(int userNo);
 }
