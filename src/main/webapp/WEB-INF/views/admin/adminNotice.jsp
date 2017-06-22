@@ -118,7 +118,7 @@ body{
 			if($("#name").val()==null){
 				alert("제목을 입력해주세요");
 			}
-				location.href = "${pageContext.request.contextPath}/storage/storageTable/1?searchText="+$("#searchText").val()+"&categoryNo="+$("#category").val();
+				location.href = "${pageContext.request.contextPath}/admin/adminNotice?searchText="+$("#searchText").val();
 		})
 		
 		
@@ -153,11 +153,15 @@ body{
                         
                             <div class="header">
                             <div class="col-sm-6">
-                                <h4 class="title">공지사항</h4>
+                                <h2 class="title">공지사항</h2>
                             </div>
-                                <div class="col-sm-6" align="right">
+                             <!--    <div class="col-sm-6" align="right">
 										<a class="btn btn-danger" href="#danger" data-toggle="modal">공지등록</a>
-								</div>
+								</div> -->
+								<div class="col-sm-6" align="right">
+								 <div class="icon-container">
+                        				<span class="ti-pencil" href="#danger" data-toggle="modal"></span><span class="icon-name" href="#danger" data-toggle="modal"><a href="#">공지등록</a></span>
+                        		</div>
                             </div>
                             
                             
@@ -178,7 +182,7 @@ body{
 					                      <li><a href="#contains" id="searchByName">이름</a></li>
 					                      <li><a href="#its_equal" id="searchByTitle">제목</a></li>
 					                    </ul> -->
-														<select class="btn btn-default dropdown-toggle"
+														<select class="btn btn-Info dropdown-toggle"
 															data-toggle="dropdown" style="width: 90px" id="category">
 															<option value="1">제목</option>
 														</select>
@@ -187,9 +191,11 @@ body{
 														id="search_param"> <input type="text"
 														class="form-control" name="x" placeholder="검색어를 입력하세요."
 														id="searchText"> <span class="input-group-btn">
-														<button class="btn btn-default" type="button"
+														<button class="btn btn-Info" type="button"
 															id="submitBt">
-															<span class="glyphicon glyphicon-search"></span>
+															<div class="icon-container">
+                        										<span class="ti-search"></span>
+                        									</div>
 														</button>
 													</span>
 												</div>
@@ -231,16 +237,20 @@ body{
                                 </table>
 						<!-- paging~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~` -->
 											<div class="clearfix" style="text-align: center" align="center">
-											<ul class="pagination pull-right" style="margin-right:30%">
+											<ul class="pagination pull-right" style="margin-right:37%">
 						
 												<c:choose>
 													<c:when test="${startPage==1}">
-														<li class="disabled"><a href="#"><span
-																class="glyphicon glyphicon-chevron-left"></span></a></li>
+																
+																<li class="disabled"><a href="#"><div class="icon-container">
+							                        				<span class="ti-angle-double-left"></span>
+							                        			</div></a></li>
 													</c:when>
 													<c:otherwise>
-														<li><a href="${pageContext.request.contextPath}/admin/adminNotice?pageNumber=${endPage-pageSu}"><span
-																class="glyphicon glyphicon-chevron-left"></span></a></li>
+																
+																<li><a href="${pageContext.request.contextPath}/admin/adminNotice?pageNumber=${endPage-pageSu}"><div class="icon-container">
+							                        				<span class="ti-angle-double-left"></span>
+							                        			</div></a></li>
 													</c:otherwise>
 												</c:choose>	
 												
@@ -250,12 +260,15 @@ body{
 												
 												<c:choose>
 														<c:when test="${flag==true}">
-															<li class="disabled"><a href="#"><span
-																class="glyphicon glyphicon-chevron-right"></span></a></li>
+																<li class="disabled"><a href="#"><div class="icon-container">
+                        											<span class="ti-angle-double-right"></span>
+                        										</div></a></li>
 														</c:when>
 														<c:otherwise>
-																<li><a href="${pageContext.request.contextPath}/admin/adminNotice?pageNumber=${startPage+pageSu}"><span
-																class="glyphicon glyphicon-chevron-right"></span></a></li>
+																
+																<li><a href="${pageContext.request.contextPath}/admin/adminNotice?pageNumber=${startPage+pageSu}"><div class="icon-container">
+                        											<span class="ti-angle-double-right"></span>
+                        										</div></a></li>
 														</c:otherwise>
 												</c:choose>
 												
@@ -292,18 +305,15 @@ body{
 					aria-labelledby="myModalLabel" aria-hidden="true">
 					<div class="modal-dialog">
 						<div class="modal-content">
-							<div class="modal-header modal-header-danger">
+							<div class="modal-header modal-header-Info">
 								<button type="button" class="close" data-dismiss="modal"
 									aria-hidden="true">×</button>
 								<h1>
-									<i class="glyphicon glyphicon-thumbs-up"></i> 공지등록
+									<div class="icon-container">
+                        				<span class="ti-export"></span><span class="icon-name"> 공지등록</span>
+                        			</div>
 								</h1>
 							</div>
-							
-							
-							
-							
-							
 							
 							<!-- 인설트 폼 -->
 							<div class="modal-body">
@@ -317,7 +327,6 @@ body{
 									<fieldset>
 
 										<!-- Form Name -->
-										<legend>공지를 등록하세요!</legend>
 
 										<!-- Text input-->
 										<div class="form-group">

@@ -98,29 +98,36 @@
 						<div class="card card-plain">
 							<div class="header">
 								<div class="col-sm-6">
-									<h4 class="title">상세보기</h4>
-									<p class="category">detail</p>
+									<h3>
+									<div class="icon-container">
+                        				<span class="ti-zoom-in"></span><span class="icon-name"> 상세보기</span>
+                        			</div>
+                        			</h3>
 								</div>
 								<div style="text-align: right;" class="col-sm-6">
-									<a
+								
+									<%-- <a
 										href="${pageContext.request.contextPath}/admin/adminNotice">
-										리스트로 돌아가기 </a>
+										리스트로 돌아가기 </a> --%>
+										
+									<h5>
+										<div class="icon-container">
+		                        				<span class="ti-menu-alt"></span><a href="${pageContext.request.contextPath}/admin/adminNotice"><span class="icon-name"> 리스트</span></a>
+		                        		</div>
+	                        		</h5>
 								</div>
 
 								<div align="right" >
-									<a
-										href="${pageContext.request.contextPath}/admin/delete/${noticeDTO.noticeNo}"
-										class="btn btn-red btn-circle active"
-										class="btn btn-red btn-circle">삭제</a>
+										<h3>
+                        					<a href="${pageContext.request.contextPath}/admin/delete/${noticeDTO.noticeNo}"><span class="ti-trash"></span></a>
 									    
-										 <a href="#" class="btn btn-red btn-circle" onclick="submitHidden()">
-										수정
-										</a>
+                        					 <a href="#" onclick="submitHidden()"><span class="ti-ink-pen"></span></a>
+                        				</h3> 
 								</div>
 
 										<form id="submitForm" method="post" action="">
 											<input type="hidden" id="securityInfo" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-											<input type="hidden" id="noticeNo" value="${noticeDTO.noticeNo}"> 
+											<input type="hidden" id="noticeNo" name="noticeNo" value="${noticeDTO.noticeNo}">  
 											<input type="hidden" name="noticeTitle" value="${noticeDTO.noticeTitle}">
 											<input type="hidden" name="noticeContent" value="${noticeDTO.noticeContent}">
 										</form>
@@ -129,9 +136,22 @@
 							<div class="content table-responsive table-full-width">
 								<table class="table table-hover">
 									<thead>
-										<th colspan="2">제목 - ${noticeDTO.noticeTitle}</th>
-										<th colspan="2">작성자 - 관리자</th>
-										<th colspan="2">작성일 - ${noticeDTO.writeDay}</th>
+										<th colspan="2">
+										<div class="icon-container">
+                        					<span class="ti-direction-alt"></span><span class="icon-name"> ${noticeDTO.noticeTitle}</span>
+                        				</div> 
+										
+										</th>
+										<th colspan="2">
+										<div class="icon-container">
+                        					<span class="ti-cloud-up"></span><span class="icon-name">&nbsp;&nbsp;관리자</span>
+                        				</div>
+                        				</th>
+										<th colspan="2">
+										<div class="icon-container">
+                        					<span class="ti-time"></span><span class="icon-name">&nbsp;&nbsp; ${noticeDTO.writeDay}</span>
+                        				</div>
+										</th>
 									</thead>
 									<tbody>
 										<tr>

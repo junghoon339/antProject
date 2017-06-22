@@ -135,6 +135,7 @@ public class AdminDAOImpl implements AdminDAO {
 
 	@Override
 	public int updateNotice(NoticeDTO noticeDTO) throws Exception {
+		System.out.println("dao noticeDTO.no = "+noticeDTO.getNoticeNo());
 		return session.update("mapper.admin.adminMapper.updateNotice", noticeDTO);
 	}
 
@@ -158,14 +159,16 @@ public class AdminDAOImpl implements AdminDAO {
 
 	@Override
 	public List<NoticeDTO> noticeSelectBySearch(int startRow, int endRow, String searchText) {
-		// TODO Auto-generated method stub
-		return null;
+		Map<String, Object> map = new HashMap<>();
+		map.put("startRow", startRow);
+		map.put("endRow", endRow);
+		map.put("searchText", searchText);
+		return session.selectList("mapper.admin.adminMapper.noticeSelectBySearch", map);
 	}
 
 	@Override
-	public int noticeTotalCountBySearch(String searchText, int noticeNo) {
-		// TODO Auto-generated method stub
-		return 0;
+	public int noticeTotalCountBySearch(String searchText) {
+		return session.selectOne("mapper.admin.adminMapper.noticeTotalCountBySearch", searchText);
 	}
 
 	@Override
