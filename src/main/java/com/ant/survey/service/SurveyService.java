@@ -1,5 +1,7 @@
 package com.ant.survey.service;
 
+import java.util.List;
+
 import com.ant.survey.dto.SurveyDTO;
 import com.ant.survey.dto.SurveyDetailDTO;
 import com.ant.survey.dto.SurveyUserDTO;
@@ -11,6 +13,8 @@ public interface SurveyService {
 	 * Parameter -> projectNo
 	 * */
 	SurveyDTO surveySelectByProjectNo(int projectNo);
+	
+	List<SurveyUserDTO> surveyUserSelect(int surveyNo);
 	
 	SurveyUserDTO surveyUserSelect(int surveyNo, int userNo);
 	
@@ -37,4 +41,7 @@ public interface SurveyService {
 	
 	/** 마감하기 시, 프로젝트의 남은 기간을 오늘자+1day로 변경 */
 	int closingProject(int projectNo, String endDate);
+	
+	/** 투표참여 후 확인을 기점으로 조별과제내 사람들이 모두 투표를 참여했으면 state 2로 변경 */
+	int closedProject(int projectNo);
 }

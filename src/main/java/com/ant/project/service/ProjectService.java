@@ -76,6 +76,9 @@ public interface ProjectService {
 	 */
 	public String selectProjectUserRole(ProjectUserDTO projectUserDTO);
 	
-
+	/**
+	 * project state가 1인 project들을 검색
+	 * */
+	public List<ProjectDTO> selectIfProjectState1();
 
 }

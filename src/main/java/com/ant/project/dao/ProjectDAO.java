@@ -74,4 +74,9 @@ public interface ProjectDAO {
 	 * 자신이 해당조별과제의 조장인지 조원인지 검색
 	 */
 	public String selectProjectUserRole(ProjectUserDTO projectUserDTO);
+	
+	/**
+	 * project state가 1인 project들을 검색
+	 * */
+	public List<ProjectDTO> selectIfProjectState1();
 }

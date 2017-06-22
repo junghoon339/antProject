@@ -111,4 +111,10 @@ public class ProjectServiceImpl implements ProjectService {
 		String projectUserRole = projectDAO.selectProjectUserRole(projectUserDTO);
 		return projectUserRole;
 	}
+	
+	@Override
+	public List<ProjectDTO> selectIfProjectState1() {
+		return projectDAO.selectIfProjectState1();
+	}
+
 }

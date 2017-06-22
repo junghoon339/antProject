@@ -113,6 +113,11 @@ public class ProjectDAOImpl implements ProjectDAO {
 		String projectUserRole = sqlSession.selectOne("projectMapper.selectProjectUserRole", projectUserDTO);
 		return projectUserRole;
 	}
-	
+
+	@Override
+	public List<ProjectDTO> selectIfProjectState1() {
+		return sqlSession.selectList("projectMapper.selectIfProjectState1");
+	}
+
 }
 

@@ -2,6 +2,17 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="projectMapper">
 
+	<!-- 기본 projectDTOMap -->
+	<resultMap type="projectDTO" id="projectDTOMap">
+		<id column="project_no" property="projectNo" />
+		<result column="project_name" property="projectName" />
+		<result column="project_startdate" property="projectStartdate" />
+		<result column="project_enddate" property="projectEnddate" />
+		<result column="project_subject" property="projectSubject" />
+		<result column="project_teacher" property="projectTeacher" />
+		<result column="project_state" property="projectState" />
+	</resultMap>
+
 	<!-- 진행중, 완료된 조별과제 검색결과 담을 resultMap -->
 	<resultMap type="projectDTO" id="selectProjectMap2">
 		<id column="project_no" property="projectNo"/>		
@@ -128,5 +139,11 @@
 	                     ]]>
 	</update>
 
+	<!-- state가 1인 project를 호출 -->
+	<select id="selectIfProjectState1" resultMap="projectDTOMap">
+		SELECT *
+		FROM project
+		WHERE project_state = 1
+	</select>
 
 </mapper>

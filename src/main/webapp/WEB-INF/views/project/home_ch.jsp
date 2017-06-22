@@ -53,72 +53,104 @@
 	var header = $("meta[name='_csrf_header']").attr("content");
 	var token = $("meta[name='_csrf']").attr("content");
 
-	$(document).ready(function() {
-		$("#plusImg").click(function() {
-			$("#myModal").modal(); 
-		})
-	
-		$("#addBtn").click(function() {
-							var addInputbox = "<input class='form-control border-input' type='text'  name='invitedUser' placeholder='초대할 팀원을 입력하세요.'><button type='button' class='btn btn-danger' id='delMemberbtn'>삭제</button></input><p></p>";
-							$("#invitedMemberDiv").append(
-									addInputbox);
-							num = num + 1;
+	$(document)
+			.ready(
+					function() {
+						$("#plusImg").click(function() {
+							$("#myModal").modal(); //우동이가 수정함. 이걸로!!
 						})
-	
-		$("#projectForm").submit(function() {
-			alert("새로운 조별과제가 등록되었습니다.");
-		});
-		$("#insertProjectBtn").click(function() {
-			if (check() == true)
-				$("#projectForm").submit();
-	
-		});
-	
-		$(".survey").click(function() {
-			$.ajax({
-					url : "${pageContext.request.contextPath}/survey/",
-					type : "post",
-					beforeSend : function(xhr) {
-									xhr.setRequestHeader(header,token);
-					},
-					dataType : "json",
-					data : "projectNo="+ $(this).parent().next().val(),
-					success : function(result) {
 
-								if ($(result).size()==0) {
-									alert("이미 설문조사에 참여하였습니다.");
-									return;
-								}
-		
-								var str = "";
-								$.each(result,function(index,item) {
-													str += '<tr width="100%">';
-													str += '<td name="nameTd" width="50%"><center>'+ item.userName + '</center></td>';
-													str += '<input type="hidden" name="userName" value="'+item.userName+'" />';
-													str += '<input type="hidden" name="projectNo" value="'+ $(".survey").parent().next().val() + '" />';
-													str += '<td name="scoreTd" width="15%"><input type="text" name="userScore" placeholder="점수를 입력해주세요." value=""/></td>';
-													str += '<td name="updateTd" width="35%"><a href="#"><center>완료</center></a></td>';
-													str += '</tr>';
-												})
-								$("#print").html(
-										str);
-								$("#myModal2").modal('show');
+						$("#addBtn")
+								.click(
+										function() {
+											var addInputbox = "<input class='' type='text'  name='invitedUser' placeholder='초대할 팀원을 입력하세요.'><button type='button' class='btn btn-danger' id='delMemberbtn'>삭제</button></input><p></p>";
+											$("#invitedMemberDiv").append(
+													addInputbox);
+											num = num + 1;
+										})
 
-					},
-					error : function(err) {
-						alert("teamInfo.jsp ERROR : "
-								+ err);
-					}
-				});
-		})
-	
-		$("#okayBtn").click(function() {
-			alert("dd확인뉴름ㅎㅎ");
-			$("input")
-			$("#ffform").submit();
-		})
+						$("#projectForm").submit(function() {
+							alert("새로운 조별과제가 등록되었습니다.");
+						});
+						$("#insertProjectBtn").click(function() {
+							if (check() == true)
+								$("#projectForm").submit();
 
-	});
+						});
+
+						$(".survey")
+								.click(
+										function() {
+											$
+													.ajax({
+														url : "${pageContext.request.contextPath}/survey/",
+														type : "post",
+														beforeSend : function(
+																xhr) {
+															xhr
+																	.setRequestHeader(
+																			header,
+																			token);
+														},
+														dataType : "json",
+														data : "projectNo="
+																+ $(this)
+																		.parent()
+																		.next()
+																		.val(),
+														success : function(
+																result) {
+
+															if ($(result)
+																	.size()==0) {
+																alert("이미 설문조사에 참여하였습니다.");
+																return;
+															}
+
+															var str = "";
+															$
+																	.each(
+																			result,
+																			function(
+																					index,
+																					item) {
+																				str += '<tr width="100%">';
+																				str += '<td name="nameTd" width="50%"><center>'
+																						+ item.userName
+																						+ '</center></td>';
+																				str += '<input type="hidden" name="userName" value="'+item.userName+'" />';
+																				str += '<input type="hidden" name="projectNo" value="'
+																						+ $(
+																								".survey")
+																								.parent()
+																								.next()
+																								.val()
+																						+ '" />';
+																				str += '<td name="scoreTd" width="15%"><input type="text" name="userScore" placeholder="점수를 입력해주세요." value=""/></td>';
+																				str += '<td name="updateTd" width="35%"><a href="#"><center>완료</center></a></td>';
+																				str += '</tr>';
+																			})
+															$("#print").html(
+																	str);
+															$("#myModal2")
+																	.modal(
+																			'show');
+
+														},
+														error : function(err) {
+															alert("teamInfo.jsp ERROR : "
+																	+ err);
+														}
+													});
+										})
+
+						$("#okayBtn").click(function() {
+							alert("dd확인뉴름ㅎㅎ");
+							$("input")
+							$("#ffform").submit();
+						})
+
+					});
 
 	function check() {
 		if (fr.projectName.value == "") {
@@ -185,12 +217,16 @@
 												</div>
 												<hr />
 												<div class="row">
-													<div class="col-sm-6" style="height: 34px ; margin-top:2%;"  >
-														<span class="label label-info" ><a href="#"	style="color: #FFFFFF;" class="survey">설문조사${projectDTO.projectNo}</a></span> 
-														<input type="hidden" value="${projectDTO.projectNo}">
+													<div class="col-md-8">
+														<span class="label label-info "><a href="#"
+															style="color: #FFFFFF;" class="survey">설문조사
+																${projectDTO.projectNo}</a></span> <input type="hidden"
+															value="${projectDTO.projectNo}">
 													</div>
-													<div class="col-sm-2">
-														<a href="${pageContext.request.contextPath}/project/teamMain/${projectDTO.projectNo}" class="btn btn-primary btn-simple">Enter</a>
+													<div class="col-md-2">
+														<a
+															href="${pageContext.request.contextPath}/project/teamMain/${projectDTO.projectNo}"
+															class="btn btn-primary btn-simple">Enter</a>
 													</div>
 												</div>
 											</div>
@@ -234,12 +270,9 @@
 									<div class="header">
 										<div class="row">
 											<div class="col-lg-6 col-lg-offset-3">
-											<br>
-											
-												<div class="content" id="plusImg" align="center" >
-													<%-- <img style="width: 100%; height: 100%; margin: auto; "
-														src="${pageContext.request.contextPath}/resources/img/plus.png"> --%>
-													<span style="font-size: 0px;margin-right:50px; margin-top:5px;"><i class="fa fa-plus-circle" style=""></i></span>
+												<div class="content" id="plusImg">
+													<img style="width: 100%; height: 100%; margin: auto;"
+														src="${pageContext.request.contextPath}/resources/img/plus.png">
 												</div>
 											</div>
 										</div>
@@ -249,6 +282,12 @@
 
 						</div>
 					</div>
+					<!-- --------------------------------------------------------------------------------------------------------- -->
+
+
+
+					<!-- --------------------------------------------------------------------------------------------------------- -->
+
 				</div>
 			</div>
 			<jsp:include page="footer_ch.jsp" flush="false" />
@@ -302,25 +341,39 @@
 					<div class="container" style="margin-top: 10px;">
 						<div class="row">
 							<div class="">
-								<form id="projectForm" name="fr" class="form-horizontal col-sm-7 col-sm-offset-1" action="${pageContext.request.contextPath}/project/insertProject" method="post">
-									<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"> *새로운 조별과제를 만드는 분이 자동으로 조장으로
+								<form id="projectForm" name="fr"
+									class="form-horizontal col-sm-7 col-sm-offset-1"
+									action="${pageContext.request.contextPath}/project/insertProject"
+									method="post">
+									<input type="hidden" name="${_csrf.parameterName}"
+										value="${_csrf.token}"> *새로운 조별과제를 만드는 분이 자동으로 조장으로
 									지정됩니다.
 									<p></p>
-									팀플명 : <input class="form-control border-input" type="text" name="projectName" />
+									팀플명 : <input class="form-control" type="text"
+										name="projectName" />
 									<p></p>
-									과목명 : <input class="form-control border-input" type="text" name="projectSubject" />
+									과목명 : <input class="form-control" type="text"
+										name="projectSubject" />
 									<p></p>
-									교수님 : <input class="form-control border-input" type="text" name="projectTeacher" />
+									교수님 : <input class="form-control" type="text"
+										name="projectTeacher" />
 									<p></p>
 									시작날짜:
-										<input class="form-control border-input" name="projectStartdate" id="registration-date" type="date">
+									<div class="input-group registration-date-time">
+										<input class="form-controsl" name="projectStartdate"
+											id="reg|istration-date" type="date">
+									</div>
 									<p></p>
 									종료날짜 :
-										<input class="form-control border-input" name="projectEnddate" id="registration-date" type="date">
+									<div class="input-group registration-date-time">
+										<input class="form-control" name="projectEnddate"
+											id="registration-date" type="date">
+									</div>
 									<p></p>
-									
+
 									<div id="invitedMemberDiv">
-										팀원ID : <input class="form-control border-input" type="text" name="invitedUser" />
+										팀원ID : <input class="form-control" type="text"
+											name="invitedUser" />
 										<p></p>
 									</div>
 
@@ -343,7 +396,6 @@
 	</div>
 
 </body>
-
 
 <!--   Core JS Files   -->
 <script

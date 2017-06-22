@@ -59,9 +59,11 @@ public class SurveyController {
 				users.add(u);
 			}
 		}
-		return users;
 		
+		return users;
 	}
+	
+	
 	
 	@RequestMapping("/mainPage")
 	public String mainPage(HttpSession session){
@@ -70,7 +72,7 @@ public class SurveyController {
 		
 		String surveyStartDate ;
 		String surveyEndDate ;
-		String surveyEndDate2 ;
+		String surveyEndDate2;
 		
 		SimpleDateFormat sd = new SimpleDateFormat("MM/dd/yyyy", Locale.KOREA);
 		SimpleDateFormat sd2 = new SimpleDateFormat("yy/MM/dd", Locale.KOREA);
@@ -110,22 +112,27 @@ public class SurveyController {
 	
 	@RequestMapping("/insertSurveyDetail")
 	public String createSurveyUser(HttpSession session, int projectNo, String[] userName, String[] userScore){
-		
 		UserDTO user = (UserDTO) session.getAttribute("userDTO");
 		int userNo = user.getUserNo();
-		
 		SurveyDTO survey = surveyService.surveySelectByProjectNo(projectNo);
 		int surveyNo = survey.getSurveyNo();
-		
 		SurveyUserDTO surveyUser = surveyService.surveyUserSelect(surveyNo, userNo);
 		int surveyUserNo = surveyUser.getSurveyUserNo();
-		
 		for(int i=0; i<userName.length;i++){
 			surveyService.surveyDetailCreate(new SurveyDetailDTO(0, surveyNo, surveyUserNo, userName[i], userScore[i]));
 		}
-		
 		surveyService.surveyUserUpdate(surveyNo, userNo);
 		
+		List<SurveyUserDTO> surveyUsers = surveyService.surveyUserSelect(surveyNo);
+		int a = 1;
+		for(SurveyUserDTO su : surveyUsers){
+			System.out.println(su.getSurveyNo() +" : "+ su.getUserNo()+"의 상태 = "+su.getSurveyUserState());
+			a = a * su.getSurveyUserState();
+		}
+		if (a==1){
+			System.out.println("모두참여햇음 ㅇㅇ");
+			surveyService.closedProject(projectNo);
+		}
 		return "redirect:/project/home";
 	}
 }
