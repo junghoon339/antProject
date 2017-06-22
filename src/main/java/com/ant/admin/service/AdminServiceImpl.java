@@ -155,14 +155,12 @@ public class AdminServiceImpl implements AdminService {
 
 	@Override
 	public List<NoticeDTO> noticeSelectBySearch(int startRow, int endRow, String searchText) {
-		// TODO Auto-generated method stub
-		return null;
+		return adminDAO.noticeSelectBySearch(startRow, endRow, searchText);
 	}
 
 	@Override
 	public int noticeTotalCountBySearch(String searchText) {
-		// TODO Auto-generated method stub
-		return 0;
+		return adminDAO.noticeTotalCountBySearch(searchText);
 	}
 
 	@Override

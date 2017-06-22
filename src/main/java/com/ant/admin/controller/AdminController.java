@@ -230,6 +230,8 @@ public class AdminController {
 	
 	@RequestMapping("/updateForm")
 	public ModelAndView noticeUpdateForm(NoticeDTO noticeDTO){
+		System.out.println("update Form = "+noticeDTO.getNoticeNo());
+		
 		ModelAndView mv = new ModelAndView();
 		mv.addObject("noticeDTO",noticeDTO);
 		mv.setViewName("admin/updateForm");
@@ -239,7 +241,7 @@ public class AdminController {
 	@RequestMapping("/update")
 	public String noticeUpdate(NoticeDTO noticeDTO) throws Exception{
 		System.out.println("여기오긴하냐");
-		System.out.println(noticeDTO.getNoticeNo());
+		System.out.println("update = "+noticeDTO.getNoticeNo());
 		service.updateNotice(noticeDTO);
 		return "redirect:/admin/adminNotice";
 	}

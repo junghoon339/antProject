@@ -121,7 +121,7 @@ public class MessageController {
 	public String messageDelete(String messageNos,boolean flag){
 		System.out.println(messageNos);
 		service.messageDelete(messageNos,flag);
-		return "redirect:/message/main";
+		return "redirect:/message/main?flag="+flag;
 	}
 	
 	@RequestMapping("/sendCancel")

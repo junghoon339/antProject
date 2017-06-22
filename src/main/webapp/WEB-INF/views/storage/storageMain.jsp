@@ -10,6 +10,8 @@
 	content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0'
 	name='viewport' />
 <meta name="viewport" content="width=device-width" />
+	<link rel="apple-touch-icon" sizes="76x76" href="${pageContext.request.contextPath }/resources/assets/img/apple-icon.png">
+	<link rel="icon" type="image/png" sizes="96x96" href="assets/img/favicon.png">
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 
 <title>Insert title here</title>
@@ -29,6 +31,7 @@
 <link
 	href="${pageContext.request.contextPath }/resources/css/paper-dashboard.css"
 	rel="stylesheet" />
+	
 <!--  Fonts and icons     -->
 <link
 	href="http://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css"
@@ -92,6 +95,37 @@
 		}
 	})
 </script>
+<style type="text/css">
+.modal-header-danger {
+	color: #fff;
+	padding: 9px 15px; border-bottom : 1px solid #eee; background-color :
+	#d9534f; -webkit-border-top-left-radius : 5px;
+	-webkit-border-top-right-radius : 5px; -moz-border-radius-topleft : 5px;
+	-moz-border-radius-topright : 5px; border-top-left-radius : 5px;
+	border-top-right-radius: 5px;
+	padding: 9px 15px;
+	border-bottom: 1px solid #eee;
+	background-color: #d9534f;
+	-webkit-border-top-left-radius: 5px;
+	-webkit-border-top-right-radius: 5px;
+	-moz-border-radius-topleft: 5px;
+	-moz-border-radius-topright: 5px;
+	border-top-left-radius: 5px;
+	border-bottom: 1px solid #eee;
+	background-color: #d9534f;
+	-webkit-border-top-left-radius: 5px;
+	-webkit-border-top-right-radius: 5px;
+	-moz-border-radius-topleft: 5px;
+	-moz-border-radius-topright: 5px;
+	border-top-left-radius: 5px;
+}
+
+/* search form */
+body{
+    margin-top:20px;
+}
+/* search form */
+</style>
 <body>
 	<div class="wrapper">
 		<jsp:include page="/WEB-INF/views/project/sidebar_ch.jsp" />
@@ -120,14 +154,18 @@
                         
                             <div class="header">
                             <div class="col-sm-6">
-                                <h4 class="title">자료실</h4>
+                                <h2 class="title">자료실</h2>
                                 <p class="category">자료를 공유하세요!</p>
                             </div>
-                                <div class="col-sm-6" align="right">
+                               <!--  <div class="col-sm-6" align="right">
 										<a class="btn btn-danger" href="#danger" data-toggle="modal">글쓰기</a>
-								</div>
+								</div> -->
+								<div class="col-sm-6" align="right">
+								 <div class="icon-container">
+                        				<span class="ti-pencil" href="#danger" data-toggle="modal"></span><span class="icon-name" href="#danger" data-toggle="modal"><a href="#">글쓰기</a></span>
+                        		</div>
                             </div>
-                            
+                           </div>
                             
                             
                             
@@ -146,8 +184,8 @@
 					                      <li><a href="#contains" id="searchByName">이름</a></li>
 					                      <li><a href="#its_equal" id="searchByTitle">제목</a></li>
 					                    </ul> -->
-														<select class="btn btn-default dropdown-toggle"
-															data-toggle="dropdown" style="width: 80px" id="category">
+														<select class="btn btn-Info dropdown-toggle"
+															data-toggle="dropdown" style="width: 90px" id="category">
 															<option value="-1">선택</option>
 															<option value="0">이름</option>
 															<option value="1">제목</option>
@@ -157,9 +195,14 @@
 														id="search_param"> <input type="text"
 														class="form-control" name="x" placeholder="검색어를 입력하세요."
 														id="searchText"> <span class="input-group-btn">
-														<button class="btn btn-default" type="button"
+														
+														<button class="btn btn-Info" type="button"
 															id="submitBt">
-															<span class="glyphicon glyphicon-search"></span>
+															
+															<div class="icon-container">
+                        										<span class="ti-search"></span>
+                        									</div>
+                        									
 														</button>
 													</span>
 												</div>
@@ -211,20 +254,25 @@
 												</c:forEach>
                                     </tbody>
                                 </table>
-<!-- paging~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~` -->
+                                
+                                
+							<!-- paging~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~` -->
 										<div class="clearfix" style="text-align: center"
 											align="center">
-											<ul class="pagination pull-right" style="margin-right: 30%">
-
+											<ul class="pagination pull-right" style="margin-right: 37%">
+								
 												<c:choose>
 													<c:when test="${startPage==1}">
-														<li class="disabled"><a href="#"><span
-																class="glyphicon glyphicon-chevron-left"></span></a></li>
+														<li class="disabled"><a href="#"><div class="icon-container">
+							                        				<span class="ti-angle-double-left"></span>
+							                        			</div></a></li>
+															
 													</c:when>
 													<c:otherwise>
-														<li><a
-															href="${pageContext.request.contextPath}/storage/storageTable/1?pageNumber=${endPage-pageSu}"><span
-																class="glyphicon glyphicon-chevron-left"></span></a></li>
+														
+																<li><a href="${pageContext.request.contextPath}/storage/storageTable/1?pageNumber=${endPage-pageSu}"><div class="icon-container">
+							                        				<span class="ti-angle-double-left"></span>
+							                        			</div></a></li>
 													</c:otherwise>
 												</c:choose>
 
@@ -236,19 +284,21 @@
 
 												<c:choose>
 													<c:when test="${flag==true}">
-														<li class="disabled"><a href="#"><span
-																class="glyphicon glyphicon-chevron-right"></span></a></li>
+														<li class="disabled"><a href="#"><div class="icon-container">
+                        									<span class="ti-angle-double-right"></span>
+                        								</div></a></li>
+																
 													</c:when>
 													<c:otherwise>
-														<li><a
-															href="${pageContext.request.contextPath}/storage/storageTable/1?pageNumber=${startPage+pageSu}"><span
-																class="glyphicon glyphicon-chevron-right"></span></a></li>
+															<li><a href="${pageContext.request.contextPath}/storage/storageTable/1?pageNumber=${startPage+pageSu}"><div class="icon-container">
+		                        								<span class="ti-angle-double-right"></span>
+		                        							</div></a></li>
 													</c:otherwise>
 												</c:choose>
 
 											</ul>
 										</div>
-
+									
 										<!-- paging~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~` -->
                             </div>
                         </div>
@@ -258,26 +308,28 @@
 
 
 
-
+					</div>
 				</div>
 			</div>
 			<jsp:include page="/WEB-INF/views/project/footer_ch.jsp"
 				flush="false" />
-		</div>
+		
 	</div>
-	
-	
-	
+	</div>
+	</div>
+</div>
 					<!-- Modal -->
 									<div class="modal fade" id="danger" tabindex="-1" role="dialog"
-										aria-labelledby="myModalLabel" aria-hidden="true">
-										<div class="modal-dialog">
+										aria-labelledby="myModalLabel" aria-hidden="true" >
+										<div class="modal-dialog" style="z-index: 1050;">
 											<div class="modal-content">
-												<div class="modal-header modal-header-danger">
-													<button type="button" class="close" data-dismiss="modal"
+												<div class="modal-header modal-header-Info">
+													<button type="button" class="close"t data-dismiss="modal"
 														aria-hidden="true">×</button>
 													<h1>
-														<i class="glyphicon glyphicon-thumbs-up"></i> 자료등록
+														<div class="icon-container">
+                        									<span class="ti-export"></span><span class="icon-name"> 자료등록</span>
+                        								</div>
 													</h1>
 												</div>
 
@@ -287,7 +339,7 @@
 
 
 												<!-- 인설트 폼 -->
-												<div class="modal-body">
+												<div class="modal-body" style="z-index: 1050;">
 													<form class="form-horizontal"
 														action="${pageContext.request.contextPath}/storage/insert"
 														method="post" enctype="multipart/form-data">
@@ -299,7 +351,6 @@
 														<fieldset>
 
 															<!-- Form Name -->
-															<legend>자료를 등록하세요!</legend>
 
 															<!-- Text input-->
 															<div class="form-group">
@@ -315,35 +366,43 @@
 
 
 															<!-- Textarea -->
-															<div class="form-group">
-																<label class="col-md-4 control-label" for="anschrift"
-																	style="width: 63px">내용</label>
-																<div class="col-md-4">
+															
+															 <div class="form-group">
+																<label class="col-md-4 control-label" for="anschrift" style="width:63px">내용</label>
+																
 																	<textarea class="form-control" id="anschrift"
-																		name="storageContent"
-																		style="width: 465px; height: 150px"
+																		name="storageContent" rows="5" style="width:150%"
 																		placeholder="내용을 입력하세요"></textarea>
-																</div>
-															</div>
+																
+															</div> 
 
-
-
+															<!-- Button (Double) -->
 															<div class="input-group">
 																<span class="input-group-btn">
+																
+																
 																	<button id="fake-file-button-browse" type="button"
 																		class="btn btn-default">
-																		<span class="glyphicon glyphicon-file"></span>
+																		<i><div class="icon-container">
+             										           				<span class="ti-clip"></span>
+                        												</div></i>
 																	</button>
+																	
+																	
 																</span> <input type="file" id="files-input-upload"
 																	style="display: none" name="file"> <input
 																	type="text" id="fake-file-input-name"
 																	disabled="disabled" placeholder="File not selected"
 																	class="form-control" name="filePath"> <span
 																	class="input-group-btn">
+																	
 																	<button type="button" class="btn btn-default"
 																		disabled="disabled" id="fake-file-button-upload">
-																		<span class="glyphicon glyphicon-upload"></span>
+																		<div class="icon-container">
+                        													<span class="ti-dropbox"></span>
+                        												</div>
 																	</button>
+																	
 																</span>
 															</div>
 															<small class="pull-right">파일을 등록하세요</small>
@@ -352,7 +411,8 @@
 																<label class="col-md-4 control-label" for="anmelden"></label>
 																<div class="col-md-8">
 																	<input type="submit" id="anmelden" name="anmelden"
-																		class="btn btn-success" value="등록">
+																		class="btn btn-Info" value="등록">
+									                        			
 																</div>
 															</div>
 														</fieldset>
@@ -394,7 +454,7 @@
 																	});
 												</script>
 												<div class="modal-footer">
-													<button type="button" class="btn btn-default pull-left"
+													<button type="button" class="btn btn-Info btn-filter"
 														data-dismiss="modal">닫기</button>
 												</div>
 											</div>
