@@ -264,17 +264,19 @@ public class VoteController {
 	}
 	
 	@RequestMapping("/update")
-	public String update(RedirectAttributes redirectAttr, HttpSession session, int projectNo , int voteNo, String[] chk) {
+	public String update(HttpServletRequest request, HttpSession session, int projectNo , int voteNo, String[] chk) {
 		
 		UserDTO user = (UserDTO) session.getAttribute("userDTO");
 		int userNo = user.getUserNo();
 		
 		for(String s : chk){
-			voteService.insertVoteDetail(new VoteDetailDTO(0, voteNo, s));
+			if(!s.trim().equals("")){
+				voteService.insertVoteDetail(new VoteDetailDTO(0, voteNo, s));
+			}
 		}
 		
-		redirectAttr.addAttribute("voteNo", voteNo);
-		redirectAttr.addAttribute("userCount", voteService.selectVoteDetailCall(voteNo));
-		return "redirect:/vote/detail";
+//		request.setAttribute("voteNo", voteNo);
+//		request.setAttribute("userCount", voteService.selectVoteDetailCall(voteNo));
+		return "redirect:/vote/";
 	}
 }

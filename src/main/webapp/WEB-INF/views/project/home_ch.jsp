@@ -102,7 +102,7 @@
 																result) {
 
 															if ($(result)
-																	.empty()) {
+																	.size()==0) {
 																alert("이미 설문조사에 참여하였습니다.");
 																return;
 															}
@@ -123,7 +123,6 @@
 																						+ $(
 																								".survey")
 																								.parent()
-																								.children()
 																								.next()
 																								.val()
 																						+ '" />';

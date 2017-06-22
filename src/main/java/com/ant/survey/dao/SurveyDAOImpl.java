@@ -1,6 +1,7 @@
 package com.ant.survey.dao;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -23,6 +24,14 @@ public class SurveyDAOImpl implements SurveyDAO{
 		return session.selectOne("surveyMapper.surveySelect1",projectNo);
 	}
 	
+	@Override
+	public List<SurveyUserDTO> surveyUserSelect(int surveyNo) {
+		Map<String, Integer> map = new TreeMap<>();
+		map.put("surveyNo", surveyNo);
+		map.put("userNo", 0);
+		return session.selectList("surveyMapper.surveyUserSelect", map);
+	}
+
 	@Override
 	public SurveyUserDTO surveyUserSelect(int surveyNo, int userNo) {
 		Map<String, Integer> map = new TreeMap<>();
@@ -76,6 +85,11 @@ public class SurveyDAOImpl implements SurveyDAO{
 		map.put("projectNo", projectNo);
 		map.put("endDate", endDate);
 		return session.update("surveyMapper.closingProject", map);
+	}
+
+	@Override
+	public int closedProject(int projectNo) {
+		return session.update("surveyMapper.colsedProject", projectNo);
 	}
 	
 }

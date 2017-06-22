@@ -44,8 +44,6 @@
 $(function() {
 
 	$("#insert").click(function(){
-		alert($("input name[voteTitle]").text());
-		
 		$("#createForm").submit();
 	})
 	
