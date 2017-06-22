@@ -98,22 +98,21 @@
 																		.parent()
 																		.next()
 																		.val(),
-														success : function(
-																result) {
-
+														success : function( result) {
+															
+															if(result[0].userNo==0){
+																alert("설문조사 대상이 존재하지 않습니다.");
+																return;
+															}
+															
 															if ($(result)
 																	.size()==0) {
 																alert("이미 설문조사에 참여하였습니다.");
 																return;
 															}
-
 															var str = "";
-															$
-																	.each(
-																			result,
-																			function(
-																					index,
-																					item) {
+															$.each(result, function( index, item) {
+																
 																				str += '<tr width="100%">';
 																				str += '<td name="nameTd" width="50%"><center>'
 																						+ item.userName
@@ -145,7 +144,6 @@
 										})
 
 						$("#okayBtn").click(function() {
-							alert("dd확인뉴름ㅎㅎ");
 							$("input")
 							$("#ffform").submit();
 						})

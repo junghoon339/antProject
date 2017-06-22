@@ -113,8 +113,8 @@ public class ProjectServiceImpl implements ProjectService {
 	}
 	
 	@Override
-	public List<ProjectDTO> selectIfProjectState1() {
-		return projectDAO.selectIfProjectState1();
+	public List<ProjectDTO> selectIfProjectState1(int userNo) {
+		return projectDAO.selectIfProjectState1(userNo);
 	}
 
 }

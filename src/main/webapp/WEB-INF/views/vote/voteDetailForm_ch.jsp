@@ -122,7 +122,7 @@ $(function() {
 				$("#well").css("color", "gray");
 			},
 			error : function(err) {
-				alert("오류 발생 이니셜라이즈 : " + err);
+				alert("ERROR010 : " + err);
 			}
 		});
 	})
@@ -176,7 +176,7 @@ function init(){
 			}
 		},
 		error : function(err) {
-			alert("오류 발생 이니셜라이즈 : " + err);
+			alert("ERROR020 : " + err);
 		}
 	});
 };
@@ -198,7 +198,7 @@ function btnEvent(a){
 				$("#vote").text("다시 투표하기");
 			},
 			error : function(err) {
-				alert("오류 발생zx : " + err);
+				alert("ERROR030 : " + err);
 			}
 		});
 	} else if( $(a).text()=='다시 투표하기') {

@@ -113,22 +113,14 @@ public class ProjectController implements Serializable {
 		int updateProState = projectService.updateProjectState(userNo);
 		
 		//Project STATE가 1인 경우, SURVEY를 생성하는 구문
-		List<ProjectDTO> projects = projectService.selectIfProjectState1();
-		System.out.println("1인애를 가져와보자 있나?"+projects);
+		List<ProjectDTO> projects = projectService.selectIfProjectState1(userNo);
 		if(projects.size()!=0){
-			System.out.println("ㅇㅇ 있네");
 			for(ProjectDTO project : projects){
-				System.out.println("잇는만큼");
 				int projectNo = project.getProjectNo();
 				SurveyDTO survey = surveyService.surveySelectByProjectNo(projectNo);
-				System.out.println("만약 스테이트가 1인데 서베이가 없는애가 잇나?");
-				System.out.println(survey);
 				if(survey==null){
-					System.out.println("스테이트가 1인데 서베이가 없는애가 잇네 ㅇㅇ");
 					// Project STATE가 1임에도 survey가 생성되지 않을경우 생성
-					System.out.println("플젝에 해당하는 서베이가 없으니까 생성해야지");
 					surveyService.surveyCreate(new SurveyDTO(0, projectNo, surveyStartDate, surveyEndDate, 0));
-					System.out.println("웅 생성함 ㅋ");
 					SurveyDTO getSurvey = surveyService.surveySelectByProjectNo(projectNo);
 					int surveyNo = getSurvey.getSurveyNo();
 					
@@ -136,9 +128,7 @@ public class ProjectController implements Serializable {
 					
 					for(UserDTO u : projectUserList){
 						int getUserNo = u.getUserNo();
-						System.out.println("플젝에 해당하는 유저만큼 서베이유저 생성해야지");
 						surveyService.surveyUserCreate(new SurveyUserDTO(0, surveyNo, getUserNo, 0));
-						System.out.println("생성햇다");
 					}
 					
 				}// if(survey != null) end
