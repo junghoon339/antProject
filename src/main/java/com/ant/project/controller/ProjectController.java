@@ -15,6 +15,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 
@@ -38,6 +39,10 @@ import com.ant.message.service.MessageService;
 import com.ant.project.dto.ProjectDTO;
 import com.ant.project.dto.ProjectUserDTO;
 import com.ant.project.service.ProjectService;
+import com.ant.survey.controller.SurveyController;
+import com.ant.survey.dto.SurveyDTO;
+import com.ant.survey.dto.SurveyUserDTO;
+import com.ant.survey.service.SurveyService;
 import com.ant.user.dto.UserDTO;
 import com.dhtmlx.planner.DHXEv;
 import com.dhtmlx.planner.DHXEvent;
@@ -58,7 +63,13 @@ public class ProjectController implements Serializable {
 	
 	@Autowired
 	private MessageService messageService;
-
+	
+	@Autowired
+	private SurveyController surveyController;
+	
+	@Autowired
+	private SurveyService surveyService;
+	
 	public static String date_format = "MM/dd/yyyy HH:mm";
 	public static String filter_format = "yyyy-MM-dd";
 	public DHXSecurity security;
@@ -74,6 +85,23 @@ public class ProjectController implements Serializable {
 	 */
 	@RequestMapping("/home")
 	public ModelAndView home(HttpServletRequest req) throws ParseException{
+		
+		//NA-DRAGON-TIGER 지역변수 선언
+		String surveyStartDate ;
+		String surveyEndDate ;
+		
+		SimpleDateFormat sd = new SimpleDateFormat("MM/dd/yyyy", Locale.KOREA);
+		Date now = new Date();
+		Calendar surveyStartCal = Calendar.getInstance();
+		Calendar surveyEndCal = Calendar.getInstance();
+		
+		surveyStartCal.setTime(now);
+		surveyEndCal.setTime(now);
+		surveyEndCal.add(Calendar.DATE, 1);
+		
+		surveyStartDate = sd.format(surveyStartCal.getTime());
+		surveyEndDate = sd.format(surveyEndCal.getTime());
+		
 		//홈화면 진입시 projectNo에 null을 담음
 		req.getSession().setAttribute("projectNo", null);
 		
@@ -81,7 +109,43 @@ public class ProjectController implements Serializable {
 		UserDTO userDTO = (UserDTO) req.getSession().getAttribute("userDTO");
 		int userNo = userDTO.getUserNo();
 
-		// 현재진행중, 완료대기중, 완료된 조별과제를 담은 map
+		//현재시간=enddate가 된 조별과제를 진행중->완료대기중으로 자동수정
+		int updateProState = projectService.updateProjectState(userNo);
+		
+		//Project STATE가 1인 경우, SURVEY를 생성하는 구문
+		List<ProjectDTO> projects = projectService.selectIfProjectState1();
+		System.out.println("1인애를 가져와보자 있나?"+projects);
+		if(projects.size()!=0){
+			System.out.println("ㅇㅇ 있네");
+			for(ProjectDTO project : projects){
+				System.out.println("잇는만큼");
+				int projectNo = project.getProjectNo();
+				SurveyDTO survey = surveyService.surveySelectByProjectNo(projectNo);
+				System.out.println("만약 스테이트가 1인데 서베이가 없는애가 잇나?");
+				System.out.println(survey);
+				if(survey==null){
+					System.out.println("스테이트가 1인데 서베이가 없는애가 잇네 ㅇㅇ");
+					// Project STATE가 1임에도 survey가 생성되지 않을경우 생성
+					System.out.println("플젝에 해당하는 서베이가 없으니까 생성해야지");
+					surveyService.surveyCreate(new SurveyDTO(0, projectNo, surveyStartDate, surveyEndDate, 0));
+					System.out.println("웅 생성함 ㅋ");
+					SurveyDTO getSurvey = surveyService.surveySelectByProjectNo(projectNo);
+					int surveyNo = getSurvey.getSurveyNo();
+					
+					List<UserDTO> projectUserList = projectService.selectProjectUsers(projectNo);
+					
+					for(UserDTO u : projectUserList){
+						int getUserNo = u.getUserNo();
+						System.out.println("플젝에 해당하는 유저만큼 서베이유저 생성해야지");
+						surveyService.surveyUserCreate(new SurveyUserDTO(0, surveyNo, getUserNo, 0));
+						System.out.println("생성햇다");
+					}
+					
+				}// if(survey != null) end
+			}// for(ProjectDTO project : projects) end
+		}// if(!projects.isEmpty()) end
+		
+		// 현재진행중, 완료대기중 조별과제를 담은 map
 		Map<String, List<ProjectDTO>> projectMap = projectService.selectProjectById(userNo);
 		List<ProjectDTO> currentProList = projectMap.get("currentProList");
 		List<ProjectDTO> surveyingProList = projectMap.get("surveyingProList");
@@ -126,7 +190,6 @@ public class ProjectController implements Serializable {
 		mv.setViewName("project/home_ch");
 		mv.addObject("currentProList",currentProList);
 		mv.addObject("surveyingProList",surveyingProList);
-		//mv.addObject("completedProList",completedProList);
 		return mv;
 	}
 	
@@ -139,15 +202,15 @@ public class ProjectController implements Serializable {
 		// 현재 로그인된 userNo
 		UserDTO userDTO = (UserDTO) req.getSession().getAttribute("userDTO");
 		int userNo = userDTO.getUserNo();
+		
 
-		// 현재진행중, 완료대기중, 완료된 조별과제를 담은 map
+		
+		//완료된 조별과제를 담은 map
 		Map<String, List<ProjectDTO>> projectMap = projectService.selectProjectById(userNo);
 		List<ProjectDTO> completedProList = projectMap.get("completedProList");
 		
 		ModelAndView mv = new ModelAndView();
 		mv.setViewName("project/completedProject_ch");
-		//mv.addObject("currentProList",currentProList);
-		//mv.addObject("surveyingProList",surveyingProList);
 		mv.addObject("completedProList",completedProList);
 		return mv;
 	}
@@ -226,6 +289,7 @@ public class ProjectController implements Serializable {
 		ModelAndView mv = new ModelAndView();
 		mv.addObject("projectDTO",projectDTO);
 		mv.setViewName("project/teamInfo_ch");
+		
 		return mv;
 	}
 	
