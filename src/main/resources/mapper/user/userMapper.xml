@@ -33,4 +33,10 @@
 		UPDATE ant_user SET user_password = #{userPassword}
 		WHERE user_no=#{userNo}
 	</update>
+	
+	<update id="updateUser" parameterType="userDTO">
+		UPDATE ant_user SET user_password = #{userPassword}, user_name=#{userName}, user_school=#{userSchool}, user_major=#{userMajor}
+		WHERE user_id=#{userId}
+	</update>
+	
 </mapper>

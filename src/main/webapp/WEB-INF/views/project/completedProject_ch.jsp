@@ -73,10 +73,10 @@
 						</c:choose>
 
 						
-						<jsp:include page="footer_ch.jsp" flush="false" />
 					</div>
 				</div>
 			</div>
+						<jsp:include page="footer_ch.jsp" flush="false" />
 		</div>
 	</div>
 

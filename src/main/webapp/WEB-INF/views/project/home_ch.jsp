@@ -57,21 +57,28 @@
 			.ready(
 					function() {
 						$("#plusImg").click(function() {
-							$("#myModal").modal(); //우동이가 수정함. 이걸로!!
+							$("#myModal").modal(); 
 						})
 
-						$("#addBtn")
-								.click(
-										function() {
-											var addInputbox = "<input class='' type='text'  name='invitedUser' placeholder='초대할 팀원을 입력하세요.'><button type='button' class='btn btn-danger' id='delMemberbtn'>삭제</button></input><p></p>";
-											$("#invitedMemberDiv").append(
-													addInputbox);
-											num = num + 1;
-										})
+						$("#addBtn").click(function() {
+							var addInputbox = "<input class='form-control border-input' type='text' name='invitedUser' placeholder='초대할 팀원아이디를 입력하세요.'><button type='button' class='btn btn-primary btn-xs' id='delMemberbtn'>삭제</button><p></p>";
+							$("#invitedMemberDiv").append(addInputbox);
+							num = num + 1;
+						})
+					
+						$(document).on("click","#delMemberbtn",function(){
+								$(this).prev().remove();
+								$(this).remove();
+								
+								
+						
+						})
+						
 
 						$("#projectForm").submit(function() {
 							alert("새로운 조별과제가 등록되었습니다.");
 						});
+						
 						$("#insertProjectBtn").click(function() {
 							if (check() == true)
 								$("#projectForm").submit();
@@ -106,7 +113,7 @@
 															}
 															
 															if ($(result)
-																	.size()==0) {
+																	.size() == 0) {
 																alert("이미 설문조사에 참여하였습니다.");
 																return;
 															}
@@ -191,7 +198,6 @@
 			<div class="content">
 				<div class="container-fluid">
 					<div class="row">
-						<!-- ----------------------------------------------------------------------------------------------우동 시작 -->
 						<c:choose>
 							<c:when test="${empty currentProList}&&${empty surveyingProList}">
 								<!-- 진행중인,완료대기중인 조별과제가 없으면 -->
@@ -223,9 +229,7 @@
 															value="${projectDTO.projectNo}">
 													</div>
 													<div class="col-md-2">
-														<a
-															href="${pageContext.request.contextPath}/project/teamMain/${projectDTO.projectNo}"
-															class="btn btn-primary btn-simple">Enter</a>
+														<a href="${pageContext.request.contextPath}/project/teamMain/${projectDTO.projectNo}" class="btn btn-primary btn-simple">Enter</a>
 													</div>
 												</div>
 											</div>
@@ -281,12 +285,6 @@
 
 						</div>
 					</div>
-					<!-- --------------------------------------------------------------------------------------------------------- -->
-
-
-
-					<!-- --------------------------------------------------------------------------------------------------------- -->
-
 				</div>
 			</div>
 			<jsp:include page="footer_ch.jsp" flush="false" />
@@ -348,31 +346,27 @@
 										value="${_csrf.token}"> *새로운 조별과제를 만드는 분이 자동으로 조장으로
 									지정됩니다.
 									<p></p>
-									팀플명 : <input class="form-control" type="text"
+									팀플명 : <input class="form-control border-input" type="text"
 										name="projectName" />
 									<p></p>
-									과목명 : <input class="form-control" type="text"
+									과목명 : <input class="form-control border-input" type="text"
 										name="projectSubject" />
 									<p></p>
-									교수님 : <input class="form-control" type="text"
+									교수님 : <input class="form-control border-input" type="text"
 										name="projectTeacher" />
 									<p></p>
 									시작날짜:
-									<div class="input-group registration-date-time">
-										<input class="form-controsl" name="projectStartdate"
-											id="reg|istration-date" type="date">
-									</div>
+										<input class="form-control border-input" name="projectStartdate"
+											id="registration-date" type="date">
 									<p></p>
 									종료날짜 :
-									<div class="input-group registration-date-time">
-										<input class="form-control" name="projectEnddate"
+										<input class="form-control border-input" name="projectEnddate"
 											id="registration-date" type="date">
-									</div>
 									<p></p>
 
 									<div id="invitedMemberDiv">
-										팀원ID : <input class="form-control" type="text"
-											name="invitedUser" />
+										팀원ID : <input class="form-control border-input" type="text"
+											name="invitedUser" placeholder="초대할 팀원아이디를 입력하세요."/>
 										<p></p>
 									</div>
 

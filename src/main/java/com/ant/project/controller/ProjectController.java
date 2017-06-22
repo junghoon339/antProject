@@ -112,6 +112,7 @@ public class ProjectController implements Serializable {
 		//현재시간=enddate가 된 조별과제를 진행중->완료대기중으로 자동수정
 		int updateProState = projectService.updateProjectState(userNo);
 		
+
 		//Project STATE가 1인 경우, SURVEY를 생성하는 구문
 		List<ProjectDTO> projects = projectService.selectIfProjectState1(userNo);
 		if(projects.size()!=0){
@@ -134,6 +135,9 @@ public class ProjectController implements Serializable {
 				}// if(survey != null) end
 			}// for(ProjectDTO project : projects) end
 		}// if(!projects.isEmpty()) end
+
+		
+		
 		
 		// 현재진행중, 완료대기중 조별과제를 담은 map
 		Map<String, List<ProjectDTO>> projectMap = projectService.selectProjectById(userNo);

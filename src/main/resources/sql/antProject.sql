@@ -22,6 +22,7 @@ drop table project;
 drop table authorities;
 DROP TABLE ant_user CASCADE CONSTRAINTS;
 
+alter session set nls_language='AMERICAN';
 
 
 

@@ -34,7 +34,7 @@
                               </a>
                               <ul class="dropdown-menu">
                                <li><a href="${pageContext.request.contextPath}/user/chat">몰라</a></li>
-						<li><a href="#">절레절레</a></li>
+						<li><a href="${pageContext.request.contextPath}/user/update">절레절레</a></li>
 						<li class="divider"></li>
 						<li><a href="${pageContext.request.contextPath}/test/test">꾸꾸까까</a></li>
 						<li><a href="${pageContext.request.contextPath}/user/logout">로그인/로그아웃</a></li>

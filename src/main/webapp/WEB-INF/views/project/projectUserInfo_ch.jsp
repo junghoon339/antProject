@@ -58,7 +58,7 @@
 							<div class="card">
 								<div class="header">
 									<h4 class="title">팀원정보</h4>
-									<p class="category">Here is a subtitle for this table</p>
+									<p class="category"></p>
 								</div>
 								<div class="content table-responsive table-full-width">
 									<table class="table table-striped">
@@ -111,7 +111,7 @@
 										</tbody>
 									</table>
 									<c:if test="${projectUserRole=='조장'}">
-										<button class="btn btn-primary btn-xs" data-title="Edit" id="editBtn" data-toggle="modal" data-target="#add"
+										　<button class="btn btn-primary btn-xs" data-title="Edit" id="editBtn" data-toggle="modal" data-target="#add"
 											name="${projectUserDTO.userNo}/${projectUserDTO.userName}/${projectUserDTO.projectuserRole.projectUserTask}">
 											<span class="glyphicon glyphicon-plus" data-toggle="modal">팀원추가</span>
 										</button>
@@ -148,8 +148,7 @@
 					<div class="modal-body">
 						<div class="form-group" id="userName"></div>
 						<div class="form-group">
-							<input class="form-control" type="text" name="projectUserTask"
-								id="projectUserTask" value="">
+							<input class="form-control border-input" type="text" name="projectUserTask" id="projectUserTask" value="" style="width:100%">
 						</div>
 						<input type="hidden" name="userNo" id="userNo" value="">
 					</div>
@@ -214,8 +213,7 @@
 		<div class="modal-dialog">
 			<div class="modal-content">
 				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal"
-						aria-hidden="true">
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
 						<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
 					</button>
 					<h4 class="modal-title custom_align" id="Heading">팀원추가</h4>
@@ -227,7 +225,8 @@
 						value="${_csrf.token}">
 					<div class="modal-body">
 						<div class="form-group">
-							팀원ID : <input class="form-control" type="text" name="userId" />
+							초대할 팀원의 아이디를 입력해 주세요<p><p/>
+							<input class="form-control border-input" type="text" name="userId" style="width:100%;"/>
 							<p></p>
 						</div>
 					</div>
