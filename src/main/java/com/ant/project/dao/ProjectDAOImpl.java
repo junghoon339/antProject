@@ -27,7 +27,6 @@ public class ProjectDAOImpl implements ProjectDAO {
 	public int selectProjectNo() {
 		int projectNo = sqlSession.selectOne("projectMapper.selectProjectNo");
 		return projectNo;
-		
 	}
 
 	@Override
@@ -42,10 +41,14 @@ public class ProjectDAOImpl implements ProjectDAO {
 		return invitedUserNolist;
 	}
 	
-	//��������
 	@Override
 	public int insertProjectMember(ProjectUserDTO projectUserDTO) {
 		return sqlSession.insert("projectMapper.insertProjectMember", projectUserDTO);
+	}
+
+	@Override
+	public int updateProjectState(int userNo) {
+		return sqlSession.update("projectMapper.updateProjectState", userNo);
 	}
 
 	@Override
@@ -110,6 +113,11 @@ public class ProjectDAOImpl implements ProjectDAO {
 		String projectUserRole = sqlSession.selectOne("projectMapper.selectProjectUserRole", projectUserDTO);
 		return projectUserRole;
 	}
-	
+
+	@Override
+	public List<ProjectDTO> selectIfProjectState1() {
+		return sqlSession.selectList("projectMapper.selectIfProjectState1");
+	}
+
 }
 

@@ -102,8 +102,10 @@
 	<select id="surveyUserSelect" parameterType="map" resultMap="surveyUserDTOMap">
 		SELECT *
 		FROM survey_user
-		WHERE survey_no = #{surveyNo} 
-		AND user_no = #{userNo}
+		<where>
+		survey_no = #{surveyNo} 
+		<if test="userNo>0">AND user_no = #{userNo}</if>
+		</where>
 	</select>
 	
 	<update id="updateTeamInfo" parameterType="int">
@@ -116,6 +118,12 @@
 		UPDATE project
 		SET project_enddate = to_date(#{endDate}, 'yy/MM/dd')
 		WHERE project_no = #{projectNo}
+	</update>
+	
+	<update id="colsedProject" parameterType="int">
+		UPDATE project
+		SET project_state=2
+		WHERE project_no=#{_parameter}
 	</update>
 	
 </mapper>
