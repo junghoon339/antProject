@@ -108,7 +108,7 @@ public class MessageController {
 		
 		service.messageInsert(messageDTO);
 		
-		return "redirect:/message/main";
+		return "redirect:/message/main?userNo=";
 	}
 	
 	@RequestMapping("/selectMessage")

@@ -133,43 +133,53 @@ var sessionUserNo="${sessionScope.userDTO.userNo}";
             <div class="container-fluid">
                <div class="row">
                   
-                  
-             <div class="card">     
-                  
-                  <div id="gallery" class="gallery" style="display:inline;">
+                  <div id="gallery" class="gallery" style="display:inline;margin-left:600px;">
       <!-- <div class="quote-container"> -->
          <a href="#" id="0" draggable="true">
           <!--  <i class="pin"></i> -->
            
-           <blockquote class="note yellow" style="font-size:15px; width:180px;height:120px;">
+           <blockquote class="note yellow" style="font-size:15px;">
               
              <span id="postitText">내용을 작성해주세요</span>
             
-             <cite class="author" style="margin-top:90px"></cite>
+             <cite class="author">작성자</cite>
              
            </blockquote>
            
         </a>
+      <!-- </div> -->
+      <%-- <a id="1" draggable="true"><img src="${pageContext.request.contextPath }/resources/todo/images/1.jpg"></a> <a
+         id="2" draggable="true"><img src="${pageContext.request.contextPath }/resources/todo/images/2.jpg"></a> <a id="3"
+         draggable="true"><img src="${pageContext.request.contextPath }/resources/todo/images/3.jpg"></a> <a id="4"
+         draggable="true"><img src="${pageContext.request.contextPath }/resources/todo/images/4.jpg"></a> <a id="5"
+         draggable="true"><img src="${pageContext.request.contextPath }/resources/todo/images/5.jpg"></a> <a id="6"
+         draggable="true"><img src="${pageContext.request.contextPath }/resources/todo/images/6.jpg"></a> <a id="7"
+         draggable="true"><img src="${pageContext.request.contextPath }/resources/todo/images/7.jpg"></a> <a id="8"
+         draggable="true"><img src="images/8.jpg"></a> <a id="9"
+         draggable="true"><img src="images/9.jpg"></a> <a id="10"
+         draggable="true"><img src="images/10.jpg"></a> <a id="11"
+         draggable="true"><img src="images/11.jpg"></a> <a id="12"
+         draggable="true"><img src="images/12.jpg"></a> --%>
       </div>
-      <div class="album" id="drop_trash" droppable="true" style="float:right;width:150px;height:120px">
-         <h2 style="text-align: center; color:#778899 ">TRASH</h2>
+      <div class="album" id="drop_trash" droppable="true" style="float:right;margin-right:250px;">
+         <h2>TRASH</h2>
          
       </div>
    
    <div class="albums">
-      <div class="album" id="drop_0" droppable="true" style="border:3px solid gray;">
-         <h2 style="text-align: center; color: #9ACD32">TO DO</h2>
+      <div class="album" id="drop_0" droppable="true">
+         <h2>TO DO</h2>
          
       </div>
-      <div class="album" id="drop_1" droppable="true" style="border:3px solid gray;">
-         <h2 style="text-align: center ;color: #9ACD32">DOING</h2>
+      <div class="album" id="drop_1" droppable="true">
+         <h2>DOING</h2>
       </div>
-      <div class="album" id="drop_2" droppable="true" style="border:3px solid gray;">
-         <h2 style="text-align: center; color: #9ACD32">DONE</h2>	
+      <div class="album" id="drop_2" droppable="true">
+         <h2>DONE</h2>
       </div>
    </div>
    <div style="clear: both"></div>
-   </div>
+   
    <form id="todoForm" method=post action="">
        <input type=hidden id="securityInfo" name="${_csrf.parameterName}" value="${_csrf.token}">
        <input type=hidden id="todoNo" name="todoNo" value="0"/>
