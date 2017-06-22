@@ -94,7 +94,7 @@ $(document).ready(function() {
 		$("#Btn").attr("disabled","disabled");
 	}
 	
-	alert("${projectDTO.projectState}"=="1");
+	//alert("${projectDTO.projectState}"=="1");
 
 })
 

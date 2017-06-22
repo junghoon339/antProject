@@ -86,11 +86,8 @@ public class ProjectController implements Serializable {
 		UserDTO userDTO = (UserDTO) req.getSession().getAttribute("userDTO");
 		int userNo = userDTO.getUserNo();
 
-		// projectEnddate가 현재날짜일때 projectState변경
-		int updateResult = projectService.updateProjectState(userNo);
-		// surveyController호출???????????★★★★★★★★★★★★★★★★★★★★★★★★★★★★★
-		//surveyController.mainPage(session);
-		
+		//현재시간=enddate가 된 조별과제를 진행중->완료대기중으로 자동수정
+		int updateProState = projectService.updateProjectState(userNo);
 		
 		// 현재진행중, 완료대기중 조별과제를 담은 map
 		Map<String, List<ProjectDTO>> projectMap = projectService.selectProjectById(userNo);
@@ -137,7 +134,6 @@ public class ProjectController implements Serializable {
 		mv.setViewName("project/home_ch");
 		mv.addObject("currentProList",currentProList);
 		mv.addObject("surveyingProList",surveyingProList);
-		//mv.addObject("completedProList",completedProList);
 		return mv;
 	}
 	
@@ -150,15 +146,15 @@ public class ProjectController implements Serializable {
 		// 현재 로그인된 userNo
 		UserDTO userDTO = (UserDTO) req.getSession().getAttribute("userDTO");
 		int userNo = userDTO.getUserNo();
+		
 
+		
 		//완료된 조별과제를 담은 map
 		Map<String, List<ProjectDTO>> projectMap = projectService.selectProjectById(userNo);
 		List<ProjectDTO> completedProList = projectMap.get("completedProList");
 		
 		ModelAndView mv = new ModelAndView();
 		mv.setViewName("project/completedProject_ch");
-		//mv.addObject("currentProList",currentProList);
-		//mv.addObject("surveyingProList",surveyingProList);
 		mv.addObject("completedProList",completedProList);
 		return mv;
 	}

@@ -59,7 +59,7 @@
 		})
 	
 		$("#addBtn").click(function() {
-							var addInputbox = "<input class='' type='text'  name='invitedUser' placeholder='초대할 팀원을 입력하세요.'><button type='button' class='btn btn-danger' id='delMemberbtn'>삭제</button></input><p></p>";
+							var addInputbox = "<input class='form-control border-input' type='text'  name='invitedUser' placeholder='초대할 팀원을 입력하세요.'><button type='button' class='btn btn-danger' id='delMemberbtn'>삭제</button></input><p></p>";
 							$("#invitedMemberDiv").append(
 									addInputbox);
 							num = num + 1;
@@ -186,11 +186,11 @@
 												</div>
 												<hr />
 												<div class="row">
-													<div class="col-md-8">
-														<span class="label label-info "><a href="#"	style="color: #FFFFFF;" class="survey">설문조사${projectDTO.projectNo}</a></span> 
+													<div class="col-sm-6" style="height: 34px ; margin-top:2%;"  >
+														<span class="label label-info" ><a href="#"	style="color: #FFFFFF;" class="survey">설문조사${projectDTO.projectNo}</a></span> 
 														<input type="hidden" value="${projectDTO.projectNo}">
 													</div>
-													<div class="col-md-2">
+													<div class="col-sm-2">
 														<a href="${pageContext.request.contextPath}/project/teamMain/${projectDTO.projectNo}" class="btn btn-primary btn-simple">Enter</a>
 													</div>
 												</div>
@@ -235,9 +235,12 @@
 									<div class="header">
 										<div class="row">
 											<div class="col-lg-6 col-lg-offset-3">
-												<div class="content" id="plusImg">
-													<img style="width: 100%; height: 100%; margin: auto;"
-														src="${pageContext.request.contextPath}/resources/img/plus.png">
+											<br>
+											
+												<div class="content" id="plusImg" align="center" >
+													<%-- <img style="width: 100%; height: 100%; margin: auto; "
+														src="${pageContext.request.contextPath}/resources/img/plus.png"> --%>
+													<span style="font-size: 0px;margin-right:50px; margin-top:5px;"><i class="fa fa-plus-circle" style=""></i></span>
 												</div>
 											</div>
 										</div>
@@ -247,12 +250,6 @@
 
 						</div>
 					</div>
-					<!-- --------------------------------------------------------------------------------------------------------- -->
-
-
-
-					<!-- --------------------------------------------------------------------------------------------------------- -->
-
 				</div>
 			</div>
 			<jsp:include page="footer_ch.jsp" flush="false" />
@@ -306,39 +303,25 @@
 					<div class="container" style="margin-top: 10px;">
 						<div class="row">
 							<div class="">
-								<form id="projectForm" name="fr"
-									class="form-horizontal col-sm-7 col-sm-offset-1"
-									action="${pageContext.request.contextPath}/project/insertProject"
-									method="post">
-									<input type="hidden" name="${_csrf.parameterName}"
-										value="${_csrf.token}"> *새로운 조별과제를 만드는 분이 자동으로 조장으로
+								<form id="projectForm" name="fr" class="form-horizontal col-sm-7 col-sm-offset-1" action="${pageContext.request.contextPath}/project/insertProject" method="post">
+									<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"> *새로운 조별과제를 만드는 분이 자동으로 조장으로
 									지정됩니다.
 									<p></p>
-									팀플명 : <input class="form-control" type="text"
-										name="projectName" />
+									팀플명 : <input class="form-control border-input" type="text" name="projectName" />
 									<p></p>
-									과목명 : <input class="form-control" type="text"
-										name="projectSubject" />
+									과목명 : <input class="form-control border-input" type="text" name="projectSubject" />
 									<p></p>
-									교수님 : <input class="form-control" type="text"
-										name="projectTeacher" />
+									교수님 : <input class="form-control border-input" type="text" name="projectTeacher" />
 									<p></p>
 									시작날짜:
-									<div class="input-group registration-date-time">
-										<input class="form-controsl" name="projectStartdate"
-											id="reg|istration-date" type="date">
-									</div>
+										<input class="form-control border-input" name="projectStartdate" id="registration-date" type="date">
 									<p></p>
 									종료날짜 :
-									<div class="input-group registration-date-time">
-										<input class="form-control" name="projectEnddate"
-											id="registration-date" type="date">
-									</div>
+										<input class="form-control border-input" name="projectEnddate" id="registration-date" type="date">
 									<p></p>
-
+									
 									<div id="invitedMemberDiv">
-										팀원ID : <input class="form-control" type="text"
-											name="invitedUser" />
+										팀원ID : <input class="form-control border-input" type="text" name="invitedUser" />
 										<p></p>
 									</div>
 
@@ -361,6 +344,7 @@
 	</div>
 
 </body>
+
 
 <!--   Core JS Files   -->
 <script
