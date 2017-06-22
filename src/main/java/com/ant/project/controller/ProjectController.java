@@ -89,6 +89,8 @@ public class ProjectController implements Serializable {
 		//현재시간=enddate가 된 조별과제를 진행중->완료대기중으로 자동수정
 		int updateProState = projectService.updateProjectState(userNo);
 		
+		
+		
 		// 현재진행중, 완료대기중 조별과제를 담은 map
 		Map<String, List<ProjectDTO>> projectMap = projectService.selectProjectById(userNo);
 		List<ProjectDTO> currentProList = projectMap.get("currentProList");

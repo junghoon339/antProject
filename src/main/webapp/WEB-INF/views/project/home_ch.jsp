@@ -161,7 +161,6 @@
 			<div class="content">
 				<div class="container-fluid">
 					<div class="row">
-						<!-- ----------------------------------------------------------------------------------------------우동 시작 -->
 						<c:choose>
 							<c:when test="${empty currentProList}&&${empty surveyingProList}">
 								<!-- 진행중인,완료대기중인 조별과제가 없으면 -->

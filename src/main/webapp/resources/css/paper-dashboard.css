@@ -194,7 +194,8 @@ body .wrapper {
 }
 
 a {
-	color: #68B3C8;
+ 	/* color: #68B3C8; */
+	color: #000000;
 }
 
 a:hover, a:focus {
