@@ -219,7 +219,7 @@
             <input type="text" name="timetableLocation" id="custom_location" class="input-large" placeholder="강의동을 입력하세요." /><br />
             <input type="hidden" name="timetableClassInfo" id="custom_class_time"/>
             <input type="hidden" name="timetableColor" id="timetableColor"/>
-            <input type="hidden" name="userNo" value="13"/> 
+            <input type="hidden" name="userNo" value="44"/> 
             <button type="submit" id="custom_lecture_add_button" class="btn btn-inverse">추가</button>
             <a id="custom_lecture_close_button" class="btn btn-inverse">취소</a>
          </form>

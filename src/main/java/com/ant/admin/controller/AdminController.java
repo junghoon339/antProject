@@ -45,7 +45,7 @@ public class AdminController {
 		System.out.println("qqqqqqqqqqqqqq"+list.size());
 		
 		int totalRow=service.userTotalCount();//�� �Խù� ����
-		int pageSu=1; //�ѷ��� ������ ��
+		int pageSu=5; //�ѷ��� ������ ��
 		int startPage=((curPage-1)/pageSu)*pageSu+1;
 		int endPage=startPage+pageSu-1;
 		
@@ -110,7 +110,7 @@ public class AdminController {
 		}
 		
 		System.out.println("tttttttttttttrrrrrrrrrrrrrrrrr"+totalRow);
-		int pageSu=1; //�ѷ��� ������ ��
+		int pageSu=5; //�ѷ��� ������ ��
 		int startPage=((curPage-1)/pageSu)*pageSu+1;
 		int endPage=startPage+pageSu-1;
 		

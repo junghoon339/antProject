@@ -23,7 +23,7 @@ var apiClient = {
 
 function simplify_class_time(class_time)
 {
-  //월(1.5-1.5) -> 월
+  // 월(1.5-1.5) -> 월
   return class_time.replace(/-[\d.,]*\)/g, ")").replace(/,[\d.,]*\)/g, ")").replace(/[()]/g, "");
 }
 
@@ -56,7 +56,7 @@ function already_exist_class_time(lecture)
   return false;
 }
 
-//두 강의의 시간이 겹치는지 체크
+// 두 강의의 시간이 겹치는지 체크
 function is_duplicated_class_time(l1, l2)
 {
   function increasing_sequence(a,b,c){
@@ -67,7 +67,7 @@ function is_duplicated_class_time(l1, l2)
   var t2 = l2.class_time.split("/");
   for (var i=0;i<t1.length;i++){
     for (var j=0;j<t2.length;j++){
-      //월(3-3), 월(4-2)
+      // 월(3-3), 월(4-2)
       var wday1 = t1[i].charAt(0);
       var wday2 = t2[j].charAt(0);
       var time1 = t1[i].replace(/[()]/g, "").slice(1).split('-');
@@ -90,7 +90,7 @@ function is_duplicated_class_time(l1, l2)
   return false;
 }
 
-//GLOBAL VARIABLES
+// GLOBAL VARIABLES
 var lectures = [];
 var my_lectures = [];
 var query_text;
@@ -105,13 +105,16 @@ var search_result_scroll_top = 0;
 var current_tab = "search";
 var gray_color = {border:"#ccc",plane:"#ddd"};
 var colors = [
-  {border:"#2B8728",plane:"#B6F9B2"}, //green
-  {border:"#45B2B8",plane:"#BFF7F8"}, //really light blue
-  {border:"#1579C2",plane:"#94E6FE"}, //light blue
-  {border:"#A337A1",plane:"#F6B5F5"}, //purple
-  {border:"#B8991B",plane:"#FFF49A"}, //beige/yello
-  {border:"#BA313B",plane:"#FFB2BC"}, //pink/red
-  {border:"#BA6C31",plane:"#FFCFB2"}  //skin-tone/brown
+  {border:"#BA313B",plane:"#d6d6d6"}, // pink/red
+  {border:"#BA6C31",plane:"#FFCFB2"},  // skin-tone/brown
+  {border:"#1579C2",plane:"#ffe229"}, // light blue
+  {border:"#2B8728",plane:"#B6F9B2"}, // green
+  {border:"#45B2B8",plane:"#BFF7F8"}, // really light blue
+ 
+  {border:"#A337A1",plane:"#F6B5F5"}, // purple
+  {border:"#B8991B",plane:"#FFF49A"} // beige/yello
+  
+  
 ];
 var search_type = "course_title";
 var current_year;
@@ -127,94 +130,307 @@ var custom_end_time;
 var custom_lecture_number = 1;
 var coursebook_info;
 
+var userNoColor=[]; //userNo에 해당하는 색깔지정
+var checkedUserNo=[]; //체크된 userNo
 $(function(){
-	selectAll();
+	selectUserNos();
+	
+	$(document).on("click","input[type='checkbox']",function(){
+		checkedUserNo=[];
+		$(":checked").each(function(index,item){
+			//alert(index);
+			checkedUserNo[index]=$(item).attr("id");
+			
+			
+		})
+		//alert(checkedUserNo[0]);
+		selectAll();
+		// alert($(this).attr("id"));
+	});
 });
-
+function selectUserNos(){
+	$.ajax({
+		url:commonUrl+"/timetable/selectUserNos",
+		type:"post",
+		data:"projectNo=41&"+$("#securityInfo").attr("name")+"="+$("#securityInfo").val(),
+		dataType:"json",
+		success:function(result){
+			// alert(result);
+			var str="";
+			$(result).each(function(index,item){
+				// alert(index);
+				// item.userDTO.userName
+				str+='<label id="checkboxLabel" for="'+item.timetableDTO.userNo+'" class="btn" style="background-color:'+colors[index].plane+';color:white;">'+item.userName+'<input type="checkbox" id="'+item.timetableDTO.userNo+'" class="badgebox"><span class="badge" style="background-color:white;color:'+colors[index].plane+';">&check;</span></label>';
+				 var tempUserNoColor = {
+					      userNo : item.timetableDTO.userNo,
+					      color : colors[index],
+					     
+					    };
+				
+				userNoColor.push(tempUserNoColor);
+			})
+			$("#checkboxUserNo").html(str);
+		},
+		error:function(err){
+			alert("err : "+err);
+		}
+	});
+}
 function selectAll(){
-	//초기화작업
+	// 초기화작업
 	my_lectures = [];
     refresh_my_courses_table();
 	$.ajax({
-		url:commonUrl+"/timetable/selectAll",
+		url:commonUrl+"/timetable/teamSelectAll",
 		type:"post",
-		data:"userNo=44&"+$("#securityInfo").attr("name")+"="+$("#securityInfo").val(),
+		data:"projectNo=41&"+$("#securityInfo").attr("name")+"="+$("#securityInfo").val(),
 		dataType:"json",
 		success:function(result){
+			// alert(result);
+			var colorNum=0;
 			$('.timecell-container').remove();
 			  var unitcell_width = $('#timetable_container td.mon').outerWidth();
 			  var unitcell_height = $('#timetable_container td.mon').outerHeight();
 			  var leftcell_width = $('#timetable tbody th').outerWidth();
 			  var topcell_height = $('#timetable thead th').outerHeight();
 			  var border_weight = 1;
-			$(result).each(function(index,timetableDTO){
-				alert("테이블번호여:"+timetableDTO.timetableNo);
-				 custom_lecture_number=timetableDTO.timetableNo;
-				 
-				 var cellColors=timetableDTO.timetableColor.split(";");
-				 
-				 var num=0;
-				 for(var i=0;i<colors.length;i++){
-					 if(colors[i].border==cellColors[1]){
-						 num=i;
-						 break;
-					 }
-				 }
-				 var custom_lecture = {
-					      course_number : "custom",
-					      lecture_number : custom_lecture_number,
-					      course_title : timetableDTO.timetableSubject,
-					      class_time : timetableDTO.timetableClassInfo,
-					      location : timetableDTO.timetableLocation,
-					      color : colors[num],
-					      credit : 0
-					    };
-					    my_lectures.push(custom_lecture);
-			      var wday = wday_to_num(timetableDTO.timetableClassInfo.charAt(0));
-			      var start_time = parseFloat(timetableDTO.timetableClassInfo.replace(/[()]/g,"").split('-')[0].slice(1))*2;
-			      var duration = parseFloat(timetableDTO.timetableClassInfo.replace(/[()]/g,"").split('-')[1])*2;
-			    /*  alert(wday);
-			      alert(start_time);
-			      alert(duration);*/
-			      //기준 셀
-			      var criteria_cell = $($('#timetable td')[6*start_time+wday]);
-			      var criteria_cell2;
-			      var criteria_cell3 = $($('#timetable td')[6*(start_time+duration-1)+wday]);
-			      if (wday == 5 || wday == 4) criteria_cell2 = criteria_cell.prev();
-			      else criteria_cell2 = criteria_cell.next();
+			  
+			$.map(result,function(value,index){
+				// index => key값
+				// value => list값
+				for(var k=0;k<checkedUserNo.length;k++){
+					if(checkedUserNo[k]==index){
+						colorNum++;
+						$(value).each(function(i,timetableDTO){
+							// alert(index+"의 과목명 : "+val.timetableSubject);
+							custom_lecture_number=timetableDTO.timetableNo;
+							
+							 var cellColors;
+							 for(var i=0;i<userNoColor.length;i++){
+								 if(index==userNoColor[i].userNo){
+									 cellColors=userNoColor[i].color;
+								 }
+							 }
+							//alert("색상은..?"+cellColors.plane);
+							 
+							 var custom_lecture = {
+								      course_number : "custom",
+								      lecture_number : custom_lecture_number,
+								      course_title : timetableDTO.timetableSubject,
+								      class_time : timetableDTO.timetableClassInfo,
+								      location : timetableDTO.timetableLocation,
+								      color : colors[colorNum],
+								      userNo : index
+								    };
+								    my_lectures.push(custom_lecture);
+						      var wday = wday_to_num(timetableDTO.timetableClassInfo.charAt(0));
+						      var start_time = parseFloat(timetableDTO.timetableClassInfo.replace(/[()]/g,"").split('-')[0].slice(1))*2;
+						      var duration = parseFloat(timetableDTO.timetableClassInfo.replace(/[()]/g,"").split('-')[1])*2;
+						     // alert("요일 : "+wday);
+						     // alert("시작 : "+start_time);
+						     // alert("지속 : "+duration);
+						      // 기준 셀
+						      var criteria_cell = $($('#timetable td')[6*start_time+wday]);
+						      var criteria_cell2;
+						      var criteria_cell3 = $($('#timetable td')[6*(start_time+duration-1)+wday]);
+						      if (wday == 5 || wday == 4) criteria_cell2 = criteria_cell.prev();
+						      else criteria_cell2 = criteria_cell.next();
+						      
+						      //alert("aaaa"+criteria_cell3.position().top);
+						      var width = Math.abs(criteria_cell2.position().left - criteria_cell.position().left) + border_weight;
+						      var height = criteria_cell3.position().top - criteria_cell.position().top+criteria_cell3.innerHeight() +2* border_weight;
+						      var left = criteria_cell.position().left - criteria_cell.parent().position().left;
+						      var top = criteria_cell.position().top - criteria_cell.parent().parent().position().top + topcell_height;
 
-			      var width = Math.abs(criteria_cell2.position().left - criteria_cell.position().left) + border_weight;
-			      var height = criteria_cell3.position().top - criteria_cell.position().top+criteria_cell3.innerHeight() +2* border_weight;
-			      var left = criteria_cell.position().left - criteria_cell.parent().position().left;
-			      var top = criteria_cell.position().top - criteria_cell.parent().parent().position().top + topcell_height;
-
-			      //create container
-			      //cell색칠하는부분
-			      var cellColors=timetableDTO.timetableColor.split(";");
-			      var container = $('<div></div>').addClass('timecell-container').appendTo($('#timecells_container'));
-			      var tdiv = $('<div></div>').addClass('timecell').width(width).height(height).css('left', left).css('top', top).css('background-color', cellColors[0]).css('color', cellColors[1]).appendTo(container);
-			      var tdivc = $('<div class="timecellinfo-containter">').appendTo(tdiv);
-			      $('<span></span>').text(timetableDTO.timetableSubject).appendTo(tdivc);
-			      
-			      $('<br />').appendTo(tdivc);
-			      $('<span></span>').text(timetableDTO.timetableLocation).appendTo(tdivc);
-			      
-			      //gray cell이면 gray-cell 클래스 추가
-			    /*  if (lecture.color == gray_color)
-			        tdiv.addClass('gray-cell');
-			      */
-			     /* alert(lecture.course_number);
-			      alert(lecture.lecture_number);*/
-			      tdiv.attr('course-number', 'custom').attr('lecture-number', timetableDTO.timetableNo);
-			      
+						     /*
+								 * alert("width:"+width);
+								 * alert("height:"+height); alert("left:"+left);
+								 * alert("top:"+top);
+								 */
+						      // create container
+						      // cell색칠하는부분
+						    //  var cellColors=timetableDTO.timetableColor.split(";");
+						      var container = $('<div></div>').addClass('timecell-container').appendTo($('#timecells_container'));
+						      //alert(cellColors.plane)
+						      var tdiv = $('<div></div>').addClass('timecell').width(width).height(height).css('left', left).css('top', top).css('background-color', cellColors.plane).css('color', cellColors.border).appendTo(container);
+						      var tdivc = $('<div class="timecellinfo-containter">').appendTo(tdiv);
+						      $('<span></span>').text(timetableDTO.timetableSubject).appendTo(tdivc);
+						      
+						      $('<br />').appendTo(tdivc);
+						      $('<span></span>').text(timetableDTO.timetableLocation).appendTo(tdivc);
+						      
+						      // gray cell이면 gray-cell 클래스 추가
+						    /*
+							 * if (lecture.color == gray_color)
+							 * tdiv.addClass('gray-cell');
+							 * 
+							 * alert(lecture.course_number);
+							 * alert(lecture.lecture_number);
+							 */
+						      tdiv.attr('course-number', 'custom').attr('lecture-number', timetableDTO.timetableNo);
+					
+					});
+				}
+				
+				
+				
+				      
+				}
+				
+				
+				//cancel_lecture_selection();
+				
 			});
-			cancel_lecture_selection();
+			
+			/*
+			 * $('.timecell-container').remove(); var unitcell_width =
+			 * $('#timetable_container td.mon').outerWidth(); var
+			 * unitcell_height = $('#timetable_container td.mon').outerHeight();
+			 * var leftcell_width = $('#timetable tbody th').outerWidth(); var
+			 * topcell_height = $('#timetable thead th').outerHeight(); var
+			 * border_weight = 1; $(result).each(function(index,timetableDTO){
+			 * alert("테이블번호여:"+timetableDTO.timetableNo);
+			 */
+			// handlingOverlap(my_lectures);
 		},
 		error:function(err){
 			alert("에러발생 : "+err);
 		}
 	});
 }
+
+function handlingOverlap(lecture){
+	
+	var m0=new Map();
+	var m1=new Map();
+	var m2=new Map();
+	var m3=new Map();
+	var m4=new Map();
+	var m5=new Map();
+	// m0.set(key,value);
+	
+	// alert(m0.get(1));
+	
+	for(var i=0;i<lecture.length;i++){
+		
+			    
+		var mylec=lecture[i];
+		 var custom_lecture = {
+			      course_number : "custom",
+			      lecture_number : custom_lecture_number,
+			      course_title : timetableDTO.timetableSubject,
+			      class_time : timetableDTO.timetableClassInfo,
+			      location : timetableDTO.timetableLocation,
+			      color : colors[colorNum],
+			      userNo : index
+			    };
+			    my_lectures.push(custom_lecture);
+		var wday = wday_to_num(mylec.class_time.charAt(0));
+	    var start_time = parseFloat(mylec.class_time.replace(/[()]/g,"").split('-')[0].slice(1))*2;
+	    var duration = parseFloat(mylec.class_time.replace(/[()]/g,"").split('-')[1])*2;
+	    var colors=mylec.color.plane+";"+mylec.color.border;
+	    for(var j=start_time;j<start_time+duration;j++){
+	    	if(eval('m'+wday).get(j)!=null){
+	    		eval('m'+wday).set(j,(eval('m'+wday).get(j))+"|"+colors); 
+	    	}else{
+	    		eval('m'+wday).set(j,colors);
+	    	}	
+	    }
+	  	// alert(mylec.class_time);
+	}
+	
+	// for(var i=0;i<6;i++){
+		// alert("bb");
+		/*
+		 * $.map(m0,function(val,index){ alert("Aa"); if(val.indexOf('|')!=-1){
+		 * alert("인덱스여:"+index); alert("val이여:"+val); }
+		 * 
+		 * });
+		 */
+	
+	var unitcell_width = $('#timetable_container td.mon').outerWidth();
+	  var unitcell_height = $('#timetable_container td.mon').outerHeight();
+	  var leftcell_width = $('#timetable tbody th').outerWidth();
+	  var topcell_height = $('#timetable thead th').outerHeight();
+	  var border_weight = 1;
+		for(var i=0;i<6;i++){
+			var temp=0;
+			
+			eval('m'+i).forEach(function(value,key,mapObj){
+				// var duration=0;
+				
+				if(value.indexOf("|")!=-1){
+					if(key<=temp) return true;
+					// if(key<=temp)
+					alert(i+'요일의'+key+" : "+value);
+					// alert("이거되냐:"+mapObj.get(++key));
+					var result=getTemp(value,key,mapObj).split("|");
+					// duration=result[0];
+					temp=result[1];
+					/*
+					 * alert("key:"+key); alert("duration:"+duration);
+					 * alert("temp:"+temp);
+					 */
+					
+					// alert("duration:"+duration);
+					 var wday =i;
+				     var start_time = key;
+				     var duration = result[0];
+				    /*
+					 * alert("요일 : "+wday); alert("시작 : "+start_time); alert("지속 :
+					 * "+duration);
+					 */
+				      // 기준 셀
+				      var criteria_cell = $($('#timetable td')[6*start_time+wday]);
+				      var criteria_cell2;
+				     // alert(6*(start_time+duration-1)+wday);
+				      var criteria_cell3 = $($('#timetable td')[6*(start_time+duration-1)+wday]);
+				      
+				      if (wday == 5 || wday == 4) criteria_cell2 = criteria_cell.prev();
+				      else criteria_cell2 = criteria_cell.next();
+				      
+				      //alert(criteria_cell3.position());
+				      var width = Math.abs(criteria_cell2.position().left - criteria_cell.position().left) + border_weight;
+				      var height = criteria_cell3.position().top - criteria_cell.position().top+criteria_cell3.innerHeight() +2* border_weight;
+				      var left = criteria_cell.position().left - criteria_cell.parent().position().left;
+				      var top = criteria_cell.position().top - criteria_cell.parent().parent().position().top + topcell_height;
+
+				     /*
+						 * alert("width:"+width); alert("height:"+height);
+						 * alert("left:"+left); alert("top:"+top);
+						 */;
+				      // create container
+				      // cell색칠하는부분
+				      var cellColors=timetableDTO.timetableColor.split(";");
+				      var container = $('<div></div>').addClass('timecell-container').appendTo($('#timecells_container'));  				
+				      var tdiv = $('<div></div>').addClass('timecell').width(width).height(height).css('left', left).css('top', top).css('background-color', "#FFB2BC").css('color', "#BA313B").appendTo(container);
+				      var tdivc = $('<div class="timecellinfo-containter">').appendTo(tdiv);
+				     // $('<span></span>').text(timetableDTO.timetableSubject).appendTo(tdivc);
+				      
+				      $('<br />').appendTo(tdivc);
+				     // $('<span></span>').text(timetableDTO.timetableLocation).appendTo(tdivc);
+				}
+			});
+		}
+		
+			
+			
+		
+	// }
+	
+}
+
+function getTemp(value,key,mapObj){
+	var duration=1;
+	while(true){
+		if(value==mapObj.get(++key)){
+			duration++;
+		}else{
+			return duration+"|"+key;
+		}
+	}
+}
+
 function semester_to_text(semester)
 {
   if (semester == '1') return '1학기';
@@ -250,18 +466,18 @@ function generate_custom_cell(lecture)
   var leftcell_width = $('#timetable tbody th').width()+2;
   var topcell_height = $('#timetable thead th').height()+2;
   var border_weight = 2;
-  //시간이 유효하지 않으면 스킵
+  // 시간이 유효하지 않으면 스킵
   if (wday_to_num(lecture.class_time.charAt(0)) == -1) {
 		console.log("User tried to generate timetables with invalid class time");
 		return;
 	}
   var class_time = lecture.class_time;
-  //setup variables
+  // setup variables
   var wday = wday_to_num(class_time.charAt(0));
   var start_time = parseFloat(class_time.replace(/[()]/g,"").split('-')[0].slice(1))*2;
   var duration = parseFloat(class_time.replace(/[()]/g,"").split('-')[1])*2;
   var end_time = start_time + duration;
-  //기준 셀
+  // 기준 셀
   var criteria_cell = $($('#timetable td')[6*start_time+wday]);
   var criteria_cell2;
   var criteria_cell3 = $($('#timetable td')[6*(start_time+duration-1)+wday]);
@@ -273,7 +489,7 @@ function generate_custom_cell(lecture)
   var left = criteria_cell.position().left - criteria_cell.parent().position().left - border_weight/2;
   var top = criteria_cell.position().top - criteria_cell.parent().parent().position().top + topcell_height - border_weight/2;
 
-  //create container
+  // create container
   var customcell = $('#customcell').css('left', left).css('top', top).width(width).height(height).show();
 }
 
@@ -306,8 +522,9 @@ function wday_to_num(wday){
 function generate_random_color(color)
 {
   if (!color){
-	 /* var ccccc=colors[Math.floor(colors.length * Math.random())];
-	  */
+	 /*
+		 * var ccccc=colors[Math.floor(colors.length * Math.random())];
+		 */
 	  return colors[Math.floor(colors.length * Math.random())];
   }
   var result = colors[Math.floor(colors.length * Math.random())];
@@ -347,7 +564,7 @@ function search_filter_tooltip_message(message)
 
 function remove_lecture_from_my_lectures(lecture)
 {
-  //선택된 강의를 my_lectures에서 제거한다.
+  // 선택된 강의를 my_lectures에서 제거한다.
   if (lecture){
     lecture.color = null;
     for (var i=0;i<my_lectures.length;i++){
@@ -415,39 +632,39 @@ function generate_timecell(lectures)
   for (var a=0;a<lectures.length;a++){
 	var lecture = lectures[a];
 	
-    //시간이 유효하지 않으면 스킵
+    // 시간이 유효하지 않으면 스킵
     if (wday_to_num(lecture.class_time.charAt(0)) == -1) continue;
 	
-    //cell 색깔 설정
+    // cell 색깔 설정
     if (!lecture.color) {
     	generate_random_color(lecture.color);
     }
     var class_times = lecture.class_time.split("/");
     var locations = lecture.location.split("/");
-    //alert("class_times:"+class_times);
+    // alert("class_times:"+class_times);
     for (var i=0;i<class_times.length;i++){
-      //setup variables
+      // setup variables
       
       var wday = wday_to_num(class_times[i].charAt(0));
       var start_time = parseFloat(class_times[i].replace(/[()]/g,"").split('-')[0].slice(1))*2;
       var duration = parseFloat(class_times[i].replace(/[()]/g,"").split('-')[1])*2;
-    /*  alert(wday);
-      alert(start_time);
-      alert(duration);*/
-      //기준 셀
+    /*
+	 * alert(wday); alert(start_time); alert(duration);
+	 */
+      // 기준 셀
       var criteria_cell = $($('#timetable td')[6*start_time+wday]);
       var criteria_cell2;
       var criteria_cell3 = $($('#timetable td')[6*(start_time+duration-1)+wday]);
       if (wday == 5 || wday == 4) criteria_cell2 = criteria_cell.prev();
       else criteria_cell2 = criteria_cell.next();
-
+      
       var width = Math.abs(criteria_cell2.position().left - criteria_cell.position().left) + border_weight;
       var height = criteria_cell3.position().top - criteria_cell.position().top+criteria_cell3.innerHeight() +2* border_weight;
       var left = criteria_cell.position().left - criteria_cell.parent().position().left;
       var top = criteria_cell.position().top - criteria_cell.parent().parent().position().top + topcell_height;
 
-      //create container
-      //cell색칠하는부분
+      // create container
+      // cell색칠하는부분
       var container = $('<div></div>').addClass('timecell-container').appendTo($('#timecells_container'));
       var tdiv = $('<div></div>').addClass('timecell').width(width).height(height).css('left', left).css('top', top).css('background-color', lecture.color.plane).css('color', lecture.color.border).appendTo(container);
       var tdivc = $('<div class="timecellinfo-containter">').appendTo(tdiv);
@@ -456,12 +673,12 @@ function generate_timecell(lectures)
       $('<br />').appendTo(tdivc);
       $('<span></span>').text(locations[i]).appendTo(tdivc);
       
-      //gray cell이면 gray-cell 클래스 추가
+      // gray cell이면 gray-cell 클래스 추가
       if (lecture.color == gray_color)
         tdiv.addClass('gray-cell');
       
-      //alert(lecture.course_number);
-      //alert(lecture.lecture_number);
+      // alert(lecture.course_number);
+      // alert(lecture.lecture_number);
       tdiv.attr('course-number', lecture.course_number).attr('lecture-number', lecture.lecture_number);
       
     }
@@ -469,28 +686,30 @@ function generate_timecell(lectures)
  
  
   
-  //graycell click event 추가
+  // graycell click event 추가
   $('.gray-cell').click(function(){
     if (selected_row)
       row_dblclick_handler(selected_row);
     return false;
   });
 
-  //timecell click event bind : 색깔 바꾸기
+  // timecell click event bind : 색깔 바꾸기
   $('.timecell').click(function(){
 	  alert("색");
     var ele = $(this);
     alert(ele.attr('lecture-number'));
     var lecture = get_my_lecture_by_course_number(ele.attr('course-number'), ele.attr('lecture-number'));
-    if (lecture && !ele.hasClass('gray-cell')){ //회색이 아닐때만 바꿈
+    if (lecture && !ele.hasClass('gray-cell')){ // 회색이 아닐때만 바꿈
       lecture.color = generate_next_color(lecture.color);
-      /*for_equal_lecture_timecells(ele, function(sbl) {
-        sbl.css('background-color', lecture.color.plane).css('color', lecture.color.border);
-        
+      /*
+		 * for_equal_lecture_timecells(ele, function(sbl) {
+		 * sbl.css('background-color', lecture.color.plane).css('color',
+		 * lecture.color.border);
+		 * 
+		 *  })
+		 */
       
-      })*/
-      
-      //db에 색깔바꾸기
+      // db에 색깔바꾸기
       var changeColor=lecture.color.plane+";"+lecture.color.border;
       $.ajax({
       	url:commonUrl+"/timetable/changeColor",
@@ -511,7 +730,7 @@ function generate_timecell(lectures)
       });
     }
   });i
-  //timecell dblclick event bind
+  // timecell dblclick event bind
   $('.timecell').addSwipeEvents().bind('doubletap', function(event, touch) {
 	  alert("dbclick...");
     event.stopPropagation();
@@ -519,11 +738,11 @@ function generate_timecell(lectures)
     ga('send', 'event', 'lecture', 'delete', 'double_click');
   })
 
-  //timecell hover event bind
+  // timecell hover event bind
   if(!isTouchDevice()){
 	  
     $('.timecell').hover(
-      function() { //mouse-in
+      function() { // mouse-in
         for_equal_lecture_timecells($(this), function(sbl) {
           sbl.append('<div class="close del_hover" style="position:absolute; top:1px; right:2px;">×</span>');
           sbl.find(".del_hover").click(function(event) {
@@ -532,16 +751,15 @@ function generate_timecell(lectures)
             ga('send', 'event', 'lecture', 'delete', 'button_x');
           })
         })
-      }, function() { //mouse-out
+      }, function() { // mouse-out
         $('.del_hover').remove();
       })
   }
   
-/* $.ajax({
-	  type:"POST",
-	  url:"${pageContext.request.contextPath}/timetable/main",
-	  data: 
-  });*/
+/*
+ * $.ajax({ type:"POST",
+ * url:"${pageContext.request.contextPath}/timetable/main", data: });
+ */
   
   
 }
@@ -549,10 +767,10 @@ function generate_timecell(lectures)
 function timecell_delete_handler(ele)
 {
   var lecture = get_my_lecture_by_course_number(ele.attr('course-number'), ele.attr('lecture-number'));
-  //더블클릭하거나 호버링하면 삭제
+  // 더블클릭하거나 호버링하면 삭제
   var con = confirm("["+lecture.course_title+"]를 시간표에서 제거하꺼??");
   if (con){
-	//remove_lecture_from_my_lectures(lecture);
+	// remove_lecture_from_my_lectures(lecture);
 	$.ajax({
 		url:commonUrl+"/timetable/timetableDelete",
 		type:"post",
@@ -583,28 +801,28 @@ function my_courses_row_click_handler()
   var ele = $(this);
   ele.addClass('selected');
   my_courses_selected_row = ele;
-  //remove 버튼 추가
+  // remove 버튼 추가
   $('.remove-course-button').remove();
   var course_title = my_courses_selected_row.find('.course-title');
   var remove_button = $('<span class="badge badge-important">제거</span>').addClass('remove-course-button').appendTo(course_title);
-  //remove 버튼 핸들러 추가
+  // remove 버튼 핸들러 추가
   remove_button.click(function(){
     if (my_courses_selected_row) my_courses_selected_row.trigger('dblclick');
   });
   var mobile_info = my_courses_selected_row.find('.mobile-info');
   remove_button = $('<span class="badge badge-important">제거</span>').addClass('remove-course-button').appendTo(mobile_info);
-  //remove 버튼 핸들러 추가
+  // remove 버튼 핸들러 추가
   remove_button.click(function(){
     if (my_courses_selected_row) my_courses_selected_row.trigger('dblclick');
   });
-  //timetable refreshing
+  // timetable refreshing
   var selected_lecture = get_my_lecture_by_course_number(ele.attr('course-number'), ele.attr('lecture-number'));
   if (!selected_lecture.color)
     selected_lecture.color = gray_color;
   alert("2");
   generate_timecell(my_lectures.concat([selected_lecture]));
 
-  //refresh course detail
+  // refresh course detail
   refresh_course_detail(selected_lecture);
 }
 
@@ -615,28 +833,28 @@ function row_click_handler()
   var ele = $(this);
   ele.addClass('selected');
   selected_row = ele;
-	//add 버튼 추가
+	// add 버튼 추가
   $('.add-course-button').remove();
   var course_title = selected_row.find('.course-title');
   var add_button = $('<span class="badge badge-success">추가</span>').addClass('add-course-button').appendTo(course_title);
-  //add버튼 핸들러 추가
+  // add버튼 핸들러 추가
   add_button.click(function(){
     if (selected_row) selected_row.trigger('dblclick');
   });
   var mobile_info = selected_row.find('.mobile-info');
   add_button = $('<span class="badge badge-success">추가</span>').addClass('add-course-button').appendTo(mobile_info);
-  //add버튼 핸들러 추가
+  // add버튼 핸들러 추가
   add_button.click(function(){
     if (selected_row) selected_row.trigger('dblclick');
   });
-  //timetable refreshing
+  // timetable refreshing
   var selected_lecture = get_lecture_by_course_number(ele.attr('course-number'), ele.attr('lecture-number'));
   if (!selected_lecture.color)
     selected_lecture.color = gray_color;
   alert(3);
   generate_timecell(my_lectures.concat([selected_lecture]));
 
-  //refresh course detail
+  // refresh course detail
   refresh_course_detail(selected_lecture);
 }
 
@@ -651,11 +869,11 @@ function row_dblclick_handler(ele)
 {
   var selected_lecture = get_lecture_by_course_number(ele.attr('course-number'), ele.attr('lecture-number'));
   if (selected_lecture){
-    //selected_lecture가 이미 들어있지 않으면
+    // selected_lecture가 이미 들어있지 않으면
     if (already_owned_lecture(selected_lecture)){
       alert("이미 넣은 강의입니다.");
     }
-    //강의 시간이 겹치면
+    // 강의 시간이 겹치면
     else if (already_exist_class_time(selected_lecture)){
       alert("강의시간이 겹칩니다.");
     }
@@ -695,13 +913,13 @@ function isTouchDevice(){
 }
 
 function touchScroll(id){
-  if(isTouchDevice()){ //if touch events exist...
+  if(isTouchDevice()){ // if touch events exist...
     var el=document.getElementById(id);
     var scrollStartPos=0;
 
     document.getElementById(id).addEventListener("touchstart", function(event) {
       scrollStartPos=this.scrollTop+event.touches[0].pageY;
-      //event.preventDefault();
+      // event.preventDefault();
     },false);
 
     document.getElementById(id).addEventListener("touchmove", function(event) {
@@ -727,13 +945,13 @@ $(function(){
       current_year = data.last_coursebook_info.year;
       current_semester = data.last_coursebook_info.semester;
     }
-    //저장된 시간표 불러오기
+    // 저장된 시간표 불러오기
     refresh_my_courses_table();
     alert(6);
     generate_timecell(my_lectures);
     change_semester(current_year, current_semester);
 
-    //학기 dropdown 메뉴 초기화
+    // 학기 dropdown 메뉴 초기화
     $('#semester_label').text(current_year + "-" + current_semester);
     var semester_dropdown_ul = $('#semester_dropdown_ul');
     semester_dropdown_ul.children().remove();
@@ -744,19 +962,19 @@ $(function(){
       var link = $('<a href="#">'+year+"년 "+semester_to_text(semester)+'</a>').attr('year', year).attr('semester', semester).appendTo(list).addClass('semester-button');
       if (year == current_year && semester == current_semester) list.addClass('selected-semester-li')
     }
-    //학기 변경
+    // 학기 변경
     $('.semester-button').unbind('click').click(function(){
       var ele = $(this);
       if (current_year == ele.attr('year') && current_semester == ele.attr('semester')) return true;
-      //학기 변경
+      // 학기 변경
       change_semester(ele.attr('year'), ele.attr('semester'));
       $('.selected-semester-li').removeClass('selected-semester-li');
       ele.addClass('selected-semester-li');
-      //검색결과 삭제
+      // 검색결과 삭제
       $('#search_result_table tbody').children().remove();
       var row = $('<tr></tr>').appendTo($('#search_result_table tbody'));
       $('<td colspan="13"><h2>검색어를 입력하세요!</h2></td>').appendTo(row).css('text-align', 'center');
-      //내 강의 초기화
+      // 내 강의 초기화
       my_lectures = [];
       refresh_my_courses_table();
       alert(7);
@@ -768,19 +986,19 @@ $(function(){
 		 if(window.innerWidth<768) $('.navbar-collapse').collapse('hide');
 	});
 
-  //SNUTT 로고 클릭
+  // SNUTT 로고 클릭
   $('#brand_button').click(function(){
     $('#nav_search_result').trigger('click');
     return false;
   });
 
-  //resize
+  // resize
   $(window).resize(function(){
     if (selected_row) selected_row.trigger('click');
  
     else{
     	alert(8);
-    	generate_timecell(my_lectures);
+    	//generate_timecell(my_lectures);
     }
   });
 
@@ -792,7 +1010,7 @@ $(function(){
     ga('send', 'event', 'tab', 'search_result');
   });
 
-  //tab transition
+  // tab transition
   $('a[data-toggle="tab"]').on('show', function (e) {
     switch ($(e.target).attr('href')){
     case "#my_courses": 
@@ -818,7 +1036,7 @@ $(function(){
     }
   })
 
-  //set tooltip
+  // set tooltip
   $('#nav_my_courses').tooltip({
     placement : 'bottom',
     trigger : 'manual',
@@ -827,7 +1045,7 @@ $(function(){
   }).tooltip('show');
   $('.tooltip').addClass('my-course-tooltip').hide();
 
-  //set tooltip
+  // set tooltip
   $('#search_filter_toggle_button').tooltip({
     placement : 'right',
     trigger : 'manual',
@@ -847,7 +1065,7 @@ $(function(){
       })
     };
 
-  //scroll change
+  // scroll change
   $('#lectures_content').scroll(function(){
     if (current_tab == "search"){
       var ele = $(this);
@@ -855,12 +1073,12 @@ $(function(){
       var scrollTop = ele.scrollTop();
       var scrollBottom = ele.scrollTop() + ele.height();
       var difference = scrollHeight - scrollBottom;
-      //현재 scroll 위치 갱신
+      // 현재 scroll 위치 갱신
       search_result_scroll_top = scrollTop;
 	}
   });
 
-  //search query
+  // search query
   $('#search_form').submit(function(){
     query_text = $('#search_query_text').val();
     if (query_text.length < 2) {
@@ -880,16 +1098,16 @@ $(function(){
       per_page:per_page
     });
     ga('send', 'event', 'search', search_type, query_text);
-    cancel_lecture_selection();
+   // cancel_lecture_selection();
     return false;
   });
 
-  //표의 빈공간 클릭 시 gray-cell 삭제
+  // 표의 빈공간 클릭 시 gray-cell 삭제
   $('#timetable tbody td').click(function(){
-    cancel_lecture_selection();
+   // cancel_lecture_selection();
   });
 
-  //검색필터 on/off 토글
+  // 검색필터 on/off 토글
   $('#search_filter_toggle_button').click(function(){
     var ele = $(this);
     if (ele.attr('state') == 'off'){
@@ -904,13 +1122,13 @@ $(function(){
     }
   });
   $('#search_filter').hide();
-  //검색필터 라벨 클릭
+  // 검색필터 라벨 클릭
   $('#search_filter .label').click(function(){
     var ele = $(this);
     if (!ele.hasClass('label-info')) ele.addClass('label-info');
     else ele.removeClass('label-info');
   });
-  //검색필터 라벨 더블클릭
+  // 검색필터 라벨 더블클릭
   $('#search_filter .label').dblclick(function(){
     var ele = $(this);
     ele.parent().children().removeClass('label-info');
@@ -925,7 +1143,7 @@ $(function(){
     var header = $(this);
     var selected = header.siblings('.label-info');
     var all = header.siblings('.label');
-    //전부 선택되어있으면 전체선택 해제
+    // 전부 선택되어있으면 전체선택 해제
     if (all.size() == selected.size()){
       all.removeClass('label-info');
     }else {
@@ -948,8 +1166,8 @@ $(function(){
 
   $('body').keydown(function(e){
     if (e.keyCode == 34 && current_tab == "search"){
-      //pagedown
-      //선택된 것이 없으면 1번째 row 선택
+      // pagedown
+      // 선택된 것이 없으면 1번째 row 선택
       if (!selected_row && lectures.length > 0){
         $('#search_result_table tbody tr').first().trigger('click');
         $('#search_query_text').blur();
@@ -963,7 +1181,7 @@ $(function(){
       return false;
     }
     else if (e.keyCode == 33 && current_tab == "search"){
-      //pageup
+      // pageup
       if (!selected_row && lectures.length > 0){
         $('#search_result_table tbody tr').first().trigger('click');
         selected_row.addClass('selected');
@@ -978,8 +1196,8 @@ $(function(){
       return false;
     }
     else if (e.keyCode == 40 && current_tab == "search"){
-      //down
-      //선택된 것이 없으면 1번째 row 선택
+      // down
+      // 선택된 것이 없으면 1번째 row 선택
       if (!selected_row && lectures.length > 0){
         $('#search_result_table tbody tr').first().trigger('click');
         $('#search_query_text').blur();
@@ -992,7 +1210,7 @@ $(function(){
       return false;
     }
     else if (e.keyCode == 38 && current_tab == "search"){
-      //up
+      // up
       if (!selected_row && lectures.length > 0){
         $('#search_result_table tbody tr').first().trigger('click');
         selected_row.addClass('selected');
@@ -1005,10 +1223,10 @@ $(function(){
       }
       return false;
     }
-    //내 강의
+    // 내 강의
     else if (e.keyCode == 40 && current_tab == "my_courses"){
-      //down
-      //선택된 것이 없으면 1번째 row 선택
+      // down
+      // 선택된 것이 없으면 1번째 row 선택
       if (!my_courses_selected_row && my_lectures.length > 0){
         $('#my_courses_table tbody tr').first().trigger('click');
         $('#search_query_text').blur();
@@ -1021,7 +1239,7 @@ $(function(){
       return false;
     }
     else if (e.keyCode == 38 && current_tab == "my_courses"){
-      //up
+      // up
       if (!my_courses_selected_row && my_lectures.length > 0){
         $('#my_courses_table tbody tr').first().trigger('click');
         $('#search_query_text').blur();
@@ -1034,25 +1252,25 @@ $(function(){
       return false;
     }
     else if (e.keyCode == 13 && current_tab == "search"){
-      //enter
+      // enter
       if (selected_row && $('#search_query_text:focus').size() == 0){
         selected_row.trigger('dblclick');
       }
     }
     else if (e.keyCode == 13 && current_tab == "my_courses"){
-      //enter
+      // enter
       if (my_courses_selected_row && $('#search_query_text:focus').size() == 0){
         my_courses_selected_row.trigger('dblclick');
       }
     }
     else {
-      //$('#search_query_text').focus();
+      // $('#search_query_text').focus();
     }
   });
 
 	set_dropdown_handler();
 
-  //init modal
+  // init modal
   $('#init_loading_modal').dialog({
     modal:true,
     hide:"fade",
@@ -1062,7 +1280,7 @@ $(function(){
     autoOpen:true
   });
 
-  //facebook modal
+  // facebook modal
   $('#facebook_loading_modal').dialog({
     modal:true,
     resizable:false,
@@ -1071,7 +1289,7 @@ $(function(){
     autoOpen:false
   });
 
-  //custom lecture modal
+  // custom lecture modal
   $('#custom_lecture_modal').dialog({
     modal:true,
     title:"사용자정의 시간표",
@@ -1081,7 +1299,7 @@ $(function(){
     open:function(){
       $('#custom_course_title').val("");
       $('#custom_location').val("");
-      cancel_lecture_selection();
+      //cancel_lecture_selection();
     },
     close:function(){
       $('#customcell').hide();
@@ -1093,7 +1311,7 @@ $(function(){
 
   $('#course_detail_wrapper').hide();
 
-  //강의계획서 버튼
+  // 강의계획서 버튼
   $('#course_detail_plan_button').click(course_detail_plan_button_handler);
 
   $('#custom_lecture_close_button').click(function(){
@@ -1101,7 +1319,7 @@ $(function(){
     return false;
   });
 
-  //페이스북에 공유하기
+  // 페이스북에 공유하기
   $('#publish_facebook_toggle_button').click(function(){
     var ele = $(this);
     if (ele.attr('state') == 'off'){
@@ -1118,7 +1336,7 @@ $(function(){
   });
   $('#facebook_message_wrapper').hide();
 
-  //페이스북에 올리기
+  // 페이스북에 올리기
   $('#facebook_message_wrapper').submit(function(){
     var ele = $('#publish_facebook_ok_button');
     if (!ele.attr('disabled')){
@@ -1159,7 +1377,7 @@ $(function(){
     return false;
   });
 
-  //custom lecture form submit
+  // custom lecture form submit
   $('#custom_lecture_form').submit(function(){
     var course_title = $('#custom_course_title').val();
     var location = $('#custom_location').val();
@@ -1183,16 +1401,20 @@ $(function(){
     
    // generate_timecell(my_lectures);
     
-    //my_lectures[my_lectures.length-1];
-   /* alert(my_lectures[my_lectures.length-1].course_title);
-    alert(my_lectures[my_lectures.length-1].location);
-    alert(my_lectures[my_lectures.length-1].class_time);*/
-   /* alert(lectures[lectures.length-1].color.plane);
-    alert(lectures[lectures.length-1].color.border);*/
+    // my_lectures[my_lectures.length-1];
+   /*
+	 * alert(my_lectures[my_lectures.length-1].course_title);
+	 * alert(my_lectures[my_lectures.length-1].location);
+	 * alert(my_lectures[my_lectures.length-1].class_time);
+	 */
+   /*
+	 * alert(lectures[lectures.length-1].color.plane);
+	 * alert(lectures[lectures.length-1].color.border);
+	 */
     $("#custom_class_time").val(my_lectures[my_lectures.length-1].class_time+"");
    // alert(my_lectures[my_lectures.length-1].color.plane);
    // alert(my_lectures[my_lectures.length-1].color.border);
-    //randomColor=lectures[lectures.length-1].color.plane+";"+lectures[lectures.length-1].color.border;
+    // randomColor=lectures[lectures.length-1].color.plane+";"+lectures[lectures.length-1].color.border;
     
     $("#timetableColor").val(my_lectures[my_lectures.length-1].color.plane+";"+my_lectures[my_lectures.length-1].color.border);
     
@@ -1223,10 +1445,10 @@ $(function(){
     return false;
   });
   
-  //contents scroll
+  // contents scroll
   touchScroll('lectures_content');
 
-  //custom time 추가
+  // custom time 추가
   function wday_string(wday)
   {
     if (wday == "mon") return "월";
@@ -1255,7 +1477,7 @@ $(function(){
     return false;
   });
   $('body').mouseup(function(e){
-    //선택된 칸이 한칸 이상이어야..
+    // 선택된 칸이 한칸 이상이어야..
     if (custom_end_cell){
       if (already_exist_class_time({class_time:custom_class_time})){
         alert("강의시간이 겹칩니다.");
@@ -1270,102 +1492,15 @@ $(function(){
     custom_start_cell = null;
     custom_end_cell = null;
   });
-  //내보내기 네비게이션
-  $('#nav_export').click(function(){
-    //브라우저가 canvas.toDataURL을 지원할 때에만..
-    ga('send', 'event', 'tab', 'export');
-   	supportsToDataURL(); 
-		if (!supportsToDataURL()){
-      alert("현재 사용중인 브라우저에선 이미지 내보내기 기능을 지원하지 않습니다.");
-      $('#image_export_wrapper').hide();
-    }
-    else {
-      export_timetable();
-    }
-    var t_lectures = my_lectures;
-    for(var i = 0; i < t_lectures.length ; i++)
-    {
-      t_lectures[i].course_number += "$";
-      t_lectures[i].lecture_number+= "$";
-    }
-    apiClient.get('export_timetable', {
-      year:current_year,
-      semester:current_semester,
-      my_lectures: my_lectures
-    }, function(data){
-      $('#saved_timetable_url').attr('href', '/user/'+data.filename).text(window.location.origin + "/user/"+data.filename);
-    });
-    
-    for(var i = 0; i < t_lectures.length ; i++)
-    {
-      t_lectures[i].course_number = t_lectures[i].course_number.replace("$","");
-      t_lectures[i].lecture_number = t_lectures[i].lecture_number.replace("$","");
-    }
-
-    $('#content_wrapper').hide();
-    $('#social_comment_wrapper').hide();
-    $('#export_wrapper').show();
-    current_tab = "export";
-    cancel_lecture_selection();
-  });
-
-  $('#main_navigation a').not('#nav_export').not('#nav_social_comment').not('#semester_label_button').click(function(){
-    $('#content_wrapper').show();
-    $('#export_wrapper').hide();
-    $('#social_comment_wrapper').hide();
-    alert(11);
-    generate_timecell(my_lectures);
-  });
-  $('#export_wrapper').hide();
-  $('#social_comment_wrapper').hide();
-
-  //소셜댓글 네비게이션
-  $('#nav_social_comment').click(function(){
-    $('#content_wrapper').hide();
-    $('#export_wrapper').hide();
-    $('#social_comment_wrapper').show();
-    current_tab = "social_comment";
-    cancel_lecture_selection();
-  });
-
-  $('.search-result-table').disableSelection();
-  $('#timetable_container').disableSelection();
-
-  $('.course_detail_toggle').click(function(){
-    var ele = $(this);
-    var course_detail = $('#course_detail');
-    if (course_detail.is(':visible')){
-      course_detail.slideUp();
-    }
-    else {
-      course_detail.slideDown();
-    }
-  });
+  // 내보내기 네비게이션
 
 
-  //document load end//
+
+  // document load end//
 });
 
 
-//파이어폭스 드래그 금지
-/*
-var omitformtags=["input", "textarea", "select"];
-omitformtags=omitformtags.join("|");
-function disableselect(e){
-  if (omitformtags.indexOf(e.target.tagName.toLowerCase())==-1)
-    return false;
-}
-function reEnable(){
-  return true;
-}
-if (typeof document.onselectstart!="undefined")
-  document.onselectstart=new Function ("return false")
-else {
-  document.onmousedown=disableselect;
-  document.onmouseup=reEnable;
-}
-*/
-//drag prevention
+// drag prevention
 (function($){
 $.fn.disableSelection = function() {
     return this.each(function() {

@@ -10,11 +10,56 @@
 	<result column="timetable_color" property="timetableColor"/>
 </resultMap>
 
+<!-- <resultMap type="timetableDTO" id="timetableDTOAssoMap">
+	<id column="timetable_no" property="timetableNo"/>
+	<result column="user_no" property="userNo"/>
+	<result column="timetable_subject" property="timetableSubject"/>
+	<result column="timetable_location" property="timetableLocation"/>
+	<result column="timetable_class_info" property="timetableClassInfo"/>
+	<result column="timetable_color" property="timetableColor"/>
+	<association property="userDTO" javaType="userDTO">
+		<id column="user_no" property="userNo" />
+		<result column="user_name" property="userName"/>
+	</association>
+</resultMap> -->
+
+<resultMap type="userDTO" id="timetableDTOAssoMap">
+	
+		<id column="user_no" property="userNo" />
+		<result column="user_name" property="userName"/>
+		
+	<association property="timetableDTO" javaType="timetableDTO">
+	    <id column="timetable_no" property="timetableNo"/>
+		<result column="user_no" property="userNo"/>
+		<result column="timetable_subject" property="timetableSubject"/>
+		<result column="timetable_location" property="timetableLocation"/>
+		<result column="timetable_class_info" property="timetableClassInfo"/>
+		<result column="timetable_color" property="timetableColor"/>
+	</association>
+</resultMap>
+
+
 <insert id="timetableInsert" parameterType="timetableDTO">
 	insert into timetable values(seq_timetable_no.nextval,#{userNo},#{timetableSubject},#{timetableLocation},#{timetableClassInfo},#{timetableColor})
 </insert>
 
 <select id="selectAll" parameterType="int" resultMap="timetableDTOMap">
 	select * from timetable where user_no=#{_parameter} order by timetable_no asc
+</select>
+
+<update id="changeColor" parameterType="map">
+	update timetable set timetable_color=#{timetableColor} where timetable_no=#{timetableNo}
+</update>
+
+<delete id="timetableDelete" parameterType="int">
+	delete from timetable where timetable_no=#{_parameter}
+</delete>
+
+<select id="selectUserNos" parameterType="int" resultMap="timetableDTOAssoMap">
+	select p.user_no,p.project_no,a.user_name from project_user p join ant_user a on p.user_no=a.user_no where p.project_no=#{_parameter}
+</select>
+
+<select id="selectUserNoList" parameterType="int" resultType="int">
+	select user_no from project_user where project_no=#{_parameter}
 </select>
 </mapper>

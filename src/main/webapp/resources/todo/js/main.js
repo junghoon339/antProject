@@ -266,7 +266,7 @@ function todoSelectAll(){
 	$.ajax({
 		url:url+"/todo/selectAll",
 		type:"post",
-		data:"projectNo="+$("#projectNo").val()+"&"+$("#securityInfo").attr("name")+"="+$("#securityInfo").val(),
+		data:"projectNo="+parseInt($("#projectNo").val())+"&"+$("#securityInfo").attr("name")+"="+$("#securityInfo").val(),
 		dataType:"json",
 		success:function(re){
 			$.each(re,function(index,todoDTO){

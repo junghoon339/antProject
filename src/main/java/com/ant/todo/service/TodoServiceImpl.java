@@ -28,10 +28,13 @@ public class TodoServiceImpl implements TodoService {
 	@Override
 	public int todoUpdate(TodoDTO todoDTO) {
 		int result=0;
+		System.out.println("ìœ„ì¹˜ì—¬..:"+todoDTO.getTodoLocation());
+		System.out.println("ë‚´ìš©ì´ì—¬..:"+todoDTO.getTodoContent());
 		if(todoDTO.getTodoLocation()==-1){
+			System.out.println("ì•ˆì•ˆ ë‚´ìš©ì´ì—¬..:"+todoDTO.getTodoContent());
 			result=todoDAO.todoUpdateText(todoDTO);
 		}else{
-			// À§Ä¡ÀÌµ¿ ¾÷µ¥ÀÌÆ®
+			// ï¿½ï¿½Ä¡ï¿½Ìµï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®
 			result=todoDAO.todoUpdate(todoDTO);
 		}
 		

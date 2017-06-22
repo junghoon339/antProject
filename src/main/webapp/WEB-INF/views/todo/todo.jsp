@@ -31,6 +31,7 @@
 							if(re!=null){
 								var updateVal=prompt("포스트잇에 적을 내용을 입력해주세요",re.todoContent);
 								if(updateVal!=null){
+									$("#todoLocation").val("-1");
 									$("#todoNo").val(postitSu[1]);
 									$("#todoContent").val(updateVal);
 									$.ajax({

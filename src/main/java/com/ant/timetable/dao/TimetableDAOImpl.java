@@ -1,12 +1,15 @@
 package com.ant.timetable.dao;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.ant.timetable.dto.TimetableDTO;
+import com.ant.user.dto.UserDTO;
 
 @Repository
 public class TimetableDAOImpl implements TimetableDAO {
@@ -22,13 +25,36 @@ public class TimetableDAOImpl implements TimetableDAO {
 	@Override
 	public int timetableDelete(int timetableNo) {
 		// TODO Auto-generated method stub
-		return 0;
+		return session.delete("timetableMapper.timetableDelete",timetableNo);
 	}
 
 	@Override
 	public List<TimetableDTO> selectAll(int userNo) {
 		// TODO Auto-generated method stub
 		return session.selectList("timetableMapper.selectAll",userNo);
+	}
+
+	@Override
+	public int changeColor(int timetableNo, String timetableColor) {
+		// TODO Auto-generated method stub
+		Map<String,Object> map=new HashMap<>();
+		map.put("timetableNo", timetableNo);
+		map.put("timetableColor", timetableColor);
+		return session.update("timetableMapper.changeColor",map);
+	}
+
+	@Override
+	public List<UserDTO> selectUserNos(int projectNo) {
+		// TODO Auto-generated method stub
+		System.out.println("다오사이즈여 : "+session.selectList("timetableMapper.selectUserNos",projectNo).size());
+		return session.selectList("timetableMapper.selectUserNos",projectNo);
+	}
+
+	@Override
+	public List<Integer> selectUserNoList(int projectNo) {
+		// TODO Auto-generated method stub
+		System.out.println("ㄷ오사이즈아:"+session.selectList("timetableMapper.selectUserNoList",projectNo).size());
+		return session.selectList("timetableMapper.selectUserNoList",projectNo);
 	}
 
 }
