@@ -47,6 +47,7 @@
 <script type="text/javascript">
 	/* sumbit */
 	function submitHidden() {
+		alert("adfs");
 		$("#submitForm").attr("action","${pageContext.request.contextPath}/admin/update");
 		$("#submitForm").submit();
 	}
@@ -87,7 +88,7 @@
 							<input type="hidden" value="${noticeDTO.writeDay}" name="writeDay">
 							<!-- <input type="hidden" value="1" name="userNo"> -->
 							<%-- <span class="caption-helper">작성자 - ${storageDTO.storageNo}</span> --%>
-							<input type="hidden" value="${noticeDTO.noticeNo}" name="noticeNo">
+							<input type="text" value="${noticeDTO.noticeNo}" name="noticeNo">
 							
 							
 						</div>

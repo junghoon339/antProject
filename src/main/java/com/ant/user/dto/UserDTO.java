@@ -3,6 +3,7 @@ package com.ant.user.dto;
 import java.util.List;
 
 import com.ant.project.dto.ProjectUserDTO;
+import com.ant.timetable.dto.TimetableDTO;
 
 public class UserDTO {
 	private int userNo;
@@ -12,10 +13,12 @@ public class UserDTO {
 	private String userSchool;
 	private String userMajor;
 	
-	private List<ProjectUserDTO> listProjectUserDTO;//°ü¸®ÀÚ¿¡¼­ È¸¿ø°ü¸®½Ã »ç¿ë
+	private TimetableDTO timetableDTO;
+	
+	private List<ProjectUserDTO> listProjectUserDTO;//ï¿½ï¿½ï¿½ï¿½ï¿½Ú¿ï¿½ï¿½ï¿½ È¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
 	private int doingProject;
 	private int doneProject;
-	private ProjectUserDTO projectuserRole; //ÆÀ¿øÁ¤º¸ Á¶È¸¿¡ »ç¿ë-¿ìµ¿
+	private ProjectUserDTO projectuserRole; //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½È¸ï¿½ï¿½ ï¿½ï¿½ï¿½-ï¿½ìµ¿
 	
 	public UserDTO() {
 		super();
@@ -122,5 +125,11 @@ public class UserDTO {
 		this.projectuserRole = projectuserRole;
 	}	
 	
+	public void setTimetableDTO(TimetableDTO timetableDTO) {
+		this.timetableDTO = timetableDTO;
+	}
 	
+	public TimetableDTO getTimetableDTO() {
+		return timetableDTO;
+	}
 }

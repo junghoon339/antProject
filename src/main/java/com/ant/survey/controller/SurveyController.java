@@ -46,13 +46,17 @@ public class SurveyController {
 		SurveyUserDTO surveyUser = surveyService.surveyUserSelect(surveyNo, userNo);
 		List<UserDTO> users = new ArrayList<>();
 		
+		List<UserDTO> projectUserList = projectService.selectProjectUsers(projectNo);
+		
+		if(projectUserList.size()<=1){
+			users.add(new UserDTO(0,"0","0","0","0","0"));
+		}
+		
 		if(surveyUser.getSurveyUserState()==1){
 			return users;
 		}
 		
 		String userName = user.getUserName();
-		
-		List<UserDTO> projectUserList = projectService.selectProjectUsers(projectNo);
 		
 		for(UserDTO u : projectUserList){
 			if(!u.getUserName().equals(userName)){

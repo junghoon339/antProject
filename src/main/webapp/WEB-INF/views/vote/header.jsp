@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
+<title>Insert title herde</title>
 
 <!-- Latest compiled and minified CSS -->
 <link rel="stylesheet"
@@ -37,10 +37,12 @@ $(function(){
 </script>
 <body>
 <input type=hidden id="securityInfo" name="${_csrf.parameterName}" value="${_csrf.token}"> <input type=hidden id="voteNo" value="${voteNo}" />
+<br>
 <div align="right">
-<input type="button" value="생성하기"  id="create"/> 
-<input type="button" value="목록보기"  id="list"/><p>
+<a href="#" class="btn btn-default" id="create" title="투표 생성하기" ><span class="glyphicon glyphicon-pencil"></span> </a>
+<a href="#" class="btn btn-default" id="list" title="투표 목록보기"><span class="glyphicon glyphicon-align-justify"></span> </a>
+<span id="blank">　</span>
 </div>
-<hr>
+<p>
 </body>
 </html>

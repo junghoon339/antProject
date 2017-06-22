@@ -114,7 +114,7 @@ public class ProjectController implements Serializable {
 		
 
 		//Project STATE가 1인 경우, SURVEY를 생성하는 구문
-		List<ProjectDTO> projects = projectService.selectIfProjectState1();
+		List<ProjectDTO> projects = projectService.selectIfProjectState1(userNo);
 		if(projects.size()!=0){
 			for(ProjectDTO project : projects){
 				int projectNo = project.getProjectNo();

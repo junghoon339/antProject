@@ -43,36 +43,6 @@
 	  
       var commonUrl="${pageContext.request.contextPath}";
     </script>
-    <style type="text/css">
-    .badgebox
-{
-    opacity: 0;
-}
-
-.badgebox + .badge
-{
-    /* Move the check mark away when unchecked */
-    text-indent: -999999px;
-    /* Makes the badge's width stay the same checked and unchecked */
-	width: 27px;
-}
-
-.badgebox:focus + .badge
-{
-    /* Set something to make the badge looks focused */
-    /* This really depends on the application, in my case it was: */
-    
-    /* Adding a light border */
-    box-shadow: inset 0px 0px 5px;
-    /* Taking the difference out of the padding */
-}
-
-.badgebox:checked + .badge
-{
-    /* Move the check mark back when checked */
-	text-indent: 0;
-}
-    </style>
 </head>
 <body>
 	<div class="wrapper">
@@ -81,9 +51,6 @@
 			<jsp:include page="/WEB-INF/views/project/header_ch.jsp" flush="false" /> <!-- </nav> -->
 			<div class="content">
 				<div class="container-fluid">
-				<div id="checkboxUserNo"> <!-- 체크박스 놓는곳 -->
-      	
-      			</div>
 					<div id="timetable_container">
                <div id="timecells_container">
                   <div id="customcell_container">
@@ -251,7 +218,7 @@
 				</div>
 			</div>
 			
-			 <div id="custom_lecture_modal" style="display:none">
+			 <div id="custom_lecture_modal">
          <form id="custom_lecture_form">
          	<input type=hidden id="securityInfo" name="${_csrf.parameterName}" value="${_csrf.token}">
          	<input type="text" name="timetableSubject" id="custom_course_title" class="input-large" placeholder="교과목명을 입력하세요." /><br />
@@ -283,7 +250,7 @@
 
 <script src="${pageContext.request.contextPath}/resources/asset/javascripts/utils.js" type="text/javascript"></script>
       <script src="${pageContext.request.contextPath}/resources/asset/javascripts/exportpng.js" type="text/javascript"></script>
-      <script src="${pageContext.request.contextPath}/resources/asset/javascripts/team_timetable_common.js" type="text/javascript"></script>
+      <script src="${pageContext.request.contextPath}/resources/asset/javascripts/timetable_common.js" type="text/javascript"></script>
       <script src="${pageContext.request.contextPath}/resources/asset/javascripts/timetable_snutt.js" type="text/javascript"></script>
       <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/jquery-ui.min.js"></script>
       

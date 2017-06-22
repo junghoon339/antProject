@@ -189,10 +189,15 @@
 
 				<h1>쪽지함</h1>
 				<button type="button" class="btn btn-danger btn-filter" id="messageDeleteBtn">삭제</button>
+				
+				<div class="icon-container">
+                     <a href=""><span class="ti-trash"></span></a>
+                </div>
+                
 				<button type="button" class="btn btn-danger btn-filter" id="receiveBtn">받은쪽지함</button>
 				<button type="button" class="btn btn-danger btn-filter" id="sendBtn">보낸쪽지함</button>
 				
-				<a class="btn btn-danger" href="#danger" data-toggle="modal" id="sendMessageBtn"><h4>쪽지보내기</h4></a>
+				<a class="btn btn-danger" href="#danger" data-toggle="modal" id="sendMessageBtn">쪽지보내기</a>
 
 				<!-- Modal -->
 				<div class="modal fade" id="danger" tabindex="-1" role="dialog"
