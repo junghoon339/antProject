@@ -25,8 +25,7 @@
 <!-- Bootstrap core CSS     -->
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
-<link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
+
 <!-- Animation library for notifications   -->
 <link
 	href="${pageContext.request.contextPath }/resources/css/animate.min.css"
