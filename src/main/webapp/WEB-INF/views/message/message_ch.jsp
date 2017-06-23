@@ -41,9 +41,9 @@
     <link href="${pageContext.request.contextPath }/resources/css/demo.css" rel="stylesheet" />
  --%>
 <!--  Fonts and icons     -->
-<link
+<!-- <link
 	href="http://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css"
-	rel="stylesheet">
+	rel="stylesheet"> -->
 <link href='https://fonts.googleapis.com/css?family=Muli:400,300'
 	rel='stylesheet' type='text/css'>
 <link
@@ -60,7 +60,7 @@
 			location.href="${pageContext.request.contextPath}/message/main?userNo=${sessionScope.userDTO.userNo}&flag=true";
 		});
 		
-		/* $("#mytable #checkall").click(function() {
+		 $("#mytable #checkall").click(function() {
 			 alert(11)
 			if ($("#mytable #checkall").is(':checked')) {
 				alert("checkall");
@@ -73,7 +73,7 @@
 					$(this).prop("checked", false);
 				});
 			}
-		}); */
+		});
 		$("#checkAll").click(function(){
 			//alert($(this).attr("class"));
 			
@@ -380,9 +380,9 @@
 								<thead>
 								
 								 <th>
-									<label class="checkbox checkbox-blue" id="checkAll">
-										 <input type="checkbox" id="checkall" value="-1">
-									</label>
+								
+								 <input type="checkbox" id="checkall" value="-1">
+									
 								</th>    
 									<!--  <th><input type="checkbox" id="checkall" value="-1" /></th>  -->
 									
@@ -422,9 +422,7 @@
 															name="messageNoArr" value="${messageDTO.messageNo }" /></td>  --%>
 															
 															<td>
-																<label class="checkbox checkbox-blue" for="checkbox1">
-																	 <input type="checkbox" class="checkthis" name="messageNoArr" data-toggle="checkbox" value="${messageDTO.messageNo }">
-																</label>
+																	 <input type="checkbox" class="checkthis" name="messageNoArr" value="${messageDTO.messageNo }">
 															</td>   
 															
 														<td>${messageDTO.userDTO.userId}
@@ -515,8 +513,8 @@
 											<input type="hidden" name="search_param" value="all"
 												id="search_param"> <input type="text"
 												class="form-control" name="x" placeholder="검색어를 입력하세요."
-												id="searchText"> <span class="input-group-btn">
-												<button class="btn btn-Info" type="button" id="submitBt">
+												id="searchText" style="border:1px solid #66615b"> <span class="input-group-btn">
+												<button class="btn btn-Info" type="button" id="submitBt" style="height:40px">
 													<span class="glyphicon glyphicon-search"></span>
 												</button>
 											</span>

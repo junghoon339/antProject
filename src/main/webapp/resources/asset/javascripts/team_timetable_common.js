@@ -61,7 +61,7 @@ function selectUserNos(){
 	$.ajax({
 		url:commonUrl+"/timetable/selectUserNos",
 		type:"post",
-		data:"projectNo=41&"+$("#securityInfo").attr("name")+"="+$("#securityInfo").val(),
+		data:"projectNo="+projectNo+"&"+$("#securityInfo").attr("name")+"="+$("#securityInfo").val(),
 		dataType:"json",
 		success:function(result){
 			// alert(result);
@@ -93,7 +93,7 @@ function selectAll(){
 	$.ajax({
 		url:commonUrl+"/timetable/teamSelectAll",
 		type:"post",
-		data:"projectNo=41&"+$("#securityInfo").attr("name")+"="+$("#securityInfo").val(),
+		data:"projectNo="+projectNo+"&"+$("#securityInfo").attr("name")+"="+$("#securityInfo").val(),
 		dataType:"json",
 		success:function(result){
 			// alert(result);
