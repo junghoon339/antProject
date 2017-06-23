@@ -89,7 +89,7 @@ public class AdminController {
 		
 		int curPage=Integer.parseInt(pageNumber);
 
-		int rowCount=2; //�� �������� �ѷ��� ���ڵ��
+		int rowCount=5; //�� �������� �ѷ��� ���ڵ��
 		int startRow=(curPage-1)*rowCount+1;
 		int endRow=curPage*rowCount;
 		//System.out.println("endRowwwwwwwww:"+endRow);

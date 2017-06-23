@@ -33,7 +33,7 @@
 					<li><a href="${pageContext.request.contextPath}/userCalendar/userCalendar"> <i class="ti-text"></i>
 							<p>My Calendar</p>
 					</a></li>
-					<li><a href="icons.html"> <i class="ti-pencil-alt2"></i>
+					<li><a href="${pageContext.request.contextPath}/admin/adminNotice"> <i class="ti-pencil-alt2"></i>
 							<p>공지사항</p>
 					</a></li>
 				</c:when>
@@ -59,7 +59,7 @@
 							<p>조별과제 달력</p> 
 					</a></li>
 					<li><a
-						href="${pageContext.request.contextPath}/storage/storageTable/1">
+						href="${pageContext.request.contextPath}/storage/storageTable/${projectNo}">
 							<i class="ti-pencil-alt2"></i>
 							<p>자료실</p>
 					</a></li>

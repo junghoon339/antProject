@@ -108,7 +108,7 @@
 								<div style="text-align: right;" class="col-sm-6">
 									<h5>
 									<div class="icon-container">
-	                        				<span class="ti-menu-alt"></span><a href="${pageContext.request.contextPath}/storage/storageTable/1"><span class="icon-name"> 리스트</span></a>
+	                        				<span class="ti-menu-alt"></span><a href="${pageContext.request.contextPath}/storage/storageTable/${dto.projectNo}"><span class="icon-name"> 리스트</span></a>
 	                        		</div>
 	                        		</h5>
 								</div>
