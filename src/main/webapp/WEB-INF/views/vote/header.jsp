@@ -4,25 +4,10 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title herde</title>
+<title>Insert t</title>
 
-<!-- Latest compiled and minified CSS -->
-<link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
-	integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
-	crossorigin="anonymous">
 
-<!-- Optional theme -->
-<link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"
-	integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp"
-	crossorigin="anonymous">
 
-<!-- Latest compiled and minified JavaScript -->
-<!-- <script
-	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
-	integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
-	crossorigin="anonymous"></script> -->
 </head>
 <script>
 $(function(){
@@ -39,8 +24,8 @@ $(function(){
 <input type=hidden id="securityInfo" name="${_csrf.parameterName}" value="${_csrf.token}"> <input type=hidden id="voteNo" value="${voteNo}" />
 <br>
 <div align="right">
-<a href="#" class="btn btn-default" id="create" title="투표 생성하기" ><span class="glyphicon glyphicon-pencil"></span> </a>
-<a href="#" class="btn btn-default" id="list" title="투표 목록보기"><span class="glyphicon glyphicon-align-justify"></span> </a>
+<button type="submit" class="btn btn-warning" id="create" title="투표 생성하기" ><span class="glyphicon glyphicon-pencil"></span></button> 
+<button type="submit" class="btn btn-warning" id="list" title="투표 목록보기" ><span class="glyphicon glyphicon-align-justify"></span></button> 
 <span id="blank">　</span>
 </div>
 <p>

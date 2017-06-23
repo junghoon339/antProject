@@ -95,44 +95,44 @@ td {
 						
 						<!-- 이곳에 내용작성!!!!!!!!!!!!!!!! -->
 						<div class="row">
-						<div class="col-md-12">
-							<div class="card">
-						<section>
-						<div class="card">
-						<%@include file="header.jsp"%>
-							<div style="padding: 20px; border-top: 1px solid #c3d9b8;border-bottom: 1px solid #c3d9b8;" >
-								<h4><span class="glyphicon glyphicon-tasks"></span> 진행중인 투표</h4>
-							</div>
+							<div class="col-md-12">
+								<div class="card" style="padding-left : 20px;padding-right: 20px;">
+									<section>
+											<%@include file="header.jsp"%>
+											<div style="padding: 20px; border-top: 1px solid #c3d9b8;border-bottom: 1px solid #c3d9b8;" >
+											<h4><span class="glyphicon glyphicon-tasks"></span> 진행중인 투표</h4>
+											</div>
 					
-							<div id="doing" class="List" >
-									<c:forEach items="${doingList}" var="doingList" varStatus="doingStatus">
-									<form class="doingForm" id="doingForm" action="${pageContext.request.contextPath}/vote/Detail" method="post">
-									<input type=hidden id="securityInfo" name="${_csrf.parameterName}" value="${_csrf.token}">
-										<input type="hidden" name="voteNo" id="voteNo" value="${doingList.voteNo}" />
-										<input type="hidden" name="userNo" id="userNo" value="${userNo}" />
-										<input type="hidden" name="userCount" value="${doingList.userCount}"/>
-										<table class="obj">
-											<tr>
-												<td rowspan="2" id="q"><h1>Q.</h1></td>
-												<td colspan="2">${doingStatus.count}.${doingList.voteTitle}</td>
-											</tr>
-											<tr>
-												<td id="attribute" width="50"><c:choose>
-														<c:when test="${doingList.userCount!=0}">${doingList.userCount}</c:when>
-														<c:otherwise>0</c:otherwise>
-													</c:choose> 명 참여</td>
-												<td id="attribute">
+											<div id="doing" class="List" >
+												<c:forEach items="${doingList}" var="doingList" varStatus="doingStatus">
+												<form class="doingForm" id="doingForm" action="${pageContext.request.contextPath}/vote/Detail" method="post">
+												<input type=hidden id="securityInfo" name="${_csrf.parameterName}" value="${_csrf.token}">
+												<input type="hidden" name="voteNo" id="voteNo" value="${doingList.voteNo}" />
+												<input type="hidden" name="userNo" id="userNo" value="${userNo}" />
+												<input type="hidden" name="userCount" value="${doingList.userCount}"/>
+												<table class="obj">
+												<tr>
+													<td rowspan="2" id="q"><h1>Q.</h1></td>
+													<td colspan="2">${doingStatus.count}.${doingList.voteTitle}</td>
+												</tr>
+												<tr>
+													<td id="attribute" width="50">
+														<c:choose>
+															<c:when test="${doingList.userCount!=0}">${doingList.userCount}</c:when>
+															<c:otherwise>0</c:otherwise>
+														</c:choose> 명 참여</td>
+													<td id="attribute">
 													<c:choose>
 														<c:when test="${doingList.state==false}">미참여</c:when>
 														<c:otherwise>참여완료</c:otherwise>
 													</c:choose>
-												</td>
-											</tr>
-										</table>
-									</form>
-									<hr>
-								</c:forEach>
-							</div>
+													</td>
+												</tr>
+												</table>
+												</form>
+												<hr>
+												</c:forEach>
+											</div>
 					
 							<div style="padding: 20px; border-top: 1px solid #c3d9b8;border-bottom: 1px solid #c3d9b8;" >
 								<h4><span class="glyphicon glyphicon-tasks"></span> 종료된 투표</h4>
@@ -172,7 +172,6 @@ td {
 									</c:forEach>
 							</div>
 							<p>
-						</div>
 						</section>
 						</div></div></div>
 					</div>
