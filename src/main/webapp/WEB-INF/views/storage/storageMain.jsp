@@ -84,7 +84,7 @@
 		$("#submitBt")
 				.click(
 						function() {
-							location.href = "${pageContext.request.contextPath}/storage/storageTable/1?searchText="
+							location.href = "${pageContext.request.contextPath}/storage/storageTable/${projectNo}?searchText="
 									+ $("#searchText").val()
 									+ "&categoryNo="
 									+ $("#category").val();
@@ -154,7 +154,7 @@ body{
                         
                             <div class="header">
                             <div class="col-sm-6">
-                                <h2 class="title">자료실</h2>
+                                <h2 class="title">자료실 ${sessionScope.projectDTO.projectNo}</h2>
                                 <p class="category">자료를 공유하세요!</p>
                             </div>
                                <!--  <div class="col-sm-6" align="right">
@@ -171,19 +171,21 @@ body{
                             
                             
                             <div class="header">
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
                             <!-- 검색 -->
 									<div class="container" style="width: 910px;">
 										<div class="row">
 											<div class="col-xs-8 col-xs-offset-2">
 												<div class="input-group">
 													<div class="input-group-btn search-panel">
-														<!-- <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-					                    	<span id="search_concept">검색 옵션</span> <span class="caret"></span>
-					                    </button>
-					                    <ul class="dropdown-menu" role="menu">
-					                      <li><a href="#contains" id="searchByName">이름</a></li>
-					                      <li><a href="#its_equal" id="searchByTitle">제목</a></li>
-					                    </ul> -->
+														
 														<select class="btn btn-Info dropdown-toggle"
 															data-toggle="dropdown" style="width: 90px" id="category">
 															<option value="-1">선택</option>
@@ -210,6 +212,15 @@ body{
 										</div>
 									</div>
 									<!-- 검색 -->
+									
+									
+									
+									
+									
+									
+									
+									
+									
 									
 									</div>
 									
@@ -270,16 +281,16 @@ body{
 													</c:when>
 													<c:otherwise>
 														
-																<li><a href="${pageContext.request.contextPath}/storage/storageTable/1?pageNumber=${endPage-pageSu}"><div class="icon-container">
+																<li><a href="${pageContext.request.contextPath}/storage/storageTable/${projectNo}?pageNumber=${endPage-pageSu}"><div class="icon-container">
 							                        				<span class="ti-angle-double-left"></span>
 							                        			</div></a></li>
 													</c:otherwise>
 												</c:choose>
 
 												<c:forEach begin="${startPage}" end="${endPage}"
-													var="pageNum" step="1">
+													var="pageNum" step="1" >
 													<li><a
-														href="${pageContext.request.contextPath}/storage/storageTable/1?pageNumber=${pageNum}&searchText=${searchText}&categoryNo=${categoryNo}">${pageNum}</a></li>
+														href="${pageContext.request.contextPath}/storage/storageTable/${projectNo}?pageNumber=${pageNum}&searchText=${searchText}&categoryNo=${categoryNo}">${pageNum}</a></li>
 												</c:forEach>
 
 												<c:choose>
@@ -290,7 +301,7 @@ body{
 																
 													</c:when>
 													<c:otherwise>
-															<li><a href="${pageContext.request.contextPath}/storage/storageTable/1?pageNumber=${startPage+pageSu}"><div class="icon-container">
+															<li><a href="${pageContext.request.contextPath}/storage/storageTable/${projectNo}?pageNumber=${startPage+pageSu}"><div class="icon-container">
 		                        								<span class="ti-angle-double-right"></span>
 		                        							</div></a></li>
 													</c:otherwise>
@@ -344,9 +355,9 @@ body{
 														action="${pageContext.request.contextPath}/storage/insert"
 														method="post" enctype="multipart/form-data">
 
-														<input type="hidden" id="securityInfo"
-															name="${_csrf.parameterName}" value="${_csrf.token}" /> <input
-															type="hidden" name="userNo" value="1">
+														<input type="hidden" id="securityInfo"name="${_csrf.parameterName}" value="${_csrf.token}" /> 
+														<input type="hidden" name="userNo" value="${sessionScope.userDTO.userNo}">
+														<input type="hidden" name ="projectNo" value="${projectNo}">
 
 														<fieldset>
 

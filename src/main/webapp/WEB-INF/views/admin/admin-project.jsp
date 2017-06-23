@@ -148,11 +148,13 @@
 				<div class="container-fluid">
 					<div class="row">
 						<div class="col-md-12">
+						<div class="card">
 						<div class="content table-responsive table-full-width">
-							<button type="button" class="btn btn-danger btn-filter" id="done">완료된프로젝트</button>
-							<button type="button" class="btn btn-danger btn-filter"
+						<div style="text-align: right; margin-right:20px; margin-bottom:35px;">
+							<button type="button" class="btn btn-Info" id="done">완료된프로젝트</button>
+							<button type="button" class="btn btn-Info"
 								id="doing">진행중프로젝트</button>
-
+						</div>
 							<table id="mytable" class="table table-hover">
 
 								<thead>
@@ -186,10 +188,10 @@
 													</c:choose>
 													<td><p data-placement="top" data-toggle="tooltip"
 															title="Delete">
-															<button class="btn btn-danger btn-xs" data-title="Delete"
+															<button class="btn btn-Info" data-title="Delete"
 																id="deleteBtn" data-toggle="modal" data-target="#delete"
 																name="${projectDTO.projectNo}">
-																<span class="glyphicon glyphicon-trash"></span>
+                        											<span class="ti-close"></span>
 															</button>
 														</p></td>
 												</tr>
@@ -231,7 +233,7 @@
 									</c:choose>
 									<c:forEach begin="${startPage }" end="${endPage }"
 										var="pageNum" step="1">
-										<li class="active"><a
+										<li ><a
 											href="${pageContext.request.contextPath }/admin/adminProject?pageNumber=${pageNum}&projectState=${projectState}&categoryNo=${categoryNo}&searchText=${searchText}">${pageNum }</a></li>
 									</c:forEach>
 
@@ -257,11 +259,51 @@
 								type="hidden" id="projectState" value=${projectState } />
 
 							<div>
-								<select class="form-control" id="category">
+							
+							
+							
+							 <!-- 검색 -->
+									<div class="container" style="width: 910px;">
+										<div class="row">
+											<div class="col-xs-8 col-xs-offset-2">
+												<div class="input-group">
+													<div class="input-group-btn search-panel">
+														
+														<select class="btn btn-Info dropdown-toggle"
+															data-toggle="dropdown" style="width: 90px" id="category">
+															<option value="-1">선택</option>
+															<option value="0">프로젝트명</option>
+															<option value="1">과목명</option>
+														</select>
+													</div>
+													<input type="hidden" name="search_param" value="all"
+														id="search_param"> <input type="text"
+														class="form-control" name="x" placeholder="검색어를 입력하세요."
+														id="searchText"> <span class="input-group-btn">
+														
+														<button class="btn btn-Info" type="button"
+															id="searchBtn">
+															
+															<div class="icon-container">
+                        										<span class="ti-search"></span>
+                        									</div>
+                        									
+														</button>
+													</span>
+												</div>
+											</div>
+										</div>
+									</div>
+									<!-- 검색 -->
+									
+							
+								<!-- <select class="form-control" id="category">
 									<option value="-1">선택</option>
 									<option value="0">프로젝트명</option>
 									<option value="1">과목명</option>
 								</select>
+								
+								
 								<div class="col-sm-6 col-sm-offset-3">
 									<div id="imaginary_container">
 										<div class="input-group stylish-input-group input-append">
@@ -274,7 +316,7 @@
 											</span>
 										</div>
 									</div>
-								</div>
+								</div> -->
 							</div>
 						</div>
 						
@@ -282,7 +324,7 @@
 					</div>
 				</div>
 			</div>
-			
+			</div>
 			<div class="modal fade" id="delete" tabindex="-1" role="dialog"
 			aria-labelledby="edit" aria-hidden="true">
 			<div class="modal-dialog">
