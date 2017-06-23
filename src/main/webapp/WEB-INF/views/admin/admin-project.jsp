@@ -227,6 +227,7 @@
 								<ul class="pagination">
 									<c:choose>
 										<c:when test="${startPage==1 }">
+
 											<li class="disabled"><a href="#"><div class="icon-container">
 							                        				<span class="ti-angle-double-left"></span>
 							                        			</div></span></a></li>
@@ -246,6 +247,7 @@
 
 									<c:choose>
 										<c:when test="${flag==true }">
+
 											<li class="disabled"><a href="#"><div class="icon-container">
 		                        								<span class="ti-angle-double-right"></span></div></a></li>
 										</c:when>
@@ -277,9 +279,9 @@
 							
 							<c:if test="${projectList.size()!=0}">
 							 <!-- 검색 -->
-									<div class="container" style="width: 910px;">
+									<div class="container" style="width: 400px;">
 										<div class="row">
-											<div class="col-xs-8 col-xs-offset-2">
+											
 												<div class="input-group">
 													<div class="input-group-btn search-panel">
 														
@@ -290,10 +292,11 @@
 															<option value="1">과목명</option>
 														</select>
 													</div>
+													
 													<input type="hidden" name="search_param" value="all"
 														id="search_param"> <input type="text"
 														class="form-control" name="x" placeholder="검색어를 입력하세요."
-														id="searchText"> <span class="input-group-btn">
+														id="searchText" style="border:1px solid #66615b"> <span class="input-group-btn">
 														
 														<button class="btn btn-Info" type="button"
 															id="searchBtn">
@@ -304,8 +307,9 @@
                         									
 														</button>
 													</span>
+												
 												</div>
-											</div>
+											
 										</div>
 									</div>
 									<!-- 검색 -->

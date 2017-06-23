@@ -161,6 +161,7 @@
 						<ul class="pagination" >
 							<c:choose>
 								<c:when test="${startPage==1 }">
+
 									<li class="disabled"><a href="#"><div class="icon-container">
 							                        				<span class="ti-angle-double-left"></span>
 							                        			</div></a></li>
@@ -177,6 +178,7 @@
 							
 							<c:choose>
 								<c:when test="${flag==true }">
+
 									<li class="disabled"><a href="#"><div class="icon-container">
 		                        								<span class="ti-angle-double-right"></span>
 		                        							</div></a></li>

@@ -161,7 +161,7 @@ addEvent(dropAreas, 'drop', function (event) {
 			    			dataType:"text",
 			    			success:function(re){
 			    				if(re>0){
-			    					alert("삭제굿");
+			    					//alert("삭제굿");
 			    					todoSelectAll();
 			    				}else{
 			    					alert("삭제안됨");
@@ -180,7 +180,7 @@ addEvent(dropAreas, 'drop', function (event) {
 			    	    	success:function(re){
 			    	    		//alert(re);
 			    	    		if(re>0){
-			    	    			alert("잘변경됨")
+			    	    			//alert("잘변경됨")
 			    	    			todoSelectAll();
 			    	    		}else{
 			    	    			alert("안변경됨");
@@ -217,7 +217,7 @@ addEvent(dropAreas, 'drop', function (event) {
     	    	success:function(re){
     	    		//alert(re);
     	    		if(re>0){
-    	    			alert("잘드감");
+    	    			//alert("잘드감");
     	    			document.getElementById("gallery").innerHTML='<a href="#" id="'+(++i)+'" draggable="true"><blockquote class="note yellow" style="font-size:17px; width:180px;height:120px;"><span id="postitText">메모를 작성해서<br/> 옮겨주세요</span><cite class="author"></cite></blockquote></a>'
     	    		    
     	    			todoSelectAll();
