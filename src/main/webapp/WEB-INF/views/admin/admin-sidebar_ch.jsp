@@ -20,11 +20,11 @@
       </div>
 
       <ul class="nav">
-         <li class="active"><a href="${pageContext.request.contextPath }/admin/user"> <i
-               class="ti-pie-chart"></i>
+         <li><a href="${pageContext.request.contextPath }/admin/user"> <i
+               class="ti-user"></i>
                <p>회원관리</p>
          </a></li>
-         <li><a href="${pageContext.request.contextPath }/admin/adminProject"> <i class="ti-user"></i>
+         <li><a href="${pageContext.request.contextPath }/admin/adminProject"> <i class="ti-pie-chart"></i>
                <p>프로젝트관리</p>
          </a></li>
          <li><a href="${pageContext.request.contextPath }/admin/adminNotice"> <i

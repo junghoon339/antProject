@@ -222,12 +222,12 @@
 								<ul class="pagination">
 									<c:choose>
 										<c:when test="${startPage==1 }">
-											<li class="disabled"><a href="#"><span
+											<li class="disabled"><a href="#" style="height:34px;"><span
 													class="glyphicon glyphicon-chevron-left"></span></a></li>
 										</c:when>
 										<c:otherwise>
 											<li><a
-												href="${pageContext.request.contextPath }/admin/adminProject?pageNumber=${startPage-pageSu }&projectState=${projectState}&categoryNo=${categoryNo}&searchText=${searchText}"><span
+												href="${pageContext.request.contextPath }/admin/adminProject?pageNumber=${startPage-pageSu }&projectState=${projectState}&categoryNo=${categoryNo}&searchText=${searchText}" style="height:34px;"><span
 													class="glyphicon glyphicon-chevron-left"></span></a></li>
 										</c:otherwise>
 									</c:choose>
@@ -239,12 +239,12 @@
 
 									<c:choose>
 										<c:when test="${flag==true }">
-											<li class="disabled"><a href="#"><span
+											<li class="disabled"><a href="#" style="height:34px;"><span
 													class="glyphicon glyphicon-chevron-right"></span></a></li>
 										</c:when>
 										<c:otherwise>
 											<li><a
-												href="${pageContext.request.contextPath }/admin/adminProject?pageNumber=${startPage+pageSu }&projectState=${projectState}&categoryNo=${categoryNo}&searchText=${searchText}"><span
+												href="${pageContext.request.contextPath }/admin/adminProject?pageNumber=${startPage+pageSu }&projectState=${projectState}&categoryNo=${categoryNo}&searchText=${searchText}" style="height:34px;"><span
 													class="glyphicon glyphicon-chevron-right"></span></a></li>
 										</c:otherwise>
 									</c:choose>
@@ -263,9 +263,9 @@
 							
 							
 							 <!-- 검색 -->
-									<div class="container" style="width: 910px;">
+									<div class="container" style="width: 400px;">
 										<div class="row">
-											<div class="col-xs-8 col-xs-offset-2">
+											
 												<div class="input-group">
 													<div class="input-group-btn search-panel">
 														
@@ -276,10 +276,11 @@
 															<option value="1">과목명</option>
 														</select>
 													</div>
+													
 													<input type="hidden" name="search_param" value="all"
 														id="search_param"> <input type="text"
 														class="form-control" name="x" placeholder="검색어를 입력하세요."
-														id="searchText"> <span class="input-group-btn">
+														id="searchText" style="border:1px solid #66615b"> <span class="input-group-btn">
 														
 														<button class="btn btn-Info" type="button"
 															id="searchBtn">
@@ -290,8 +291,9 @@
                         									
 														</button>
 													</span>
+												
 												</div>
-											</div>
+											
 										</div>
 									</div>
 									<!-- 검색 -->

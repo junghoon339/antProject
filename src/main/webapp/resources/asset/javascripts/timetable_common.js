@@ -148,7 +148,7 @@ function selectAll(){
 			  var topcell_height = $('#timetable thead th').outerHeight();
 			  var border_weight = 1;
 			$(result).each(function(index,timetableDTO){
-				alert("테이블번호여:"+timetableDTO.timetableNo);
+				//alert("테이블번호여:"+timetableDTO.timetableNo);
 				 custom_lecture_number=timetableDTO.timetableNo;
 				 
 				 var cellColors=timetableDTO.timetableColor.split(";");
@@ -357,7 +357,7 @@ function remove_lecture_from_my_lectures(lecture)
       }
     }
     refresh_my_courses_table();
-    alert("1");
+    //alert("1");
     generate_timecell(my_lectures);
     my_course_tooltip_message("강의가 제거되었습니다.");
   }
@@ -405,7 +405,7 @@ function for_equal_lecture_timecells(cell, thenDo)
 
 function generate_timecell(lectures)
 {
-	 alert("generate_timecell 들어옴");
+	 //alert("generate_timecell 들어옴");
 	$('.timecell-container').remove();
   var unitcell_width = $('#timetable_container td.mon').outerWidth();
   var unitcell_height = $('#timetable_container td.mon').outerHeight();
@@ -478,9 +478,9 @@ function generate_timecell(lectures)
 
   //timecell click event bind : 색깔 바꾸기
   $('.timecell').click(function(){
-	  alert("색");
+	 // alert("색");
     var ele = $(this);
-    alert(ele.attr('lecture-number'));
+   //alert(ele.attr('lecture-number'));
     var lecture = get_my_lecture_by_course_number(ele.attr('course-number'), ele.attr('lecture-number'));
     if (lecture && !ele.hasClass('gray-cell')){ //회색이 아닐때만 바꿈
       lecture.color = generate_next_color(lecture.color);
@@ -499,7 +499,7 @@ function generate_timecell(lectures)
       	dataType:"text",
       	success:function(result){
       		if(result>0){
-      			alert("수정됬으");
+      			//alert("수정됬으");
       			selectAll();
       		}else{
       			alert("수정안됨");
@@ -513,7 +513,7 @@ function generate_timecell(lectures)
   });i
   //timecell dblclick event bind
   $('.timecell').addSwipeEvents().bind('doubletap', function(event, touch) {
-	  alert("dbclick...");
+	  //alert("dbclick...");
     event.stopPropagation();
     timecell_delete_handler($(this));
     ga('send', 'event', 'lecture', 'delete', 'double_click');
@@ -560,7 +560,7 @@ function timecell_delete_handler(ele)
 		dataType:"text",
 		success:function(result){
 			if(result>0){
-				alert("삭제성공");
+				//alert("삭제성공");
 				selectAll();
 			}else{
 				alert("삭제실패");
@@ -601,7 +601,7 @@ function my_courses_row_click_handler()
   var selected_lecture = get_my_lecture_by_course_number(ele.attr('course-number'), ele.attr('lecture-number'));
   if (!selected_lecture.color)
     selected_lecture.color = gray_color;
-  alert("2");
+  //alert("2");
   generate_timecell(my_lectures.concat([selected_lecture]));
 
   //refresh course detail
@@ -633,7 +633,7 @@ function row_click_handler()
   var selected_lecture = get_lecture_by_course_number(ele.attr('course-number'), ele.attr('lecture-number'));
   if (!selected_lecture.color)
     selected_lecture.color = gray_color;
-  alert(3);
+ // alert(3);
   generate_timecell(my_lectures.concat([selected_lecture]));
 
   //refresh course detail
@@ -662,7 +662,7 @@ function row_dblclick_handler(ele)
     else {
       selected_lecture.color = generate_random_color(selected_lecture.color);
       my_lectures.push(selected_lecture);
-      alert(4);
+      //alert(4);
       generate_timecell(my_lectures);
       refresh_my_courses_table();
       my_course_tooltip_message("강의가 추가되었습니다.");
@@ -678,8 +678,8 @@ function cancel_lecture_selection()
   $('.remove-course-button').remove();
   selected_row = null;
   my_courses_selected_row = null;
-  alert(5);
-  alert("마이렉쳐서 길이여:"+my_lectures.length);
+  //alert(5);
+ // alert("마이렉쳐서 길이여:"+my_lectures.length);
   generate_timecell(my_lectures);
   $('#course_detail_wrapper').fadeOut();
 }
@@ -729,7 +729,7 @@ $(function(){
     }
     //저장된 시간표 불러오기
     refresh_my_courses_table();
-    alert(6);
+    //alert(6);
     generate_timecell(my_lectures);
     change_semester(current_year, current_semester);
 
@@ -759,7 +759,7 @@ $(function(){
       //내 강의 초기화
       my_lectures = [];
       refresh_my_courses_table();
-      alert(7);
+     // alert(7);
       generate_timecell(my_lectures);
     });
   });
@@ -779,7 +779,7 @@ $(function(){
     if (selected_row) selected_row.trigger('click');
  
     else{
-    	alert(8);
+    	//alert(8);
     	generate_timecell(my_lectures);
     }
   });
@@ -809,7 +809,7 @@ $(function(){
   $('a[data-toggle="tab"]').on('shown', function (e) {
     switch ($(e.target).attr('href')){
     case "#my_courses": 
-    	alert(9);
+    	//alert(9);
       generate_timecell(my_lectures);
       break;
     case "#search":
@@ -1163,11 +1163,11 @@ $(function(){
   $('#custom_lecture_form').submit(function(){
     var course_title = $('#custom_course_title').val();
     var location = $('#custom_location').val();
-    alert("처음들어오는 타이틀:"+course_title);
-    alert("처음들어오는 시간:"+custom_class_time);
-    alert("처음들어오는 강의동:"+location);
-    alert("처음들어오는 색:"+generate_random_color());
-    alert(custom_lecture_number);
+  //  alert("처음들어오는 타이틀:"+course_title);
+  // alert("처음들어오는 시간:"+custom_class_time);
+  //  alert("처음들어오는 강의동:"+location);
+   // alert("처음들어오는 색:"+generate_random_color());
+  //  alert(custom_lecture_number);
     var custom_lecture = {
       course_number : "custom",
       lecture_number : ++custom_lecture_number,
@@ -1179,7 +1179,7 @@ $(function(){
     };
     my_lectures.push(custom_lecture);
     refresh_my_courses_table();
-    alert(10);
+    //alert(10);
     
    // generate_timecell(my_lectures);
     
@@ -1205,7 +1205,7 @@ $(function(){
     	dataType:"json",
     	success:function(result){
     		if(result>0){
-    			alert("잘드감");
+    		//	alert("잘드감");
     			selectAll();
     		}else{
     			alert("안드감");
@@ -1216,7 +1216,7 @@ $(function(){
     	}
     });
     
-    alert("a");
+    //alert("a");
     my_course_tooltip_message("강의가 추가되었습니다.");
     $('#custom_lecture_modal').dialog('close');
     ga('send', 'event', 'lecture', 'custom_cell', 'create');
@@ -1313,7 +1313,7 @@ $(function(){
     $('#content_wrapper').show();
     $('#export_wrapper').hide();
     $('#social_comment_wrapper').hide();
-    alert(11);
+    //alert(11);
     generate_timecell(my_lectures);
   });
   $('#export_wrapper').hide();

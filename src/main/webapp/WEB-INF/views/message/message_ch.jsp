@@ -294,7 +294,9 @@
                         			</div></a>
                         	</div>
 						</div>
-						<!-- Modal -->
+						
+						
+						<!--쪽지보내기 Modal -->
 						<div class="modal fade" id="danger" tabindex="-1" role="dialog"
 							aria-labelledby="myModalLabel" aria-hidden="true">
 							<div class="modal-dialog">
@@ -371,6 +373,40 @@
 						</div>
 						<!-- /.modal -->
 						<!-- Modal -->
+						
+						<!-- 검색 -->
+							<div class="container" style="width: 600px;">
+								<div class="row">
+									<div class="col-xs-8 col-xs-offset-2">
+										<div class="input-group">
+											<div class="input-group-btn search-panel">
+												<!-- <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+					                    	<span id="search_concept">검색 옵션</span> <span class="caret"></span>
+					                    </button>
+					                    <ul class="dropdown-menu" role="menu">
+					                      <li><a href="#contains" id="searchByName">이름</a></li>
+					                      <li><a href="#its_equal" id="searchByTitle">제목</a></li>
+					                    </ul> -->
+												<select class="btn btn-Info dropdown-toggle"
+													data-toggle="dropdown" style="width: 90px" id="category">
+													<option value="-1">선택</option>
+													<option value="0">이름</option>
+													<option value="1">내용</option>
+												</select>
+											</div>
+											<input type="hidden" name="search_param" value="all"
+												id="search_param"> <input type="text"
+												class="form-control" name="x" placeholder="검색어를 입력하세요."
+												id="searchText" style="border:1px solid #66615b"> <span class="input-group-btn">
+												<button class="btn btn-Info" type="button" id="submitBt" style="height:40px">
+													<span class="glyphicon glyphicon-search"></span>
+												</button>
+											</span>
+										</div>
+									</div>
+								</div>
+							</div>
+							<!-- 검색 -->
 
 						<div class="table-responsive">
 
@@ -379,31 +415,32 @@
 
 								<thead>
 								
-								 <th>
+								 <th class="col-md-1">
 								
 								 <input type="checkbox" id="checkall" value="-1">
 									
 								</th>    
-									<!--  <th><input type="checkbox" id="checkall" value="-1" /></th>  -->
 									
 									<c:choose>
 										<c:when test="${flag==false }">
-											<th>보낸사람</th>
+											<th class="col-md-3">보낸사람</th>
 										</c:when>
 										<c:otherwise>
-											<th>받는사람</th>
+											<th class="col-md-2">받는사람</th>
 										</c:otherwise>
 									</c:choose>
 
-									<th>내용</th>
+									
 									<c:choose>
 										<c:when test="${flag==false }">
-											<th>날짜</th>
+											<th class="col-md-6">내용</th>
+											<th class="col-md-2">날짜</th>
 										</c:when>
 										<c:otherwise>
-											<th>보낸날짜</th>
-											<th>받은날짜</th>
-											<th>발송취소</th>
+											<th class="col-md-5">내용</th>
+											<th class="col-md-1">보낸날짜</th>
+											<th class="col-md-1">받은날짜</th>
+											<th class="col-md-1">발송취소</th>
 										</c:otherwise>
 									</c:choose>
 
@@ -427,8 +464,8 @@
 															
 														<td>${messageDTO.userDTO.userId}
 															(${messageDTO.userDTO.userName})</td>
-														<td><a
-															href="javascript:messageSelect(${messageDTO.messageNo });">${messageDTO.messageContent}</a></td>
+														<td><div style="white-space: nowrap;text-overflow:ellipsis;width: 400px;overflow: hidden;"><a
+															href="javascript:messageSelect(${messageDTO.messageNo });">${messageDTO.messageContent}</a></div></td>
 														<td>${messageDTO.messageSendTime }</td>
 													</tr>
 												</c:if>
@@ -442,8 +479,8 @@
 															name="messageNoArr" value="${messageDTO.messageNo }" /></td>
 														<td>${messageDTO.userDTO.userId}
 															(${messageDTO.userDTO.userName})</td>
-														<td><a
-															href="javascript:messageSelect(${messageDTO.messageNo });">${messageDTO.messageContent}</a></td>
+														<td><div style="white-space: nowrap;text-overflow:ellipsis;width: 400px;overflow: hidden;"><a
+															href="javascript:messageSelect(${messageDTO.messageNo });">${messageDTO.messageContent}</a></div></td>
 														<td>${messageDTO.messageSendTime }</td>
 
 
@@ -488,55 +525,22 @@
 
 
 
-
-							<div class="clearfix"></div>
-							<!-- 검색 -->
-							<div class="container" style="width: 600px;">
-								<div class="row">
-									<div class="col-xs-8 col-xs-offset-2">
-										<div class="input-group">
-											<div class="input-group-btn search-panel">
-												<!-- <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-					                    	<span id="search_concept">검색 옵션</span> <span class="caret"></span>
-					                    </button>
-					                    <ul class="dropdown-menu" role="menu">
-					                      <li><a href="#contains" id="searchByName">이름</a></li>
-					                      <li><a href="#its_equal" id="searchByTitle">제목</a></li>
-					                    </ul> -->
-												<select class="btn btn-Info dropdown-toggle"
-													data-toggle="dropdown" style="width: 90px" id="category">
-													<option value="-1">선택</option>
-													<option value="0">이름</option>
-													<option value="1">내용</option>
-												</select>
-											</div>
-											<input type="hidden" name="search_param" value="all"
-												id="search_param"> <input type="text"
-												class="form-control" name="x" placeholder="검색어를 입력하세요."
-												id="searchText" style="border:1px solid #66615b"> <span class="input-group-btn">
-												<button class="btn btn-Info" type="button" id="submitBt" style="height:40px">
-													<span class="glyphicon glyphicon-search"></span>
-												</button>
-											</span>
-										</div>
-									</div>
-								</div>
-							</div>
-							<!-- 검색 -->
+						<!-- paging -->
+							<div class="clearfix" style="text-align:center">
 							
-							
-							<!-- paging -->
-							<ul class="pagination pull-right">
+							<ul class="pagination pull-right" style="margin-right: 50px">
 						
 								<c:choose>
 									<c:when test="${startPage==1}">
-										<li class="disabled"><a href="#"><span
-												class="glyphicon glyphicon-chevron-left"></span></a></li>
+										<li class="disabled"><a href="#"><div class="icon-container">
+							                        				<span class="ti-angle-double-left"></span>
+							                        			</div></a></li>
 									</c:when>
 									<c:otherwise>
 										<li class="disabled"><a
-											href="${pageContext.request.contextPath}/message/main?userNo=13&flag=false&pageNumber=${endPage-pageSu}"><span
-												class="glyphicon glyphicon-chevron-left"></span></a></li>
+											href="${pageContext.request.contextPath}/message/main?userNo=13&flag=false&pageNumber=${endPage-pageSu}"><div class="icon-container">
+							                        				<span class="ti-angle-double-left"></span>
+							                        			</div></a></li>
 									</c:otherwise>
 								</c:choose>
 
@@ -548,13 +552,15 @@
 
 								<c:choose>
 									<c:when test="${stopLastPage==true}">
-										<li><a href="#"><span
-												class="glyphicon glyphicon-chevron-right"></span></a></li>
+										<li><a href="#"><div class="icon-container">
+		                        								<span class="ti-angle-double-right"></span>
+		                        							</div></a></li>
 									</c:when>
 									<c:otherwise>
 										<li><a
-											href="${pageContext.request.contextPath}/message/main?userNo=13&flag=false&pageNumber=${startPage+pageSu}"><span
-												class="glyphicon glyphicon-chevron-right"></span></a></li>
+											href="${pageContext.request.contextPath}/message/main?userNo=13&flag=false&pageNumber=${startPage+pageSu}"><div class="icon-container">
+		                        								<span class="ti-angle-double-right"></span>
+		                        							</div></a></li>
 									</c:otherwise>
 								</c:choose>
 							</ul>
@@ -563,7 +569,7 @@
 
 
 						</div>
-
+					</div>
 					</div>
 				</div>
 			</div>

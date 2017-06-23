@@ -161,11 +161,11 @@
 						<ul class="pagination" >
 							<c:choose>
 								<c:when test="${startPage==1 }">
-									<li class="disabled"><a href="#"><span
+									<li class="disabled"><a href="#" style="height:34px;"><span
 									class="glyphicon glyphicon-chevron-left"></span></a></li>
 								</c:when>
 								<c:otherwise>
-									<li><a href="${pageContext.request.contextPath }/admin/user?pageNumber=${startPage-pageSu }"><span
+									<li><a href="${pageContext.request.contextPath }/admin/user?pageNumber=${startPage-pageSu }" style="height:34px;"><span
 									class="glyphicon glyphicon-chevron-left"></span></a></li>
 								</c:otherwise>
 							</c:choose>
@@ -175,11 +175,11 @@
 							
 							<c:choose>
 								<c:when test="${flag==true }">
-									<li class="disabled"><a href="#"><span
+									<li class="disabled"><a href="#" style="height:34px;"><span
 									class="glyphicon glyphicon-chevron-right"></span></a></li>
 								</c:when>
 								<c:otherwise>
-									<li><a href="${pageContext.request.contextPath }/admin/user?pageNumber=${startPage+pageSu }"><span
+									<li><a href="${pageContext.request.contextPath }/admin/user?pageNumber=${startPage+pageSu }" style="height:34px;"><span
 									class="glyphicon glyphicon-chevron-right"></span></a></li>
 								</c:otherwise>
 							</c:choose>
