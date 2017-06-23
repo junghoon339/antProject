@@ -110,11 +110,6 @@
 																		.val(),
 														success : function( result) {
 															
-															if(result[0].userNo==0){
-																alert("설문조사 대상이 존재하지 않습니다.");
-																return;
-															}
-															
 															if ($(result)
 																	.size() == 0) {
 																alert("이미 설문조사에 참여하였습니다.");
@@ -287,10 +282,11 @@
 							<div class="card">
 								<div class="row">
 									<div class="content" id="plusImg">
-										<div style="height: 150px" align="center">
-										<img style="height: 100%; margin: auto;"
-											src="${pageContext.request.contextPath}/resources/img/plus.png">
-										</div>	
+										<div style="height: 85px" align="center">
+										<img style="height: 100%; margin-top : 20px;"
+											src="${pageContext.request.contextPath}/resources/img/plus1.png" >
+										</div>
+										<h5 align="center" style="font-family: HY나무B;">새 조별과제 생성</h5>
 									</div>
 								</div>
 							</div>

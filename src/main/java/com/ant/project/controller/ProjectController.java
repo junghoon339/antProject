@@ -122,7 +122,7 @@ public class ProjectController implements Serializable {
 				int projectNo = project.getProjectNo();
 				SurveyDTO survey = surveyService.surveySelectByProjectNo(projectNo);
 				if(survey==null){
-					// Project STATE가 1임에도 survey가 생성되지 않을경우 생성
+					// Project STATE가 1임에도 survey가 없는 경우 생성
 					surveyService.surveyCreate(new SurveyDTO(0, projectNo, surveyStartDate, surveyEndDate, 0));
 					SurveyDTO getSurvey = surveyService.surveySelectByProjectNo(projectNo);
 					int surveyNo = getSurvey.getSurveyNo();

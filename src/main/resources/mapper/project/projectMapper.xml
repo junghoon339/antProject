@@ -73,6 +73,7 @@
 		FROM project p JOIN project_user pu
 		ON p.project_no = pu.project_no
 		WHERE pu.user_no=#{userNo} AND p.project_state=#{projectState}
+		ORDER BY project_no
 	</select>
 	
 	<!-- 프로젝트 정보 검색 -->
