@@ -1610,14 +1610,14 @@ input.dhx_repeat_checkbox {
 }
 
 .dhx_cal_event .dhx_header, .dhx_cal_event .dhx_footer, .dhx_cal_event .dhx_body, .dhx_cal_event .dhx_title {
-	background-color: #1796b0;
+	background-color: #8aca86;
 	border-color: transparent;
 	color: white;
 }
 
 div.dhx_cal_editor {
 	border: 1px solid transparent;
-	background-color: #1796b0;
+	background-color: #8aca86;
 }
 
 .dhx_cal_editor {
