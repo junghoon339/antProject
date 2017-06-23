@@ -191,7 +191,7 @@ public class ProjectController implements Serializable {
 			dday = dday/1000/60/60/24;
 			
 			dto.setDday((int)dday+1);
-			System.out.println("디데이: " + dto.getDday());
+			//System.out.println("디데이: " + dto.getDday());
 		}
 		
 		ModelAndView mv = new ModelAndView();
@@ -211,8 +211,6 @@ public class ProjectController implements Serializable {
 		// 현재 로그인된 userNo
 		UserDTO userDTO = (UserDTO) req.getSession().getAttribute("userDTO");
 		int userNo = userDTO.getUserNo();
-		
-
 		
 		//완료된 조별과제를 담은 map
 		Map<String, List<ProjectDTO>> projectMap = projectService.selectProjectById(userNo);
