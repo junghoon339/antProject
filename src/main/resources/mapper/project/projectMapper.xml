@@ -135,5 +135,12 @@
 		ON p.project_no = pu.project_no
 		WHERE p.project_state = 1 AND pu.user_no = #{_parameter}
 	</select>
+	
+	<!-- 쪽지함 안읽은 수 badge -->
+	<select id="selectUnchkMessage" parameterType="int" resultType="int">
+		SELECT count(message_no)
+		FROM message
+		WHERE user_no_message_receiver=#{_parameter} AND message_receivetime IS NULL
+	</select>
 
 </mapper>

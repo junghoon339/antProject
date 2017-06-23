@@ -51,6 +51,7 @@ import com.dhtmlx.planner.DHXPlanner;
 import com.dhtmlx.planner.DHXSecurity;
 import com.dhtmlx.planner.DHXSkin;
 import com.dhtmlx.planner.DHXStatus;
+import com.itextpdf.text.log.SysoCounter;
 import com.sun.org.apache.bcel.internal.generic.NEW;
 
 @Controller
@@ -190,6 +191,7 @@ public class ProjectController implements Serializable {
 			dday = dday/1000/60/60/24;
 			
 			dto.setDday((int)dday+1);
+			System.out.println("디데이: " + dto.getDday());
 		}
 		
 		ModelAndView mv = new ModelAndView();
@@ -225,16 +227,20 @@ public class ProjectController implements Serializable {
 	/**
 	 * 하나의 팀프로젝트 메인화면
 	 */
-	@RequestMapping("/teamMain/{projectNo}")
-	public String teamMain(@PathVariable int projectNo, HttpServletRequest req) {
-		req.getSession().setAttribute("projectNo", projectNo);
+	@RequestMapping("/teamMain")
+	public String teamMain(ProjectDTO projectDTO, HttpServletRequest req) {
+		req.getSession().setAttribute("projectDTO", projectDTO);
+		req.getSession().setAttribute("projectNo", projectDTO.getProjectNo());
+		
+		System.out.println("Session에 담긴 projectDTO : "+req.getSession().getAttribute("projectDTO"));
 		
 		UserDTO userDTO = (UserDTO) req.getSession().getAttribute("userDTO");
 		int userNo = userDTO.getUserNo();
 		
-		ProjectUserDTO projectUserDTO = new ProjectUserDTO(projectNo, userNo);
+		ProjectUserDTO projectUserDTO = new ProjectUserDTO(projectDTO.getProjectNo(), userNo);
 		String projectUserRole = projectService.selectProjectUserRole(projectUserDTO);
 		
+		//session에 projectUserRole(조원,조장) 담음
 		req.getSession().setAttribute("projectUserRole", projectUserRole);
 		
 		return "/project/teamMain_ch";
@@ -397,4 +403,13 @@ public class ProjectController implements Serializable {
 		return "redirect:/project/projectUserInfo";
 	}
 
+	/**
+	 * 안읽은 쪽지갯수 header에 표시
+	 */
+	@RequestMapping("selectUnchkMessage")
+	@ResponseBody
+	public int selectUnchkMessage(HttpServletRequest req){
+		UserDTO userDTO = (UserDTO) req.getSession().getAttribute("userDTO");
+		return projectService.selectUnchkMessage(userDTO.getUserNo());
+	}
 }
