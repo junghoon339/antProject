@@ -235,9 +235,9 @@ body{
                                     <tbody>
                                     <c:choose>
                                     <c:when test="${list.size()!=0}">
-	                                    <c:forEach var="item" items="${list}">
+	                                    <c:forEach var="item" items="${list}" varStatus="state">
 											<tr>
-												<td>${item.noticeNo}</td>
+												<td>${state.count}</td>
 												<td><a
 													href="${pageContext.request.contextPath}/admin/noticeDetail/${item.noticeNo}">${item.noticeTitle}</a></td>
 												<td>${item.writeDay}</td>
@@ -249,19 +249,17 @@ body{
 									<c:otherwise>
 												<tr>
 													<th colspan="4" style="text-align: center">
-													<h4>등록된 공지가 없습니다.</h4>
-													<div class="icon-container">
-                        							<h1>
                         							<div class="icon-container">
-                        				조금만 기다려주세요!<span class="ti-comments-smiley"></span>
+                        				등록된 공지가 없어요<span class="ti-face-sad"></span>
                         			</div>
-                        							</h1>
                         							</th>
 												</tr>
 									</c:otherwise>
 									</c:choose>
                                     </tbody>
                                 </table>
+                         <c:choose>
+                         <c:when test="${list.size()!=0}">
 						<!-- paging~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~` -->
 											<div class="clearfix" style="text-align: center">
 											<ul class="pagination pull-right">
@@ -301,8 +299,11 @@ body{
 												
 											</ul>
 										</div>
-				
+						
+					
 					<!-- paging~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~` -->
+					</c:when>
+					</c:choose>
                             </div>
                         </div>
                     </div>

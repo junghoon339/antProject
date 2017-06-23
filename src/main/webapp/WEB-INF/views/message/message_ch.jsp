@@ -463,6 +463,8 @@
 
 								</thead>
 								<tbody>
+								<c:choose>
+								<c:when test="${messageList.size()!=0}">
 									<c:forEach var="messageDTO" items="${messageList}">
 										<c:choose>
 											<c:when test="${flag==false}">
@@ -529,16 +531,40 @@
 
 
 
-									</c:forEach>
+								</c:forEach>
+							</c:when>
+							<c:otherwise>
+								<c:when test="${flag==false}">
+								<!-- 보낸 메시지 -->
+								<tr>
+													<th colspan="5" style="text-align: center">
+                        							<div class="icon-container">
+                        				보낸 메시지가 없어요<span class="ti-face-sad"></span>
+                        			</div>
+                        							</th>
+												</tr>
+								</c:when>
+								<c:otherwise>
+								<!-- 받은 메시지 -->
+								<tr>
+													<th colspan="3" style="text-align: center">
+                        							<div class="icon-container">
+                        				받은 메시지가 없어요<span class="ti-face-sad"></span>
+                        			</div>
+                        							</th>
+												</tr>
+								</c:otherwise>
+							</c:otherwise>
+						</c:choose>
+					</tbody>
 
-								</tbody>
-
-							</table>
+				</table>
 
 
 
 
-
+				<c:choose>
+					<c:when test="${messageList.size()!=0}">
 							<!-- paging -->
 							<div class="clearfix" style="text-align: center"
 											align="center">
@@ -552,7 +578,7 @@
 									</c:when>
 									<c:otherwise>
 										<li class="disabled"><a
-											href="${pageContext.request.contextPath}/message/main?userNo=13&flag=false&pageNumber=${endPage-pageSu}"><div class="icon-container">
+											href="${pageContext.request.contextPath}/message/main?userNo=13&flag=${flag}&pageNumber=${endPage-pageSu}"><div class="icon-container">
 							                        				<span class="ti-angle-double-left"></span>
 							                        			</div></a></li>
 									</c:otherwise>
@@ -572,7 +598,7 @@
 									</c:when>
 									<c:otherwise>
 										<li><a
-											href="${pageContext.request.contextPath}/message/main?userNo=13&flag=false&pageNumber=${startPage+pageSu}"><div class="icon-container">
+											href="${pageContext.request.contextPath}/message/main?userNo=13&flag=${flag}&pageNumber=${startPage+pageSu}"><div class="icon-container">
 		                        								<span class="ti-angle-double-right"></span>
 		                        							</div></a></li>
 									</c:otherwise>
@@ -582,6 +608,8 @@
 						
 
 						</div>
+				</c:when>
+			</c:choose>
 						<!-- paging -->
 						</div>
 

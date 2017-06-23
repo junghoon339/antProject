@@ -95,8 +95,8 @@
 
 
 					<div class="col-md-12">
-						<div class="card card-plain">
-							<div class="header">
+						<div class="card">
+							<div class="header">	
 								<div class="col-sm-6">
 									<h3>
 									<div class="icon-container">
