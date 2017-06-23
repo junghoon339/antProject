@@ -115,8 +115,8 @@ public class ProjectDAOImpl implements ProjectDAO {
 	}
 
 	@Override
-	public List<ProjectDTO> selectIfProjectState1() {
-		return sqlSession.selectList("projectMapper.selectIfProjectState1");
+	public List<ProjectDTO> selectIfProjectState1(int userNo) {
+		return sqlSession.selectList("projectMapper.selectIfProjectState1", userNo);
 	}
 
 }

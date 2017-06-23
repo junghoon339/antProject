@@ -6,6 +6,7 @@
 <jsp:useBean id="sysdate" class="java.util.Date" />
 <fmt:formatDate value="${sysdate}" pattern="HH:mm:ss" var="sysdate" />
 <div class="container">
+<div class="chatchat">
 	<div class="row chat-window col-xs-5 col-md-3" id="chat_window_1"
 		style="margin-left: 10px;">
 		<div class="col-xs-12 col-md-12">
@@ -92,5 +93,6 @@
 				</div>
 			</div>
 		</div>
+	</div>
 	</div>
 </div>

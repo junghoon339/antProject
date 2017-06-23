@@ -20,7 +20,7 @@
                 <div class="collapse navbar-collapse">
                     <ul class="nav navbar-nav navbar-right">
                         <li>
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            <a href="${pageContext.request.contextPath }/message/main?userNo=${sessionScope.userDTO.userNo}" >
                                 <i class="ti-email"></i>
 								<p>Message</p>
                             </a>
@@ -34,7 +34,7 @@
                               </a>
                               <ul class="dropdown-menu">
                                <li><a href="${pageContext.request.contextPath}/user/chat">몰라</a></li>
-						<li><a href="#">절레절레</a></li>
+						<li><a href="${pageContext.request.contextPath}/user/update">절레절레</a></li>
 						<li class="divider"></li>
 						<li><a href="${pageContext.request.contextPath}/test/test">꾸꾸까까</a></li>
 						<li><a href="${pageContext.request.contextPath}/user/logout">로그인/로그아웃</a></li>

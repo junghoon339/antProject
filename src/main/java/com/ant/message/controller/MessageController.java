@@ -27,20 +27,30 @@ public class MessageController {
 		}
 		
 		int curPage = Integer.parseInt(pageNumber);
-		int rowCount = 7;
+		int rowCount = 2;
 		int startRow = (curPage-1)*rowCount+1;
 		int endRow = curPage*rowCount;
 
 
 		List<MessageDTO> list=null;
 		int totalRow = 0;
-		if(categoryNo==-1){//�˻��� ���� ��
-			if(flag){//����������
+		if(categoryNo==-1){//선택
+			if(flag){//보낸메세지함
+				System.out.println("startRow"+startRow);
+				System.out.println("endRow:"+endRow);
 				list=service.sendMessageSelectAll(userNo,startRow,endRow);
+				System.out.println("리스트 사이즈:"+list.size());
 				totalRow = service.countSendeMessageTotal(userNo);
-			}else{//�޴�������
+			}else{//받은메세지함
+				System.out.println("받은startRow"+startRow);
+				System.out.println("받은endRow:"+endRow);
 				list=service.receiveMessageSelectAll(userNo,startRow,endRow);
+				System.out.println("받은 리스트 사이즈:"+list.size());
+				for(MessageDTO dto:list){
+					System.out.println(dto.getMessageNo()+"의메세지상태:"+dto.getMessageState());
+				}
 				totalRow = service.countReceiveMessageTotal(userNo);
+				System.out.println("총합:"+totalRow);
 			}
 		}else{
 			if(flag){// �˻�� ���� ����������
@@ -108,7 +118,7 @@ public class MessageController {
 		
 		service.messageInsert(messageDTO);
 		
-		return "redirect:/message/main";
+		return "redirect:/message/main?userNo="+messageDTO.getUserNoMessageSender();
 	}
 	
 	@RequestMapping("/selectMessage")
@@ -121,7 +131,7 @@ public class MessageController {
 	public String messageDelete(String messageNos,boolean flag){
 		System.out.println(messageNos);
 		service.messageDelete(messageNos,flag);
-		return "redirect:/message/main";
+		return "redirect:/message/main?flag="+flag;
 	}
 	
 	@RequestMapping("/sendCancel")

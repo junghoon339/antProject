@@ -279,11 +279,100 @@
 				$(this).addClass('active');
 				e.preventDefault();
 			});
+			
+		    $.validator.addMethod(
+		            "regex",
+		            function(value, element, regexp) {
+		                var re = new RegExp(regexp);
+		                return this.optional(element) || re.test(value);
+		            },
+		            "이름은 한글 2글자 이상 입력하세요."
+		    );
+		    
+	            $.validator.addMethod("PASSWORD",function(value,element){
+	                return this.optional(element) || /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,16}$/i.test(value);
+	            },"비밀번호는 8-16자 영문, 숫자 조합으로 작성하세요.");
 
+	            
+			$("#register-form").validate({
+	            //validation이 끝난 이후의 submit 직전 추가 작업할 부분
+	            submitHandler: function(form) {
+	                form.submit();
+	            },
+	            //규칙
+	            rules: {
+	                email: {
+	                    required : true,
+	                    minlength : 5,
+	                   	/* remote :
+	                    {
+	                      url: '${pageContext.request.contextPath}/user/idCheck',
+	                      type: "post",
+	                      data:
+	                      {
+	                          userId : function()
+	                          {
+	                              return $('#register-form :input[name="userId"]').val();
+	                          }
+	                      }
+	                    }, */
+	                    email : true
+	                },
+	                password: {
+	                    required : true,
+	                    PASSWORD : true
+	                },
+	                confirmPassword: {
+	                    required : true,
+	                    PASSWORD : true,
+	                    equalTo : password
+	                },
+	                userName: {
+	                    required : true,
+	                    minlength : 2,
+	                    regex : /^[가-힣]+$/
+	                },
+	                userSchool: {
+	                	required : true,
+	                    minlength : 2
+	                },
+	                userMajor: {
+	                    required : true,
+	                    minlength : 2
+	                },
+	            },
+	            //규칙체크 실패시 출력될 메시지
+	            messages : {
+	                email: {
+	                    required : "필수 입력 항목입니다.",
+	                    // remote : $.validator.format("{0}는 이미 존재하는 메일주소 입니다."),
+	                    email : "올바른 형식의 이메일 주소를 입력하세요."
+	                },
+	                password: {
+	                    required : "필수 입력 항목입니다.",
+	                    minlength : "비밀번호는 {0}자리 이상 입력 하세요."
+	                },
+	                confirmPassword: {
+	                    required : "필수 입력 항목입니다.",
+	                    minlength : "비밀번호는 {0}자리 이상 입력 하세요.",
+	                    equalTo : "비밀번호가 일치하지 않습니다."
+	                },
+	                userName: {
+	                    required : "필수 입력 항목입니다.",
+	                    minlength : "이름은 한글 {0}글자 이상 입력하세요."
+	                },
+	                userSchool: {
+	                    required : "필수 입력 항목입니다.",
+	                    minlength : "존재하지 않는 대학입니다."
+	                },
+	                userMajor: {
+	                    required : "필수 입력 항목입니다.",
+	                    minlength : "존재하지 않는 학과입니다."
+	                }
+	            }
+	        });
 			
 			$("#email").keyup(function() {
-				var emailForm = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/;
-				if (emailForm.test($(this).val())){
 					$.ajax({
 						url : '${pageContext.request.contextPath}/user/idCheck',
 						type : 'POST',
@@ -293,21 +382,19 @@
 						data : 'userId=' + $(this).val(),
 						dataType : 'text',
 						success : function(result) {
-							if (result == 0) {
+							if (result == true) {
 								// 체크버튼을 띄워준다
-								console.log("사용가능한 이메일")	
+								// 사용가능한 이메일
+								
 							} else {
-								console.log("이미 존재하는 이메일입니다")
+								// 이미 존재
 							}
 						}
 					});
-				} else {
-					console.log("이메일 형식만 가능")
-				}
 				
 			}); // email
 
-			$("#confirm-password").keyup(function() {
+/* 			$("#confirm-password").keyup(function() {
 				if ($("#password").val() != $(this).val()) {
 					console.log("비밀번호 달라~")
 				} else
@@ -335,43 +422,8 @@
 				}
 				console.log("이름 사용 가능")
 				return true;
-			})
-			
-/* 			$("#school").autocomplete({
-				source : function (request, response){
-					$.ajax({
-						type: 'post',
-						url : '${pageContext.request.contextPath}/user/schoolCheck',
-						data : 'school='+$("#school").val(),
-						dataType : 'json',
-						beforeSend : function(xhr) {
-							xhr.setRequestHeader(header, token);
-						},
-						success : function(data) {
-							if ($("#school").val() == "") {
-								$("#suggestion-box").hide();
-								return;
-							}
-
-							$("#suggestion-box").show();
-							$("#suggestion-box").html(data);
-							$("#school").css("background", "#FFF");
-						}
-					})
-				}
 			}) */
 			
-			$("#major").keyup(function(){
-				
-			})
-			
-			function chkPwd(str) {
-				var reg_pwd = /^.*(?=.{6,20})(?=.*[0-9])(?=.*[a-zA-Z]).*$/;
-				if (!reg_pwd.test(str)) {
-					return false;
-				}
-				return true;
-			}			
 		});
 
 	</script>

@@ -45,8 +45,11 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public int updateUser(UserDTO userDTO) {
-		// TODO Auto-generated method stub
-		return 0;
+		String encodedPassword = passwordEncoder.encode(userDTO.getUserPassword());
+		userDTO.setUserPassword(encodedPassword);
+		int result = userDAO.updateUser(userDTO);
+		
+		return result;
 	}
 	
 	public int updateTempPassword(int userNo, String pw){

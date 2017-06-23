@@ -27,13 +27,13 @@
 							<i class="ti-user"></i>
 							<p>완료된 조별과제</p>
 					</a></li>
-					<li><a href="table.html"> <i class="ti-view-list-alt"></i>
+					<li><a href="${pageContext.request.contextPath}/timetable/main"> <i class="ti-view-list-alt"></i>
 							<p>My TimeTable</p>
 					</a></li>
 					<li><a href="${pageContext.request.contextPath}/userCalendar/userCalendar"> <i class="ti-text"></i>
 							<p>My Calendar</p>
 					</a></li>
-					<li><a href="icons.html"> <i class="ti-pencil-alt2"></i>
+					<li><a href="${pageContext.request.contextPath}/admin/adminNotice"> <i class="ti-pencil-alt2"></i>
 							<p>공지사항</p>
 					</a></li>
 				</c:when>
@@ -59,13 +59,23 @@
 							<p>조별과제 달력</p> 
 					</a></li>
 					<li><a
-						href="${pageContext.request.contextPath}/storage/storageTable/1">
+						href="${pageContext.request.contextPath}/storage/storageTable/${projectNo}">
 							<i class="ti-pencil-alt2"></i>
 							<p>자료실</p>
 					</a></li>
 					<li><a href="${pageContext.request.contextPath}/vote/"> <i
 							class="ti-pencil-alt2"></i>
 							<p>투표</p>
+					</a></li>
+					
+					<li><a href="${pageContext.request.contextPath}/todo/list"> <i
+							class="ti-pencil-alt2"></i>
+							<p>To Do Board</p>
+					</a></li>
+					
+					<li><a href="${pageContext.request.contextPath}/timetable/teamMain"> <i
+							class="ti-pencil-alt2"></i>
+							<p>팀 시간표</p>
 					</a></li>
 				</c:otherwise>
 			</c:choose>

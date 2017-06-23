@@ -120,4 +120,13 @@
 		update notice set notice_title=#{noticeTitle}, notice_content=#{noticeContent}, notice_writeday=sysdate where notice_no=#{noticeNo}
 	</update>
 	
+	<select id="noticeSelectBySearch" parameterType="map" resultMap="noticeDTOMap">
+		select * from (select rownum as rnum,b.* from(select notice_no,notice_title,notice_content,notice_readnum,notice_writeday 
+   		 from notice where notice_title like '%'||#{searchText}||'%' order by notice_writeday desc)b)c where c.rnum>=#{startRow} and c.rnum&lt;=#{endRow}
+	</select>
+	
+	<select id="noticeTotalCountBySearch" parameterType="String" resultType="int">
+		select count(notice_no) from notice where notice_title like '%'||#{searchText}||'%'
+	</select>
+	
 </mapper>

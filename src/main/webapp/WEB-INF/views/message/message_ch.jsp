@@ -41,9 +41,9 @@
     <link href="${pageContext.request.contextPath }/resources/css/demo.css" rel="stylesheet" />
  --%>
 <!--  Fonts and icons     -->
-<link
+<!-- <link
 	href="http://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css"
-	rel="stylesheet">
+	rel="stylesheet"> -->
 <link href='https://fonts.googleapis.com/css?family=Muli:400,300'
 	rel='stylesheet' type='text/css'>
 <link
@@ -60,8 +60,10 @@
 			location.href="${pageContext.request.contextPath}/message/main?userNo=${sessionScope.userDTO.userNo}&flag=true";
 		});
 		
-		$("#mytable #checkall").click(function() {
+		 $("#mytable #checkall").click(function() {
+			 alert(11)
 			if ($("#mytable #checkall").is(':checked')) {
+				alert("checkall");
 				$("#mytable input[type=checkbox]").each(function() {
 					$(this).prop("checked", true);
 				});
@@ -71,6 +73,36 @@
 					$(this).prop("checked", false);
 				});
 			}
+		});
+		$("#checkAll").click(function(){
+			//alert($(this).attr("class"));
+			
+			var s=$(this).attr("class");
+			if(s=="checkbox checkbox-blue"){
+				alert("A");
+				s="checkbox checkbox-blue checked";
+			}else if(s=="checkbox checkbox-blue checked"){
+				alert("b");
+				s="checkbox checkbox-blue";
+			} 
+			
+			alert(s);
+			$(".checkbox-blue:not(#checkAll)").each(function(){
+				$(this).prop("class",s);
+			})
+			/* alert($(this).attr("checked"));
+			if($(this).attr("checked")){
+				alert("A");
+				$(".checkbox-blue").each(function(){
+					$(this).prop("class","checkbox checkbox-blue checked");
+				})
+			}else{
+				$(".checkbox-blue").each(function(){
+					$(this).prop("class","checkbox checkbox-blue");
+				})
+			} */
+			
+			
 		});
 
 		$("[data-toggle=tooltip]").tooltip();
@@ -221,27 +253,59 @@
 			<div class="content">
 				<div class="container-fluid">
 					<div class="row">
+						
+						 <div class="row">
+						 
+						 	
+								<c:choose>
+									 <c:when test="${flag==true }">
+										 <div class="col-sm-6">
+					                       <h2 class="title">보낸메시지</h2>		
+					                     </div>
+				                     </c:when>	
+				                     <c:otherwise>
+				                     	<div class="col-sm-6">
+					                       <h2 class="title">받은메시지</h2>
+					                    </div>
+				                     </c:otherwise>
+								</c:choose>
+							 
+								
+							<div class="col-sm-6" style="text-align: right;">
+							 
+						<button type="button" class="btn btn-Info btn-filter"
+							id="messageDeleteBtn"><div class="icon-container">
+                        				<span class="ti-trash"></span>
+                        			</div></button>
+                        			
+						<button type="button" class="btn btn-Info btn-filter"
+							id="receiveBtn"><div class="icon-container">
+                        				<span class="ti-shift-left"></span>
+                        			</div></button>
+                        			
+						<button type="button" class="btn btn-Info btn-filter"
+							id="sendBtn"><div class="icon-container">
+                        				<span class="ti-shift-right"></span>
+                        			</div></button>
 
-						<button type="button" class="btn btn-danger btn-filter"
-							id="messageDeleteBtn">삭제</button>
-						<button type="button" class="btn btn-danger btn-filter"
-							id="receiveBtn">받은쪽지함</button>
-						<button type="button" class="btn btn-danger btn-filter"
-							id="sendBtn">보낸쪽지함</button>
-
-						<a class="btn btn-danger" href="#danger" data-toggle="modal"
-							id="sendMessageBtn"><h4>쪽지보내기</h4></a>
-
+						<a class="btn btn-Info" href="#danger" data-toggle="modal"
+							id="sendMessageBtn"><div class="icon-container">
+                        				<span class="ti-pencil-alt"></span>
+                        			</div></a>
+                        	</div>
+						</div>
 						<!-- Modal -->
 						<div class="modal fade" id="danger" tabindex="-1" role="dialog"
 							aria-labelledby="myModalLabel" aria-hidden="true">
 							<div class="modal-dialog">
 								<div class="modal-content">
-									<div class="modal-header modal-header-danger">
+									<div class="modal-header modal-header-Info">
 										<button type="button" class="close" data-dismiss="modal"
 											aria-hidden="true">×</button>
 										<h1>
-											<i class="glyphicon glyphicon-thumbs-up"></i> 쪽지보내기
+											<div class="icon-container">
+                        				<span class="ti-email"></span><span class="icon-name"> 쪽지보내기</span>
+                        			</div> 
 										</h1>
 									</div>
 									<div class="modal-body">
@@ -263,22 +327,22 @@
 												<!-- Text input-->
 												<div class="form-group" id="messageTop">
 													<label class="col-md-4 control-label" for="name"
-														style="text-align: right;" id="messageTopLabel">받을사람</label>
+														style="text-align: right; width:70px" id="messageTopLabel">받을사람</label>
 													<div class="col-md-4">
 														<input id="messageTopEmail" name="messageReceiver"
 															type="text" placeholder="이메일주소를 입력해주세요"
-															class="form-control input-md" required="">
-
+															class="form-control input-md" style="width:470px">
+														
 													</div>
 												</div>
 
 
 												<!-- Textarea -->
 												<div class="form-group">
-													<label class="col-md-4 control-label" for="anschrift">내용</label>
+													<label class="col-md-4 control-label" for="anschrift" style="width:70px">내용</label>
 													<div class="col-md-4">
 														<textarea class="form-control" id="messageContent"
-															name="messageContent" style="width: 300px; height: 150px"
+															name="messageContent" cols="470"
 															placeholder="내용을 입력하세요"></textarea>
 													</div>
 												</div>
@@ -291,7 +355,7 @@
 													<label class="col-md-4 control-label" for="anmelden"></label>
 													<div id="messageBottom" class="col-md-8">
 														<input type="submit" id="anmelden" name="anmelden"
-															class="btn btn-success" value="보내기">
+															class="btn btn-Info btn-filter" value="보내기"> <!-- 이거 왜 새로고침 안되냐? -->
 													</div>
 												</div>
 											</fieldset>
@@ -314,13 +378,20 @@
 							<table id="mytable" class="table table-bordred table-striped">
 
 								<thead>
-									<th><input type="checkbox" id="checkall" value="-1" /></th>
+								
+								 <th>
+								
+								 <input type="checkbox" id="checkall" value="-1">
+									
+								</th>    
+									<!--  <th><input type="checkbox" id="checkall" value="-1" /></th>  -->
+									
 									<c:choose>
 										<c:when test="${flag==false }">
 											<th>보낸사람</th>
 										</c:when>
 										<c:otherwise>
-											<th>받을사람</th>
+											<th>받는사람</th>
 										</c:otherwise>
 									</c:choose>
 
@@ -347,8 +418,13 @@
 												<!-- 받은쪽지함 -->
 												<c:if test="${messageDTO.messageState!=1 }">
 													<tr>
-														<td><input type="checkbox" class="checkthis"
-															name="messageNoArr" value="${messageDTO.messageNo }" /></td>
+														 <%-- <td><input type="checkbox" class="checkthis"
+															name="messageNoArr" value="${messageDTO.messageNo }" /></td>  --%>
+															
+															<td>
+																	 <input type="checkbox" class="checkthis" name="messageNoArr" value="${messageDTO.messageNo }">
+															</td>   
+															
 														<td>${messageDTO.userDTO.userId}
 															(${messageDTO.userDTO.userName})</td>
 														<td><a
@@ -376,11 +452,13 @@
 																<td>-</td>
 																<td><p data-placement="top" data-toggle="tooltip"
 																		title="Delete">
-																		<button class="btn btn-danger btn-xs"
+																		<button class="btn btn-Info btn-filter"
 																			data-title="Delete" id="deleteBtn"
 																			data-toggle="modal" data-target="#delete"
 																			name="${messageDTO.messageNo}">
-																			<span class="glyphicon glyphicon-trash"></span>
+																			<div class="icon-container">
+										                        				<span class="ti-close"></span>
+										                        			</div>
 																		</button>
 																	</p></td>
 															</c:when>
@@ -425,8 +503,8 @@
 					                      <li><a href="#contains" id="searchByName">이름</a></li>
 					                      <li><a href="#its_equal" id="searchByTitle">제목</a></li>
 					                    </ul> -->
-												<select class="btn btn-default dropdown-toggle"
-													data-toggle="dropdown" style="width: 80px" id="category">
+												<select class="btn btn-Info dropdown-toggle"
+													data-toggle="dropdown" style="width: 90px" id="category">
 													<option value="-1">선택</option>
 													<option value="0">이름</option>
 													<option value="1">내용</option>
@@ -435,8 +513,8 @@
 											<input type="hidden" name="search_param" value="all"
 												id="search_param"> <input type="text"
 												class="form-control" name="x" placeholder="검색어를 입력하세요."
-												id="searchText"> <span class="input-group-btn">
-												<button class="btn btn-default" type="button" id="submitBt">
+												id="searchText" style="border:1px solid #66615b"> <span class="input-group-btn">
+												<button class="btn btn-Info" type="button" id="submitBt" style="height:40px">
 													<span class="glyphicon glyphicon-search"></span>
 												</button>
 											</span>
@@ -445,8 +523,11 @@
 								</div>
 							</div>
 							<!-- 검색 -->
+							
+							
+							<!-- paging -->
 							<ul class="pagination pull-right">
-
+						
 								<c:choose>
 									<c:when test="${startPage==1}">
 										<li class="disabled"><a href="#"><span
@@ -462,7 +543,7 @@
 								<c:forEach begin="${startPage}" end="${endPage}" var="pageNum"
 									step="1">
 									<li><a
-										href="${pageContext.request.contextPath}/message/main?userNo=13&flag=${f}&pageNumber=${pageNum}&searchText=${searchText}&categoryNo=${categoryNo}">${pageNum}</a></li>
+										href="${pageContext.request.contextPath}/message/main?userNo=13&flag=${flag}&pageNumber=${pageNum}&searchText=${searchText}&categoryNo=${categoryNo}">${pageNum}</a></li>
 								</c:forEach>
 
 								<c:choose>
@@ -478,7 +559,7 @@
 								</c:choose>
 							</ul>
 
-
+						<!-- paging -->
 
 
 						</div>
@@ -497,23 +578,21 @@
 							aria-hidden="true">
 							<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
 						</button>
-						<h4 class="modal-title custom_align" id="Heading">Delete this
-							entry</h4>
+						<h4 class="modal-title custom_align" id="Heading">쪽지 발송 취소</h4>
 					</div>
 					<div class="modal-body">
-
-						<div class="alert alert-danger">
-							<span class="glyphicon glyphicon-warning-sign"></span> Are you
-							sure you want to delete this Record?
-						</div>
+						
+						<div class="icon-container">
+                        	<h3><span class="ti-eraser"></span><span class="icon-name"> 발송을 취소하실건가요?</span></h3>
+                        </div>
 
 					</div>
 					<div class="modal-footer ">
-						<button type="button" class="btn btn-success" data-dismiss="modal"
+						<button type="button" class="btn btn-Info" data-dismiss="modal"
 							id="deleteYesBtn">
 							<span class="glyphicon glyphicon-ok-sign"></span> Yes
 						</button>
-						<button type="button" class="btn btn-default" data-dismiss="modal">
+						<button type="button" class="btn btn-Info" data-dismiss="modal">
 							<span class="glyphicon glyphicon-remove"></span> No
 						</button>
 					</div>

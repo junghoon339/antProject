@@ -4,6 +4,8 @@ import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -15,6 +17,8 @@ import com.ant.user.dto.UserDTO;
 import com.ant.user.service.UserService;
 import com.ant.util.Email;
 import com.ant.util.EmailSender;
+
+import sun.print.resources.serviceui;
 
 @Controller
 @RequestMapping("/user")
@@ -62,12 +66,12 @@ public class UserController {
 
 	@RequestMapping("/idCheck")
 	@ResponseBody
-	public int idCheckn(String userId) {
+	public boolean idCheckn(String userId) {
 		UserDTO userDTO = userService.selectUserById(userId);
 		if (userDTO == null)
-			return 0;
-
-		return 1;
+			return true;
+		
+		return false;
 	}
 
 	@RequestMapping(value = "/schoolCheck", produces = "application/json; charset=utf8")
@@ -92,6 +96,23 @@ public class UserController {
 	@RequestMapping("/forgotPassword")
 	public String forgotPassword() {
 		return "user/forgotPassword";
+	}
+	
+	@RequestMapping("/update")
+	public String update() {
+		
+		return "user/update";
+	}
+
+	@RequestMapping("/updateInfo")
+	public String updateInfo(HttpSession session, UserDTO userDTO) {
+		userService.updateUser(userDTO);
+		
+		userDTO = userService.selectUserById(userDTO.getUserId());
+		
+		session.setAttribute("userDTO", userDTO);
+		
+		return "redirect:/user/update";
 	}
 
 	@RequestMapping("/sendEmail")

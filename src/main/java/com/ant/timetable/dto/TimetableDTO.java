@@ -1,8 +1,10 @@
 package com.ant.timetable.dto;
 
+import com.ant.user.dto.UserDTO;
+
 public class TimetableDTO {
 	private int timetableNo;
-	private int userNo; //ȸ����ȣ
+	private int userNo; //팀 사용시 p
 	private String timetableSubject; //과목명
 	/*private String timetableDay; //요일
 	private String timetableClass; //시간*/
@@ -10,6 +12,9 @@ public class TimetableDTO {
 	private String timetableTeacher; //교수명
 	private String timetableClassInfo; //뷰에서 controller로 넘길때 요일(시작-칸수),,요일.시간 로 받아주는 String
 	private String timetableColor; //timetable색깔
+	private UserDTO userDTO;
+	
+	
 	public int getTimetableNo() {
 		return timetableNo;
 	}
@@ -52,7 +57,13 @@ public class TimetableDTO {
 	public void setTimetableLocation(String timetableLocation) {
 		this.timetableLocation = timetableLocation;
 	}
-	
+
+	public UserDTO getUserDTO() {
+		return userDTO;
+	}
+	public void setUserDTO(UserDTO userDTO) {
+		this.userDTO = userDTO;
+	}
 	
 	
 	

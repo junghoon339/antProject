@@ -18,6 +18,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
+import java.util.TreeMap;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -114,7 +115,8 @@ public class ProjectController implements Serializable {
 		
 
 		//Project STATE가 1인 경우, SURVEY를 생성하는 구문
-		List<ProjectDTO> projects = projectService.selectIfProjectState1();
+		List<ProjectDTO> projects = projectService.selectIfProjectState1(userNo);
+		Map<Integer, Boolean> surveySuccessList = new TreeMap<>();
 		if(projects.size()!=0){
 			for(ProjectDTO project : projects){
 				int projectNo = project.getProjectNo();
@@ -133,6 +135,16 @@ public class ProjectController implements Serializable {
 					}
 					
 				}// if(survey != null) end
+				else{
+					SurveyDTO getSurvey = surveyService.surveySelectByProjectNo(projectNo);
+					int surveyNo = getSurvey.getSurveyNo();
+					
+					SurveyUserDTO surveyUserDTO =  surveyService.surveyUserSelect(surveyNo, userNo);
+					int state = surveyUserDTO.getSurveyUserState();
+					
+					//이미 투표에 참여했다면, true를 통해 home_ch에서 설문조사 참여완료를 표시
+					surveySuccessList.put(projectNo, state==1? true : false);
+				}
 			}// for(ProjectDTO project : projects) end
 		}// if(!projects.isEmpty()) end
 
@@ -184,6 +196,7 @@ public class ProjectController implements Serializable {
 		mv.setViewName("project/home_ch");
 		mv.addObject("currentProList",currentProList);
 		mv.addObject("surveyingProList",surveyingProList);
+		mv.addObject("surveySuccessList", surveySuccessList);
 		return mv;
 	}
 	
@@ -317,7 +330,7 @@ public class ProjectController implements Serializable {
 	@RequestMapping("/chat")
 	public ModelAndView chat(HttpSession session){
 		int projectNo = (int) session.getAttribute("projectNo");
-		ModelAndView mv = new ModelAndView("chat/chat");
+		ModelAndView mv = new ModelAndView("chat/chatBackUp");
 		
 		try {
 			File file = new File("/chat/chat_room_no_" + projectNo + ".txt");

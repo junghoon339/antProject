@@ -109,6 +109,7 @@
 			<div class="content">
 				<div class="container-fluid">
 					<div class="row">
+					 <div class="card">
 						<div class="table-responsive">
 
 
@@ -136,31 +137,13 @@
 												<td>${userDTO.userName }</td>
 												<td>${userDTO.userSchool }</td>
 												<td>${userDTO.userMajor }</td>
-												<%-- <c:set var="ingCount" scope="page" value="${0}"/>
-												<c:set var="doneCount" scope="page" value="${0}"/>
-												<c:if test="${userDTO.listProjectUserDTO!=null }">
-													<c:forEach items="${userDTO.listProjectUserDTO }" var="projectUserDTO">
-														<c:choose>
-															<c:when test="${projectUserDTO.projectDTO.projectState==0 }">
-																<c:set var="ingCount" scope="page" value="${ingCount+1 }"/>
-															</c:when>
-															<c:otherwise>
-																<c:set var="doneCount" scope="page" value="${doneCount+1 }"/>
-															</c:otherwise>
-														</c:choose>
-													
-													</c:forEach>
-												</c:if>
-												
-												<td><c:out value="${ingCount }"/> </td>
-												<td><c:out value="${doneCount }"/></td> --%>
 												<td>${userDTO.doingProject }</td>
 												<td>${userDTO.doneProject }</td>
 												<td><p data-placement="top" data-toggle="tooltip"
 														title="Delete">
-														<button class="btn btn-danger btn-xs" data-title="Delete" id="deleteBtn"
+														<button class="btn btn-Info" data-title="Delete" id="deleteBtn"
 															data-toggle="modal" data-target="#delete" name="${userDTO.userNo}">
-															<span class="glyphicon glyphicon-trash"></span>
+                        									<span class="ti-close"></span>
 														</button>
 													</p></td>
 											</tr>
@@ -187,7 +170,7 @@
 								</c:otherwise>
 							</c:choose>
 							<c:forEach begin="${startPage }" end="${endPage }" var="pageNumber" step="1">
-								<li class="active"><a href="${pageContext.request.contextPath }/admin/user?pageNumber=${pageNumber}">${pageNumber }</a></li>
+								<li><a href="${pageContext.request.contextPath }/admin/user?pageNumber=${pageNumber}">${pageNumber }</a></li>
 							</c:forEach>
 							
 							<c:choose>
@@ -212,38 +195,53 @@
 					</div>
 				</div>
 			</div>
-<div class="modal fade" id="delete" tabindex="-1" role="dialog"
-			aria-labelledby="edit" aria-hidden="true">
-			<div class="modal-dialog">
-				<div class="modal-content">
-					<div class="modal-header">
-						<button type="button" class="close" data-dismiss="modal"
-							aria-hidden="true">
-							<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
-						</button>
-						<h4 class="modal-title custom_align" id="Heading">Delete this
-							entry</h4>
-					</div>
-					<div class="modal-body">
-
-						<div class="alert alert-danger">
-							<span class="glyphicon glyphicon-warning-sign"></span> Are you
-							sure you want to delete this Record?
-						</div>
-
-					</div>
-					<div class="modal-footer ">
-						<button type="button" class="btn btn-success" data-dismiss="modal" id="deleteYesBtn">
-							<span class="glyphicon glyphicon-ok-sign"></span> Yes
-						</button>
-						<button type="button" class="btn btn-default" data-dismiss="modal">
-							<span class="glyphicon glyphicon-remove"></span> No
-						</button>
-					</div>
-
-				</div>
 			</div>
-		</div>
+			
+			
+			
+			<!-- modal -->
+					<div class="modal fade" id="delete" tabindex="-1" role="dialog"
+								aria-labelledby="edit" aria-hidden="true">
+							<div class="modal-dialog">
+								<div class="modal-content">
+									<div class="modal-header">
+										<button type="button" class="close" data-dismiss="modal"
+											aria-hidden="true">
+											<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+										</button>
+										<h4 class="modal-title custom_align" id="Heading">Delete this
+											entry</h4>
+									</div>
+									<div class="modal-body">
+				
+										<div class="alert alert-danger">
+											<span class="glyphicon glyphicon-warning-sign"></span> Are you
+											sure you want to delete this Record?
+										</div>
+				
+									</div>
+									<div class="modal-footer ">
+										<button type="button" class="btn btn-success" data-dismiss="modal" id="deleteYesBtn">
+											<span class="glyphicon glyphicon-ok-sign"></span> Yes
+										</button>
+										<button type="button" class="btn btn-default" data-dismiss="modal">
+											<span class="glyphicon glyphicon-remove"></span> No
+										</button>
+									</div>
+				
+								</div>
+							</div>
+						</div>
+		
+		<!-- modal -->
+		
+		
+		
+		
+		
+		
+		
+		
 			<jsp:include page="/WEB-INF/views/project/footer_ch.jsp" flush="false" />
 		</div>
 	</div>

@@ -26,8 +26,10 @@ public class UserDAOImpl implements UserDAO {
 
 	@Override
 	public int updateUser(UserDTO userDTO) {
-		// TODO Auto-generated method stub
-		return 0;
+		System.out.println("DAO");
+		System.out.println(userDTO.getUserId());
+		System.out.println(userDTO.getUserName());
+		return sqlSession.update("UserMapper.updateUser", userDTO);
 	}
 	
 	@Override

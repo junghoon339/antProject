@@ -127,6 +127,6 @@ public interface AdminDAO {
 	/**
 	 * 	�������� �˻��� ����Ʈ ����
 	 * */
-	public int noticeTotalCountBySearch(String searchText, int noticeNo);
+	public int noticeTotalCountBySearch(String searchText);
 	
 }

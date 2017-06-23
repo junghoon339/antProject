@@ -97,25 +97,43 @@
 					<div class="col-md-12">
 						<div class="card card-plain">
 							<div class="header">
+							<div class="row">
 								<div class="col-sm-6">
-									<h4 class="title">상세보기</h4>
-									<p class="category">detail</p>
+									<h3>
+									<div class="icon-container">
+                        				<span class="ti-zoom-in"></span><span class="icon-name"> 상세보기</span>
+                        			</div>
+                        			</h3>
 								</div>
 								<div style="text-align: right;" class="col-sm-6">
-									<a
-										href="${pageContext.request.contextPath}/storage/storageTable/1">
-										리스트로 돌아가기 </a>
+									<h5>
+									<div class="icon-container">
+	                        				<span class="ti-menu-alt"></span><a href="${pageContext.request.contextPath}/storage/storageTable/${dto.projectNo}"><span class="icon-name"> 리스트</span></a>
+	                        		</div>
+	                        		</h5>
+								</div>
 								</div>
 
-								<div align="right" >
-									<a
+								<div class="row" align="right" >
+									<%-- <a
 										href="${pageContext.request.contextPath}/storage/delete/${dto.storageNo}/${dto.userNo}/${dto.projectNo}"
 										class="btn btn-red btn-circle active"
-										class="btn btn-red btn-circle">삭제</a>
+										class="btn btn-red btn-circle">삭제</a> --%>
+										
+										<h3>
+										
+                        					<a href="${pageContext.request.contextPath}/storage/delete/${dto.storageNo}/${dto.userNo}/${dto.projectNo}"><span class="ti-trash"></span></a>
+                        				
 									    
-										 <a href="#" class="btn btn-red btn-circle" onclick="submitHidden()">
+										<!--  <a href="#" class="btn btn-red btn-circle" onclick="submitHidden()">
 										수정
-										</a>
+										</a> -->
+										
+										
+                        					 <a href="#" onclick="submitHidden()"><span class="ti-ink-pen"></span></a>
+                        				
+                        				</h3> 
+                        				
 								</div>
 
 										<form id="submitForm" method="post" action="">
@@ -132,19 +150,34 @@
 							<div class="content table-responsive table-full-width">
 								<table class="table table-hover">
 									<thead>
-										<th colspan="2">제목 - ${dto.storageTitle}</th>
-										<th colspan="2">작성자 - ${dto.userDTO.userName}</th>
-										<th colspan="2">작성일 - ${dto.writeDay}</th>
+										<th colspan="2">
+										 <div class="icon-container">
+                        					<span class="ti-direction-alt"></span><span class="icon-name">&nbsp;&nbsp; ${dto.storageTitle}</span>
+                        				</div> 
+										 </th>
+										<th colspan="2">
+										<div class="icon-container">
+                        					<span class="ti-cloud-up"></span><span class="icon-name">&nbsp;&nbsp; ${dto.userDTO.userName}</span>
+                        				</div>
+										</th>
+										<th colspan="2">
+										<div class="icon-container">
+                        					<span class="ti-time"></span><span class="icon-name">&nbsp;&nbsp; ${dto.writeDay}</span>
+                        				</div>
+										</th>
 										<c:if test="${dto.fileName!=null}">
-											<th colspan="2">첨부파일 - <a
+											<th colspan="2">
+											<div class="icon-container">
+                        						<span class="ti-save"></span><span class="icon-name"><a
 												href="${pageContext.request.contextPath}/storage/download?fileName=${dto.fileName}">
-													${dto.fileName} </a>
+													&nbsp;&nbsp;${dto.fileName} </a></span>
+                        					</div> 
 											</th>
 										</c:if>
 									</thead>
 									<tbody>
 										<tr>
-											<td colspan="8" rowspan="4"><h1>${dto.storageContent}</h1></td>
+											<td colspan="8" rowspan="4"><h3>${dto.storageContent}</h3></td>
 										</tr>
 									</tbody>
 								</table>
