@@ -41,8 +41,7 @@
 <link
 	href="${pageContext.request.contextPath }/resources/css/themify-icons.css"
 	rel="stylesheet">
-<link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
+
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 <!-- 필요한 css는 이 밑에 넣어주면 됨 -->
 <!-- 스크립트는 body 맨 아래쪽에 -->
@@ -121,9 +120,9 @@
 }
 
 /* search form */
-body{
+/* body{
     margin-top:20px;
-}
+} */
 /* search form */
 </style>
 <body>
@@ -355,15 +354,10 @@ body{
 														action="${pageContext.request.contextPath}/storage/insert"
 														method="post" enctype="multipart/form-data">
 
-<<<<<<< HEAD
-														<input type="hidden" id="securityInfo"
-															name="${_csrf.parameterName}" value="${_csrf.token}" /> <input
-															type="hidden" name="userNo" value="${sessionScope.userDTO.userNo}">
-=======
 														<input type="hidden" id="securityInfo"name="${_csrf.parameterName}" value="${_csrf.token}" /> 
 														<input type="hidden" name="userNo" value="${sessionScope.userDTO.userNo}">
 														<input type="hidden" name ="projectNo" value="${projectNo}">
->>>>>>> f1b9155d4c81a24c889bfd2cb6995c4382330a8a
+
 
 														<fieldset>
 

@@ -199,7 +199,7 @@ a {
 }
 
 a:hover, a:focus {
-	color: #3091B2;
+	color: #8aca86;
 	text-decoration: none;
 }
 
@@ -505,7 +505,7 @@ hr {
 }
 
 .main-panel>.content {
-	padding: 30px 15px;
+	padding: 50px 65px;
 	min-height: calc(100% - 123px);
 }
 
@@ -835,7 +835,7 @@ hr {
 }
 
 .navbar .navbar-nav>li>a.btn-info, .btn-info {
-	border-color: #68B3C8;
+	border-color: #8aca86;
 	color: #68B3C8;
 }
 
@@ -884,8 +884,8 @@ hr {
 }
 
 .navbar .navbar-nav>li>a.btn-info.btn-fill, .btn-info.btn-fill {
-	color: #FFFFFF;
-	background-color: #68B3C8;
+	color: #ffffff;
+	background-color: #8aca86;
 	opacity: 1;
 	filter: alpha(opacity = 100);
 }
@@ -895,9 +895,9 @@ hr {
 	.open>.navbar .navbar-nav>li>a.btn-info.btn-fill.dropdown-toggle,
 	.btn-info.btn-fill:hover, .btn-info.btn-fill:focus, .btn-info.btn-fill:active,
 	.btn-info.btn-fill.active, .open>.btn-info.btn-fill.dropdown-toggle {
-	background-color: #3091B2;
+	background-color: #7cb679;
 	color: #FFFFFF;
-	border-color: #3091B2;
+	border-color: #7cb679;
 }
 
 .navbar .navbar-nav>li>a.btn-info.btn-fill .caret, .btn-info.btn-fill .caret
@@ -1017,8 +1017,8 @@ hr {
 }
 
 .navbar .navbar-nav>li>a.btn-danger, .btn-danger {
-	border-color: #EB5E28;
-	color: #EB5E28;
+	border-color: #8aca86;
+	color: #8aca86;
 }
 
 .navbar .navbar-nav>li>a.btn-danger:hover, .navbar .navbar-nav>li>a.btn-danger:focus,
@@ -1026,9 +1026,9 @@ hr {
 	.open>.navbar .navbar-nav>li>a.btn-danger.dropdown-toggle, .btn-danger:hover,
 	.btn-danger:focus, .btn-danger:active, .btn-danger.active, .open>.btn-danger.dropdown-toggle
 	{
-	background-color: #EB5E28;
+	background-color: #7cb679;
 	color: rgba(255, 255, 255, 0.7);
-	border-color: #EB5E28;
+	border-color: #7cb679;
 }
 
 .navbar .navbar-nav>li>a.btn-danger:hover .caret, .navbar .navbar-nav>li>a.btn-danger:focus .caret,
@@ -1808,7 +1808,7 @@ textarea.form-control {
 .navbar-default .navbar-nav>.open>a, .navbar-default .navbar-nav>.open>a:hover,
 	.navbar-default .navbar-nav>.open>a:focus {
 	background-color: transparent;
-	color: #68B3C8;
+	color: #8aca86;
 }
 
 .navbar-default .navbar-nav .navbar-toggle:hover, .navbar-default .navbar-nav .navbar-toggle:focus
