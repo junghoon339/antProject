@@ -188,4 +188,11 @@
 		INSERT INTO vote_detail
 		VALUES(seq_vote_detail_no.nextval, #{vote_no}, #{vote_detail_column});
 	</insert>
+	
+	<select id="selectVote" resultMap="voteDTOMap">
+		SELECT *
+		FROM vote
+		WHERE vote_no = {_parameter}
+	</select>
+	
 </mapper>

@@ -105,5 +105,10 @@ public class VoteServiceImpl implements VoteService {
 		// TODO Auto-generated method stub
 		return 0;
 	}
+
+	@Override
+	public VoteDTO selectVote(int voteNo) {
+		return voteDAO.selectVote(voteNo);
+	}
 	
 }

@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ant.message.dto.MessageDTO;
 import com.ant.message.service.MessageService;
+import com.ant.project.dto.ProjectDTO;
 import com.ant.project.service.ProjectService;
 import com.ant.survey.dto.SurveyDTO;
 import com.ant.survey.dto.SurveyDetailDTO;
@@ -133,6 +134,19 @@ public class SurveyController {
 			
 		}
 		
+		ProjectDTO pro = projectService.selectProject(projectNo);
+		
+		//마감하기를 누를 때 팀원들에게 설문조사 시작을 알림,
+		for(SurveyUserDTO su : surveyUserList){
+			UserDTO use = userService.selectUserByNo(su.getUserNo());
+			MessageDTO messageDTO = new MessageDTO();
+			messageDTO.setUserNoMessageSender(0);
+			messageDTO.setMessageReceiver(use.getUserId());
+			messageDTO.setMessageContent("[알림] 조별과제 : "+pro.getProjectName()+"이(가) '조별과제 마감완료 대기중' 상태로 전환되었습니다. 하루안에 설문조사를 참여해주세요! (미참여시 배짱이로 간주하여 불이익이 생기게 됩니다!) ");
+			
+			messageService.messageInsert(messageDTO);
+		}
+		
 		return "redirect:/project/home";
 	}
 	
@@ -157,14 +171,16 @@ public class SurveyController {
 		if (a==1){
 			System.out.println("설문조사 모든 조원 참여완료..");
 			surveyService.closedProject(projectNo);
+			
+			ProjectDTO pro = projectService.selectProject(projectNo);
+			
 			//마감된 다음, 해당 조별과제에 참여하고있는 모든 유저에게 마감을 알리는 쪽지를 보내줌.
 			for(SurveyUserDTO su : surveyUsers){
 				UserDTO use = userService.selectUserByNo(su.getUserNo());
-				
 				MessageDTO messageDTO = new MessageDTO();
 				messageDTO.setUserNoMessageSender(0);
-				messageDTO.setMessageReceiver(user.getUserId());
-				messageDTO.setMessageContent("<center>조별과제가 마감되었습니다. 완료된 조별과제에서 확인해주세요!<br><a href='#'>여기</a></center>");
+				messageDTO.setMessageReceiver(use.getUserId());
+				messageDTO.setMessageContent("[알림] 조별과제 : "+pro.getProjectName()+"이(가) '조별과제가 마감'이 되었습니다. 완료된 조별과제에서 확인해주세요!");
 				
 				messageService.messageInsert(messageDTO);
 			}

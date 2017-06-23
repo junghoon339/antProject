@@ -19,6 +19,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.ant.message.dto.MessageDTO;
+import com.ant.message.service.MessageService;
+import com.ant.project.dto.ProjectDTO;
+import com.ant.project.service.ProjectService;
+import com.ant.survey.dto.SurveyUserDTO;
 import com.ant.user.dto.UserDTO;
 import com.ant.vote.dto.VoteDTO;
 import com.ant.vote.dto.VoteDetailDTO;
@@ -31,6 +36,12 @@ public class VoteController {
 
 	@Autowired
 	VoteService voteService;
+	
+	@Autowired
+	ProjectService projectService;
+	
+	@Autowired
+	MessageService messageService;
 	
 	@RequestMapping("/")
 	public String mainForm(HttpServletRequest request, Model model) {
@@ -107,6 +118,18 @@ public class VoteController {
 				VoteDetailDTO insertVoteDetailDTO = new VoteDetailDTO(0, createVoteNo, column);
 				result = voteService.insertVoteDetail(insertVoteDetailDTO);
 			}
+		}
+		
+		List<UserDTO> users = projectService.selectProjectUsers(projectNo);
+		ProjectDTO pro = projectService.selectProject(projectNo);
+		
+		//투표등록시 투표등록 알림을 전송해주는 쪽
+		for(UserDTO u : users){
+			MessageDTO messageDTO = new MessageDTO();
+			messageDTO.setUserNoMessageSender(0);
+			messageDTO.setMessageReceiver(u.getUserId());
+			messageDTO.setMessageContent("[알림] 조별과제 : "+pro.getProjectName()+"에서 새로운 '투표'가 등록되었습니다! 확인해주세요.  ");
+			messageService.messageInsert(messageDTO);
 		}
 
 		return "redirect:/vote/";
@@ -188,7 +211,6 @@ public class VoteController {
 			voteCreater = 1;
 		}
 		
-		System.out.println( "진짜... 스시가오먹고보자"+voteService.selectVoteDetailCall(voteNo) );
 		map.put("userCount", voteService.selectVoteDetailCall(voteNo));
 		map.put("choice", choiceCheck);
 		map.put("participated", participated);
@@ -232,6 +254,20 @@ public class VoteController {
 		
 		UserDTO user = (UserDTO) session.getAttribute("userDTO");
 		int userNo = user.getUserNo();
+		int projectNo = (int) session.getAttribute("projectNo");
+		
+		List<UserDTO> users = projectService.selectProjectUsers(projectNo);
+		ProjectDTO pro = projectService.selectProject(projectNo);
+		VoteDTO vote = voteService.selectVote(voteNo);
+		
+		//투표마감시 투표등록마감 알림을 전송해주는 쪽
+		for(UserDTO u : users){
+			MessageDTO messageDTO = new MessageDTO();
+			messageDTO.setUserNoMessageSender(0);
+			messageDTO.setMessageReceiver(u.getUserId());
+			messageDTO.setMessageContent("[알림] 조별과제 : "+pro.getProjectName()+"에 "+vote.getVoteTitle()+"'투표'가 투표마감되었습니다! 확인해주세요.  ");
+			messageService.messageInsert(messageDTO);
+		}
 		
 		System.out.println("userNo-->"+userNo+", voteNo-->"+voteNo);
 		return voteService.updateVote(userNo, voteNo);
