@@ -330,7 +330,7 @@ public class ProjectController implements Serializable {
 	@RequestMapping("/chat")
 	public ModelAndView chat(HttpSession session){
 		int projectNo = (int) session.getAttribute("projectNo");
-		ModelAndView mv = new ModelAndView("chat/chat");
+		ModelAndView mv = new ModelAndView("chat/chatBackUp");
 		
 		try {
 			File file = new File("/chat/chat_room_no_" + projectNo + ".txt");

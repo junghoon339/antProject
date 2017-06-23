@@ -19,21 +19,21 @@
 	<select id="receiveMessageSelectAll" parameterType="map" resultMap="messageDTOMap">
 	select * from (select rownum as rnum,b.* from(select m.*, au.user_name,au.user_id 
     from message m join ant_user au on m.user_no_message_sender=au.user_no 
-    where USER_NO_MESSAGE_RECEIVER=#{userNoMessageSender} order by m.message_sendtime desc)b)c where c.rnum>=#{startRow} and c.rnum&lt;=#{endRow}	
+    where USER_NO_MESSAGE_RECEIVER=#{userNoMessageSender} and message_state not in (1) order by m.message_sendtime desc)b)c where c.rnum>=#{startRow} and c.rnum&lt;=#{endRow}	
     </select>
 	
 	<select id="sendMessageSelectAll" parameterType="map" resultMap="messageDTOMap">
 	select * from (select rownum as rnum,b.* from(select m.*, au.user_name,au.user_id 
     from message m join ant_user au on m.user_no_message_receiver=au.user_no 
-    where USER_NO_MESSAGE_SENDER=#{userNoMessagereceiver} order by m.message_sendtime desc)b)c where c.rnum>=#{startRow} and c.rnum&lt;=#{endRow}	
+    where USER_NO_MESSAGE_SENDER=#{userNoMessagereceiver} and message_state not in (2) order by m.message_sendtime desc)b)c where c.rnum>=#{startRow} and c.rnum&lt;=#{endRow}	
     </select>
     
     <select id="countReveiveMessage" parameterType="int" resultType="int">
-    	select count(message_no) from message where USER_NO_MESSAGE_RECEIVER=#{_paremeter}
+    	select count(message_no) from message where USER_NO_MESSAGE_RECEIVER=#{_paremeter} and message_state not in (1)
     </select>
     
     <select id="countSendMessage" parameterType="int" resultType="int">
-    	select count(message_no) from message where USER_NO_MESSAGE_SENDER=#{_paremeter}
+    	select count(message_no) from message where USER_NO_MESSAGE_SENDER=#{_paremeter} and message_state not in (2)
     </select>
     <!-- 검색할 때 -->
     <select id="receiveMessageSelectAllByName" parameterType="map" resultMap="messageDTOMap">

@@ -141,9 +141,9 @@ var sessionUserNo="${sessionScope.userDTO.userNo}";
          <a href="#" id="0" draggable="true">
           <!--  <i class="pin"></i> -->
            
-           <blockquote class="note yellow" style="font-size:15px; width:180px;height:120px;">
+           <blockquote class="note yellow" style="font-size:17px; width:180px;height:120px;">
               
-             <span id="postitText">내용을 작성해주세요</span>
+             <span id="postitText">메모를 작성해서<br/> 옮겨주세요</span>
             
              <cite class="author" style="margin-top:90px"></cite>
              

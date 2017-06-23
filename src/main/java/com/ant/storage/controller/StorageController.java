@@ -131,7 +131,7 @@ public class StorageController {
 			}
 		}
 		service.insert(storageDTO);
-		return "redirect:/storage/storageTable/1";
+		return "redirect:/storage/storageTable/"+storageDTO.getProjectNo();
 	}
 	
 	@RequestMapping("/updateForm")
