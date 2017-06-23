@@ -281,7 +281,7 @@ td {
 						
 						<div class="col-lg-9 col-lg-offset-1">
 						<div class="card">
-						<%@include file="header.jsp"%>
+							<span><%@include file="header.jsp"%>
 							<input type=hidden id="securityInfo" name="${_csrf.parameterName}" value="${_csrf.token}"> <input type=hidden id="voteNo" value="${voteNo}" />
 									<div align="right" style="vertical-align: middle;">
 										<div class="btn-group">
@@ -302,6 +302,7 @@ td {
 										</div>
 										<p>
 									</div>
+									</span>
 									<div class="well" id="well"><Strong>Q. <span class="ifEndLabel">[종료]</span> ${voteTitle}</Strong><p><font size="1"><span class="ifEndLabelDate"></span> <span class="ifEndLabel">마감</span></font></div>
 							<p>
 							<div>

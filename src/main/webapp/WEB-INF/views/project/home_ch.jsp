@@ -52,10 +52,26 @@
 <script type="text/javascript">
 	var header = $("meta[name='_csrf_header']").attr("content");
 	var token = $("meta[name='_csrf']").attr("content");
-
+	var regNumber = /^[0-9]*$/;
 	$(document)
 			.ready(
 					function() {
+						$(document).on("focusout", "[name='userScore']", function(){
+							
+							if(!regNumber.test($(this).val())){
+								alert("숫자만 입력해주세요.");
+								$(this).val("");
+								$(this).focus();
+								return;
+							}
+							else if($(this).val()<0 || $(this).val()>100){
+								alert("1~100사이의 점수를 입력해주세요.");
+								$(this).val("");
+								$(this).focus();
+								return;
+							}
+						})
+						
 						$("#plusImg").click(function() {
 							$("#myModal").modal(); 
 						})
@@ -206,6 +222,7 @@
 					<div class="row">
 						<c:choose>
 							<c:when test="${empty currentProList}&&${empty surveyingProList}">
+							
 								<!-- 진행중인,완료대기중인 조별과제가 없으면 -->
 								<h4>진행중인 조별과제가 없습니다.</h4>
 							</c:when>

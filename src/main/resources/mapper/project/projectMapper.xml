@@ -125,7 +125,8 @@
 	                     FROM project p JOIN project_user pu
 	                     ON p.project_no = pu.project_no
 	                     <![CDATA[ 
-	                     WHERE pu.user_no=#{userNo} AND to_char(project_enddate) <= to_char(sysdate))
+	                     WHERE pu.user_no=#{userNo}  AND project_state = 0 AND to_char(project_enddate) <= to_char(sysdate))
+	                    
 	                     ]]>
 	</update>
 
