@@ -81,7 +81,7 @@
 	
 	<!-- 자료 등록하기 -->
 	<insert id="insert" parameterType="StorageDTO">
-		insert into storage values(seq_storage_no.nextval,1,#{storageTitle},#{storageContent},#{fileName},#{filePath},#{fileSize},0,sysdate,#{userNo})
+		insert into storage values(seq_storage_no.nextval,#{userNo},#{storageTitle},#{storageContent},#{fileName},#{filePath},#{fileSize},0,sysdate,#{userNo})
 	</insert>
 	
 	<!-- 자료 수정 -->

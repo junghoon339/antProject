@@ -346,7 +346,7 @@ body{
 
 														<input type="hidden" id="securityInfo"
 															name="${_csrf.parameterName}" value="${_csrf.token}" /> <input
-															type="hidden" name="userNo" value="1">
+															type="hidden" name="userNo" value="${sessionScope.userDTO.userNo}">
 
 														<fieldset>
 
