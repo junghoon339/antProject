@@ -152,10 +152,20 @@ public class SurveyController {
 	
 	@RequestMapping("/insertSurveyDetail")
 	public String createSurveyUser(HttpSession session, int projectNo, String[] userName, String[] userScore){
+		
+		System.out.println("플젝넘버 : "+projectNo);
+		for(String s : userName){
+			System.out.println("해당플젝에 점수매겨진사람 : "+s);
+		}
+		for(String c : userScore){
+			System.out.println("해당플젝에 점수매겨진사람의 점수  : "+c);
+		}
+		
 		UserDTO user = (UserDTO) session.getAttribute("userDTO");
 		int userNo = user.getUserNo();
 		SurveyDTO survey = surveyService.surveySelectByProjectNo(projectNo);
 		int surveyNo = survey.getSurveyNo();
+		
 		SurveyUserDTO surveyUser = surveyService.surveyUserSelect(surveyNo, userNo);
 		int surveyUserNo = surveyUser.getSurveyUserNo();
 		for(int i=0; i<userName.length;i++){
@@ -184,8 +194,8 @@ public class SurveyController {
 				
 				messageService.messageInsert(messageDTO);
 			}
-			
 		}
+		
 		return "redirect:/project/home";
 	}
 	

@@ -107,6 +107,8 @@
 						$(".survey")
 								.click(
 										function() {
+											var pn = $(this).parent().prev().val();
+											alert(pn);
 											$
 													.ajax({
 														url : "${pageContext.request.contextPath}/survey/",
@@ -119,11 +121,7 @@
 																			token);
 														},
 														dataType : "json",
-														data : "projectNo="
-																+ $(this)
-																		.parent()
-																		.next()
-																		.val(),
+														data : "projectNo="+pn,
 														success : function( result) {
 															
 															if ($(result)
@@ -133,23 +131,16 @@
 															}
 															var str = "";
 															$.each(result, function( index, item) {
-																
-																				str += '<tr width="100%">';
-																				str += '<td name="nameTd" width="50%"><center>'
-																						+ item.userName
-																						+ '</center></td>';
-																				str += '<input type="hidden" name="userName" value="'+item.userName+'" />';
-																				str += '<input type="hidden" name="projectNo" value="'
-																						+ $(
-																								".survey")
-																								.parent()
-																								.next()
-																								.val()
-																						+ '" />';
-																				str += '<td name="scoreTd" width="15%"><input type="text" name="userScore" placeholder="점수를 입력해주세요." value=""/></td>';
-																				str += '<td name="updateTd" width="35%"><a href="#"><center>완료</center></a></td>';
-																				str += '</tr>';
-																			})
+																str += '<tr width="100%">';
+																str += '<td name="nameTd" width="50%"><center>'
+																		+ item.userName
+																		+ '</center></td>';
+																str += '<input type="hidden" name="userName" value="'+item.userName+'" />';
+																str += '<input type="hidden" name="projectNo" value="'+pn+ '" />';
+																str += '<td name="scoreTd" width="15%"><input type="text" name="userScore" placeholder="점수를 입력해주세요.'+pn+'" value=""/></td>';
+																str += '<td name="updateTd" width="35%"><a href="#"><center>완료</center></a></td>';
+																str += '</tr>';
+															})
 															$("#print").html(
 																	str);
 															$("#myModal2")
@@ -165,7 +156,6 @@
 										})
 
 						$("#okayBtn").click(function() {
-							$("input")
 							$("#ffform").submit();
 							alert("설문조사를 완료하였습니다.");
 						})
@@ -251,10 +241,9 @@
 															<span class="label label-success "><a href="#" style="color: #FFFFFF;" class="surveySuc">설문조사 참여완료</a></span>
 														</c:if>
 														<c:if test="${(ssl.key==projectDTO.projectNo)&&(ssl.value==false)}">
-															<span class="label label-warning "><a href="#" style="color: #FFFFFF;" class="survey">설문조사 참여하기</a></span>														
+															<input type="hidden" value="${projectDTO.projectNo}"><span class="label label-warning "><a href="#" style="color: #FFFFFF;" class="survey">설문조사 참여하기${projectDTO.projectNo}</a></span>														
 														</c:if>
 													</c:forEach>	
-													<input type="hidden" value="${projectDTO.projectNo}">
 													</div>
 													<div class="col-md-2">
 														<a href="${pageContext.request.contextPath}/project/teamMain/${projectDTO.projectNo}" class="btn btn-primary btn-simple">Enter</a>
