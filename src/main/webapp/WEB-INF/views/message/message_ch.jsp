@@ -550,7 +550,7 @@
 									</c:when>
 									<c:otherwise>
 										<li class="disabled"><a
-											href="${pageContext.request.contextPath}/message/main?userNo=13&flag=false&pageNumber=${endPage-pageSu}"><div class="icon-container">
+											href="${pageContext.request.contextPath}/message/main?userNo=13&flag=${flag }&pageNumber=${endPage-pageSu}"><div class="icon-container">
 							                        				<span class="ti-angle-double-left"></span>
 							                        			</div></a></li>
 									</c:otherwise>
@@ -571,7 +571,7 @@
 									</c:when>
 									<c:otherwise>
 										<li><a
-											href="${pageContext.request.contextPath}/message/main?userNo=13&flag=false&pageNumber=${startPage+pageSu}"><div class="icon-container">
+											href="${pageContext.request.contextPath}/message/main?userNo=13&flag=${flag }&pageNumber=${startPage+pageSu}"><div class="icon-container">
 		                        								<span class="ti-angle-double-right"></span>
 		                        							</div></a></li>
 									</c:otherwise>
