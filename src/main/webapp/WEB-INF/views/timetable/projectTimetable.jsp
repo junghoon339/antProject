@@ -90,6 +90,7 @@
                      <div id="customcell" style="display:none;"></div>  
                   </div>
                </div>
+               <div class="card">
                <table id="timetable" >
                      <tr>
                         <th>&nbsp;</th>
