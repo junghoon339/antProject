@@ -138,7 +138,7 @@ function selectAll(){
 	$.ajax({
 		url:commonUrl+"/timetable/selectAll",
 		type:"post",
-		data:"userNo=44&"+$("#securityInfo").attr("name")+"="+$("#securityInfo").val(),
+		data:"userNo="+userNo+"&"+$("#securityInfo").attr("name")+"="+$("#securityInfo").val(),
 		dataType:"json",
 		success:function(result){
 			$('.timecell-container').remove();
