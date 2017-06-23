@@ -16,12 +16,15 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.ant.message.dto.MessageDTO;
+import com.ant.message.service.MessageService;
 import com.ant.project.service.ProjectService;
 import com.ant.survey.dto.SurveyDTO;
 import com.ant.survey.dto.SurveyDetailDTO;
 import com.ant.survey.dto.SurveyUserDTO;
 import com.ant.survey.service.SurveyService;
 import com.ant.user.dto.UserDTO;
+import com.ant.user.service.UserService;
 
 @Controller
 @RequestMapping("/survey")
@@ -31,7 +34,13 @@ public class SurveyController {
 	private SurveyService surveyService;
 	
 	@Autowired
+	private UserService userService;
+	
+	@Autowired
 	private ProjectService projectService;
+	
+	@Autowired
+	private MessageService messageService;
 	
 	@RequestMapping("/")
 	@ResponseBody
@@ -130,12 +139,23 @@ public class SurveyController {
 		List<SurveyUserDTO> surveyUsers = surveyService.surveyUserSelect(surveyNo);
 		int a = 1;
 		for(SurveyUserDTO su : surveyUsers){
-			System.out.println(su.getSurveyNo() +" : "+ su.getUserNo()+"의 상태 = "+su.getSurveyUserState());
 			a = a * su.getSurveyUserState();
 		}
 		if (a==1){
-			System.out.println("모두참여햇음 ㅇㅇ");
+			System.out.println("설문조사 모든 조원 참여완료..");
 			surveyService.closedProject(projectNo);
+			//마감된 다음, 해당 조별과제에 참여하고있는 모든 유저에게 마감을 알리는 쪽지를 보내줌.
+			for(SurveyUserDTO su : surveyUsers){
+				UserDTO use = userService.selectUserByNo(su.getUserNo());
+				
+				MessageDTO messageDTO = new MessageDTO();
+				messageDTO.setUserNoMessageSender(0);
+				messageDTO.setMessageReceiver(user.getUserId());
+				messageDTO.setMessageContent("<center>조별과제가 마감되었습니다. 완료된 조별과제에서 확인해주세요!<br><a href='#'>여기</a></center>");
+				
+				messageService.messageInsert(messageDTO);
+			}
+			
 		}
 		return "redirect:/project/home";
 	}

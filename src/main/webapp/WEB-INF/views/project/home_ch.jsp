@@ -61,15 +61,15 @@
 						})
 
 						$("#addBtn").click(function() {
-							var addInputbox = "<input class='form-control border-input' type='text' name='invitedUser' placeholder='초대할 팀원아이디를 입력하세요.'><button type='button' class='btn btn-primary btn-xs' id='delMemberbtn'>삭제</button><p></p>";
+							var addInputbox = "<span id='addRow'><input class='form-control border-input' type='text' name='invitedUser' placeholder='초대할 팀원아이디를 입력하세요.' style='width:80%;float:left'>&nbsp;<button type='button' class='btn btn-primary btn-xs' id='delMemberbtn' style='width:18%;height:40px;'>삭제</button><p></span>";
 							$("#invitedMemberDiv").append(addInputbox);
 							num = num + 1;
 						})
 					
 						$(document).on("click","#delMemberbtn",function(){
-								$(this).prev().remove();
-								$(this).remove();
-								
+							$(this).parent().remove();
+							/* $(this).prev().remove();
+							$(this).remove(); */
 								
 						
 						})
@@ -84,7 +84,10 @@
 								$("#projectForm").submit();
 
 						});
+						
+						$(".surveySuc").click(function(){
 
+						})
 						$(".survey")
 								.click(
 										function() {
@@ -153,6 +156,7 @@
 						$("#okayBtn").click(function() {
 							$("input")
 							$("#ffform").submit();
+							alert("설문조사를 완료하였습니다.");
 						})
 
 					});
@@ -186,6 +190,13 @@
 .card {
 	height: 190px;
 }
+#setWidth {
+	width: 55%;
+	margin-left: 88px;
+}
+.form-control{
+	width: 100%;
+}
 </style>
 </head>
 <body>
@@ -205,7 +216,7 @@
 							</c:when>
 							<c:otherwise>
 								<!-- 조별과제가 있으면 -->
-								<c:forEach items="${surveyingProList}" var="projectDTO">
+								<c:forEach items="${surveyingProList}" var="projectDTO" varStatus="status">
 									<!-- 완료대기중 조별과제 -->
 									<div class="col-lg-3 col-sm-6">
 										<div class="card">
@@ -223,10 +234,15 @@
 												<hr />
 												<div class="row">
 													<div class="col-md-8">
-														<span class="label label-info "><a href="#"
-															style="color: #FFFFFF;" class="survey">설문조사
-																${projectDTO.projectNo}</a></span> <input type="hidden"
-															value="${projectDTO.projectNo}">
+													<c:forEach items="${surveySuccessList}" var="ssl" >
+														<c:if test="${(ssl.key==projectDTO.projectNo)&&(ssl.value==true)}">
+															<span class="label label-success "><a href="#" style="color: #FFFFFF;" class="surveySuc">설문조사 참여완료</a></span>
+														</c:if>
+														<c:if test="${(ssl.key==projectDTO.projectNo)&&(ssl.value==false)}">
+															<span class="label label-warning "><a href="#" style="color: #FFFFFF;" class="survey">설문조사 참여하기</a></span>														
+														</c:if>
+													</c:forEach>	
+													<input type="hidden" value="${projectDTO.projectNo}">
 													</div>
 													<div class="col-md-2">
 														<a href="${pageContext.request.contextPath}/project/teamMain/${projectDTO.projectNo}" class="btn btn-primary btn-simple">Enter</a>
@@ -267,22 +283,17 @@
 							</c:otherwise>
 						</c:choose>
 						<!-- 플러스이미지 -->
-						<div id="row">
-							<div class="col-lg-3 col-sm-6">
-								<div class="card">
-									<div class="header">
-										<div class="row">
-											<div class="col-lg-6 col-lg-offset-3">
-												<div class="content" id="plusImg">
-													<img style="width: 100%; height: 100%; margin: auto;"
-														src="${pageContext.request.contextPath}/resources/img/plus.png">
-												</div>
-											</div>
-										</div>
+						<div class="col-lg-3 col-sm-6">
+							<div class="card">
+								<div class="row">
+									<div class="content" id="plusImg">
+										<div style="height: 150px" align="center">
+										<img style="height: 100%; margin: auto;"
+											src="${pageContext.request.contextPath}/resources/img/plus.png">
+										</div>	
 									</div>
 								</div>
 							</div>
-
 						</div>
 					</div>
 				</div>
@@ -339,9 +350,10 @@
 						<div class="row">
 							<div class="">
 								<form id="projectForm" name="fr"
-									class="form-horizontal col-sm-7 col-sm-offset-1"
+									class="form-horizontal col-sm-7 col-sm-offset-0"
 									action="${pageContext.request.contextPath}/project/insertProject"
 									method="post">
+									<div id="setWidth">
 									<input type="hidden" name="${_csrf.parameterName}"
 										value="${_csrf.token}"> *새로운 조별과제를 만드는 분이 자동으로 조장으로
 									지정됩니다.
@@ -374,6 +386,7 @@
 									<a href="#" class="btn btn-sm btn-default" id="addBtn"> <span
 										class="glyphicon glyphicon-plus">팀원추가</span>
 									</a>
+									</div><!-- setWidth태그 -->
 								</form>
 							</div>
 						</div>
