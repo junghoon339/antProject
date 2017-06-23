@@ -258,8 +258,7 @@
 												<hr />
 												<div class="row">
 													<div class="col-md-2 col-md-offset-8">
-														<a
-															href="${pageContext.request.contextPath}/project/teamMain/${projectDTO.projectNo}"
+														<a href="${pageContext.request.contextPath}/project/teamMain/${projectDTO.projectNo}"
 															class="btn btn-primary btn-simple">Enter</a>
 													</div>
 												</div>

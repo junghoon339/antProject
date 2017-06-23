@@ -33,7 +33,11 @@
 <link href="http://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" rel="stylesheet">
 <link href='https://fonts.googleapis.com/css?family=Muli:400,300' rel='stylesheet' type='text/css'>
 <link href="${pageContext.request.contextPath }/resources/css/themify-icons.css" rel="stylesheet">
-
+<style type="text/css">
+.card {
+	height: 190px;
+}
+</style>
 </head>
 <body>
 <div class="wrapper">
@@ -55,7 +59,7 @@
 				                                <div class="row">
 				                                    <div class="col-md-11">
 				                                        <div class="numbers">
-				                                            ${projectDTO.projectName}
+				                                            <h5>${projectDTO.projectName}</h5>
 				                                        </div>
 				                                    </div>
 				                                </div>
