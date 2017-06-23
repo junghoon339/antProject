@@ -55,8 +55,13 @@ $(function(){
    $(document).on("click","a",function(){
       if($(this).attr("id").indexOf('p')==-1){
          var val=prompt("포스트잇에 적을 내용을 입력해주세요");
+        
+         if(val.trim()==""){
+        	 alert("내용을 적어주세요");
+         }else{
+        	 $(this).find("span").text(val);
+         }
          
-         $(this).find("span").text(val);
       }else{
          var postitSu=$(this).attr("id").split('p');
          $.ajax({
@@ -80,7 +85,7 @@ $(function(){
                            dataType:"text",
                            success:function(re){
                               if(re>0){
-                                 alert("수정됫네?ㅎㅎ");
+                                // alert("수정됫네?ㅎㅎ");
                                  todoSelectAll();
                               }else{
                                  alert("수정안됫으");

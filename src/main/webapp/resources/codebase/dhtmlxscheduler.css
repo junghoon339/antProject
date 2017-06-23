@@ -1610,14 +1610,14 @@ input.dhx_repeat_checkbox {
 }
 
 .dhx_cal_event .dhx_header, .dhx_cal_event .dhx_footer, .dhx_cal_event .dhx_body, .dhx_cal_event .dhx_title {
-	background-color: #1796b0;
+	background-color: #8aca86;
 	border-color: transparent;
 	color: white;
 }
 
 div.dhx_cal_editor {
 	border: 1px solid transparent;
-	background-color: #1796b0;
+	background-color: #8aca86;
 }
 
 .dhx_cal_editor {
@@ -1665,7 +1665,7 @@ div.dhx_menu_head, div.dhx_menu_icon {
 
 /* scales, containers start */
 .dhx_cal_container {
-	background-color: white;
+	background-color: #f4f3ef;
 }
 
 .dhx_cal_data {
@@ -1720,9 +1720,9 @@ div.dhx_menu_head, div.dhx_menu_icon {
 
 .dhx_cal_navline .dhx_cal_date {
 	border: 0;
-	font-size: 18px;
+	font-size: 25px;
 	font-weight: normal;
-	font-family: arial;
+	font-family: 나눔고딕코딩;
 	width: 100%;
 	top: 14px;
 	text-align: center;
@@ -1782,8 +1782,8 @@ div.dhx_menu_head, div.dhx_menu_icon {
 	font-size: 12px;
 }
 .dhx_cal_tab.active {
-	background-color: #F0EDE7;
-	color: #454544;
+	background-color: rgba(138, 202, 134, 0.35);
+	color: #0e0e0e;
 	border: 1px solid #CECECE;
 	text-shadow: 0px 1px 0px white;
 }

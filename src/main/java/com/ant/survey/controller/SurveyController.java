@@ -55,16 +55,11 @@ public class SurveyController {
 		SurveyUserDTO surveyUser = surveyService.surveyUserSelect(surveyNo, userNo);
 		List<UserDTO> users = new ArrayList<>();
 		
-		List<UserDTO> projectUserList = projectService.selectProjectUsers(projectNo);
-		
-		if(projectUserList.size()<=1){
-			users.add(new UserDTO(0,"0","0","0","0","0"));
-		}
-		
 		if(surveyUser.getSurveyUserState()==1){
 			return users;
 		}
 		
+		List<UserDTO> projectUserList = projectService.selectProjectUsers(projectNo);
 		String userName = user.getUserName();
 		
 		for(UserDTO u : projectUserList){
@@ -81,9 +76,12 @@ public class SurveyController {
 	@RequestMapping("/mainPage")
 	public String mainPage(HttpSession session){
 		
+		UserDTO user = (UserDTO) session.getAttribute("userDTO");
+		int sessionUser = user.getUserNo();
 		int projectNo = (int) session.getAttribute("projectNo");
 		
 		String surveyStartDate ;
+		String surveyStartDate2;
 		String surveyEndDate ;
 		String surveyEndDate2;
 		
@@ -99,14 +97,9 @@ public class SurveyController {
 		endCal.add(Calendar.DATE, 1);
 		
 		surveyStartDate = sd.format(startCal.getTime());
+		surveyStartDate2 = sd2.format(startCal.getTime());
 		surveyEndDate = sd.format(endCal.getTime());
 		surveyEndDate2 = sd2.format(endCal.getTime());
-		
-		// 마감하기 이후, State 1로 변경하는 부분,,
-		surveyService.updateTeamInfo(projectNo);
-		
-		//마감하기 이후, 프로젝트 종료시간을 변경하는 부분,,
-		surveyService.closingProject(projectNo, surveyEndDate2);
 		
 		surveyService.surveyCreate(new SurveyDTO(0, projectNo, surveyStartDate, surveyEndDate, 0));
 		
@@ -118,6 +111,26 @@ public class SurveyController {
 		for(UserDTO u : projectUserList){
 			int userNo = u.getUserNo();
 			surveyService.surveyUserCreate(new SurveyUserDTO(0, surveyNo, userNo, 0));
+		}
+		
+		List<SurveyUserDTO> surveyUserList = surveyService.surveyUserSelect(surveyNo);
+		System.out.println(projectNo+"="+surveyUserList.size());
+		if (surveyUserList.size() == 1) {
+			System.out.println("zz");
+			// 마감하기 이후, State 2로 변경하는 부분,,
+			surveyService.closedProject(projectNo);
+			
+			//마감하기 이후, 프로젝트 종료시간을 변경하는 부분,,
+			surveyService.closingProject(projectNo, surveyStartDate2);
+			
+		} else if (surveyUserList.size() > 1) {
+
+			// 마감하기 이후, State 1로 변경하는 부분,,
+			surveyService.updateTeamInfo(projectNo);
+			
+			//마감하기 이후, 프로젝트 종료시간을 변경하는 부분,,
+			surveyService.closingProject(projectNo, surveyEndDate2);
+			
 		}
 		
 		return "redirect:/project/home";
@@ -159,4 +172,5 @@ public class SurveyController {
 		}
 		return "redirect:/project/home";
 	}
+	
 }
