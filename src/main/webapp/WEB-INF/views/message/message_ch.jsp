@@ -172,6 +172,17 @@
 		})
 		
 		/* 검색 */
+		
+		/* insert 유효성 검사 */
+		$("#anmelden").click(function(){
+			alert("adf");
+			if($("#messageTopEmail").val()==""){
+				alert("받는분을 입력해주세요");
+				$("#messageTopEmail").focus();
+				return false;
+			}
+		}) 
+		/* insert 유효성 검사 */
 	});
 	/* 모달 */
 	function messageSelect(messageNo){
@@ -256,7 +267,7 @@
 						
 						 <div class="row">
 						 
-						 	
+						 	<div class="card">
 								<c:choose>
 									 <c:when test="${flag==true }">
 										 <div class="col-sm-6">
@@ -332,7 +343,7 @@
 														style="text-align: right; width:70px" id="messageTopLabel">받을사람</label>
 													<div class="col-md-4">
 														<input id="messageTopEmail" name="messageReceiver"
-															type="text" placeholder="이메일주소를 입력해주세요"
+															type="email" placeholder="이메일주소를 입력해주세요"
 															class="form-control input-md" style="width:470px">
 														
 													</div>
@@ -373,7 +384,7 @@
 						</div>
 						<!-- /.modal -->
 						<!-- Modal -->
-						
+
 						<!-- 검색 -->
 							<div class="container" style="width: 600px;">
 								<div class="row">
@@ -526,9 +537,10 @@
 
 
 						<!-- paging -->
-							<div class="clearfix" style="text-align:center">
+							<div style="text-align:center">
 							
-							<ul class="pagination pull-right" style="margin-right: 50px">
+							<ul class="pagination">
+
 						
 								<c:choose>
 									<c:when test="${startPage==1}">
@@ -552,7 +564,8 @@
 
 								<c:choose>
 									<c:when test="${stopLastPage==true}">
-										<li><a href="#"><div class="icon-container">
+
+										<li class="disabled"><a href="#"><div class="icon-container">
 		                        								<span class="ti-angle-double-right"></span>
 		                        							</div></a></li>
 									</c:when>
@@ -565,11 +578,13 @@
 								</c:choose>
 							</ul>
 
-						<!-- paging -->
-
+						
 
 						</div>
-					</div>
+
+						<!-- paging -->
+						</div>
+
 					</div>
 				</div>
 			</div>

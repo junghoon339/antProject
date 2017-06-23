@@ -161,12 +161,15 @@
 						<ul class="pagination" >
 							<c:choose>
 								<c:when test="${startPage==1 }">
-									<li class="disabled"><a href="#" style="height:34px;"><span
-									class="glyphicon glyphicon-chevron-left"></span></a></li>
+
+									<li class="disabled"><a href="#"><div class="icon-container">
+							                        				<span class="ti-angle-double-left"></span>
+							                        			</div></a></li>
 								</c:when>
 								<c:otherwise>
-									<li><a href="${pageContext.request.contextPath }/admin/user?pageNumber=${startPage-pageSu }" style="height:34px;"><span
-									class="glyphicon glyphicon-chevron-left"></span></a></li>
+									<li><a href="${pageContext.request.contextPath }/admin/user?pageNumber=${startPage-pageSu }"><div class="icon-container">
+							                        				<span class="ti-angle-double-left"></span>
+							                        			</div></a></li>
 								</c:otherwise>
 							</c:choose>
 							<c:forEach begin="${startPage }" end="${endPage }" var="pageNumber" step="1">
@@ -175,12 +178,15 @@
 							
 							<c:choose>
 								<c:when test="${flag==true }">
-									<li class="disabled"><a href="#" style="height:34px;"><span
-									class="glyphicon glyphicon-chevron-right"></span></a></li>
+
+									<li class="disabled"><a href="#"><div class="icon-container">
+		                        								<span class="ti-angle-double-right"></span>
+		                        							</div></a></li>
 								</c:when>
 								<c:otherwise>
-									<li><a href="${pageContext.request.contextPath }/admin/user?pageNumber=${startPage+pageSu }" style="height:34px;"><span
-									class="glyphicon glyphicon-chevron-right"></span></a></li>
+									<li><a href="${pageContext.request.contextPath }/admin/user?pageNumber=${startPage+pageSu }"><div class="icon-container">
+		                        								<span class="ti-angle-double-right"></span>
+		                        							</div></a></li>
 								</c:otherwise>
 							</c:choose>
 							

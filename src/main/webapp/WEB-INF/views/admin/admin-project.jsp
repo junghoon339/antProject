@@ -199,7 +199,11 @@
 
 										</c:when>
 										<c:otherwise>
-
+											<tr>
+													<th colspan="6" style="text-align: center">
+													아직 완료된 프로젝트가 없어요<span class="ti-face-sad"></span>
+                        							</th>
+												</tr>
 										</c:otherwise>
 									</c:choose>
 								</tbody>
@@ -217,18 +221,22 @@
 
 
 
-
+					<c:choose>
+						<c:when test="${projectList.size()!=0}">
 							<div style="text-align: center">
 								<ul class="pagination">
 									<c:choose>
 										<c:when test="${startPage==1 }">
-											<li class="disabled"><a href="#" style="height:34px;"><span
-													class="glyphicon glyphicon-chevron-left"></span></a></li>
+
+											<li class="disabled"><a href="#"><div class="icon-container">
+							                        				<span class="ti-angle-double-left"></span>
+							                        			</div></span></a></li>
 										</c:when>
 										<c:otherwise>
 											<li><a
-												href="${pageContext.request.contextPath }/admin/adminProject?pageNumber=${startPage-pageSu }&projectState=${projectState}&categoryNo=${categoryNo}&searchText=${searchText}" style="height:34px;"><span
-													class="glyphicon glyphicon-chevron-left"></span></a></li>
+												href="${pageContext.request.contextPath }/admin/adminProject?pageNumber=${startPage-pageSu }&projectState=${projectState}&categoryNo=${categoryNo}&searchText=${searchText}"><div class="icon-container">
+							                        				<span class="ti-angle-double-left"></span>
+							                        			</div></a></li>
 										</c:otherwise>
 									</c:choose>
 									<c:forEach begin="${startPage }" end="${endPage }"
@@ -239,18 +247,22 @@
 
 									<c:choose>
 										<c:when test="${flag==true }">
-											<li class="disabled"><a href="#" style="height:34px;"><span
-													class="glyphicon glyphicon-chevron-right"></span></a></li>
+
+											<li class="disabled"><a href="#"><div class="icon-container">
+		                        								<span class="ti-angle-double-right"></span></div></a></li>
 										</c:when>
 										<c:otherwise>
 											<li><a
-												href="${pageContext.request.contextPath }/admin/adminProject?pageNumber=${startPage+pageSu }&projectState=${projectState}&categoryNo=${categoryNo}&searchText=${searchText}" style="height:34px;"><span
-													class="glyphicon glyphicon-chevron-right"></span></a></li>
+												href="${pageContext.request.contextPath }/admin/adminProject?pageNumber=${startPage+pageSu }&projectState=${projectState}&categoryNo=${categoryNo}&searchText=${searchText}"><div class="icon-container">
+		                        								<span class="ti-angle-double-right"></span>
+		                        							</div></a></li>
 										</c:otherwise>
 									</c:choose>
 
 								</ul>
 							</div>
+						</c:when>
+					</c:choose>
 							<input type="hidden" id="flag" value="${flag }" /> <input
 								type="hidden" id="curPage" value="${curPage }" /> <input
 								type="hidden" id="endPage" value="${endPage }" /> <input
@@ -258,10 +270,14 @@
 								type="hidden" id="rowCount" value="${rowCount }" /> <input
 								type="hidden" id="projectState" value=${projectState } />
 
+
+
+
+
 							<div>
 							
 							
-							
+							<c:if test="${projectList.size()!=0}">
 							 <!-- 검색 -->
 									<div class="container" style="width: 400px;">
 										<div class="row">
@@ -297,7 +313,7 @@
 										</div>
 									</div>
 									<!-- 검색 -->
-									
+								</c:if>	
 							
 								<!-- <select class="form-control" id="category">
 									<option value="-1">선택</option>
