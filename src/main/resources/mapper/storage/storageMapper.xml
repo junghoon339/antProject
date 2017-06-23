@@ -37,17 +37,11 @@
 		s.storage_no,s.project_no,s.storage_filename,s.storage_filepath,s.storage_filesize,s.storage_readnum,s.storage_writeday,s.user_no,s.storage_title,s.storage_content,a.user_name,a.user_no	
 	</sql>
 	
-	<!-- 모든 자료 리스트
-	<select id="selectAll"  resultMap="storageMap" parameterType="int">
-		select <include refid="selectAllculmn"></include>
-		from storage s,ant_user a  
-		where s.project_no=#{projectNo}
-	</select> -->
-	
 	<!-- 총 row count  -->
 	<select id="totalCount" parameterType="int" resultType="int" >
 		select count(storage_no) from storage where project_no=#{_parameter}
 	</select>
+	
 	<!-- 모든 자료 리스트 paging -->
 	<select id="selectAllpaging"  resultMap="storageMap" parameterType="map">
 		select * from (select rownum as rnum,b.* from (select s.storage_no,s.project_no,s.storage_filename,s.storage_filepath,s.storage_filesize,s.storage_readnum,s.storage_writeday,s.storage_title,s.storage_content,a.user_name,a.user_no	
@@ -81,7 +75,7 @@
 	
 	<!-- 자료 등록하기 -->
 	<insert id="insert" parameterType="StorageDTO">
-		insert into storage values(seq_storage_no.nextval,#{userNo},#{storageTitle},#{storageContent},#{fileName},#{filePath},#{fileSize},0,sysdate,#{userNo})
+		insert into storage values(seq_storage_no.nextval,#{projectNo},#{storageTitle},#{storageContent},#{fileName},#{filePath},#{fileSize},0,sysdate,#{userNo})
 	</insert>
 	
 	<!-- 자료 수정 -->

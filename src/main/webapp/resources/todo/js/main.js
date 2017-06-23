@@ -218,7 +218,7 @@ addEvent(dropAreas, 'drop', function (event) {
     	    		//alert(re);
     	    		if(re>0){
     	    			alert("잘드감");
-    	    			document.getElementById("gallery").innerHTML='<a href="#" id="'+(++i)+'" draggable="true"><blockquote class="note yellow" style="font-size:15px;"><span id="postitText">내용을 작성해주세요</span><cite class="author">작성자</cite></blockquote></a>'
+    	    			document.getElementById("gallery").innerHTML='<a href="#" id="'+(++i)+'" draggable="true"><blockquote class="note yellow" style="font-size:17px; width:180px;height:120px;"><span id="postitText">메모를 작성해서<br/> 옮겨주세요</span><cite class="author"></cite></blockquote></a>'
     	    		    
     	    			todoSelectAll();
     	    		}else{
