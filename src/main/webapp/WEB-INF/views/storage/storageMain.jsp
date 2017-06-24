@@ -61,6 +61,10 @@
 				});
 			}
 		});
+		
+		$("#anmelden").click(function() {
+				
+		});
 
 		$("[data-toggle=tooltip]").tooltip();
 		
@@ -76,6 +80,9 @@
 				return false;
 			}
 		/* 유효성 검사 */		
+			$("#insertForm").submit();
+		
+		
 		}) 
 	
 	});
@@ -375,7 +382,7 @@
 
 												<!-- 인설트 폼 -->
 												<div class="modal-body" style="z-index: 1050;">
-													<form class="form-horizontal"
+													<form class="form-horizontal" id="insertForm"
 														action="${pageContext.request.contextPath}/storage/insert"
 														method="post" enctype="multipart/form-data">
 
@@ -446,8 +453,8 @@
 															<div class="form-group">
 																<label class="col-md-4 control-label" for="anmelden"></label>
 																<div class="col-md-8">
-																	<input type="submit" id="anmelden" name="anmelden"
-																		class="btn btn-Info" value="등록" >
+																	<!-- <input type="submit" id="anmelden" name="anmelden"
+																		class="btn btn-Info" value="등록" > -->
 									                        			
 																</div>
 															</div>
@@ -488,10 +495,17 @@
 																				.removeAttribute(
 																						'disabled');
 																	});
+													
 												</script>
 												<div class="modal-footer">
-													<button type="button" class="btn btn-Info btn-filter"
-														data-dismiss="modal">닫기</button>
+												<div class="form-group">
+																<div class="col-md-8">
+																	<input type="button" class="btn btn-Info btn-filter" id="anmelden" name="anmelden"
+														data-dismiss="modal" value="될까?"/>
+									                        			
+																</div>
+															</div>
+													
 												</div>
 											</div>
 											<!-- /.modal-content -->

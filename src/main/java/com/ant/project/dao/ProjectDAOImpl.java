@@ -119,5 +119,12 @@ public class ProjectDAOImpl implements ProjectDAO {
 		return sqlSession.selectList("projectMapper.selectIfProjectState1", userNo);
 	}
 
+	@Override
+	public int selectUnchkMessage(int userNo) {
+		return sqlSession.selectOne("projectMapper.selectUnchkMessage", userNo);
+		
+	}
+	
+
 }
 

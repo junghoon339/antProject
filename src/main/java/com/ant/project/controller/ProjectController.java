@@ -51,6 +51,7 @@ import com.dhtmlx.planner.DHXPlanner;
 import com.dhtmlx.planner.DHXSecurity;
 import com.dhtmlx.planner.DHXSkin;
 import com.dhtmlx.planner.DHXStatus;
+import com.itextpdf.text.log.SysoCounter;
 import com.sun.org.apache.bcel.internal.generic.NEW;
 
 @Controller
@@ -172,7 +173,7 @@ public class ProjectController implements Serializable {
 			long dday = (goalTime-startTime);
 			dday = dday/1000/60/60/24;
 			
-			dto.setDday((int)dday);
+			dto.setDday((int)dday+1);
 		}
 		for(ProjectDTO dto:surveyingProList){
 			Calendar startCal = Calendar.getInstance();
@@ -190,6 +191,7 @@ public class ProjectController implements Serializable {
 			dday = dday/1000/60/60/24;
 			
 			dto.setDday((int)dday+1);
+			//System.out.println("디데이: " + dto.getDday());
 		}
 		
 		ModelAndView mv = new ModelAndView();
@@ -210,8 +212,6 @@ public class ProjectController implements Serializable {
 		UserDTO userDTO = (UserDTO) req.getSession().getAttribute("userDTO");
 		int userNo = userDTO.getUserNo();
 		
-
-		
 		//완료된 조별과제를 담은 map
 		Map<String, List<ProjectDTO>> projectMap = projectService.selectProjectById(userNo);
 		List<ProjectDTO> completedProList = projectMap.get("completedProList");
@@ -225,16 +225,19 @@ public class ProjectController implements Serializable {
 	/**
 	 * 하나의 팀프로젝트 메인화면
 	 */
-	@RequestMapping("/teamMain/{projectNo}")
-	public String teamMain(@PathVariable int projectNo, HttpServletRequest req) {
-		req.getSession().setAttribute("projectNo", projectNo);
+	@RequestMapping("/teamMain")
+	public String teamMain(ProjectDTO projectDTO, HttpServletRequest req) {
+		//session에 projectNo, projectState담기
+		req.getSession().setAttribute("projectNo", projectDTO.getProjectNo());
+		req.getSession().setAttribute("projectState", projectDTO.getProjectState());
 		
 		UserDTO userDTO = (UserDTO) req.getSession().getAttribute("userDTO");
 		int userNo = userDTO.getUserNo();
 		
-		ProjectUserDTO projectUserDTO = new ProjectUserDTO(projectNo, userNo);
+		ProjectUserDTO projectUserDTO = new ProjectUserDTO(projectDTO.getProjectNo(), userNo);
 		String projectUserRole = projectService.selectProjectUserRole(projectUserDTO);
 		
+		//session에 projectUserRole(조원,조장) 담음
 		req.getSession().setAttribute("projectUserRole", projectUserRole);
 		
 		return "/project/teamMain_ch";
@@ -286,15 +289,16 @@ public class ProjectController implements Serializable {
 	}
 
 	/**
-	 * 조별과제 정보 조회
+	 * 조별과제 정보 조회 
 	 */
 	@RequestMapping("/teamInfo")
 	public ModelAndView teamInfo(HttpServletRequest req){
 		int projectNo = (int) req.getSession().getAttribute("projectNo");
+		
 		ProjectDTO projectDTO = projectService.selectProject(projectNo);
 		
 		ModelAndView mv = new ModelAndView();
-		mv.addObject("projectDTO",projectDTO);
+		mv.addObject("projectDTO", projectDTO);
 		mv.setViewName("project/teamInfo_ch");
 		
 		return mv;
@@ -396,5 +400,30 @@ public class ProjectController implements Serializable {
 		
 		return "redirect:/project/projectUserInfo";
 	}
+	
+	@RequestMapping("/report")
+	public ModelAndView report(HttpServletRequest req){
+		ModelAndView mv = new ModelAndView("project/report");
+		int projectNo = (int) req.getSession().getAttribute("projectNo");
+		ProjectDTO projectDTO = projectService.selectProject(projectNo);
+		List<UserDTO> projectUserList = projectService.selectProjectUsers(projectNo);
+		
+		
+		
+		
+		mv.addObject("projectUserList",projectUserList);
+		mv.addObject("projectDTO",projectDTO);
+		
+		return mv;
+	}
 
+	/**
+	 * 안읽은 쪽지갯수 header에 표시 패배
+	 */
+	@RequestMapping("selectUnchkMessage")
+	@ResponseBody
+	public int selectUnchkMessage(HttpServletRequest req){
+		UserDTO userDTO = (UserDTO) req.getSession().getAttribute("userDTO");
+		return projectService.selectUnchkMessage(userDTO.getUserNo());
+	}
 }

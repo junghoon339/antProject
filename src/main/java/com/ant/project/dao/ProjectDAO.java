@@ -79,4 +79,9 @@ public interface ProjectDAO {
 	 * project state가 1인 project들을 검색
 	 * */
 	public List<ProjectDTO> selectIfProjectState1(int userNo);
+	
+	/**
+	 * 안읽은 쪽지갯수 header에 표시
+	 */
+	public int selectUnchkMessage(int userNo);
 }

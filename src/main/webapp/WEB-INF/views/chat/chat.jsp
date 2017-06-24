@@ -135,7 +135,8 @@
 </script>
 </head>
 <body>
-	<div class="container">
+	<!-- <div class="container" > -->
+	<div>
 		<div class="row chat-window col-xs-5 col-md-3" id="chat_window_1"
 			style="margin-left: 10px;">
 			<div class="col-xs-12 col-md-12">
@@ -143,7 +144,7 @@
 					<div class="panel-heading top-bar">
 						<div class="col-md-8 col-xs-8">
 							<h3 class="panel-title">
-								<span class="glyphicon glyphicon-comment"></span> xx 조별과제 채팅
+								<span class="glyphicon glyphicon-comment"></span>채팅
 							</h3>
 						</div>
 						<div class="col-md-4 col-xs-4" style="text-align: right;">
