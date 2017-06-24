@@ -103,9 +103,10 @@
 						});
 						
 						//projectNO, projectState를 submit
-						$("#enter").click(function(){
-							 $("#enterForm").submit();
+						$(document).on("click","#enter",function(){
+							 $(this).parent().submit();
 						});
+						
 						
 						$(".surveySuc").click(function(){
 

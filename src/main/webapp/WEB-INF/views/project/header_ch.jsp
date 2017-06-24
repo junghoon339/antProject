@@ -26,29 +26,20 @@
                         <li>
                             <a href="${pageContext.request.contextPath }/message/main?userNo=${sessionScope.userDTO.userNo}" >
                                 <i class="ti-email"></i>
-								<p>Message　<span class="badge"></span></p>
+								<p>Message　<span class="badge" ></span></p>
                             </a>
                         </li>
-                        <li class="dropdown">
-                              <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                    <i class="ti-bell"></i>
-									<p>Notifications</p>
-									<b class="caret"></b>
-                              </a>
-                              <ul class="dropdown-menu">
-                               <li><a href="${pageContext.request.contextPath}/user/chat">몰라</a></li>
-						<li><a href="${pageContext.request.contextPath}/user/update">절레절레</a></li>
-						<li class="divider"></li>
-						<li><a href="${pageContext.request.contextPath}/test/test">꾸꾸까까</a></li>
-						<li><a href="${pageContext.request.contextPath}/user/logout">로그인/로그아웃</a></li>
-                              </ul>
-                        </li>
-						<li>
-                            <a href="#">
-								<i class="ti-reddit"></i>
+                       	<li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                             	<i class="ti-user"></i>
 								<p>${userDTO.userName}님</p>
+								<b class="caret"></b>
                             </a>
-                        </li>
+                            <ul class="dropdown-menu">
+								<li><a href="${pageContext.request.contextPath}/user/update">회원정보 수정</a></li>
+								<li><a href="${pageContext.request.contextPath}/user/logout">로그아웃</a></li>
+                            </ul>
+                     	 </li>
                     </ul>
 
                 </div>

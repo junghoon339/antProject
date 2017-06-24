@@ -173,7 +173,7 @@ public class ProjectController implements Serializable {
 			long dday = (goalTime-startTime);
 			dday = dday/1000/60/60/24;
 			
-			dto.setDday((int)dday);
+			dto.setDday((int)dday+1);
 		}
 		for(ProjectDTO dto:surveyingProList){
 			Calendar startCal = Calendar.getInstance();
@@ -289,7 +289,7 @@ public class ProjectController implements Serializable {
 	}
 
 	/**
-	 * 조별과제 정보 조회
+	 * 조별과제 정보 조회 
 	 */
 	@RequestMapping("/teamInfo")
 	public ModelAndView teamInfo(HttpServletRequest req){
@@ -402,7 +402,7 @@ public class ProjectController implements Serializable {
 	}
 
 	/**
-	 * 안읽은 쪽지갯수 header에 표시
+	 * 안읽은 쪽지갯수 header에 표시 패배
 	 */
 	@RequestMapping("selectUnchkMessage")
 	@ResponseBody
