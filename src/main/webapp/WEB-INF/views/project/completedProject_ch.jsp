@@ -55,7 +55,13 @@
 				                                <div class="row">
 				                                    <div class="col-md-11">
 				                                        <div class="numbers">
-				                                            ${projectDTO.projectName}
+				                                        	<h5><div title="${projectDTO.projectName}" style="white-space: nowrap; text-overflow: ellipsis; width:140px; overflow: hidden;">
+															
+				                                          ${projectDTO.projectName}
+				                                           </div></h5>
+				                                           <p>
+				                                           	<i class="ti-power-off"></i>마감
+				                                           </p>
 				                                        </div>
 				                                    </div>
 				                                </div>

@@ -20,20 +20,20 @@
 			<c:choose>
 				<c:when test="${projectNo==null}">
 					<li><a href="${pageContext.request.contextPath}/project/home">
-							<i class="ti-pie-chart"></i>
+							<i class="ti-layers-alt"></i>
 							<p>진행중 조별과제</p>
 					</a></li>
 					<li><a href="${pageContext.request.contextPath}/project/completedProject">
-							<i class="ti-user"></i>
+							<i class="ti-check-box"></i>
 							<p>완료된 조별과제</p>
 					</a></li>
 					<li><a href="${pageContext.request.contextPath}/timetable/main"> <i class="ti-view-list-alt"></i>
-							<p>My TimeTable</p>
+							<p>시간표</p>
 					</a></li>
-					<li><a href="${pageContext.request.contextPath}/userCalendar/userCalendar"> <i class="ti-text"></i>
-							<p>My Calendar</p>
+					<li><a href="${pageContext.request.contextPath}/userCalendar/userCalendar"> <i class="ti-calendar"></i>
+							<p>달력</p>
 					</a></li>
-					<li><a href="${pageContext.request.contextPath}/admin/adminNotice"> <i class="ti-pencil-alt2"></i>
+					<li><a href="${pageContext.request.contextPath}/admin/adminNotice"> <i class="ti-bell"></i>
 							<p>공지사항</p>
 					</a></li>
 				</c:when>
@@ -41,42 +41,42 @@
 
 				<c:otherwise>
 					<li><a
+						href="${pageContext.request.contextPath}/projectCalendar/projectCalendar">
+							<i class="ti-calendar"></i>
+							<p>프로젝트 달력</p> 
+					</a></li>
+					
+					<li><a href="${pageContext.request.contextPath}/timetable/teamMain"> <i
+							class="ti-view-list-alt"></i>
+							<p>프로젝트 시간표</p>
+					</a></li>
+					
+					<li><a
+						href="${pageContext.request.contextPath}/storage/storageTable/${projectNo}">
+							<i class="ti-save"></i>
+							<p>자료실</p>
+					</a></li>
+					<li><a href="${pageContext.request.contextPath}/vote/"> <i
+							class="ti-widget-alt"></i>
+							<p>투표함</p>
+					</a></li>
+					
+					<li><a href="${pageContext.request.contextPath}/todo/list"> <i
+							class="ti-pencil-alt"></i>
+							<p>To Do Board</p>
+					</a></li>
+					<li><a
 						href="${pageContext.request.contextPath}/project/teamInfo"> <i
-							class="ti-pie-chart"></i>
-							<p>조별과제 정보</p>
+							class="ti-more"></i>
+							<p>프로젝트 정보</p>
 					</a></li>
 					<li><a
 						href="${pageContext.request.contextPath}/project/projectUserInfo">
 							<i class="ti-user"></i>
-							<p>조원 정보</p>
-					</a></li>
-					<li><a href="table.html"> <i class="ti-view-list-alt"></i>
-							<p>조별과제 시간표</p>
-					</a></li>
-					<li><a
-						href="${pageContext.request.contextPath}/projectCalendar/projectCalendar">
-							<i class="ti-text"></i>
-							<p>조별과제 달력</p> 
-					</a></li>
-					<li><a
-						href="${pageContext.request.contextPath}/storage/storageTable/${projectNo}">
-							<i class="ti-pencil-alt2"></i>
-							<p>자료실</p>
-					</a></li>
-					<li><a href="${pageContext.request.contextPath}/vote/"> <i
-							class="ti-pencil-alt2"></i>
-							<p>투표</p>
+							<p>팀원 정보</p>
 					</a></li>
 					
-					<li><a href="${pageContext.request.contextPath}/todo/list"> <i
-							class="ti-pencil-alt2"></i>
-							<p>To Do Board</p>
-					</a></li>
 					
-					<li><a href="${pageContext.request.contextPath}/timetable/teamMain"> <i
-							class="ti-pencil-alt2"></i>
-							<p>팀 시간표</p>
-					</a></li>
 				</c:otherwise>
 			</c:choose>
 			<!--  <li>
