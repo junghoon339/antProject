@@ -199,9 +199,9 @@
 
 										</c:when>
 										<c:otherwise>
-											<tr>
+												<tr>
 													<th colspan="6" style="text-align: center">
-													아직 완료된 프로젝트가 없어요<span class="ti-face-sad"></span>
+													데이터가 없습니다.<span class="ti-face-sad"></span>
                         							</th>
 												</tr>
 										</c:otherwise>
