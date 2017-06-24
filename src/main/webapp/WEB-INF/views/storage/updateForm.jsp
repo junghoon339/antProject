@@ -87,7 +87,7 @@
 							<%-- <span class="caption-helper">작성자 - ${storageDTO.storageNo}</span> --%>
 							<input type="hidden" value="${storageDTO.userDTO.userName}" name="userName">
 							<input type="hidden" value="${storageDTO.storageNo}" name="storageNo">
-							
+							<input type="hidden" name ="projectNo" value="${projectNo}">
 							<input type="hidden" id="securityInfo" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 							
 						</div>
