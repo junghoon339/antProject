@@ -273,19 +273,25 @@
 												<div class="row">
 													<div class="col-xs-11">
 														<div class="numbers">
-															<h5>${projectDTO.projectName}</h5>
+															<h5><div title="${projectDTO.projectName}" style="white-space: nowrap; text-overflow: ellipsis; width:150px; overflow: hidden;">
+															
+															${projectDTO.projectName}
+															</div></h5>
 															<p>
 																<i class="ti-timer"></i>&nbsp;&nbsp;D-${projectDTO.dday}
 															</p>
+															
 														</div>
 													</div>
 												</div>
 												<hr />
 												<div class="row">
 													<div class="col-md-2 col-md-offset-8">
-														<a
-															href="${pageContext.request.contextPath}/project/teamMain/${projectDTO.projectNo}"
-															class="btn btn-primary btn-simple">Enter</a>
+														
+															<a
+																href="${pageContext.request.contextPath}/project/teamMain/${projectDTO.projectNo}"
+																class="btn btn-primary btn-simple">Enter</a>
+														
 													</div>
 												</div>
 											</div>
@@ -300,10 +306,10 @@
 								<div class="row">
 									<div class="content" id="plusImg">
 										<div style="height: 85px" align="center">
-										<img style="height: 100%; margin-top : 20px;"
+										<img style="height: 100%; margin-top : 20px; cursor:pointer;"
 											src="${pageContext.request.contextPath}/resources/img/plus1.png" >
 										</div>
-										<h5 align="center" style="font-family: HY나무B;">새 조별과제 생성</h5>
+										<h5 align="center" style="font-family: 나눔고딕코딩; cursor:pointer">새 조별과제 생성</h5>
 									</div>
 								</div>
 							</div>
