@@ -400,6 +400,22 @@ public class ProjectController implements Serializable {
 		
 		return "redirect:/project/projectUserInfo";
 	}
+	
+	@RequestMapping("/report")
+	public ModelAndView report(HttpServletRequest req){
+		ModelAndView mv = new ModelAndView("project/report");
+		int projectNo = (int) req.getSession().getAttribute("projectNo");
+		ProjectDTO projectDTO = projectService.selectProject(projectNo);
+		List<UserDTO> projectUserList = projectService.selectProjectUsers(projectNo);
+		
+		
+		
+		
+		mv.addObject("projectUserList",projectUserList);
+		mv.addObject("projectDTO",projectDTO);
+		
+		return mv;
+	}
 
 	/**
 	 * 안읽은 쪽지갯수 header에 표시 패배

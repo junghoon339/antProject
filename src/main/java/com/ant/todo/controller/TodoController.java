@@ -58,4 +58,9 @@ public class TodoController {
 	public int todoDelete(int todoNo){
 		return service.todoDelete(todoNo);
 	}
+	
+	@RequestMapping("/capTodo")
+	public String capTodo(){
+		return "todo/todo_cap";
+	}
 }

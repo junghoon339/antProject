@@ -61,6 +61,10 @@
 				});
 			}
 		});
+		
+		$("#anmelden").click(function() {
+				
+		});
 
 		$("[data-toggle=tooltip]").tooltip();
 		
@@ -76,6 +80,9 @@
 				return false;
 			}
 		/* 유효성 검사 */		
+			$("#insertForm").submit();
+		
+		
 		}) 
 	
 	});
@@ -168,8 +175,7 @@
                         
                             <div class="header">
                             <div class="col-sm-6">
-                                <h2 class="title">자료실 ${sessionScope.projectDTO.projectNo}</h2>
-                                <p class="category">자료를 공유하세요!</p>
+                                <h3 class="title">자료실${sessionScope.projectState}</h3>
                             </div>
 								<div class="col-sm-6" align="right">
 								 <div class="icon-container">
@@ -207,7 +213,7 @@
 													<input type="hidden" name="search_param" value="all"
 														id="search_param"> <input type="text"
 														class="form-control" name="x" placeholder="검색어를 입력하세요."
-														id="searchText"> <span class="input-group-btn">
+														id="searchText" style="border:1px solid #7cb679"> <span class="input-group-btn">
 														
 														<button class="btn btn-Info" type="button"
 															id="submitBt">
@@ -293,9 +299,8 @@
                             <c:choose>
                             <c:when test="${list.size()!=0}">
 							<!-- paging~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~` -->
-										<div class="clearfix" style="text-align: center"
-											align="center">
-											<ul class="pagination pull-right" style="margin-right: 37%">
+										<div  style="text-align: center">
+											<ul class="pagination " >
 								
 												<c:choose>
 													<c:when test="${startPage==1}">
@@ -363,11 +368,11 @@
 												<div class="modal-header modal-header-Info">
 													<button type="button" class="close"t data-dismiss="modal"
 														aria-hidden="true">×</button>
-													<h1>
+													<h3>
 														<div class="icon-container">
                         									<span class="ti-export"></span><span class="icon-name"> 자료등록</span>
                         								</div>
-													</h1>
+													</h3>
 												</div>
 
 
@@ -377,7 +382,7 @@
 
 												<!-- 인설트 폼 -->
 												<div class="modal-body" style="z-index: 1050;">
-													<form class="form-horizontal"
+													<form class="form-horizontal" id="insertForm"
 														action="${pageContext.request.contextPath}/storage/insert"
 														method="post" enctype="multipart/form-data">
 
@@ -448,8 +453,8 @@
 															<div class="form-group">
 																<label class="col-md-4 control-label" for="anmelden"></label>
 																<div class="col-md-8">
-																	<input type="submit" id="anmelden" name="anmelden"
-																		class="btn btn-Info" value="등록" >
+																	<!-- <input type="submit" id="anmelden" name="anmelden"
+																		class="btn btn-Info" value="등록" > -->
 									                        			
 																</div>
 															</div>
@@ -490,10 +495,17 @@
 																				.removeAttribute(
 																						'disabled');
 																	});
+													
 												</script>
 												<div class="modal-footer">
-													<button type="button" class="btn btn-Info btn-filter"
-														data-dismiss="modal">닫기</button>
+												<div class="form-group">
+																<div class="col-md-8">
+																	<input type="button" class="btn btn-Info btn-filter" id="anmelden" name="anmelden"
+														data-dismiss="modal" value="될까?"/>
+									                        			
+																</div>
+															</div>
+													
 												</div>
 											</div>
 											<!-- /.modal-content -->

@@ -145,6 +145,8 @@ public class StorageController {
 	
 	@RequestMapping("/update")
 	public String update(StorageDTO storageDTO) throws Exception{
+		System.out.println("title = "+storageDTO.getStorageTitle());
+		System.out.println("title = "+storageDTO.getStorageContent());
 		MultipartFile file = storageDTO.getFile();
 		if(file.getSize()>0){
 			String fileName = file.getOriginalFilename();
@@ -163,7 +165,7 @@ public class StorageController {
 			}
 		}
 		service.update(storageDTO);
-		return "redirect:/storage/storageTable/1";
+		return "redirect:/storage/storageTable/"+storageDTO.getProjectNo();
 	}
 	
 	@RequestMapping("/download")

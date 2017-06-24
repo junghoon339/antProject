@@ -27,7 +27,7 @@ public class UserAuthenticationSuccessHandler implements AuthenticationSuccessHa
 		UserDTO userDTO = (UserDTO)auth.getPrincipal();
 		req.getSession().setAttribute("userDTO", userDTO);
 		
-		//req.getRequestDispatcher("/user/main").forward(req, res); 
+		//req.getRequestDispatcher("/user/main").forward(req, res);
 		redirectStrategy.sendRedirect(req,res,"/project/home");
 	}
 	

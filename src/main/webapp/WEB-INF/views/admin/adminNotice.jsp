@@ -336,11 +336,11 @@ body{
 							<div class="modal-header modal-header-Info">
 								<button type="button" class="close" data-dismiss="modal"
 									aria-hidden="true">×</button>
-								<h1>
+								<h3>
 									<div class="icon-container">
                         				<span class="ti-export"></span><span class="icon-name"> 공지등록</span>
                         			</div>
-								</h1>
+								</h3>
 							</div>
 							
 							<!-- 인설트 폼 -->

@@ -26,7 +26,7 @@
                         <li>
                             <a href="${pageContext.request.contextPath }/message/main?userNo=${sessionScope.userDTO.userNo}" >
                                 <i class="ti-email"></i>
-								<p>Message　<span class="badge" ></span></p>
+								<p>쪽지함<span class="badge" ></span></p>
                             </a>
                         </li>
                        	<li class="dropdown">

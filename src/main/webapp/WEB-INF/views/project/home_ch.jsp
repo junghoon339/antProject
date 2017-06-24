@@ -282,16 +282,22 @@
 												<div class="row">
 													<div class="col-xs-11">
 														<div class="numbers">
-															<h5>${projectDTO2.projectName}</h5>
+															<h5><div title="${projectDTO2.projectName}" style="white-space: nowrap; text-overflow: ellipsis; width:150px; overflow: hidden;">
+															
+															${projectDTO2.projectName}
+															</div></h5>
+
 															<p>
 																<i class="ti-timer"></i>&nbsp;&nbsp;D-${projectDTO2.dday}
 															</p>
+															
 														</div>
 													</div>
 												</div>
 												<hr />
 												<div class="row">
 													<div class="col-md-2 col-md-offset-8">
+
 														<form id="enterForm" action="${pageContext.request.contextPath}/project/teamMain" method="post">
 															<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
 															<input type="hidden" name="projectNo" value="${projectDTO2.projectNo}">
@@ -312,10 +318,10 @@
 								<div class="row">
 									<div class="content" id="plusImg">
 										<div style="height: 85px" align="center">
-										<img style="height: 100%; margin-top : 20px;"
+										<img style="height: 100%; margin-top : 20px; cursor:pointer;"
 											src="${pageContext.request.contextPath}/resources/img/plus1.png" >
 										</div>
-										<h5 align="center" style="font-family: HY나무B;">새 조별과제 생성</h5>
+										<h5 align="center" style="font-family: 나눔고딕코딩; cursor:pointer">새 조별과제 생성</h5>
 									</div>
 								</div>
 							</div>
