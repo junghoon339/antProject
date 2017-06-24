@@ -66,7 +66,12 @@
 				                                <hr/>
 				                               <div class="row">
 													<div class="col-md-2 col-md-offset-8">
-					                              		<a href="${pageContext.request.contextPath}/project/teamMain/${projectDTO.projectNo}" class="btn btn-primary btn-simple">Enter</a>
+														<form id="enterForm" action="${pageContext.request.contextPath}/project/teamMain" method="post">
+															<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
+															<input type="hidden" name="projectNo" value="${projectDTO.projectNo}">
+															<input type="hidden" name="projectState" value="${projectDTO.projectState}">
+															<a href="#"	class="btn btn-primary btn-simple" id="enter">Enter</a>
+														</form>
 					                                 </div>
 				                                </div>
 				                            </div>
@@ -114,4 +119,12 @@
 
 <!-- Paper Dashboard DEMO methods, don't include it in your project! -->
 <%-- <script src="${pageContext.request.contextPath }/resources/js/demo.js"></script> --%>
+<script>
+//projectNO, projectState를 submit
+$("#enter").click(function(){
+	 $("#enterForm").submit();
+});
+</script>
+
+
 </html>

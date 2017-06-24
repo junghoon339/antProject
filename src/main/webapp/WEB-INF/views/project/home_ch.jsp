@@ -102,7 +102,7 @@
 
 						});
 						
-						//teamMain으로 projectDTO submit
+						//projectNO, projectState를 submit
 						$("#enter").click(function(){
 							 $("#enterForm").submit();
 						});
@@ -227,7 +227,6 @@
 					<div class="row">
 						<c:choose>
 							<c:when test="${empty currentProList}&&${empty surveyingProList}">
-							
 								<!-- 진행중인,완료대기중인 조별과제가 없으면 -->
 								<h4>진행중인 조별과제가 없습니다.</h4>
 							</c:when>
@@ -262,7 +261,12 @@
 													<input type="hidden" value="${projectDTO.projectNo}">
 													</div>
 													<div class="col-md-2">
-														<a href="${pageContext.request.contextPath}/project/teamMain/${projectDTO.projectNo}" class="btn btn-primary btn-simple">Enter</a>
+														<form id="enterForm" action="${pageContext.request.contextPath}/project/teamMain" method="post">
+															<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
+															<input type="hidden" name="projectNo" value="${projectDTO.projectNo}">
+															<input type="hidden" name="projectState" value="${projectDTO.projectState}">
+															<a class="btn btn-primary btn-simple" id="enter">Enter</a>
+														</form>
 													</div>
 												</div>
 											</div>
@@ -270,16 +274,16 @@
 									</div>
 								</c:forEach>
 
-								<c:forEach items="${currentProList}" var="projectDTO"><!-- 진행중인 조별과제 -->
+								<c:forEach items="${currentProList}" var="projectDTO2"><!-- 진행중인 조별과제 -->
 									<div class="col-lg-3 col-sm-6">
 										<div class="card">
 											<div class="content">
 												<div class="row">
 													<div class="col-xs-11">
 														<div class="numbers">
-															<h5>${projectDTO.projectName}</h5>
+															<h5>${projectDTO2.projectName}</h5>
 															<p>
-																<i class="ti-timer"></i>&nbsp;&nbsp;D-${projectDTO.dday}
+																<i class="ti-timer"></i>&nbsp;&nbsp;D-${projectDTO2.dday}
 															</p>
 														</div>
 													</div>
@@ -289,9 +293,10 @@
 													<div class="col-md-2 col-md-offset-8">
 														<form id="enterForm" action="${pageContext.request.contextPath}/project/teamMain" method="post">
 															<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
-															<input type="hidden" name="projectDTO" value="${projectDTO}">
-															<a href="#"	class="btn btn-primary btn-simple" id="enter">Enter</a>
-														</form>
+															<input type="hidden" name="projectNo" value="${projectDTO2.projectNo}">
+															<input type="hidden" name="projectState" value="${projectDTO2.projectState}">
+															<a class="btn btn-primary btn-simple" id="enter">Enter</a>
+														</form>													
 													</div>
 												</div>
 											</div>
@@ -372,9 +377,8 @@
 									action="${pageContext.request.contextPath}/project/insertProject"
 									method="post">
 									<div id="setWidth">
-									<input type="hidden" name="${_csrf.parameterName}"
-										value="${_csrf.token}"> *새로운 조별과제를 만드는 분이 자동으로 조장으로
-									지정됩니다.
+									<input type="hidden" name="${_csrf.parameterName}"value="${_csrf.token}">
+									 *새로운 조별과제를 만드는 분이 자동으로 조장으로 지정됩니다.
 									<p></p>
 									팀플명 : <input class="form-control border-input" type="text"
 										name="projectName" />

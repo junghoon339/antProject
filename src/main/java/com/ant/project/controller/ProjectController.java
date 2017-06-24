@@ -227,10 +227,9 @@ public class ProjectController implements Serializable {
 	 */
 	@RequestMapping("/teamMain")
 	public String teamMain(ProjectDTO projectDTO, HttpServletRequest req) {
-		req.getSession().setAttribute("projectDTO", projectDTO);
+		//session에 projectNo, projectState담기
 		req.getSession().setAttribute("projectNo", projectDTO.getProjectNo());
-		
-		System.out.println("Session에 담긴 projectDTO : "+req.getSession().getAttribute("projectDTO"));
+		req.getSession().setAttribute("projectState", projectDTO.getProjectState());
 		
 		UserDTO userDTO = (UserDTO) req.getSession().getAttribute("userDTO");
 		int userNo = userDTO.getUserNo();
@@ -295,10 +294,11 @@ public class ProjectController implements Serializable {
 	@RequestMapping("/teamInfo")
 	public ModelAndView teamInfo(HttpServletRequest req){
 		int projectNo = (int) req.getSession().getAttribute("projectNo");
+		
 		ProjectDTO projectDTO = projectService.selectProject(projectNo);
 		
 		ModelAndView mv = new ModelAndView();
-		mv.addObject("projectDTO",projectDTO);
+		mv.addObject("projectDTO", projectDTO);
 		mv.setViewName("project/teamInfo_ch");
 		
 		return mv;
