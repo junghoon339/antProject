@@ -117,4 +117,11 @@ public class ProjectServiceImpl implements ProjectService {
 		return projectDAO.selectIfProjectState1(userNo);
 	}
 
+	@Override
+	public int selectUnchkMessage(int userNo) {
+		return projectDAO.selectUnchkMessage(userNo);
+	}
+	
+	
+
 }

@@ -10,6 +10,8 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 	
 	<title>Insert title here</title>
+		<!--   Core JS Files   -->
+	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/jquery-3.2.1.min.js"></script>
 	<link rel="apple-touch-icon" sizes="76x76" href="assets/img/apple-icon.png">
 	<link rel="icon" type="image/png" sizes="96x96" href="assets/img/favicon.png">
 	<!-- Bootstrap core CSS     -->
@@ -48,8 +50,7 @@
 		</div>
 	</div>
 	
-	<!--   Core JS Files   -->
-	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/jquery-3.2.1.min.js"></script>
+
 	<script src="${pageContext.request.contextPath }/resources/js/bootstrap.min.js" type="text/javascript"></script>
 	<!--  Checkbox, Radio & Switch Plugins -->
 	<script src="${pageContext.request.contextPath }/resources/js/bootstrap-checkbox-radio.js"></script>
