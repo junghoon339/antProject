@@ -396,5 +396,10 @@ public class ProjectController implements Serializable {
 		
 		return "redirect:/project/projectUserInfo";
 	}
-
+	
+	@RequestMapping("/report")
+	public String report(){
+		
+		return "project/report";
+	}
 }

@@ -77,6 +77,11 @@
 							class="ti-pencil-alt2"></i>
 							<p>팀 시간표</p>
 					</a></li>
+					
+					<li><a href="${pageContext.request.contextPath}/project/report"> <i
+							class="ti-pencil-alt2"></i>
+							<p>프로젝트 요약</p>
+					</a></li>
 				</c:otherwise>
 			</c:choose>
 			<!--  <li>
