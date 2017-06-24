@@ -398,8 +398,18 @@ public class ProjectController implements Serializable {
 	}
 	
 	@RequestMapping("/report")
-	public String report(){
+	public ModelAndView report(HttpServletRequest req){
+		ModelAndView mv = new ModelAndView("project/report");
+		int projectNo = (int) req.getSession().getAttribute("projectNo");
+		ProjectDTO projectDTO = projectService.selectProject(projectNo);
+		List<UserDTO> projectUserList = projectService.selectProjectUsers(projectNo);
 		
-		return "project/report";
+		
+		
+		
+		mv.addObject("projectUserList",projectUserList);
+		mv.addObject("projectDTO",projectDTO);
+		
+		return mv;
 	}
 }

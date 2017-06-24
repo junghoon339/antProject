@@ -51,6 +51,58 @@ public class ProjectCalendarController implements Serializable {
 	private Date from;
 	private Date to;
 	private Boolean dynFilter;
+
+	
+	@RequestMapping("/report")
+	public ModelAndView report(HttpServletRequest req) throws Exception {
+
+		System.out.println("projectCalendar 뿌려짐");
+		String contextPath = req.getContextPath();
+		HttpSession session = req.getSession();
+
+		UserDTO userDTO = (UserDTO) session.getAttribute("userDTO");
+		int userNo = userDTO.getUserNo();
+		System.out.println("user_no : "+userNo);
+		
+		int projectNo = (int) session.getAttribute("projectNo");
+		ProjectDTO projectDTO = projectService.selectProject(projectNo);
+		int nono = projectDTO.getProjectNo();
+		System.out.println("project_no : " +nono);
+		/*int projectNo = projectDTO.getProjectNo();*/
+		
+
+		
+		// calendar����
+		DHXPlanner planner = new DHXPlanner(contextPath + "/resources/codebase/", DHXSkin.TERRACE);
+		planner.localizations.set("cr");
+		planner.setWidth(900);
+
+		planner.setInitialView("month");
+
+		planner.config.setTimeStep(60);
+		planner.config.setEventDuration(60);
+		planner.config.setAutoEndDate(true);
+		planner.config.setFirstHour(9);
+		planner.config.setLastHour(19);
+		planner.config.setStartOnMonday(false);
+		planner.config.setMonthDate("%Y년 %M월");
+		planner.config.setDefaultDate("%Y년%M월 %j일");
+		planner.config.setDayDate("%D");
+
+		CsrfToken token = (CsrfToken) req.getAttribute(CsrfToken.class.getName());
+		System.out.println("token:" + token);
+
+		planner.data.dataprocessor
+				.setURL(contextPath + "/projectCalendar/events?" + token.getParameterName() + "=" + token.getToken());
+		planner.parse(calendarService.getEvent(projectNo));
+
+		ModelAndView mv = new ModelAndView();
+		mv.addObject("schedule", planner.render());
+		mv.setViewName("project/report");
+		// mv.addObject("currentProList",currentProList);
+		// mv.addObject("completedProList",completedProList);
+		return mv;
+	}
 	
 	@RequestMapping("/projectCalendar")
 	public ModelAndView home(HttpServletRequest req) throws Exception {

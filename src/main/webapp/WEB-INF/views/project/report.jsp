@@ -57,89 +57,93 @@
 					-->
 
 					<div class="row">
-						<div class="col-md-12">
-							<div class="card" id="timereport">
+						<div class="col-md-6">
+							<div class="card">
+								<div class="header">
+									<h4 class="title">조원 정보</h4>
+									<p class="category">${projectDTO.projectName}</p>
+								</div>
 								<div class="content">
-									<h1>시간표</h1>
-									<div>
-										<img
-											src="${pageContext.request.contextPath}/resources/img/apple-icon.png" />
+									<div class="row">
+										${projectDTO.projectSubject} | ${projectDTO.projectTeacher} <br>
+										
+									</div>
+
+									<div class="footer">
+
+										<hr>
+										<div class="stats">
+											<i class="ti-timer"></i> Campaign sent 2 days ago
+										</div>
 									</div>
 								</div>
-
 							</div>
-							<div class="card" id="todoreport">
+						</div>
+						<div class="col-md-6">
+							<div class="card">
+								<div class="header">
+									<h4 class="title">조별과제 정보</h4>
+									<p class="category">Last Campaign Performance</p>
+								</div>
 								<div class="content">
+									<div class="row">ddsdsds</div>
 
-									<h1>투두리스트</h1>
-									<div>
-										<img
-											src="${pageContext.request.contextPath}/resources/img/new_logo.png" />
+									<div class="footer">
+
+										<hr>
+										<div class="stats">
+											<i class="ti-timer"></i> Campaign sent 2 days ago
+										</div>
 									</div>
 								</div>
-
 							</div>
-							<div class="card" id="todoreport2">
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-6">
+							<div class="card">
+								<div class="header">
+									<h4 class="title">TO DO BOARD</h4>
+									<p class="category">Last Campaign Performance</p>
+								</div>
 								<div class="content">
+									<div class="row">ddsdsds</div>
 
-									<h1>투두리스트</h1>
-									<div>
-										<img
-											src="${pageContext.request.contextPath}/resources/img/new_logo.png" />
+									<div class="footer">
+
+										<hr>
+										<div class="stats">
+											<i class="ti-timer"></i> Campaign sent 2 days ago
+										</div>
 									</div>
 								</div>
-
 							</div>
-							<div class="card" id="todoreport">
+						</div>
+						<div class="col-md-6">
+							<div class="card">
+								<div class="header">
+									<h4 class="title">조별과제 달력</h4>
+									<p class="category">Last Campaign Performance</p>
+								</div>
 								<div class="content">
+									<div class="row">
+										<c:import url="/projectCalendar/report"/>
+									</div>
 
-									<h1>투두리스트</h1>
-									<div>
-										<img
-											src="${pageContext.request.contextPath}/resources/img/new_logo.png" />
+									<div class="footer">
+
+										<hr>
+										<div class="stats">
+											<i class="ti-timer"></i> Campaign sent 2 days ago
+										</div>
 									</div>
 								</div>
-
 							</div>
-							<div class="card" id="todoreport">
-								<div class="content">
-
-									<h1>투두리스트</h1>
-									<div>
-										<img
-											src="${pageContext.request.contextPath}/resources/img/new_logo.png" />
-									</div>
-								</div>
-
-							</div>
-							<div class="card" id="todoreport">
-								<div class="content">
-
-									<h1>투두리스트</h1>
-									<div>
-										<img
-											src="${pageContext.request.contextPath}/resources/img/new_logo.png" />
-									</div>
-								</div>
-
-							</div>
-							<div class="card" id="todoreport">
-								<div class="content">
-
-									<h1>투두리스트</h1>
-									<div>
-										<img
-											src="${pageContext.request.contextPath}/resources/img/new_logo.png" />
-									</div>
-								</div>
-
-							</div>
-							<button id="pdfdown">다운</button>
 						</div>
 					</div>
 
-
 				</div>
+					<button id="pdfdown">다운</button>
 			</div>
 			<jsp:include page="footer_ch.jsp" flush="false" />
 		</div>
@@ -179,34 +183,34 @@
 				pdf.addHTML(document.body, options, function() {
 					pdf.save('datauri');
 				}); */
+				makePDF();
+				/* 				var doc = new jsPDF();
+				 doc.setFontSize(30); */
+				/* 				 doc.addHTML($("#pdf"), function(){
+				 doc.save('test.pdf');
+				 }) */
 
-				var doc = new jsPDF();
-				doc.setFontSize(30);
 				/* var options = {
 					pagesplit : true	
 				};
 				 */
-				 var el = document.getElementById('pdf');
+				/* 				 var el = document.getElementById('pdf');
 				 el.parentElement.style.height = '10000px';
-				  
+				
 				 el.style.display = 'inline-block';
 				 el.style.height = "auto";
-				 
-				 doc.addHTML($("#pdf"), function(){
-					 doc.save('test.pdf');
-				 })
-/* 				 
+				
+				 /* 				 
 
-				html2canvas($("#todoreport2"), {
-						onrendered : function(canvas) {
-							var imgData = canvas.toDataURL('image/jpeg',1.0);
-							doc.text(0, 10, 'TIME TABLE');
-							doc.addImage(imgData, 'PNG', 20, 20, 100, 50);
-							doc.save('test.pdf');
-						}
-					}); */
-				 
-				 
+				 html2canvas($("#todoreport2"), {
+				 onrendered : function(canvas) {
+				 var imgData = canvas.toDataURL('image/jpeg',1.0);
+				 doc.text(0, 10, 'TIME TABLE');
+				 doc.addImage(imgData, 'PNG', 20, 20, 100, 50);
+				 doc.save('test.pdf');
+				 }
+				 }); */
+
 				/* pdf.text(10, 10, 'HTML')
 				pdf.addHTML($("#pdf"), 10, 30, options, function(){
 				    pdf.save("test.pdf");
@@ -233,10 +237,10 @@
 			});
 
 		})
-		
-		function genPDF(){
+
+		function genPDF() {
 			html2canvas(document.body, {
-				onrendered: function(canvas){
+				onrendered : function(canvas) {
 					var img = canvas.toDataURL("image/png");
 					var doc = new jsPDF();
 					doc.addImage(img, 'JPEG', 20, 20);
@@ -244,12 +248,23 @@
 				}
 			});
 		}
-		
+
 		function makePDF() {
 
-			var quotes = document.getElementById('container-fluid');
+			var quotes = document.getElementById('pdf');
+			quotes.parentElement.style.height = '10000px';
 
-			html2canvas(quotes,{onrendered : function(canvas) {
+			quotes.style.display = 'inline-block';
+			quotes.style.height = "auto";
+			/* var el = document.getElementById('container-fluid');
+			 el.parentElement.style.height = '10000px';
+			  
+			 el.style.display = 'inline-block';
+			 el.style.height = "auto"; */
+			html2canvas(
+					quotes,
+					{
+						onrendered : function(canvas) {
 							//! MAKE YOUR PDF
 							var pdf = new jsPDF('p', 'pt', 'letter');
 
@@ -287,7 +302,7 @@
 								if (i > 0) {
 									pdf.addPage(612, 791); //8.5" x 11" in pts (in*72)
 								}
-								
+
 								//! now we declare that we're working on that page
 								pdf.setPage(i + 1);
 								//! now we add content to that page!
