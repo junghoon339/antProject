@@ -296,7 +296,7 @@
 													<input type="hidden" name="search_param" value="all"
 														id="search_param"> <input type="text"
 														class="form-control" name="x" placeholder="검색어를 입력하세요."
-														id="searchText" style="border:1px solid #66615b"> <span class="input-group-btn">
+														id="searchText" style="border:1px solid #7cb679"> <span class="input-group-btn">
 														
 														<button class="btn btn-Info" type="button"
 															id="searchBtn">
