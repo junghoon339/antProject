@@ -199,7 +199,11 @@
 
 										</c:when>
 										<c:otherwise>
-
+												<tr>
+													<th colspan="6" style="text-align: center">
+													데이터가 없습니다.<span class="ti-face-sad"></span>
+                        							</th>
+												</tr>
 										</c:otherwise>
 									</c:choose>
 								</tbody>
@@ -217,18 +221,22 @@
 
 
 
-
+					<c:choose>
+						<c:when test="${projectList.size()!=0}">
 							<div style="text-align: center">
 								<ul class="pagination">
 									<c:choose>
 										<c:when test="${startPage==1 }">
-											<li class="disabled"><a href="#"><span
-													class="glyphicon glyphicon-chevron-left"></span></a></li>
+
+											<li class="disabled"><a href="#"><div class="icon-container">
+							                        				<span class="ti-angle-double-left"></span>
+							                        			</div></span></a></li>
 										</c:when>
 										<c:otherwise>
 											<li><a
-												href="${pageContext.request.contextPath }/admin/adminProject?pageNumber=${startPage-pageSu }&projectState=${projectState}&categoryNo=${categoryNo}&searchText=${searchText}"><span
-													class="glyphicon glyphicon-chevron-left"></span></a></li>
+												href="${pageContext.request.contextPath }/admin/adminProject?pageNumber=${startPage-pageSu }&projectState=${projectState}&categoryNo=${categoryNo}&searchText=${searchText}"><div class="icon-container">
+							                        				<span class="ti-angle-double-left"></span>
+							                        			</div></a></li>
 										</c:otherwise>
 									</c:choose>
 									<c:forEach begin="${startPage }" end="${endPage }"
@@ -239,18 +247,22 @@
 
 									<c:choose>
 										<c:when test="${flag==true }">
-											<li class="disabled"><a href="#"><span
-													class="glyphicon glyphicon-chevron-right"></span></a></li>
+
+											<li class="disabled"><a href="#"><div class="icon-container">
+		                        								<span class="ti-angle-double-right"></span></div></a></li>
 										</c:when>
 										<c:otherwise>
 											<li><a
-												href="${pageContext.request.contextPath }/admin/adminProject?pageNumber=${startPage+pageSu }&projectState=${projectState}&categoryNo=${categoryNo}&searchText=${searchText}"><span
-													class="glyphicon glyphicon-chevron-right"></span></a></li>
+												href="${pageContext.request.contextPath }/admin/adminProject?pageNumber=${startPage+pageSu }&projectState=${projectState}&categoryNo=${categoryNo}&searchText=${searchText}"><div class="icon-container">
+		                        								<span class="ti-angle-double-right"></span>
+		                        							</div></a></li>
 										</c:otherwise>
 									</c:choose>
 
 								</ul>
 							</div>
+						</c:when>
+					</c:choose>
 							<input type="hidden" id="flag" value="${flag }" /> <input
 								type="hidden" id="curPage" value="${curPage }" /> <input
 								type="hidden" id="endPage" value="${endPage }" /> <input
@@ -258,14 +270,18 @@
 								type="hidden" id="rowCount" value="${rowCount }" /> <input
 								type="hidden" id="projectState" value=${projectState } />
 
+
+
+
+
 							<div>
 							
 							
-							
+							<c:if test="${projectList.size()!=0}">
 							 <!-- 검색 -->
-									<div class="container" style="width: 910px;">
+									<div class="container" style="width: 400px;">
 										<div class="row">
-											<div class="col-xs-8 col-xs-offset-2">
+											
 												<div class="input-group">
 													<div class="input-group-btn search-panel">
 														
@@ -276,10 +292,11 @@
 															<option value="1">과목명</option>
 														</select>
 													</div>
+													
 													<input type="hidden" name="search_param" value="all"
 														id="search_param"> <input type="text"
 														class="form-control" name="x" placeholder="검색어를 입력하세요."
-														id="searchText"> <span class="input-group-btn">
+														id="searchText" style="border:1px solid #66615b"> <span class="input-group-btn">
 														
 														<button class="btn btn-Info" type="button"
 															id="searchBtn">
@@ -290,12 +307,13 @@
                         									
 														</button>
 													</span>
+												
 												</div>
-											</div>
+											
 										</div>
 									</div>
 									<!-- 검색 -->
-									
+								</c:if>	
 							
 								<!-- <select class="form-control" id="category">
 									<option value="-1">선택</option>

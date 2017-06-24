@@ -280,3 +280,12 @@ select * from todo;
 		ON d.vote_detail_no = s.vote_detail_no 
 		AND d.vote_no = 4' 
 		AND d.vote_detail_no = '10
+		
+create table notice(
+      notice_no number constraint notice_no_pk primary key,
+      notice_title varchar2(100) not null,
+      notice_content varchar2(200) not null,
+      notice_readnum number default 0,
+      notice_writeday date default sysdate
+)
+create sequence seq_notice_no;

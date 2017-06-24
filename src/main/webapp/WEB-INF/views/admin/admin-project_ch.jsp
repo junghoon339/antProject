@@ -220,12 +220,12 @@
 								<ul class="pagination">
 									<c:choose>
 										<c:when test="${startPage==1 }">
-											<li class="disabled"><a href="#"><span
+											<li class="disabled"><a href="#" style="height:34px;"><span
 													class="glyphicon glyphicon-chevron-left"></span></a></li>
 										</c:when>
 										<c:otherwise>
 											<li><a
-												href="${pageContext.request.contextPath }/admin/adminProject?pageNumber=${startPage-pageSu }&projectState=${projectState}&categoryNo=${categoryNo}&searchText=${searchText}"><span
+												href="${pageContext.request.contextPath }/admin/adminProject?pageNumber=${startPage-pageSu }&projectState=${projectState}&categoryNo=${categoryNo}&searchText=${searchText}" style="height:34px;"><span
 													class="glyphicon glyphicon-chevron-left"></span></a></li>
 										</c:otherwise>
 									</c:choose>
@@ -237,12 +237,12 @@
 
 									<c:choose>
 										<c:when test="${flag==true }">
-											<li class="disabled"><a href="#"><span
+											<li class="disabled"><a href="#" style="height:34px;"><span
 													class="glyphicon glyphicon-chevron-right"></span></a></li>
 										</c:when>
 										<c:otherwise>
 											<li><a
-												href="${pageContext.request.contextPath }/admin/adminProject?pageNumber=${startPage+pageSu }&projectState=${projectState}&categoryNo=${categoryNo}&searchText=${searchText}"><span
+												href="${pageContext.request.contextPath }/admin/adminProject?pageNumber=${startPage+pageSu }&projectState=${projectState}&categoryNo=${categoryNo}&searchText=${searchText}" style="height:34px;"><span
 													class="glyphicon glyphicon-chevron-right"></span></a></li>
 										</c:otherwise>
 									</c:choose>

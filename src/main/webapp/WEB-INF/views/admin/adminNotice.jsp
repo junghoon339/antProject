@@ -66,6 +66,16 @@
 		});
 
 		$("[data-toggle=tooltip]").tooltip();
+		
+		/* 유효성 검사 */
+		$("#anmelden").click(function(){
+			if($("#name").val()==""){
+				alert("제목을 입력해주세요");
+				$("#name").focus();
+				return false;
+			}
+		/* 유효성 검사 */	
+		
 	});
 	/* 모달 */
 	
@@ -190,7 +200,7 @@ body{
 													<input type="hidden" name="search_param" value="all"
 														id="search_param"> <input type="text"
 														class="form-control" name="x" placeholder="검색어를 입력하세요."
-														id="searchText"> <span class="input-group-btn">
+														id="searchText" style="border:1px solid #66615b"> <span class="input-group-btn">
 														<button class="btn btn-Info" type="button"
 															id="submitBt">
 															<div class="icon-container">
@@ -223,21 +233,36 @@ body{
 										
 									</thead>
                                     <tbody>
-                                    <c:forEach var="item" items="${list}">
-										<tr>
-											<td>${item.noticeNo}</td>
-											<td><a
-												href="${pageContext.request.contextPath}/admin/noticeDetail/${item.noticeNo}">${item.noticeTitle}</a></td>
-											<td>${item.writeDay}</td>
-											<td>${item.readNum}</td>
-		
-										</tr>
-									</c:forEach>
+                                    <c:choose>
+                                    <c:when test="${list.size()!=0}">
+	                                    <c:forEach var="item" items="${list}" varStatus="state">
+											<tr>
+												<td>${state.count}</td>
+												<td><a
+													href="${pageContext.request.contextPath}/admin/noticeDetail/${item.noticeNo}">${item.noticeTitle}</a></td>
+												<td>${item.writeDay}</td>
+												<td>${item.readNum}</td>
+			
+											</tr>
+										</c:forEach>
+									</c:when>	
+									<c:otherwise>
+												<tr>
+													<th colspan="4" style="text-align: center">
+                        							<div class="icon-container">
+                        				등록된 공지가 없어요<span class="ti-face-sad"></span>
+                        			</div>
+                        							</th>
+												</tr>
+									</c:otherwise>
+									</c:choose>
                                     </tbody>
                                 </table>
+                         <c:choose>
+                         <c:when test="${list.size()!=0}">
 						<!-- paging~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~` -->
-											<div class="clearfix" style="text-align: center" align="center">
-											<ul class="pagination pull-right" style="margin-right:37%">
+											<div class="clearfix" style="text-align: center">
+											<ul class="pagination pull-right">
 						
 												<c:choose>
 													<c:when test="${startPage==1}">
@@ -274,8 +299,11 @@ body{
 												
 											</ul>
 										</div>
-				
+						
+					
 					<!-- paging~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~` -->
+					</c:when>
+					</c:choose>
                             </div>
                         </div>
                     </div>

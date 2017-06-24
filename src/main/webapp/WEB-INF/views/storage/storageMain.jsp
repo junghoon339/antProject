@@ -41,8 +41,7 @@
 <link
 	href="${pageContext.request.contextPath }/resources/css/themify-icons.css"
 	rel="stylesheet">
-<link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
+
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 <!-- 필요한 css는 이 밑에 넣어주면 됨 -->
 <!-- 스크립트는 body 맨 아래쪽에 -->
@@ -64,6 +63,21 @@
 		});
 
 		$("[data-toggle=tooltip]").tooltip();
+		
+		/*  if($("#name").val()==""){
+			$("#anmelden").attr("disabled",true);
+		}  */
+		
+		/* 유효성 검사 */
+		$("#anmelden").click(function(){
+			if($("#name").val()==""){
+				alert("제목을 입력해주세요");
+				$("#name").focus();
+				return false;
+			}
+		/* 유효성 검사 */		
+		}) 
+	
 	});
 	/* 모달 */
 
@@ -121,9 +135,9 @@
 }
 
 /* search form */
-body{
+/* body{
     margin-top:20px;
-}
+} */
 /* search form */
 </style>
 <body>
@@ -157,9 +171,6 @@ body{
                                 <h2 class="title">자료실 ${sessionScope.projectDTO.projectNo}</h2>
                                 <p class="category">자료를 공유하세요!</p>
                             </div>
-                               <!--  <div class="col-sm-6" align="right">
-										<a class="btn btn-danger" href="#danger" data-toggle="modal">글쓰기</a>
-								</div> -->
 								<div class="col-sm-6" align="right">
 								 <div class="icon-container">
                         				<span class="ti-pencil" href="#danger" data-toggle="modal"></span><span class="icon-name" href="#danger" data-toggle="modal"><a href="#">글쓰기</a></span>
@@ -241,9 +252,11 @@ body{
                                     	<th>조회수</th>
                                     </thead>
                                     <tbody>
-                                    <c:forEach var="item" items="${list}">
+                                    <c:choose>
+                                    	<c:when test="${list.size()!=0}">
+                                   			 <c:forEach var="item" items="${list}" varStatus="state">
 													<tr>
-														<td>${item.storageNo}</td>
+														<td>${state.count}</td>
 														<td>${item.userDTO.userName}</td>
 														<td><a
 															href="${pageContext.request.contextPath}/storage/tableDetail/${item.storageNo}">${item.storageTitle}</a></td>
@@ -263,10 +276,22 @@ body{
 
 													</tr>
 												</c:forEach>
+											</c:when>
+											<c:otherwise>
+												<tr>
+													<th colspan="6" style="text-align: center">
+													<div class="icon-container">
+                        							<span class="icon-name"> 자료를 등록해보세요!</span>	<span class="ti-comments-smiley"></span>
+                        							</div>
+                        							</th>
+												</tr>
+											</c:otherwise>
+										</c:choose>
                                     </tbody>
                                 </table>
                                 
-                                
+                            <c:choose>
+                            <c:when test="${list.size()!=0}">
 							<!-- paging~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~` -->
 										<div class="clearfix" style="text-align: center"
 											align="center">
@@ -309,7 +334,8 @@ body{
 
 											</ul>
 										</div>
-									
+										</c:when>
+									</c:choose>
 										<!-- paging~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~` -->
                             </div>
                         </div>
@@ -359,6 +385,7 @@ body{
 														<input type="hidden" name="userNo" value="${sessionScope.userDTO.userNo}">
 														<input type="hidden" name ="projectNo" value="${projectNo}">
 
+
 														<fieldset>
 
 															<!-- Form Name -->
@@ -370,7 +397,7 @@ body{
 																<div class="col-md-4">
 																	<input id="name" name="storageTitle" type="text"
 																		placeholder="제목을 입력하세요" class="form-control input-md"
-																		style="width: 465px">
+																		style="width: 465px" >
 
 																</div>
 															</div>
@@ -422,7 +449,7 @@ body{
 																<label class="col-md-4 control-label" for="anmelden"></label>
 																<div class="col-md-8">
 																	<input type="submit" id="anmelden" name="anmelden"
-																		class="btn btn-Info" value="등록">
+																		class="btn btn-Info" value="등록" >
 									                        			
 																</div>
 															</div>

@@ -25,13 +25,14 @@
 	<link href="http://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" rel="stylesheet">
 	<link href='https://fonts.googleapis.com/css?family=Muli:400,300' rel='stylesheet' type='text/css'>
 	<link href="${pageContext.request.contextPath }/resources/css/themify-icons.css" rel="stylesheet">
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
 	
 	<!-- 필요한 css는 이 밑에 넣어주면 됨 -->
 	<link href="${pageContext.request.contextPath}/resources/asset/stylesheets/timetable.css" media="all" rel="stylesheet" type="text/css" />
 	
 	<!-- 스크립트는 body 맨 아래쪽에 -->
-	
+	<style type="text/css">
+	.timecell {opacity:1;}
+	</style>
       <script>
       (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
          (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
@@ -58,6 +59,7 @@
                      <div id="customcell" style="display:none;"></div>  
                   </div>
                </div>
+               <div class="card">
                <table id="timetable" >
                      <tr>
                         <th>&nbsp;</th>
