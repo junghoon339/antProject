@@ -84,41 +84,6 @@
 <body>
 
 
-<br/><br/><br/><br/>
-<!-- 	<header tabindex="0"> </header> -->
-	<%-- <div id="gallery" class="gallery" style="display:inline;margin-left:600px;">
-		<!-- <div class="quote-container"> -->
-	 	  <a href="#" id="0" draggable="true">
-			 <!--  <i class="pin"></i> -->
-			  
-			  <blockquote class="note yellow" style="font-size:15px;">
-			  	
-			    <span id="postitText">내용을 작성해주세요</span>
-			   
-			    <cite class="author">작성자</cite>
-			    
-			  </blockquote>
-			  
-		  </a> --%>
-		<!-- </div> -->
-		<%-- <a id="1" draggable="true"><img src="${pageContext.request.contextPath }/resources/todo/images/1.jpg"></a> <a
-			id="2" draggable="true"><img src="${pageContext.request.contextPath }/resources/todo/images/2.jpg"></a> <a id="3"
-			draggable="true"><img src="${pageContext.request.contextPath }/resources/todo/images/3.jpg"></a> <a id="4"
-			draggable="true"><img src="${pageContext.request.contextPath }/resources/todo/images/4.jpg"></a> <a id="5"
-			draggable="true"><img src="${pageContext.request.contextPath }/resources/todo/images/5.jpg"></a> <a id="6"
-			draggable="true"><img src="${pageContext.request.contextPath }/resources/todo/images/6.jpg"></a> <a id="7"
-			draggable="true"><img src="${pageContext.request.contextPath }/resources/todo/images/7.jpg"></a> <a id="8"
-			draggable="true"><img src="images/8.jpg"></a> <a id="9"
-			draggable="true"><img src="images/9.jpg"></a> <a id="10"
-			draggable="true"><img src="images/10.jpg"></a> <a id="11"
-			draggable="true"><img src="images/11.jpg"></a> <a id="12"
-			draggable="true"><img src="images/12.jpg"></a> --%>
-		<!-- </div> -->
-		<!-- <div class="album" id="drop_trash" droppable="true" style="float:right;margin-right:250px;">
-			<h2>TRASH</h2>
-			
-		</div> -->
-	
 	<div class="albums">
 		<div class="album" id="drop_0" droppable="true">
 			<h2>TO DO</h2>

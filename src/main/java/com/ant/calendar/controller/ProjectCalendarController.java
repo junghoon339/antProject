@@ -9,6 +9,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
@@ -101,6 +102,16 @@ public class ProjectCalendarController implements Serializable {
 		mv.setViewName("project/report");
 		// mv.addObject("currentProList",currentProList);
 		// mv.addObject("completedProList",completedProList);
+		
+		List<UserDTO> projectUserList = projectService.selectProjectUsers(projectNo);
+		
+		
+		
+		
+		mv.addObject("projectUserList",projectUserList);
+		mv.addObject("projectDTO",projectDTO);
+
+		
 		return mv;
 	}
 	

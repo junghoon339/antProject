@@ -2,7 +2,6 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
-<!DOCTYPE html>
 <html lang="ko">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -42,7 +41,7 @@
 <!-- 필요한 css는 이 밑에 넣어주면 됨 -->
 <!-- 스크립트는 body 맨 아래쪽에 -->
 </head>
-<body>
+<body id="body">
 	<div class="wrapper">
 		<jsp:include page="sidebar_ch.jsp" />
 		<div class="main-panel">
@@ -107,7 +106,9 @@
 									<p class="category">Last Campaign Performance</p>
 								</div>
 								<div class="content">
-									<div class="row">ddsdsds</div>
+									<div class="row">
+										<div style="height: 50; width: 50"><c:import url="/todo/capTodo" /></div>
+									</div>
 
 									<div class="footer">
 
@@ -127,9 +128,10 @@
 								</div>
 								<div class="content">
 									<div class="row">
-										<c:import url="/projectCalendar/report"/>
+										<jsp:include page="/WEB-INF/views/calendar/scheduler.jsp"/>
 									</div>
-
+									
+									
 									<div class="footer">
 
 										<hr>
@@ -251,24 +253,21 @@
 
 		function makePDF() {
 
-			var quotes = document.getElementById('pdf');
-			quotes.parentElement.style.height = '10000px';
+//			var quotes = document.getElementById('body');
 
-			quotes.style.display = 'inline-block';
-			quotes.style.height = "auto";
-			/* var el = document.getElementById('container-fluid');
-			 el.parentElement.style.height = '10000px';
+			var el = document.getElementById('container-fluid');
+			 el.parentElement.style.width = '10000px';
 			  
 			 el.style.display = 'inline-block';
-			 el.style.height = "auto"; */
+			 el.style.width = "auto";
 			html2canvas(
-					quotes,
+					el,
 					{
 						onrendered : function(canvas) {
 							//! MAKE YOUR PDF
-							var pdf = new jsPDF('p', 'pt', 'letter');
+							var pdf = new jsPDF('l', 'mm', [1400,900]);
 
-							for (var i = 0; i <= quotes.clientHeight / 980; i++) {
+							for (var i = 0; i <= el.clientHeight / 980; i++) {
 								//! This is all just html2canvas stuff
 								var srcImg = canvas;
 								var sX = 0;
