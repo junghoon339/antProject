@@ -163,6 +163,7 @@ public class AdminController {
 	
 	@RequestMapping("/adminNotice")
 	public ModelAndView NoticeMain(String pageNumber, String searchText){
+		System.out.println("여기 안들어온다");
 		System.out.println(pageNumber);
 		if(pageNumber==null){
 			pageNumber = "1";

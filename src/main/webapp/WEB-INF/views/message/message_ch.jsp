@@ -212,17 +212,15 @@
                                        + $("#category").val()
                                        + "&flag=${flag}";
                               })
-
-                  /* insert 유효성 검사 */
-                  $("#anmelden").click(function() {
-                     alert("adf");
-                     if ($("#messageTopEmail").val() == "") {
-                        alert("받는분을 입력해주세요");
-                        $("#messageTopEmail").focus();
-                        return false;
-                     }
-                  })
-                  /* insert 유효성 검사 */
+                  
+                 $(document).on("click","#anmelden",function(){
+                	 if($("#messageTopEmail").val()==""){
+         				alert("받는분을 입력해주세요");
+         				$("#messageTopEmail").focus();
+         				return false;
+         			}
+                 })
+                 /* insert 유효성 검사 */
                });
    /* 모달 */
    function messageSelect(messageNo) {
@@ -565,7 +563,7 @@
                                           </div></a></li>
                                  </c:otherwise>
                               </c:choose>
-
+								
                               <c:forEach begin="${startPage}" end="${endPage}" var="pageNum"
                                  step="1">
                                  <li><a
@@ -697,7 +695,7 @@
                                        <div class="form-group">
                                           <label class="col-md-4 control-label" for="anmelden"></label>
                                           <div id="messageBottom" class="col-md-8">
-                                             <input type="submit" id="sendBt" name="anmelden"
+                                             <input type="submit" id="anmelden" name="anmelden"
                                                 class="btn btn-Info btn-filter" value="보내기">
                                              <!-- 이거 왜 새로고침 안되냐? -->
                                           </div>

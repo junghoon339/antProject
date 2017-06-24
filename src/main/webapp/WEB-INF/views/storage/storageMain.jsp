@@ -168,7 +168,7 @@
                         
                             <div class="header">
                             <div class="col-sm-6">
-                                <h3 class="title">자료실</h3>
+                                <h3 class="title">자료실${sessionScope.projectState}</h3>
                             </div>
 								<div class="col-sm-6" align="right">
 								 <div class="icon-container">

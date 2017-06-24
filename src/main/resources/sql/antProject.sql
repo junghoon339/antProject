@@ -200,12 +200,12 @@ CREATE SEQUENCE seq_chat_no;
 CREATE TABLE message
 (
    message_no number constraint message_no_pk primary key,
-   user_no_message_receiver number constraint message_user_no_receiver_fk references ant_user(user_no) on delete cascade,
-   message_content varchar2(500),
+   user_no_message_receiver number constraint message_user_no_receiver_fk references ant_user(user_no) on delete cascade not null,
+   message_content varchar2(500) not null,
    message_sendtime date default sysdate ,
    message_receivetime date ,
    message_state number default 0,
-   user_no_message_sender number constraint message_user_no_sender_fk references ant_user(user_no) on delete cascade
+   user_no_message_sender number constraint message_user_no_sender_fk references ant_user(user_no) on delete cascade not null
 );
 create sequence seq_message_no; 
 commit
