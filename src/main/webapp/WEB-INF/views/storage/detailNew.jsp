@@ -69,7 +69,14 @@
 		$("#submitForm").attr("action","${pageContext.request.contextPath}/storage/updateForm");
 		$("#submitForm").submit();
 	}
+	
+	/* $(document).ready(function(){
+		$("#anmelden").click(function(){
+			location.href=""
+		})
+	}) */
 </script>
+
 </head>
 <body>
 	<div class="wrapper">
@@ -122,15 +129,38 @@
 										
 										<h3>
 										
-                        					<a href="${pageContext.request.contextPath}/storage/delete/${dto.storageNo}/${dto.userNo}/${dto.projectNo}"><span class="ti-trash"></span></a>
+                        					<%-- <a href="${pageContext.request.contextPath}/storage/delete/${dto.storageNo}/${dto.userNo}/${dto.projectNo}"><span class="ti-trash"></span></a> --%>
                         				
-									    
-										<!--  <a href="#" class="btn btn-red btn-circle" onclick="submitHidden()">
-										수정
-										</a> -->
-										
-										
-                        					 <a href="#" onclick="submitHidden()"><span class="ti-ink-pen"></span></a>
+                        					<!--  <a href="#" onclick="submitHidden()"><span class="ti-ink-pen"></span></a> -->
+                        					 
+                        					 
+                        					 
+                        					 
+                        					 
+                        					 
+      <ul class="nav navbar-nav" style="float:right">
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="ti-settings"></span></a>
+          <ul class="dropdown-menu">
+            <li style="text-align: center"><h5><a href="#"><span class="ti-marker-alt" href="#danger" data-toggle="modal"></span><span class="icon-name" href="#danger" data-toggle="modal"></span><span class="icon-name" href="#danger" data-toggle="modal">수정하기</span></a></h5></li>
+            <li style="text-align: center"><h5><a href="${pageContext.request.contextPath}/storage/delete/${dto.storageNo}/${dto.userNo}/${dto.projectNo}"><span class="ti-trash"></span><span class="icon-name">삭제하기</span></a></h5></li>
+          </ul>
+        </li>
+      </ul>          					 
+                        					 
+                        					 
+                        					 
+                        					 <!-- <span class="ti-marker-alt" href="#danger" data-toggle="modal"></span><span class="icon-name" href="#danger" data-toggle="modal"><a href="#"></a></span> -->
+                        				
+                        				
+                        				
+                        				
+                        				
+                        				
+                        				
+                        				
+                        				
+                        				
                         				
                         				</h3> 
                         				
@@ -216,6 +246,168 @@
 	<script
 		src="${pageContext.request.contextPath }/resources/js/paper-dashboard.js"></script>
 	<!-- 필요한 자바스크립트 파일은 여기에 넣어주면 됨 -->
+	
+	
+	
+	
+	
+	
+	
+	
+	<!-- Modal -->
+									<div class="modal fade" id="danger" tabindex="-1" role="dialog"
+										aria-labelledby="myModalLabel" aria-hidden="true" >
+										<div class="modal-dialog" style="z-index: 1050;">
+											<div class="modal-content">
+												<div class="modal-header modal-header-Info">
+													<button type="button" class="close"t data-dismiss="modal"
+														aria-hidden="true">×</button>
+													<h3>
+														<div class="icon-container">
+                        									<span class="ti-marker-alt"></span><span class="icon-name"> 수정하기</span>
+                        								</div>
+													</h3>
+												</div>
+
+
+
+
+
+
+												<!-- 인설트 폼 -->
+												<div class="modal-body" style="z-index: 1050;">
+													<form class="form-horizontal"
+														action="${pageContext.request.contextPath}/storage/update"
+														method="post" enctype="multipart/form-data">
+
+														<input type="hidden" id="securityInfo"name="${_csrf.parameterName}" value="${_csrf.token}" /> 
+														<input type="hidden" name="userNo" value="${sessionScope.userDTO.userNo}">
+														<input type="hidden" name ="projectNo" value="${projectNo}">
+														<input type="hidden" name ="storageNo" value="${dto.storageNo}">
+
+														<fieldset>
+
+															<!-- Form Name -->
+
+															<!-- Text input-->
+															<div class="form-group">
+																<label class="col-md-4 control-label" for="name"
+																	style="text-align: right; width: 63px">제목</label>
+																<div class="col-md-4">
+																	<input id="name" name="storageTitle" type="text"
+																		placeholder="제목을 입력하세요" class="form-control input-md"
+																		style="width: 465px" value="${dto.storageTitle}">
+
+																</div>
+															</div>
+
+
+															<!-- Textarea -->
+															
+															 <div class="form-group">
+																<label class="col-md-4 control-label" for="anschrift" style="width:63px">내용</label>
+																
+																	<textarea class="form-control" id="anschrift"
+																		name="storageContent" rows="5" style="width:150%"
+																		placeholder="내용을 입력하세요">${dto.storageContent}</textarea>
+																
+															</div> 
+
+															<!-- Button (Double) -->
+															<div class="input-group">
+																<span class="input-group-btn">
+																
+																
+																	<button id="fake-file-button-browse" type="button"
+																		class="btn btn-default">
+																		<i><div class="icon-container">
+             										           				<span class="ti-clip"></span>
+                        												</div></i>
+																	</button>
+																	
+																	
+																</span> <input type="file" id="files-input-upload"
+																	style="display: none" name="file"> <input
+																	type="text" id="fake-file-input-name"
+																	disabled="disabled" placeholder="File not selected"
+																	class="form-control" name="filePath"> <span
+																	class="input-group-btn">
+																	
+																	<button type="button" class="btn btn-default"
+																		disabled="disabled" id="fake-file-button-upload">
+																		<div class="icon-container">
+                        													<span class="ti-dropbox"></span>
+                        												</div>
+																	</button>
+																	
+																</span>
+															</div>
+															<!-- Button (Double) -->
+															<div class="form-group">
+																<label class="col-md-4 control-label" for="anmelden"></label>
+																<div class="col-md-8">
+																	<input type="submit" id="anmelden" name="anmelden"
+																		class="btn btn-Info" value="수정" >
+									                        			
+																</div>
+															</div>
+														</fieldset>
+													</form>
+
+												</div>
+												<!-- 인설트 폼 -->
+
+
+
+												<script type="text/javascript">
+													// Fake file upload
+													document
+															.getElementById(
+																	'fake-file-button-browse')
+															.addEventListener(
+																	'click',
+																	function() {
+																		document
+																				.getElementById(
+																						'files-input-upload')
+																				.click();
+																	});
+
+													document
+															.getElementById(
+																	'files-input-upload')
+															.addEventListener(
+																	'change',
+																	function() {
+																		document
+																				.getElementById('fake-file-input-name').value = this.value;
+
+																		document
+																				.getElementById(
+																						'fake-file-button-upload')
+																				.removeAttribute(
+																						'disabled');
+																	});
+												</script>
+												<div class="modal-footer">
+													<button type="button" class="btn btn-Info btn-filter"
+														data-dismiss="modal">닫기</button>
+												</div>
+											</div>
+											<!-- /.modal-content -->
+										</div>
+										<!-- /.modal-dialog -->
+									</div>
+									<!-- /.modal -->
+									<!-- Modal -->
+	
+	
+	
+	
+	
+	
+	
+	
 
 </body>
 

@@ -317,12 +317,12 @@
                         <c:choose>
                            <c:when test="${flag==true }">
                               <div class="col-sm-6" style="margin-top:10px;">
-                                 <h2 class="title">보낸메시지</h2>
+                                 <h3 class="title">보낸메시지</h3>
                               </div>
                            </c:when>
                            <c:otherwise>
                               <div class="col-sm-6" style="margin-top:10px;">
-                                 <h2 class="title">받은메시지</h2>
+                                 <h3 class="title">받은메시지</h3>
                               </div>
                            </c:otherwise>
                         </c:choose>
@@ -385,7 +385,7 @@
                                  <input type="hidden" name="search_param" value="all"
                                     id="search_param"> <input type="text"
                                     class="form-control" name="x" placeholder="검색어를 입력하세요."
-                                    id="searchText" style="border: 1px solid #66615b"> <span
+                                    id="searchText" style="border: 1px solid #7cb679" > <span
                                     class="input-group-btn">
                                     <button class="btn btn-Info" type="button" id="submitBt"
                                        style="height: 40px">
@@ -436,6 +436,14 @@
 
                            </thead>
                            <tbody>
+                           
+                           
+                           
+                           <c:choose>
+                           
+                           <c:when test="${messageList.size()!=0}">
+                           
+                           
                               <c:forEach var="messageDTO" items="${messageList}">
                                  <c:choose>
                                     <c:when test="${flag==false}">
@@ -499,16 +507,36 @@
                                              </c:choose>
                                           </tr>
                                        </c:if>
-
-
-
-
                                     </c:otherwise>
                                  </c:choose>
-
-
-
                               </c:forEach>
+                              
+                              
+                              </c:when>
+                              <c:otherwise>
+                              
+                              
+                              
+                              
+                               <c:choose>
+                                 <c:when test="${flag==false }">
+                                 	<th colspan="4" style="text-align: center">
+                                 		받은 메시지함이 비었어요<span class="ti-face-sad"></span>
+                                 	</th>
+                                 </c:when>
+                                 <c:otherwise>
+                                 	<th colspan="6" style="text-align: center">
+                                 		보낸 메시지함이 비었어요<span class="ti-face-sad"></span>
+                                 	</th>
+                                 </c:otherwise>
+                              </c:choose>
+                              
+                              
+                              
+                              
+                              </c:otherwise>
+                              </c:choose>
+                              
 
                            </tbody>
 
@@ -517,13 +545,11 @@
 
 
 
-
+						<c:if test="${messageList.size()!=0}">
                         <!-- paging -->
                         <div style="text-align: center">
 
                            <ul class="pagination">
-
-
                               <c:choose>
                                  <c:when test="${startPage==1}">
                                     <li class="disabled"><a href="#"><div
@@ -563,12 +589,11 @@
                                  </c:otherwise>
                               </c:choose>
                            </ul>
-
-
-
                         </div>
 
                         <!-- paging -->
+                        </c:if>
+                        
                      </div>
 
                </div>
@@ -618,12 +643,12 @@
                               <div class="modal-header modal-header-Info">
                                  <button type="button" class="close" data-dismiss="modal"
                                     aria-hidden="true">×</button>
-                                 <h1>
+                                 <h3>
                                     <div class="icon-container">
                                        <span class="ti-email"></span><span id="modalTitle" class="icon-name">
                                           쪽지보내기</span>
                                     </div>
-                                 </h1>
+                                 </h2>
                               </div>
                               <div class="modal-body">
                                  <!-- 인설트 폼 -->
@@ -672,7 +697,7 @@
                                        <div class="form-group">
                                           <label class="col-md-4 control-label" for="anmelden"></label>
                                           <div id="messageBottom" class="col-md-8">
-                                             <input type="submit" id="anmelden" name="anmelden"
+                                             <input type="submit" id="sendBt" name="anmelden"
                                                 class="btn btn-Info btn-filter" value="보내기">
                                              <!-- 이거 왜 새로고침 안되냐? -->
                                           </div>
