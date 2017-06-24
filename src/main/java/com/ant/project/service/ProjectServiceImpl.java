@@ -37,6 +37,9 @@ public class ProjectServiceImpl implements ProjectService {
 		//System.out.println("占쏙옙占쏙옙占쏙옙트占쏙옙호"+projectUserDTO.getProjectNo()+" / 占쏙옙占쏙옙userNo : "+projectUserDTO.getUserNo());
 		int resultInsLeader = insertProjectLeader(projectUserDTO);
 		
+		//3-1. 팀 캘린더에 일정삽입
+		int re=projectDAO.insertProjectCalendar(projectDTO,userNo);
+		
 		//4.조원 삽입
 		for(String userId:invitedUser){
 			projectUserDTO.setUserId(userId);

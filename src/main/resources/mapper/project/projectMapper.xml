@@ -144,4 +144,7 @@
 		WHERE user_no_message_receiver=#{_parameter} AND message_receivetime IS NULL
 	</select>
 
+	<insert id="insertProjectCalendar" parameterType="map">
+		insert into project_calendar values(seq_project_calendar.nextval,(SELECT max(project_no) FROM project),#{userNo},#{projectDTO.projectName},#{projectDTO.projectStartdate},#{projectDTO.projectEnddate})
+	</insert>
 </mapper>

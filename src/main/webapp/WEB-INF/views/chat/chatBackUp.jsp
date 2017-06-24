@@ -5,11 +5,11 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <jsp:useBean id="sysdate" class="java.util.Date" />
 <fmt:formatDate value="${sysdate}" pattern="HH:mm:ss" var="sysdate" />
-<div class="container">
+<div class="container pull-right" style="width:400px;">
 <div class="chatchat">
 	<div class="row chat-window col-xs-5 col-md-3" id="chat_window_1"
 		style="margin-left: 10px;">
-		<div class="col-xs-12 col-md-12">
+		<div class="col-xs-12 col-md-12" style="margin-bottom:60px;">
 			<div class="panel panel-default">
 				<div class="panel-heading top-bar">
 					<div class="col-md-8 col-xs-8">

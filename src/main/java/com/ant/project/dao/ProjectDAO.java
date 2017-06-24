@@ -84,4 +84,9 @@ public interface ProjectDAO {
 	 * 안읽은 쪽지갯수 header에 표시
 	 */
 	public int selectUnchkMessage(int userNo);
+	
+	/**
+	 * 프로젝트캘린더에 프로젝트기간 삽입
+	 * */
+	int insertProjectCalendar(ProjectDTO projectDTO,int userNo);
 }
