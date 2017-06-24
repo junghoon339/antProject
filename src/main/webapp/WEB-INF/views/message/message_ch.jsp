@@ -458,6 +458,11 @@
 
 
                         </thead>
+                        
+                        
+                        
+                        <c:choose>
+                        <c:when test="${messageList.size()!=0}">
                         <tbody>
                            <c:forEach var="messageDTO" items="${messageList}">
                               <c:choose>
@@ -526,9 +531,14 @@
 
 
                            </c:forEach>
-
-                        </tbody>
-
+                          
+						
+                  			     </tbody>	
+                         </c:when>
+                         <c:otherwise>
+                         
+                         </c:otherwise>
+					</c:choose>
                      </table>
 
 
