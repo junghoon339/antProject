@@ -100,10 +100,12 @@ td {
 									<section>
 											<%@include file="header.jsp"%>
 											<div style="padding: 20px; border-top: 1px solid #c3d9b8;border-bottom: 1px solid #c3d9b8;" >
-											<h4><span class="glyphicon glyphicon-tasks"></span> 진행중인 투표</h4>
+											<h4><span class="ti-check-box"></span> 진행중인 투표</h4>
 											</div>
 					
 											<div id="doing" class="List" >
+											<c:choose>
+												<c:when test="${doingList != null}">
 												<c:forEach items="${doingList}" var="doingList" varStatus="doingStatus">
 												<form class="doingForm" id="doingForm" action="${pageContext.request.contextPath}/vote/Detail" method="post">
 												<input type=hidden id="securityInfo" name="${_csrf.parameterName}" value="${_csrf.token}">
@@ -132,10 +134,16 @@ td {
 												</form>
 												<hr>
 												</c:forEach>
+												</c:when>
+												<c:otherwise>
+												진행중인 투표가 없습니다.										
+												</c:otherwise>
+											</c:choose>
+												
 											</div>
 					
 							<div style="padding: 20px; border-top: 1px solid #c3d9b8;border-bottom: 1px solid #c3d9b8;" >
-								<h4><span class="glyphicon glyphicon-tasks"></span> 종료된 투표</h4>
+								<h4><span class="ti-check-box"></span> 종료된 투표</h4>
 							</div>
 							<div id="done" class="List">
 								<c:forEach items="${doneList}" var="doneList" varStatus="doneStatus">
