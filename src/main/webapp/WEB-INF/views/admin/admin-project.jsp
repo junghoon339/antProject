@@ -199,9 +199,9 @@
 
 										</c:when>
 										<c:otherwise>
-											<tr>
+												<tr>
 													<th colspan="6" style="text-align: center">
-													아직 완료된 프로젝트가 없어요<span class="ti-face-sad"></span>
+													데이터가 없습니다.<span class="ti-face-sad"></span>
                         							</th>
 												</tr>
 										</c:otherwise>
@@ -296,7 +296,7 @@
 													<input type="hidden" name="search_param" value="all"
 														id="search_param"> <input type="text"
 														class="form-control" name="x" placeholder="검색어를 입력하세요."
-														id="searchText" style="border:1px solid #66615b"> <span class="input-group-btn">
+														id="searchText" style="border:1px solid #7cb679"> <span class="input-group-btn">
 														
 														<button class="btn btn-Info" type="button"
 															id="searchBtn">

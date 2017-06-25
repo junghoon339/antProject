@@ -2,18 +2,9 @@
 
  <footer class="footer">
             <div class="container-fluid">
-                <nav class="pull-left">
-                    <ul>
 
-                        <li>
-                            <a href="#">
-                                Home
-                            </a>
-                        </li>
-                    </ul>
-                </nav>
 				<div class="copyright pull-right">
-                    &copy; <script>document.write(new Date().getFullYear())</script>, made with <i class="fa fa-heart heart"></i> by <a href="http://www.creative-tim.com">Creative Tim</a>
+                    &copy; <script>document.write(new Date().getFullYear())</script>, made by <i class="fa fa-heart heart"></i>개미와 베짱이팀
                 </div>
             </div>
         </footer>

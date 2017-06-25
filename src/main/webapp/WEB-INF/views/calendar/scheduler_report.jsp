@@ -10,8 +10,6 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 	
 	<title>Insert title here</title>
-		<!--   Core JS Files   -->
-	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/jquery-3.2.1.min.js"></script>
 	<link rel="apple-touch-icon" sizes="76x76" href="assets/img/apple-icon.png">
 	<link rel="icon" type="image/png" sizes="96x96" href="assets/img/favicon.png">
 	<!-- Bootstrap core CSS     -->
@@ -30,12 +28,6 @@
 	<!-- 스크립트는 body 맨 아래쪽에 -->
 </head>
 <body>
-	<div class="wrapper">
-		<jsp:include page="../project/sidebar_ch.jsp" />
-		<div class="main-panel">
-			<jsp:include page="../project/header_ch.jsp" flush="false" /> <!-- </nav> -->
-			<div class="content">
-				<div class="container-fluid">
 					<!-- 이곳에 내용작성!!!!!!!!!!!!!!!! -->
 					<!-- 
 						작성할때 template.html 에서
@@ -44,13 +36,9 @@
 
 					${schedule}
 
-				</div>
-			</div>
-			<jsp:include page="../project/footer_ch.jsp" flush="false" />
-		</div>
-	</div>
 	
-
+	<!--   Core JS Files   -->
+	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/jquery-3.2.1.min.js"></script>
 	<script src="${pageContext.request.contextPath }/resources/js/bootstrap.min.js" type="text/javascript"></script>
 	<!--  Checkbox, Radio & Switch Plugins -->
 	<script src="${pageContext.request.contextPath }/resources/js/bootstrap-checkbox-radio.js"></script>

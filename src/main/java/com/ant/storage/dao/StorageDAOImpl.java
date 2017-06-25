@@ -51,6 +51,9 @@ public class StorageDAOImpl implements StorageDAO {
 
 	@Override
 	public int update(StorageDTO storageDTO) {
+		System.out.println("title = "+storageDTO.getStorageTitle());
+		System.out.println("title = "+storageDTO.getStorageContent());
+		System.out.println("storageNo = "+storageDTO.getStorageNo());
 		return session.update("mapper.storage.storageMapper.update", storageDTO);
 	}
 

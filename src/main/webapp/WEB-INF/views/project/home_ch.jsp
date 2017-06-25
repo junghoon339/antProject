@@ -95,16 +95,22 @@
 							alert("새로운 조별과제가 등록되었습니다.");
 						});
 						
+						//새로운 조별과제 submit
 						$("#insertProjectBtn").click(function() {
 							if (check() == true)
 								$("#projectForm").submit();
 
 						});
 						
+						//projectNO, projectState를 submit
+						$(document).on("click","#enter",function(){
+							 $(this).parent().submit();
+						});
+						
+						
 						$(".surveySuc").click(function(){
 
 						})
-						$(".survey")
 								.click(
 										function() {
 											var pn = $(this).parent().prev().val();
@@ -212,7 +218,6 @@
 					<div class="row">
 						<c:choose>
 							<c:when test="${empty currentProList}&&${empty surveyingProList}">
-							
 								<!-- 진행중인,완료대기중인 조별과제가 없으면 -->
 								<h4>진행중인 조별과제가 없습니다.</h4>
 							</c:when>
@@ -246,7 +251,12 @@
 													</c:forEach>	
 													</div>
 													<div class="col-md-2">
-														<a href="${pageContext.request.contextPath}/project/teamMain/${projectDTO.projectNo}" class="btn btn-primary btn-simple">Enter</a>
+														<form id="enterForm" action="${pageContext.request.contextPath}/project/teamMain" method="post">
+															<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
+															<input type="hidden" name="projectNo" value="${projectDTO.projectNo}">
+															<input type="hidden" name="projectState" value="${projectDTO.projectState}">
+															<a class="btn btn-primary btn-simple" id="enter">Enter</a>
+														</form>
 													</div>
 												</div>
 											</div>
@@ -254,27 +264,35 @@
 									</div>
 								</c:forEach>
 
-								<c:forEach items="${currentProList}" var="projectDTO">
-									<!-- 진행중인 조별과제 -->
+								<c:forEach items="${currentProList}" var="projectDTO2"><!-- 진행중인 조별과제 -->
 									<div class="col-lg-3 col-sm-6">
 										<div class="card">
 											<div class="content">
 												<div class="row">
 													<div class="col-xs-11">
 														<div class="numbers">
-															<h5>${projectDTO.projectName}</h5>
+															<h5><div title="${projectDTO2.projectName}" style="white-space: nowrap; text-overflow: ellipsis; width:150px; overflow: hidden;">
+															
+															${projectDTO2.projectName}
+															</div></h5>
+
 															<p>
-																<i class="ti-timer"></i>&nbsp;&nbsp;D-${projectDTO.dday}
+																<i class="ti-timer"></i>&nbsp;&nbsp;D-${projectDTO2.dday}
 															</p>
+															
 														</div>
 													</div>
 												</div>
 												<hr />
 												<div class="row">
 													<div class="col-md-2 col-md-offset-8">
-														<a
-															href="${pageContext.request.contextPath}/project/teamMain/${projectDTO.projectNo}"
-															class="btn btn-primary btn-simple">Enter</a>
+
+														<form id="enterForm" action="${pageContext.request.contextPath}/project/teamMain" method="post">
+															<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
+															<input type="hidden" name="projectNo" value="${projectDTO2.projectNo}">
+															<input type="hidden" name="projectState" value="${projectDTO2.projectState}">
+															<a class="btn btn-primary btn-simple" id="enter">Enter</a>
+														</form>													
 													</div>
 												</div>
 											</div>
@@ -289,10 +307,10 @@
 								<div class="row">
 									<div class="content" id="plusImg">
 										<div style="height: 85px" align="center">
-										<img style="height: 100%; margin-top : 20px;"
+										<img style="height: 100%; margin-top : 20px; cursor:pointer;"
 											src="${pageContext.request.contextPath}/resources/img/plus1.png" >
 										</div>
-										<h5 align="center" style="font-family: HY나무B;">새 조별과제 생성</h5>
+										<h5 align="center" style="font-family: 나눔고딕코딩; cursor:pointer">새 조별과제 생성</h5>
 									</div>
 								</div>
 							</div>
@@ -351,14 +369,12 @@
 					<div class="container" style="margin-top: 10px;">
 						<div class="row">
 							<div class="">
-								<form id="projectForm" name="fr"
-									class="form-horizontal col-sm-7 col-sm-offset-0"
+								<form id="projectForm" name="fr" class="form-horizontal col-sm-7 col-sm-offset-0"
 									action="${pageContext.request.contextPath}/project/insertProject"
 									method="post">
 									<div id="setWidth">
-									<input type="hidden" name="${_csrf.parameterName}"
-										value="${_csrf.token}"> *새로운 조별과제를 만드는 분이 자동으로 조장으로
-									지정됩니다.
+									<input type="hidden" name="${_csrf.parameterName}"value="${_csrf.token}">
+									 *새로운 조별과제를 만드는 분이 자동으로 조장으로 지정됩니다.
 									<p></p>
 									팀플명 : <input class="form-control border-input" type="text"
 										name="projectName" />
