@@ -144,4 +144,17 @@
 		WHERE user_no_message_receiver=#{_parameter} AND message_receivetime IS NULL
 	</select>
 
+	<!-- state가 2인 project를 호출 -->
+	<select id="selectIfProjectState2" resultMap="selectProjectMap2">
+		SELECT project_no	
+		FROM project
+		WHERE p.project_state = 2
+	</select>
+	
+	<select id="selectUserByUserNo" resultMap="selectProjectUsersMap">
+		SELECT *
+		FROM ant_user
+		WHERE user_no = #{_parameter}
+	</select>
+	
 </mapper>

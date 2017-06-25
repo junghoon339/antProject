@@ -44,7 +44,12 @@
 
 <script>
 $(function() {
+
+	if(${projectState==2}){
+		location.href="${pageContext.request.contextPath}/vote/";
+	}
 	
+	else{
 	$("#insert").click(function(){
 		if( $("input[name='voteTitle']").val().trim()=="" ){
 			alert("투표 제목을 입력해주세요.");
@@ -90,7 +95,7 @@ $(function() {
 			$("#datepicker").prop("disabled", true);
 		}
 	})
-
+	}
 });
 </script>
 </head>
@@ -108,20 +113,18 @@ $(function() {
 						<section>
 						<div class="container">
 							<div class="row">
-					
-							<div class="col-lg-9 col-lg-offset-1">
-							<div class="card">
+							<div class="col-md-11">
+							<div class="card" style="padding-left : 20px;padding-right: 20px;">
 							<%@include file="header.jsp"%>
-								<div class="well well-lg">
 									<div class="form-group" style="padding: 12px;">
 										<form action="${pageContext.request.contextPath}/vote/Create" id="createForm" method="post">
 											<input type=hidden id="securityInfo" name="${_csrf.parameterName}" value="${_csrf.token}">
 											<input type="hidden" name="projectUserNo" value="1" />
 											<input type="hidden" name="userNo" value="${sessionScope.userDTO.userNo}" />
 											<input type="hidden" name="projectNo" value="${sessionScope.projectNo}" />
-											투표 제목<p>
+											<font size="4">투표 제목</font><p>
 											<input type="text" class="form-control" name="voteTitle" value="" placeholder="제목을 입력하세요." /><p>
-											항목 입력
+											<font size="4">항목 입력</font></p>
 											<div id="addArticle"><p>
 												<input type="text" class="form-control" name="chk" placeholder="항목을 입력하세요." /><p>
 												<input type="text" class="form-control" name="chk" placeholder="항목을 입력하세요." /><p>
@@ -131,18 +134,17 @@ $(function() {
 												<span class="glyphicon glyphicon-plus"></span> 
 											</a> 
 											<font size="2" color="#b5bab8">항목 추가</font><br><br>
-											마감시간 설정<p>
-											<input type="checkbox" id="dateCheck"> <input type="text" id="datepicker" name="voteEndDate" disabled="disabled"><p>
-											기타옵션<p>
+											<font size="4">마감시간 설정</font><p>
+											<input type="checkbox" id="dateCheck"> <input type="text" id="datepicker" name="voteEndDate" disabled="disabled"><br><p>
+											<br><font size="4">기타옵션</font><p>
 											<input type="checkbox" name="" /> 복수선택<p>
 											<input type="checkbox" name="" /> 익명투표<p>
 											<input type="checkbox" name="" /> 선택항목 추가 허용<p>
-					
+											<br><br>
 											<a href="#" class="btn btn-lg btn-warning" id="insert">등록</a> 
-											<a href="#" class="btn btn-lg btn-default" id="cancel">취소</a>
+											<a href="${pageContext.request.contextPath}/vote/" class="btn btn-lg btn-danger" id="cancel">취소</a>
 										</form>
 									</div>
-								</div>
 							</div>
 							</div>
 						</div></div></section>
@@ -164,8 +166,8 @@ $(function() {
 	type="text/javascript"></script>
 
 <!--  Checkbox, Radio & Switch Plugins -->
-<script
-	src="${pageContext.request.contextPath }/resources/js/bootstrap-checkbox-radio.js"></script>
+<%-- <script
+	src="${pageContext.request.contextPath }/resources/js/bootstrap-checkbox-radio.js"></script> --%>
 
 <!--  Charts Plugin -->
 <script

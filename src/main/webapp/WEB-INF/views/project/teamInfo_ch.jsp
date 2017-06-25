@@ -125,10 +125,15 @@ $(document).ready(function() {
 					        <div class="modal-dialog modal-sm">
 					            <div class="modal-content">
 					                <div class="modal-header">
-					                    <h4 class="modal-title">주의!</h4>
+					                    <h4 class="modal-title"><span class="ti-help-alt"/> <font color="red">주의!</font></h4>
 					                </div>
-					                <div class="modal-body">
-					                    <h4>정말 조별과제를 마감하시겠습니까?</h4>
+					                <div class="modal-body" align="center">
+					                    <font style="font-size:small;">
+					                    	정말 조별과제를 마감하시겠습니까?<br>
+					                    </font><font style="font-size:x-small;color: #6b69f2">
+					                    	마감하기 진행시, 설문조사로 넘어가며 되돌릴 수 없습니다.<br> 신중하게 결정해주세요!
+					                    </font>
+					                    <p>
 					                </div>
 					                <div class="modal-footer">
 					                <form action="${pageContext.request.contextPath}/survey/mainPage" method="post">

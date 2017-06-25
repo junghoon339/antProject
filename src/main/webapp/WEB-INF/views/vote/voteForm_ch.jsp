@@ -44,13 +44,18 @@
 <script>
 	$(function(){
 
-/* 		$(".obj").mouseenter(function(){
-	        $(this).css("background-color", "#fff4f4");
+		if(${projectState==2}){
+			$("#voteLink").attr('href', '#');
+			$("#voteLink").css('color', 'gray');
+		}
+		
+ 		$(".obj").mouseenter(function(){
+	        $(this).css("background-color", "#fcffd6");
 	    });
 		
 	    $(".obj").mouseleave(function(){
-	        $(this).css("background-color", "gray");
-	    }); */
+	        $(this).css("background-color", "white");
+	    }); 
 	    
 	    $(".obj").dblclick(function(){
 	    	$(this).parent().submit();
@@ -62,9 +67,15 @@ table {
 	width: 100%;
 }
 
+#title {
+	font-size: large;
+	vertical-align: bottom;
+}
+
 #q {
 	width: 70px;
 	text-align: center;
+	vertical-align: top;
 }
 
 #doing, #done {
@@ -79,7 +90,8 @@ td {
 
 #attribute {
 	color: gray;
-	font-size: x-small;
+	font-size: small;
+	margin: -20px;
 }
 </style>
 </head>
@@ -95,17 +107,16 @@ td {
 						
 						<!-- 이곳에 내용작성!!!!!!!!!!!!!!!! -->
 						<div class="row">
-							<div class="col-md-12">
+							<div class="col-md-11">
 								<div class="card" style="padding-left : 20px;padding-right: 20px;">
 									<section>
 											<%@include file="header.jsp"%>
-											<div style="padding: 20px; border-top: 1px solid #c3d9b8;border-bottom: 1px solid #c3d9b8;" >
+											<div class="well">
 											<h4><span class="ti-check-box"></span> 진행중인 투표</h4>
 											</div>
-					
 											<div id="doing" class="List" >
 											<c:choose>
-												<c:when test="${doingList != null}">
+												<c:when test="${doingList.size() != 0}">
 												<c:forEach items="${doingList}" var="doingList" varStatus="doingStatus">
 												<form class="doingForm" id="doingForm" action="${pageContext.request.contextPath}/vote/Detail" method="post">
 												<input type=hidden id="securityInfo" name="${_csrf.parameterName}" value="${_csrf.token}">
@@ -115,10 +126,10 @@ td {
 												<table class="obj">
 												<tr>
 													<td rowspan="2" id="q"><h1>Q.</h1></td>
-													<td colspan="2">${doingStatus.count}.${doingList.voteTitle}</td>
+													<td colspan="2" id="title">${doingStatus.count}.${doingList.voteTitle}</td>
 												</tr>
 												<tr>
-													<td id="attribute" width="50">
+													<td id="attribute" width="60">
 														<c:choose>
 															<c:when test="${doingList.userCount!=0}">${doingList.userCount}</c:when>
 															<c:otherwise>0</c:otherwise>
@@ -136,16 +147,23 @@ td {
 												</c:forEach>
 												</c:when>
 												<c:otherwise>
-												진행중인 투표가 없습니다.										
+												<tr>
+													<td>
+													<h5 align="center" style="color: #666666; margin: 40px">진행중인 투표목록이 없습니다.
+													'<a href='${pageContext.request.contextPath}/vote/CreateForm?"+$("#securityInfo").attr("name")+"="+$("#securityInfo").val()' style="color: blue" id="voteLink">투표</a>'를 등록해보세요.</h5>
+													</td>
+												</tr>							
 												</c:otherwise>
 											</c:choose>
 												
 											</div>
-					
-							<div style="padding: 20px; border-top: 1px solid #c3d9b8;border-bottom: 1px solid #c3d9b8;" >
+								<br>
+								<div class="well">
 								<h4><span class="ti-check-box"></span> 종료된 투표</h4>
-							</div>
+								</div>
 							<div id="done" class="List">
+							<c:choose>
+								<c:when test="${doneList.size() != 0}">
 								<c:forEach items="${doneList}" var="doneList" varStatus="doneStatus">
 									<form class="doneForm" id="doneForm" action="${pageContext.request.contextPath}/vote/Detail">
 									<input type=hidden id="securityInfo" name="${_csrf.parameterName}" value="${_csrf.token}">
@@ -155,10 +173,10 @@ td {
 									<table class="obj">
 										<tr>
 											<td rowspan="2" id="q"><h1>Q.</h1></td>
-											<td colspan="2">${doneStatus.count}. ${doneList.voteTitle} </td>
+											<td colspan="2" id="title">${doneStatus.count}. ${doneList.voteTitle} </td>
 										</tr>
 										<tr>
-											<td id="attribute" width="50">
+											<td id="attribute" width="60">
 											<c:choose>
 											<c:when test="${doneList.userCount!=0}">${doneList.userCount}</c:when>
 														<c:otherwise>0</c:otherwise>
@@ -178,6 +196,16 @@ td {
 										</form>
 										<hr>
 									</c:forEach>
+									</c:when>
+									<c:otherwise>
+										<tr>
+											<td>
+											<h5 align="center" style="color: #666666; margin: 40px">종료된 투표목록이 없습니다</h5>
+											<br>
+											</td>
+										</tr>
+									</c:otherwise>
+									</c:choose>
 							</div>
 							<p>
 						</section>

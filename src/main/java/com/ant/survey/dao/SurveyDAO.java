@@ -2,9 +2,11 @@ package com.ant.survey.dao;
 
 import java.util.List;
 
+import com.ant.project.dto.ProjectDTO;
 import com.ant.survey.dto.SurveyDTO;
 import com.ant.survey.dto.SurveyDetailDTO;
 import com.ant.survey.dto.SurveyUserDTO;
+import com.ant.user.dto.UserDTO;
 
 public interface SurveyDAO {
 
@@ -44,4 +46,15 @@ public interface SurveyDAO {
 	
 	/** 투표참여 후 확인을 기점으로 조별과제내 사람들이 모두 투표를 참여했으면 state 2로 변경 */
 	int closedProject(int projectNo);
+	
+	/** 끝났을때 모든 조원의 점수를 합산하여 호출 */
+	List<SurveyDetailDTO> selectTotalScore(int surveyNo);
+	
+	List<ProjectDTO> selectProjectState2();
+	
+	List<SurveyUserDTO> selectSurveyUserState0(int surveyNo);
+	
+	UserDTO selectUser(int userNo);
+	
+	int updateXXX(int surveyNo, String userName);
 }

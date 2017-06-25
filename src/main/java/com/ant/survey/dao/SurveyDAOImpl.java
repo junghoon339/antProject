@@ -9,9 +9,11 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.ant.project.dto.ProjectDTO;
 import com.ant.survey.dto.SurveyDTO;
 import com.ant.survey.dto.SurveyDetailDTO;
 import com.ant.survey.dto.SurveyUserDTO;
+import com.ant.user.dto.UserDTO;
 
 @Repository
 public class SurveyDAOImpl implements SurveyDAO{
@@ -90,6 +92,34 @@ public class SurveyDAOImpl implements SurveyDAO{
 	@Override
 	public int closedProject(int projectNo) {
 		return session.update("surveyMapper.colsedProject", projectNo);
+	}
+
+	@Override
+	public List<SurveyDetailDTO> selectTotalScore(int surveyNo) {
+		return session.selectList("surveyMapper.selectTotalScore", surveyNo);
+	}
+
+	@Override
+	public List<ProjectDTO> selectProjectState2() {
+		return session.selectList("projectMapper.selectProjectState2");
+	}
+
+	@Override
+	public List<SurveyUserDTO> selectSurveyUserState0(int surveyNo) {
+		return session.selectList("surveyMapper.selectSurveyUserState0", surveyNo);
+	}
+
+	@Override
+	public UserDTO selectUser(int userNo) {
+		return session.selectOne("projectMapper.selectUserByUserNo", userNo);
+	}
+
+	@Override
+	public int updateXXX(int surveyNo, String userName) {
+		Map<String, Object> map = new TreeMap<>();
+		map.put("surveyNo", surveyNo);
+		map.put("userName", userName);
+		return session.update("surveyMapper.updateXXX", map);
 	}
 	
 }

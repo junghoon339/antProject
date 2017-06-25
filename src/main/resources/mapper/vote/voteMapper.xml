@@ -192,7 +192,7 @@
 	<select id="selectVote" resultMap="voteDTOMap">
 		SELECT *
 		FROM vote
-		WHERE vote_no = {_parameter}
+		WHERE vote_no = #{_parameter}
 	</select>
 	
 </mapper>
