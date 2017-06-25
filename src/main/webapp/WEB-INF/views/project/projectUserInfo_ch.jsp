@@ -2,6 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="security" %>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -40,7 +41,7 @@
 	href="${pageContext.request.contextPath }/resources/css/paper-dashboard.css"
 	rel="stylesheet" />
 <!-- 필요한 css는 이 밑에 넣어주면 됨 -->
-<!-- 스크립트는 body 맨 아래쪽에 -->
+<security:csrfMetaTags/>
 </head>
 <body>
 	<div class="wrapper">
@@ -49,11 +50,7 @@
 			<jsp:include page="header_ch.jsp" flush="false" />
 			<div class="content">
 				<div class="container-fluid">
-					<!-- 이곳에 내용작성!!!!!!!!!!!!!!!! -->
-					<!-- 
-						작성할때 template.html 에서
-						<div class="row">부터 참고하면서 작성하면 됨
-					-->
+
 					<div class="row">
 						<div class="col-md-12">
 							<div class="card">
@@ -219,36 +216,30 @@
 					</button>
 					<h4 class="modal-title custom_align" id="Heading">팀원추가</h4>
 				</div>
-				<form
-					action="${pageContext.request.contextPath}/project/addProjectUser"
-					method="post">
-					<input type="hidden" name="${_csrf.parameterName}"
-						value="${_csrf.token}">
+				<form id="inviteForm" action="${pageContext.request.contextPath}/project/addProjectUser" method="post">
+					<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
 					<div class="modal-body">
 						<div class="form-group">
 							초대할 팀원의 아이디를 입력해 주세요<p><p/>
-							<input class="form-control border-input" type="text" name="userId" style="width:100%;"/>
+							<input class="form-control border-input" type="text" name="userId" id="invitedUserId" style="width:100%;"/>
 							<p></p>
 						</div>
 					</div>
+				</form>
 					<div class="modal-footer">
-						<button type="submit" class="btn btn-warning btn-lg"
-							style="width: 100%;">
+<!-- 					<button type="submit" class="btn btn-warning btn-lg" style="width: 100%;">
+ -->					<button id="inviteBtn" class="btn btn-warning btn-lg" style="width: 100%;">
 							<span class="glyphicon glyphicon-ok-sign"></span> 초대하기
 						</button>
 					</div>
-				</form>
+				
 			</div>
 		</div>
 	</div>
 	<!-- modal end -->
 
 
-	<!-- script -->
-
-
 	<!--   Core JS Files   -->
-	
 	<script
 		src="${pageContext.request.contextPath }/resources/js/bootstrap.min.js"
 		type="text/javascript"></script>
@@ -264,8 +255,9 @@
 	<!-- Paper Dashboard Core javascript and methods for Demo purpose -->
 	<script
 		src="${pageContext.request.contextPath }/resources/js/paper-dashboard.js"></script>
+	
 	<!-- 필요한 자바스크립트 파일은 여기에 넣어주면 됨 -->
-		<script type="text/javascript">
+	<script type="text/javascript">
 		$(document).ready(function() {
 			$("[data-toggle=tooltip]").tooltip();
 
@@ -281,12 +273,45 @@
 				$("#projectUserTask").attr("value", projectUserTask);
 				$("#userNo").attr("value", userNo);
 			})
-
+	
+			//팀원삭제
 			$(document).on("click", "#delBtn", function() {
 				var delUserNo = parseInt($(this).attr("name"));
 				$("#delUserNo").attr("value", delUserNo);
 			})
 		});
+		
+		
+		var header = $("meta[name='_csrf_header']").attr("content");
+		var token = $("meta[name='_csrf']").attr("content");
+		
+		//초대하기버튼클릭시 이미 속해있는 조원인지 확인 후 처리
+		$("#inviteBtn").click(function(){
+			$.ajax({
+				type:"post",
+				url:"${pageContext.request.contextPath}/project/selectChkProjectMember",
+				data: "userId="+$("#invitedUserId").val(),
+				dataType: "text",
+	            beforeSend : function(xhr){
+	                   xhr.setRequestHeader(header, token);
+	            },
+				success: function(result){
+					console.log("ajax 결과 : " + result);
+ 					if(result==""){//조원초대가능
+ 						alert("초대가 가능한 회원입니다.");
+ 						$("#inviteForm").submit();
+					}else{//이미 속해있는 조원일 경우
+						alert("이미 조원으로 등록되어있는 회원입니다.")
+						//${pageContext.request.contextPath}/project/addProjectUser로 userId갖고 이동
+						
+					} 
+				},
+				error: function(err){
+					console.log("이미 속해있는 조원인지 확인 오류발생 : "+err);
+				}
+			})
+		});
+		
 	</script>
 
 </body>

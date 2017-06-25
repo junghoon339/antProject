@@ -84,4 +84,9 @@ public interface ProjectDAO {
 	 * 안읽은 쪽지갯수 header에 표시
 	 */
 	public int selectUnchkMessage(int userNo);
+	
+	/**
+	 * 조원 초대시 이미 속해있는 조원인지 검색
+	 */
+	public String selectChkProjectMember(ProjectUserDTO projectUserDTO);
 }

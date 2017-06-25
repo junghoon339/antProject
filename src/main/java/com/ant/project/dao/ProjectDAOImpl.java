@@ -124,6 +124,11 @@ public class ProjectDAOImpl implements ProjectDAO {
 		return sqlSession.selectOne("projectMapper.selectUnchkMessage", userNo);
 		
 	}
+
+	@Override
+	public String selectChkProjectMember(ProjectUserDTO projectUserDTO) {
+		return sqlSession.selectOne("projectMapper.selectChkProjectMember", projectUserDTO);
+	}
 	
 
 }
