@@ -179,7 +179,6 @@
 }
 .pricing-option{
 	height: 240px;
-	
 	padding: 10px;
 }
 .card-header{
@@ -328,7 +327,7 @@ body {
          <jsp:include page="header_ch.jsp" flush="false" /> <!-- </nav> -->
         
         <h2 align="center">TEST 1 TITLE</h2>
-         <div class="content" style="padding-top: 20px">
+         <div class="content" style="padding-top: 20px" align="center">
             <div class="container-fluid">
                <!-- 이곳에 내용작성!!!!!!!!!!!!!!!! -->
                <!-- 
@@ -396,7 +395,7 @@ body {
 	            			</div>
 	              			<div class="card-body">
 	              				<!-- 내용을 넣을 공간 -->
-	              				<div class="panel status panel-success" style="margin-top: 5px">
+	              				<div class="panel status panel-success" >
 					                <div class="panel-heading">
 					                    <h1 class="panel-title text-center">${todayDate}</h1>
 					                </div>
@@ -422,15 +421,18 @@ body {
 	            			<div class="card-header">
 	            				<h5><span class="ti-menu-alt"/> 최신 투표항목</h5>
 	            			</div>
-	            			<div class="card-body">
+	            			<div class="card-body" style="margin-bottom: 0px">
 	            				<div class="col-lg-11" style="margin-left: 15px">
 	            				<div class="card" style="height: 125px">
 	              				<!-- 내용을 넣을 공간 -->
 	              				<div class="well"  style="height: 40px;margin-bottom: 5px; padding:10px; vertical-align: middle;"><Strong id="well" style="vertical-align: middle;">Q. ${vote.voteTitle}</Strong></div>
-	              				<div>
+	              				<div align="left">
 	              					<c:forEach items="${voteDetails}" var="voteDetail" varStatus="status">
-	              						<c:if test="${status.count<4}">
+	              						<c:if test="${status.count<voteDetails.size()}">
 	              						<font style="font-size: small;vertical-align: middle;"><span class="ti-control-record"/>　${voteDetail.voteDetailColumn}</font><br>
+	              						</c:if>
+	              						<c:if test="${status.count==voteDetails.size()}">
+	              						　　　:
 	              						</c:if>
 	              					</c:forEach>
 	              				</div>
@@ -639,8 +641,10 @@ body {
 <script>
 <!-- add script -->
 $(function(){
-	$(".card").mouseover(function(){
-		//$(this).css("border", "2px red solid");
+	$(".pricing-option").mouseover(function(){
+		$(this).click(function){
+			
+		}
 	})
 })
 </script>
