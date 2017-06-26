@@ -270,12 +270,22 @@ public class ProjectController implements Serializable {
 		
 		//팀메인에 출력할 투표관련
 		List<VoteDTO> votes = voteService.selectVoteList(projectDTO.getProjectNo(), 0);
-		VoteDTO vote = votes.get(votes.size()-1);
-		VoteDTO vote2 = voteService.selectVoteListByVoteNo(vote.getVoteNo());
-		List<VoteDetailDTO> voteDetails = new ArrayList<>();
-		
-		for(VoteDetailDTO detail :vote2.getDetails()){
-			voteDetails.add(detail);
+		System.out.println("1"+votes);
+		System.out.println("2"+votes.size());
+		VoteDTO vote = null;
+		VoteDTO vote2 = null;
+		List<VoteDetailDTO> voteDetails = null;
+		if(votes.size()!=0){
+			vote = votes.get(votes.size()-1);
+			System.out.println(vote);
+			if(vote!=null){
+				vote2 = voteService.selectVoteListByVoteNo(vote.getVoteNo());
+				voteDetails = new ArrayList<>();
+				
+				for(VoteDetailDTO detail :vote2.getDetails()){
+					voteDetails.add(detail);
+				}
+			}
 		}
 		
 		//팀메인에 출력할 파일사이즈관련
