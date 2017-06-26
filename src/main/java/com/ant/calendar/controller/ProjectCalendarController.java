@@ -52,12 +52,19 @@ public class ProjectCalendarController implements Serializable {
 	private Date from;
 	private Date to;
 	private Boolean dynFilter;
-
+	
 	
 	@RequestMapping("/report")
 	public ModelAndView report(HttpServletRequest req) throws Exception {
-
-		System.out.println("projectCalendar 뿌려짐");
+		
+		ModelAndView mv = new ModelAndView("project/report");
+		int projectNo = (int) req.getSession().getAttribute("projectNo");
+		ProjectDTO projectDTO = projectService.selectProject(projectNo);
+		List<UserDTO> projectUserList = projectService.selectProjectUsers(projectNo);
+		
+		
+		
+		
 		String contextPath = req.getContextPath();
 		HttpSession session = req.getSession();
 
@@ -65,13 +72,9 @@ public class ProjectCalendarController implements Serializable {
 		int userNo = userDTO.getUserNo();
 		System.out.println("user_no : "+userNo);
 		
-		int projectNo = (int) session.getAttribute("projectNo");
-		ProjectDTO projectDTO = projectService.selectProject(projectNo);
 		int nono = projectDTO.getProjectNo();
 		System.out.println("project_no : " +nono);
 		/*int projectNo = projectDTO.getProjectNo();*/
-		
-
 		
 		// calendar����
 		DHXPlanner planner = new DHXPlanner(contextPath + "/resources/codebase/", DHXSkin.TERRACE);
@@ -97,23 +100,17 @@ public class ProjectCalendarController implements Serializable {
 				.setURL(contextPath + "/projectCalendar/events?" + token.getParameterName() + "=" + token.getToken());
 		planner.parse(calendarService.getEvent(projectNo));
 
-		ModelAndView mv = new ModelAndView();
 		mv.addObject("schedule", planner.render());
-		mv.setViewName("project/report");
 		// mv.addObject("currentProList",currentProList);
 		// mv.addObject("completedProList",completedProList);
 		
-		List<UserDTO> projectUserList = projectService.selectProjectUsers(projectNo);
-		
-		
-		
-		
+
 		mv.addObject("projectUserList",projectUserList);
 		mv.addObject("projectDTO",projectDTO);
-
 		
 		return mv;
 	}
+
 	
 	@RequestMapping("/projectCalendar")
 	public ModelAndView home(HttpServletRequest req) throws Exception {
@@ -131,8 +128,6 @@ public class ProjectCalendarController implements Serializable {
 		int nono = projectDTO.getProjectNo();
 		System.out.println("project_no : " +nono);
 		/*int projectNo = projectDTO.getProjectNo();*/
-		
-
 		
 		// calendar����
 		DHXPlanner planner = new DHXPlanner(contextPath + "/resources/codebase/", DHXSkin.TERRACE);
@@ -320,18 +315,18 @@ public class ProjectCalendarController implements Serializable {
 		schedule.setEnd_date(end_date);
 		
 		if(event.getId()!=null){
-			System.out.println("�̺�Ʈ ���̵� : "+event.getId());
+			System.out.println("event.getId() : "+event.getId());
 			schedule.setEvent_id(event.getId());			
 		}
 		 
 
 		if (status == DHXStatus.UPDATE) {
-			System.out.println("projectCalendar update ��Ʈ�ѷ�->���� ����");
+			System.out.println("projectCalendar update 컨트롤러 -> 서비스");
 			calendarService.updateEvent(schedule);
 			event.setId(schedule.getEvent_id());
 
 		} else if (status == DHXStatus.INSERT) {
-			System.out.println("projectCalendar insert ��Ʈ�ѷ�->���� ����");
+			System.out.println("projectCalendar insert 컨트롤러 -> 서비스");
 			calendarService.insertEvent(schedule);
 			event.setId(schedule.getEvent_id()-1);
 

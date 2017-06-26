@@ -37,7 +37,8 @@
 <link
 	href="${pageContext.request.contextPath}/resources/css/themify-icons.css"
 	rel="stylesheet">
-
+<script type="text/javascript"
+	src="${pageContext.request.contextPath}/resources/js/jquery-3.2.1.min.js"></script>
 <!-- 필요한 css는 이 밑에 넣어주면 됨 -->
 <!-- 스크립트는 body 맨 아래쪽에 -->
 </head>
@@ -56,104 +57,204 @@
 					-->
 
 					<div class="row">
-						<div class="col-md-6">
+						<div class="col-md-4">
 							<div class="card">
-								<div class="header">
-									<h4 class="title">조원 정보</h4>
-									<p class="category">${projectDTO.projectName}</p>
-								</div>
 								<div class="content">
-									<div class="row">
-										${projectDTO.projectSubject} | ${projectDTO.projectTeacher} <br>
-										
-									</div>
-
-									<div class="footer">
-
-										<hr>
-										<div class="stats">
-											<i class="ti-timer"></i> Campaign sent 2 days ago
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-						<div class="col-md-6">
-							<div class="card">
-								<div class="header">
 									<h4 class="title">조별과제 정보</h4>
-									<p class="category">Last Campaign Performance</p>
-								</div>
-								<div class="content">
-									<div class="row">ddsdsds</div>
-
-									<div class="footer">
-
-										<hr>
-										<div class="stats">
-											<i class="ti-timer"></i> Campaign sent 2 days ago
-										</div>
-									</div>
 								</div>
 							</div>
 						</div>
 					</div>
 					<div class="row">
-						<div class="col-md-6">
+						<div class="col-lg-8 col-md-7">
 							<div class="card">
-								<div class="header">
-									<h4 class="title">TO DO BOARD</h4>
-									<p class="category">Last Campaign Performance</p>
-								</div>
 								<div class="content">
-									<div class="row">
-										<div style="height: 50; width: 50"><c:import url="/todo/capTodo" /></div>
-									</div>
-
-									<div class="footer">
-
-										<hr>
-										<div class="stats">
-											<i class="ti-timer"></i> Campaign sent 2 days ago
+									<form name="projectForm" class=""
+										action="${pageContext.request.contextPath}/project/updateTeamInfo"
+										method="post">
+										<input type="hidden" id="securityInfo"
+											name="${_csrf.parameterName}" value="${_csrf.token}">
+										<div class="row">
+											<div class="col-md-12">
+												<div class="form-group">
+													<label>조별과제명</label> <input type="text"
+														class="form-control border-input" name="projectName"
+														value="${projectDTO.projectName}">
+												</div>
+											</div>
 										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-						<div class="col-md-6">
-							<div class="card">
-								<div class="header">
-									<h4 class="title">조별과제 달력</h4>
-									<p class="category">Last Campaign Performance</p>
-								</div>
-								<div class="content">
-									<div class="row">
-										<jsp:include page="/WEB-INF/views/calendar/scheduler.jsp"/>
-									</div>
-									
-									
-									<div class="footer">
-
-										<hr>
-										<div class="stats">
-											<i class="ti-timer"></i> Campaign sent 2 days ago
+										<div class="row">
+											<div class="col-md-12">
+												<div class="form-group">
+													<label>과목명</label> <input type="text"
+														class="form-control border-input" name="projectSubject"
+														value="${projectDTO.projectSubject}">
+												</div>
+											</div>
 										</div>
-									</div>
+										<div class="row">
+											<div class="col-md-12">
+												<div class="form-group">
+													<label>교수님</label> <input type="text"
+														class="form-control border-input" name="projectTeacher"
+														value="${projectDTO.projectTeacher}">
+												</div>
+											</div>
+										</div>
+										<div class="row">
+											<div class="col-md-12">
+												<div class="form-group">
+													<label>시작날짜</label> <input
+														class="form-control border-input" name="projectStartdate"
+														id="start-date" type="date">
+												</div>
+											</div>
+										</div>
+										<div class="row">
+											<div class="col-md-12">
+												<div class="form-group">
+													<label>종료날짜</label> <input
+														class="form-control border-input" name="projectEnddate"
+														id="end-date" type="date">
+												</div>
+											</div>
+										</div>
+										<div class="text-center">
+											<button type="submit" class="btn btn-info btn-fill btn-wd"
+												id="updateBtn" style="display: none">수정하기</button>
+											<button type="button" class="btn btn-info btn-fill btn-wd"
+												id="Btn" style="display: none">마감하기</button>
+										</div>
+										<div class="clearfix"></div>
+									</form>
 								</div>
 							</div>
 						</div>
 					</div>
 
-				</div>
+
+					<div class="row">
+						<div class="col-md-4">
+							<div class="card">
+								<div class="content">
+									<h4 class="title">조원 정보</h4>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<div class="row">
+						<c:forEach var="user" items="${projectUserList}">
+							<div class="col-md-4">
+								<div class="card card-user">
+									<div class="image">
+										<img style="position: relative; z-index: 1" src="${pageContext.request.contextPath}/resources/asset/img/background.jpg" alt="..." />
+									</div>
+									<div class="content">
+										<div class="author">
+											<img style="z-index: 2; position: relative;" class="avatar border-white"
+												src="${pageContext.request.contextPath}/resources/asset/img/faces/face-0.jpg" alt="..." />
+											<h4 class="title">
+												${user.userName}<br /> <a href="#"><small>${user.userId}</small></a>
+											</h4>
+										</div>
+										<p class="description text-center">★★★★★★★★★★</p>
+									</div>
+									<hr>
+									<div class="text-center">
+										<div class="row">
+											<div class="col-md-3 col-md-offset-1">
+												<!-- <h5>
+													12<br />
+													<small>Files</small>
+												</h5> -->
+											</div>
+											<div class="col-md-4">
+												<h5>
+													10<br /> <small>등록한 자료</small>
+												</h5>
+											</div>
+											<div class="col-md-3">
+												<!-- <h5>
+													24,6$<br />
+													<small>Spent</small>
+												</h5> -->
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</c:forEach>
+
+					</div>
+
+					<div class="row">
+						<div class="col-md-4">
+							<div class="card">
+								<div class="content">
+									<h4 class="title">TO DO BOARD</h4>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<div class="row">
+						<div class="col-md-12">
+							<div class="card" id="todoboard">
+
+								<div class="content">
+									<div class="row">
+										<c:import url="/todo/capTodo" />
+									</div>
+
+									<!-- <div class="footer">
+										<hr>
+										<div class="stats">
+											<i class="ti-timer"></i> Campaign sent 2 days ago
+										</div>
+									</div> -->
+								</div>
+							</div>
+						</div>
+					</div>
+					
+					<div class="row">
+						<div class="col-md-4">
+							<div class="card">
+								<div class="content">
+									<h4 class="title">조별과제 달력</h4>
+								</div>
+							</div>
+						</div>
+					</div>
+					
+					<div class="row">
+						<div class="col-md-12">
+							<div class="card">
+								<div class="content">
+									<div class="row">
+										${schedule}
+									</div>
+
+									<!-- <div class="footer">
+										<hr>
+										<div class="stats">
+											<i class="ti-timer"></i> Campaign sent 2 days ago
+										</div>
+									</div> -->
+								</div>
+							</div>
+						</div>
+					</div>
+
 					<button id="pdfdown">다운</button>
+				</div>
 			</div>
-			<jsp:include page="footer_ch.jsp" flush="false" />
 		</div>
 	</div>
 
 	<!--   Core JS Files   -->
-	<script type="text/javascript"
-		src="${pageContext.request.contextPath}/resources/js/jquery-3.2.1.min.js"></script>
+
 	<script
 		src="${pageContext.request.contextPath }/resources/js/bootstrap.min.js"
 		type="text/javascript"></script>
@@ -241,31 +342,84 @@
 		})
 
 		function genPDF() {
-			html2canvas(document.body, {
-				onrendered : function(canvas) {
-					var img = canvas.toDataURL("image/png");
-					var doc = new jsPDF();
-					doc.addImage(img, 'JPEG', 20, 20);
-					doc.save('test.pdf');
-				}
-			});
+			html2canvas(
+					$('#container-fluid'),
+					{
+						onrendered : function(canvas) {
+							var img = canvas.toDataURL("image/png");
+							var doc = new jsPDF('landscape');
+							doc.text(20, 20, 'Hello world!')
+							doc
+									.text(20, 30,
+											'This is client-side Javascript, pumping out a PDF.')
+							doc.addPage()
+							doc.addImage(img, 'JPEG', 20, 20);
+							doc.save('test.pdf');
+						}
+					});
 		}
 
+		/* function examPDF() {
+			var doc = new jsPDF('p', 'pt', 'a4');
+
+			doc.text(50, 50, "subject");
+
+			html2canvas($('#jowon'), {
+				onrendered : function(canvas1) {
+					alert(0)
+					var img = canvas1.toDataURL("image/png");
+					doc.addPage();
+					doc.text(20, 20, 'jowon!')
+					doc.addImage(img, 'JPEG', 20, 40);
+
+					html2canvas($('#jojung'), {
+						onrendered : function(canvas2) {
+							alert(1)
+							var img = canvas2.toDataURL("image/png");
+							doc.addPage();
+							doc.text(20, 20, 'jojung!')
+							doc.addImage(img, 'JPEG', 20, 40);
+							html2canvas($('#todoboard'), {
+								onrendered : function(canvas3) {
+									alert(2)
+									var img = canvas3.toDataURL("image/png");
+									doc.addPage();
+									doc.text(20, 20, 'todoboard!')
+									doc.addImage(img, 'JPEG', 20, 40);
+									html2canvas($('#pyungjeom'), {
+										onrendered : function(canvas4) {
+											alert(3)
+											var img = canvas4
+													.toDataURL("image/png");
+											doc.addPage();
+											doc.text(20, 20, 'pyungjeom!')
+											doc.addImage(img, 'JPEG', 20, 40);
+											doc.save('testpdf.pdf');
+										}
+									});
+								}
+							});
+						}
+					});
+				}
+			});
+
+		}
+ */
 		function makePDF() {
 
-//			var quotes = document.getElementById('body');
+			//			var quotes = document.getElementById('body');
 
 			var el = document.getElementById('container-fluid');
-			 el.parentElement.style.width = '10000px';
-			  
-			 el.style.display = 'inline-block';
-			 el.style.width = "auto";
-			html2canvas(
-					el,
+/* 			el.parentElement.style.width = '10000px';
+
+			el.style.display = 'inline-block';
+			el.style.width = "auto"; */
+			html2canvas(el,
 					{
 						onrendered : function(canvas) {
 							//! MAKE YOUR PDF
-							var pdf = new jsPDF('l', 'mm', [1400,900]);
+							var pdf = new jsPDF();
 
 							for (var i = 0; i <= el.clientHeight / 980; i++) {
 								//! This is all just html2canvas stuff

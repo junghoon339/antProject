@@ -59,6 +59,13 @@
 			#{invitedUserId}
 		</foreach>
 	</select>
+	
+	<!-- 조원 초대시 이미 속해있는 조원인지 검색 -->
+	<select id="selectChkProjectMember" parameterType="projectUserDTO" resultType="String">
+		SELECT user_id
+		FROM project_user pu, ant_user au
+		WHERE pu.user_no=au.user_no and pu.project_no=#{projectNo} and user_id=#{userId}	
+	</select>
 		
 	<!-- 팀플방에 조원등록 -->
 	<insert id="insertProjectMember" parameterType="projectUserDTO">
@@ -144,6 +151,10 @@
 		WHERE user_no_message_receiver=#{_parameter} AND message_receivetime IS NULL
 	</select>
 
+	<insert id="insertProjectCalendar" parameterType="map">
+		insert into project_calendar values(seq_project_calendar.nextval,(SELECT max(project_no) FROM project),#{userNo},#{projectDTO.projectName},#{projectDTO.projectStartdate},#{projectDTO.projectEnddate})
+	</insert>
+	
 	<!-- state가 2인 project를 호출 -->
 	<select id="selectIfProjectState2" resultMap="selectProjectMap2">
 		SELECT project_no	

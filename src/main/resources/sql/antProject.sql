@@ -68,6 +68,8 @@ CREATE TABLE project(
 create sequence seq_project_no;
 
 SELECT * FROM ANT_USER;
+select * from project;
+select * from ANT_USER;
 
 INSERT INTO PROJECT_USER
 VALUES (seq_project_user_no.nextval, 1, 84, '����', '����');

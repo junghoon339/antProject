@@ -183,6 +183,10 @@
 			alert("조별과제 종료날짜를 입력해 주세요.");
 			fr.projectEnddate.focus();
 			return false;
+		} else if (fr.projectStartdate.value > fr.projectEnddate.value) {
+			alert("시작날짜와 종료날짜를 확인해주세요");
+			fr.projectEnddate.focus();
+			return false;
 		} else
 			return true;
 	}

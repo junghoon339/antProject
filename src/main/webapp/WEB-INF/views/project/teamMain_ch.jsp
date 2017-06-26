@@ -207,7 +207,6 @@
                   작성할때 template.html 에서
                   <div class="row">부터 참고하면서 작성하면 됨
                -->
-               
                	<div class="row">
                		<div class=col-lg-4>
 	            		<div class="card">

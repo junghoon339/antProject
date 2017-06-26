@@ -348,7 +348,6 @@
                                  <span class="ti-shift-right"></span>
                               </div>
                            </button>
-
                            <a class="btn btn-Info" href="#danger" data-toggle="modal"
                               id="sendMessageBtn"><div class="icon-container">
                                  <span class="ti-pencil-alt"></span>
