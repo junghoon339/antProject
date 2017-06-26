@@ -42,20 +42,6 @@ CREATE TABLE ant_user
 
 
 
-SELECT * FROM ANT_USER;
-
-drop table ant_user;
-select * tab;
-
-select * from project_calendar;
-
-insert into PROJECT_CALENDAR
-value (seq, )
-
-SELECT pc.event_id, pc.event_name, pc.project_no, pc.user_no, pc.start_date, pc.end_date, p.project_startdate, p.project_enddate
-	FROM project_calendar pc, project p
-	WHERE pc.project_no=p.project_no and p.project_no=5;
-
 CREATE TABLE project(
    project_no            NUMBER CONSTRAINT project_no_pk PRIMARY KEY,
    project_name          varchar2(50) NOT NULL,
@@ -67,12 +53,6 @@ CREATE TABLE project(
 );
 create sequence seq_project_no;
 
-SELECT * FROM ANT_USER;
-select * from project;
-select * from ANT_USER;
-
-INSERT INTO PROJECT_USER
-VALUES (seq_project_user_no.nextval, 1, 84, '����', '����');
 
 CREATE TABLE project_user(
    project_user_no       NUMBER CONSTRAINT project_user_no_pk PRIMARY KEY,
