@@ -205,6 +205,12 @@
 </style>
 </head>
 <body>
+	<security:authorize access="hasRole('ROLE_ADMIN')">
+		<script type="text/javascript">
+			location.href="${pageContext.request.contextPath}/admin/user";
+		</script>
+	</security:authorize> 
+	
 	<div class="wrapper">
 		<jsp:include page="/WEB-INF/views/project/sidebar_ch.jsp" />
 
