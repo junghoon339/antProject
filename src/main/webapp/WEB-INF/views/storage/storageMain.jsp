@@ -14,7 +14,7 @@
 	<link rel="icon" type="image/png" sizes="96x96" href="assets/img/favicon.png">
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 
-<title>Insert title here</title>
+<title>개미와 베짱이, 대학조별과제 관리시스템</title>
 <link rel="apple-touch-icon" sizes="76x76"
 	href="assets/img/apple-icon.png">
 <link rel="icon" type="image/png" sizes="96x96"
@@ -417,7 +417,7 @@
 																<label class="col-md-4 control-label" for="anschrift" style="width:63px">내용</label>
 																
 																	<textarea class="form-control" id="anschrift"
-																		name="storageContent" rows="5" style="width:150%"
+																		name="storageContent" rows="5" style="width:465px%"
 																		placeholder="내용을 입력하세요"></textarea>
 																
 															</div> 
@@ -502,10 +502,11 @@
 												</script>
 												<div class="modal-footer">
 												<div class="form-group">
+									                        	<div class="col-md-8">
+																	<input type="reset" class="btn btn-Info btn-filter" data-dismiss="modal" value="취소"/>		
 																<div class="col-md-8">
 																	<input type="button" class="btn btn-Info btn-filter" id="anmelden" name="anmelden"
-														data-dismiss="modal" value="될까?"/>
-									                        			
+														data-dismiss="modal" value="등록"/>
 																</div>
 															</div>
 													

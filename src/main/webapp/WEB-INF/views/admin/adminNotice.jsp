@@ -13,7 +13,7 @@
 	href="assets/img/favicon.png">
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 
-<title>Paper Dashboard by Creative Tim</title>
+<title>개미와 베짱이, 대학조별과제 관리시스템</title>
 
 <meta
 	content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0'

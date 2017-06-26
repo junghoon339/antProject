@@ -11,7 +11,7 @@
 <link rel="icon" type="image/png" sizes="96x96" href="assets/img/favicon.png">
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 
-<title>Paper Dashboard by Creative Tim</title>
+<title>개미와 베짱이, 대학조별과제 관리시스템</title>
 
 <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
 <meta name="viewport" content="width=device-width" />
@@ -183,7 +183,7 @@ td {
 											</c:choose>명 참여</td>
 											<td id="attribute">
 											<c:choose>
-														<c:when test="${doneList	.state==false}">미참여</c:when>
+														<c:when test="${doneList.state==false}">미참여</c:when>
 														<c:otherwise>참여완료</c:otherwise>
 											</c:choose>
 											</td>

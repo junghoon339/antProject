@@ -10,8 +10,6 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 	
 	<title>개미와 베짱이, 대학조별과제 관리시스템</title>
-		<!--   Core JS Files   -->
-	<script src="http://code.jquery.com/jquery-latest.min.js"></script>
 	<link rel="apple-touch-icon" sizes="76x76" href="assets/img/apple-icon.png">
 	<link rel="icon" type="image/png" sizes="96x96" href="assets/img/favicon.png">
 	
@@ -27,6 +25,7 @@
 	<link href="http://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" rel="stylesheet">
 	<link href='https://fonts.googleapis.com/css?family=Muli:400,300' rel='stylesheet' type='text/css'>
 	<link href="${pageContext.request.contextPath }/resources/css/themify-icons.css" rel="stylesheet">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
 	
 	<!-- 필요한 css는 이 밑에 넣어주면 됨 -->
 	<link href="${pageContext.request.contextPath}/resources/asset/stylesheets/timetable.css" media="all" rel="stylesheet" type="text/css" />
@@ -43,7 +42,6 @@
       ga('send', 'pageview');
 	  
       var commonUrl="${pageContext.request.contextPath}";
-      var projectNo="${sessionScope.projectNo }"
     </script>
     <style type="text/css">
     .badgebox
@@ -92,7 +90,6 @@
                      <div id="customcell" style="display:none;"></div>  
                   </div>
                </div>
-               <div class="card">
                <table id="timetable" >
                      <tr>
                         <th>&nbsp;</th>
@@ -261,7 +258,7 @@
             <input type="text" name="timetableLocation" id="custom_location" class="input-large" placeholder="강의동을 입력하세요." /><br />
             <input type="hidden" name="timetableClassInfo" id="custom_class_time"/>
             <input type="hidden" name="timetableColor" id="timetableColor"/>
-            <input type="hidden" name="userNo" value="${sessionScope.userDTO.userNo }"/> 
+            <input type="hidden" name="userNo" value="44"/> 
             <button type="submit" id="custom_lecture_add_button" class="btn btn-inverse">추가</button>
             <a id="custom_lecture_close_button" class="btn btn-inverse">취소</a>
          </form>
@@ -271,8 +268,9 @@
 		</div>
 	</div>
 	
-
-    <script src="${pageContext.request.contextPath }/resources/js/bootstrap.min.js" type="text/javascript"></script>
+	<!--   Core JS Files   -->
+	<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+      <script src="${pageContext.request.contextPath }/resources/js/bootstrap.min.js" type="text/javascript"></script>
 	<!--  Checkbox, Radio & Switch Plugins -->
 	<script src="${pageContext.request.contextPath }/resources/js/bootstrap-checkbox-radio.js"></script>
 	<!--  Charts Plugin -->
