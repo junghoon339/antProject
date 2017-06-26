@@ -168,4 +168,7 @@
 		WHERE user_no = #{_parameter}
 	</select>
 	
+	<insert id="insertUserCalendar" parameterType="map">
+		insert into user_calendar values(seq_user_calendar.nextval, #{userNo}, #{projectDTO.projectName},#{projectDTO.projectStartdate},#{projectDTO.projectEnddate})
+	</insert>
 </mapper>

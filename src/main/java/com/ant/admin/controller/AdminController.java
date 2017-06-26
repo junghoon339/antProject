@@ -37,22 +37,20 @@ public class AdminController {
 		
 		int curPage=Integer.parseInt(pageNumber);
 
-		int rowCount=2; //�� �������� �ѷ��� ���ڵ��
+		int rowCount=7; //한 페이지에 보여줄 데이터 개수
 		int startRow=(curPage-1)*rowCount+1;
 		int endRow=curPage*rowCount;
-		System.out.println("endRowwwwwwwww:"+endRow);
 		List<UserDTO> list=service.userSelectAll(startRow,endRow);
-		System.out.println("qqqqqqqqqqqqqq"+list.size());
 		
-		int totalRow=service.userTotalCount();//�� �Խù� ����
-		int pageSu=5; //�ѷ��� ������ ��
+		int totalRow=service.userTotalCount();//총 레코드 수
+		int pageSu=10; //페이징으로 뿌려질 갯수
 		int startPage=((curPage-1)/pageSu)*pageSu+1;
 		int endPage=startPage+pageSu-1;
 		
 		System.out.println("startPage:"+startPage);
 		System.out.println("endPage:"+endPage);
 		
-		boolean flag=false;//������ �������� �Ѿ�� ��ư ���ֱ�
+		boolean flag=false;//페이징에서 마지막페이징 처리할때 상태변수 true면 마지막페이징부분
 		
 		int lastPageNum=totalRow%rowCount==0 ? totalRow/rowCount : totalRow/rowCount+1;	
 		if(lastPageNum<=endPage){
@@ -75,7 +73,7 @@ public class AdminController {
 	}
 	
 	@RequestMapping("/user/delete")
-	public String delete(int userNo,String pageNumber){
+	public String delete(int userNo,String pageNumber) throws Exception{
 		service.userDelete(userNo);
 		return "redirect:/admin/user?pageNumber="+pageNumber;
 	}
@@ -89,45 +87,37 @@ public class AdminController {
 		
 		int curPage=Integer.parseInt(pageNumber);
 
-		int rowCount=5; //�� �������� �ѷ��� ���ڵ��
+		int rowCount=7; //한 페이지에 보여줄 데이터 개수
 		int startRow=(curPage-1)*rowCount+1;
 		int endRow=curPage*rowCount;
-		//System.out.println("endRowwwwwwwww:"+endRow);
 		
 		List<ProjectDTO> list=null;
 		int totalRow=0;
 		if(categoryNo==-1){
-			System.out.println("Aaaaaaaaaaaaaaaaaaaaa");
 			list=service.projectSelectAll(projectState,startRow,endRow);
-			//System.out.println("qqqqqqqqqqqqqq"+list.size());
 			
-			totalRow=service.projectTotalCount(projectState);//�� �Խù� ����
+			totalRow=service.projectTotalCount(projectState);
 		}else{
-			System.out.println("Bbbbbbbbbbbbbbbbbbbbbb");
 			list=service.projectSelectAllBySearch(projectState,startRow,endRow,categoryNo,searchText);
 			
 			totalRow=service.projectTotalCountBySearch(projectState,categoryNo,searchText);
 		}
 		
-		System.out.println("tttttttttttttrrrrrrrrrrrrrrrrr"+totalRow);
-		int pageSu=5; //�ѷ��� ������ ��
+		int pageSu=10; //페이징으로 뿌려질 갯수
 		int startPage=((curPage-1)/pageSu)*pageSu+1;
 		int endPage=startPage+pageSu-1;
 		
 		System.out.println("startPage:"+startPage);
 		System.out.println("endPage:"+endPage);
 		
-		boolean flag=false;//������ �������� �Ѿ�� ��ư ���ֱ�
+		boolean flag=false;//페이징에서 마지막페이징 처리할때 상태변수 true면 마지막페이징부분
 	
-		
 		int lastPageNum=totalRow%rowCount==0 ? totalRow/rowCount : totalRow/rowCount+1;
 		if(lastPageNum<=endPage){
 			endPage=lastPageNum;
 			flag=true;
 		}
 		
-		System.out.println("enddddddddddddddddd"+endPage);
-		System.out.println("listttttttttttt:"+list.size());
 		ModelAndView mv=new ModelAndView();
 		mv.addObject("projectList",list);
 		mv.addObject("totalRow",totalRow);
@@ -148,8 +138,7 @@ public class AdminController {
 	}
 	
 	@RequestMapping("/project/delete")
-	public String projectDelete(int projectNo,String pageNumber,int projectState){
-		System.out.println("pppppppppppppppppppppppppo:"+projectNo);
+	public String projectDelete(int projectNo,String pageNumber,int projectState) throws Exception{
 		service.projectDelete(projectNo);
 		return "redirect:/admin/adminProject?pageNumber="+pageNumber+"&projectState="+projectState;
 	}
@@ -163,8 +152,6 @@ public class AdminController {
 	
 	@RequestMapping("/adminNotice")
 	public ModelAndView NoticeMain(String pageNumber, String searchText){
-		System.out.println("여기 안들어온다");
-		System.out.println(pageNumber);
 		if(pageNumber==null){
 			pageNumber = "1";
 		}
@@ -182,7 +169,7 @@ public class AdminController {
 			list = service.noticeSelectBySearch(startRow, endRow, searchText);
 			totalRow = service.noticeTotalCountBySearch(searchText); 
 		}
-		int pageSu = 5;
+		int pageSu = 10;
 		int startPage = ((curPage-1)/pageSu)*pageSu+1;
 		int endPage = startPage+pageSu-1;
 		
@@ -231,8 +218,6 @@ public class AdminController {
 	
 	@RequestMapping("/updateForm")
 	public ModelAndView noticeUpdateForm(NoticeDTO noticeDTO){
-		System.out.println("update Form = "+noticeDTO.getNoticeNo());
-		
 		ModelAndView mv = new ModelAndView();
 		mv.addObject("noticeDTO",noticeDTO);
 		mv.setViewName("admin/updateForm");
@@ -241,8 +226,6 @@ public class AdminController {
 	
 	@RequestMapping("/update")
 	public String noticeUpdate(NoticeDTO noticeDTO) throws Exception{
-		System.out.println("여기오긴하냐");
-		System.out.println("update = "+noticeDTO.getNoticeNo());
 		service.updateNotice(noticeDTO);
 		return "redirect:/admin/adminNotice";
 	}
