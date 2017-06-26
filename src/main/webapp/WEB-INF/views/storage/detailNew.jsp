@@ -135,8 +135,8 @@
                         					 
                         					 
                         					 
-                        					 
-                        					 
+     <c:set var="userNo" value="${dto.userNo}"/>				 
+     <c:if test="${sessionScope.userDTO.userNo eq userNo}">			 
        <c:if test="${sessionScope.projectState==0}"> 
       <ul class="nav navbar-nav" style="float:right">
         <li class="dropdown">
@@ -148,7 +148,7 @@
         </li>
       </ul>          					 
        </c:if>                 					 
-                        					 
+       </c:if>                 					 
                         					 
                         					 <!-- <span class="ti-marker-alt" href="#danger" data-toggle="modal"></span><span class="icon-name" href="#danger" data-toggle="modal"><a href="#"></a></span> -->
                         				

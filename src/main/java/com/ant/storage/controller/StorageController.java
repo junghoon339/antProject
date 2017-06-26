@@ -24,16 +24,6 @@ public class StorageController {
 
 	private String path = "C:\\antAndGrasshopper\\download";
 	
-	/*@RequestMapping("/storageTable/{projectNo}")
-	public ModelAndView storageIndex(@PathVariable int projectNo){
-		List<StorageDTO> list =  service.selectAll(projectNo);
-		ModelAndView mv = new ModelAndView();
-		mv.setViewName("storage/test");
-		mv.addObject("list",list);
-		return mv;
-	}*/
-	
-	//paging~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~``
 	@RequestMapping("/storageTable/{projectNo}")
 	public ModelAndView storageIndex1(@PathVariable int projectNo, String pageNumber, String searchText,@RequestParam(defaultValue="-1")int categoryNo){
 		
@@ -136,7 +126,6 @@ public class StorageController {
 	
 	@RequestMapping("/updateForm")
 	public ModelAndView updateForm(StorageDTO storageDTO){
-		/*System.out.println(storageDTO.getUserDTO().getUserName());*/ //null
 		ModelAndView mv = new ModelAndView();
 		mv.setViewName("storage/updateForm");
 		mv.addObject("storageDTO", storageDTO);
@@ -145,8 +134,6 @@ public class StorageController {
 	
 	@RequestMapping("/update")
 	public String update(StorageDTO storageDTO) throws Exception{
-		System.out.println("title = "+storageDTO.getStorageTitle());
-		System.out.println("title = "+storageDTO.getStorageContent());
 		MultipartFile file = storageDTO.getFile();
 		if(file.getSize()>0){
 			String fileName = file.getOriginalFilename();
