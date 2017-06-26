@@ -369,9 +369,9 @@ public class ProjectController implements Serializable {
 		int userNo = userDTO.getUserNo();
 
 		List<Integer> invitedUserNolist = null;
-		
-		//초대할 회원들이 존재한다면
-		if(invitedUser!=null){	
+
+		// 초대할 회원들이 존재한다면
+		if (invitedUser.length != 0) {
 			// 조별과제방에 초대된 회원들의 id invitedUser배열을 list로 변환
 			List<String> invitedUserIdList = new ArrayList<>();
 			Collections.addAll(invitedUserIdList, invitedUser);
@@ -488,6 +488,18 @@ public class ProjectController implements Serializable {
 		int result = projectService.deleteProjectUser(projectUserDTO);
 		
 		return "redirect:/project/projectUserInfo";
+	}
+	
+	/**
+	 * 이미 속해있는 조원인지 확인
+	 */
+	@RequestMapping("/selectChkProjectMember")
+	@ResponseBody
+	public String selectChkProjectMember(HttpServletRequest req, String userId){
+		ProjectUserDTO projectUserDTO = new ProjectUserDTO();
+		projectUserDTO.setUserId(userId);
+		projectUserDTO.setProjectNo((int) req.getSession().getAttribute("projectNo"));
+		return projectService.selectChkProjectMember(projectUserDTO);
 	}
 	
 	/**
