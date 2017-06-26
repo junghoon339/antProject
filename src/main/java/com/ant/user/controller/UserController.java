@@ -208,8 +208,8 @@ public class UserController {
 	}
 	
 	@RequestMapping("/delete/{noticeNo}")
-	public String noticeDelete(@PathVariable int noticaeNo) throws Exception{
-		adminService.deleteNotice(noticaeNo);
+	public String noticeDelete(@PathVariable int noticeNo) throws Exception{
+		adminService.deleteNotice(noticeNo);
 		return "redirect:/user/adminNotice";
 	}
 	

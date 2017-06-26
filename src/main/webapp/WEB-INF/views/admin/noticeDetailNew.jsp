@@ -121,52 +121,14 @@
 		                        		</div>
 	                        		</h5>
 								</div>
-
+								<c:if test="${sessionScope.userDTO.userNo==27}">
 								<div align="right" >
 										<h3>
                         					<a href="${pageContext.request.contextPath}/user/delete/${noticeDTO.noticeNo}"><span class="ti-trash"></span></a>
-									    
-                        					
-                        					<!--  <a href="#" onclick="submitHidden()"><span class="ti-ink-pen"></span></a> -->
-                        					
-                        					
-                        					
-                        					
-                        					
-                        					
-                        					
-                        					
-                        					
-                        					
-                        					
-                        					
-                        					
-                        						<a href="#"><span class="ti-pencil" href="#danger" data-toggle="modal"></span><span class="icon-name" href="#danger" data-toggle="modal"></a>
-                        				
-                        				
-                        				
-                        				
-                        				
-                        				
-                        				
-                        				
-                        				
-                        				
-                        				
-                        				
-                        				
-                        				
-                        				
-                        				
-                        				
-                        				
-                        				
-                        				
-                        				
-                        				
+                        					<a href="#"><span class="ti-pencil" href="#danger" data-toggle="modal"></span><span class="icon-name" href="#danger" data-toggle="modal"></a>
                         				</h3> 
 								</div>
-
+								</c:if>
 										<form id="submitForm" method="post" action="">
 											<input type="hidden" id="securityInfo" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 											<input type="hidden" id="noticeNo" name="noticeNo" value="${noticeDTO.noticeNo}">  
@@ -272,10 +234,9 @@
 														method="post" enctype="multipart/form-data">
 
 														<input type="hidden" id="securityInfo"name="${_csrf.parameterName}" value="${_csrf.token}" /> 
-														<input type="hidden" name="noticeTitle" value="${noticeDTO.noticeTitle}">
+														<%-- <input type="hidden" name="noticeTitle" value="${noticeDTO.noticeTitle}"> --%>
 														<input type="hidden" name ="noticeNo" value="${noticeDTO.noticeNo}">
-														<input type="hidden" name ="noticeContent" value="${noticeDTO.noticeContent}">
-														<input type="hidden" value="${noticeDTO.writeDay}" name="writeDay">
+														<%-- <input type="hidden" name ="noticeContent" value="${noticeDTO.noticeContent}"> --%>
 														<fieldset>
 
 															<!-- Form Name -->
@@ -285,7 +246,7 @@
 																<label class="col-md-4 control-label" for="name"
 																	style="text-align: right; width: 63px">제목</label>
 																<div class="col-md-4">
-																	<input id="name" name="storageTitle" type="text"
+																	<input id="name" name="noticeTitle" type="text"
 																		placeholder="제목을 입력하세요" class="form-control input-md"
 																		style="width: 465px" value="${noticeDTO.noticeTitle}">
 
@@ -299,7 +260,7 @@
 																<label class="col-md-4 control-label" for="anschrift" style="width:63px">내용</label>
 																
 																	<textarea class="form-control" id="anschrift"
-																		name="storageContent" rows="5" style="width:150%"
+																		name="noticeContent" rows="5" style="width:150%"
 																		placeholder="내용을 입력하세요">${noticeDTO.noticeContent}</textarea>
 																
 															</div> 

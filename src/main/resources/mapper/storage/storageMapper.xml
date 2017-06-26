@@ -52,7 +52,7 @@
 	<!-- 상세보기 -->
 	<select id="selectByStorageNum" parameterType="int" resultMap="storageMap">
 		select <include refid="selectAllculmn"></include>
-		from storage s,ant_user a  
+		from storage s join ant_user a on s.user_no=a.user_no   
 		where storage_no=#{_parameter}
 	</select>
 	

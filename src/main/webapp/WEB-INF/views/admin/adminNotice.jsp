@@ -169,11 +169,11 @@ body{
 										<a class="btn btn-danger" href="#danger" data-toggle="modal">공지등록</a>
 								</div> -->
 								<div class="col-sm-6" align="right">
-								<%-- <c:if test="${sessionScope.userDTO.userNo==27}"> --%>								
+								<c:if test="${sessionScope.userDTO.userNo==27}"> 								
 								 <div class="icon-container">
                         				<span class="ti-pencil" href="#danger" data-toggle="modal"></span><span class="icon-name" href="#danger" data-toggle="modal"><a href="#">공지등록</a></span>
                         		</div>
-                            	<%-- </c:if> --%>
+                            	</c:if>
                             </div>
                             
                             <div class="header">
