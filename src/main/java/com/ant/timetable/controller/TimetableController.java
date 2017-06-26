@@ -18,11 +18,6 @@ public class TimetableController {
 	@Autowired
 	private TimetableService service;
 	
-	/*@RequestMapping("/projectTimetable")
-	public String projectTimetable(){
-		return "timetable/projectTimetable";
-	}*/
-	
 	@RequestMapping("/main")
 	public String main (){
 		return "timetable/userTimetable_ch";
@@ -57,8 +52,6 @@ public class TimetableController {
 		return service.timetableDelete(timetableNo);
 	}
 
-	
-	
 	////////////////////////////////////////////////////////팀
 	@RequestMapping("/teamSelectAll")
 	@ResponseBody
@@ -69,7 +62,6 @@ public class TimetableController {
 	@RequestMapping("/selectUserNos")
 	@ResponseBody
 	public List<UserDTO> selectUserNos(int projectNo){
-		//System.out.println("사이즈다잉 : "+service.selectUserNos(projectNo).size());
 		return service.selectUserNos(projectNo);
 	}
 	

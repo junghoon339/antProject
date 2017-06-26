@@ -46,14 +46,12 @@ public class TimetableDAOImpl implements TimetableDAO {
 	@Override
 	public List<UserDTO> selectUserNos(int projectNo) {
 		// TODO Auto-generated method stub
-		System.out.println("다오사이즈여 : "+session.selectList("timetableMapper.selectUserNos",projectNo).size());
 		return session.selectList("timetableMapper.selectUserNos",projectNo);
 	}
 
 	@Override
 	public List<Integer> selectUserNoList(int projectNo) {
 		// TODO Auto-generated method stub
-		System.out.println("ㄷ오사이즈아:"+session.selectList("timetableMapper.selectUserNoList",projectNo).size());
 		return session.selectList("timetableMapper.selectUserNoList",projectNo);
 	}
 

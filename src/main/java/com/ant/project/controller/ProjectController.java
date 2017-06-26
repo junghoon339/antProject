@@ -422,9 +422,6 @@ public class ProjectController implements Serializable {
 		ProjectDTO projectDTO = projectService.selectProject(projectNo);
 		List<UserDTO> projectUserList = projectService.selectProjectUsers(projectNo);
 		
-		
-		
-		
 		mv.addObject("projectUserList",projectUserList);
 		mv.addObject("projectDTO",projectDTO);
 		
