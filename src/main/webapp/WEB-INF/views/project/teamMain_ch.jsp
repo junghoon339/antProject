@@ -326,7 +326,7 @@ body {
          <jsp:include page="header_ch.jsp" flush="false" /> <!-- </nav> -->
         
         <h2 align="center">TEST 1 TITLE</h2>
-         <div class="content" style="padding-top: 20px" align="center">
+         <div class="content" style="padding-top: 20px; margin-left: 100px" align="center">
             <div class="container-fluid">
                <!-- 이곳에 내용작성!!!!!!!!!!!!!!!! -->
                <!-- 
@@ -342,6 +342,7 @@ body {
 			    
                	<div class="pricing-table row">
                		<div class="pricing-option col-lg-6">
+               			<input type="hidden" value="${pageContext.request.contextPath}/project/teamInfo"/>
 	            			<div class="card-header">
 	            				<h5><span class="ti-time"> 조별과제 남은 일정</h5>
 	            			</div>
@@ -353,7 +354,7 @@ body {
 					                <span class="progress-right">
 					                    <span class="progress-bar"></span>
 					                </span>
-					                <div class="progress-value">45%</div>
+					                <div class="progress-value">${result*-1}%</div>
 					            </div>
 				            </div>
 				            <div class="card-footer">
@@ -362,26 +363,28 @@ body {
 	           		</div>
 	           		
 	           		<div class="pricing-option col-lg-6">
+	           			<input type="hidden" value="#"/>
 	            			<div class="card-header">
 	            				<h5><span class="ti-light-bulb"/> 오늘의 명언</h5>
 	            			</div>
-	            			<div class="card-body">
+	            			<div class="card-body" style="border-top: 1px gray solid;padding-top: 9px">
 	              				<!-- 내용을 넣을 공간 -->
-	              				<hr>
 	              				${arr1}<br><br>
-	              				${arr2}
+	              				<strong>${arr2}</strong>
 	              			</div>
 				            <div class="card-footer">
 	              				<h6 align="right"><a href="#" style="color: #00e0d9">detail</a></span></h6>
 	              			</div>
 	           		</div>
 	           		<div class="pricing-option col-lg-6">
+	           			<input type="hidden" value="#"/>
 	           				<img height="200px" src="${pageContext.request.contextPath}/resources/img/wanted.png"/>
 	           		</div>
 	          	</div>
 	          	<br>
 	            <div class="pricing-table row">
                		<div class="pricing-option col-lg-6">
+               			<input type="hidden" value="${pageContext.request.contextPath}/projectCalendar/projectCalendar"/>
 	            			<div class="card-header">
 	            				<h5><span class="ti-calendar"/> 오늘의 계획</h5>
 	            			</div>
@@ -392,16 +395,14 @@ body {
 					                    <h1 class="panel-title text-center">${todayDate}</h1>
 					                </div>
 					                <div class="panel-body text-center">                        
-					                    <strong>
 											<c:forEach items="${map}" var="map" varStatus="status">
 				              					<c:if test="${status.count<3}">
-				              						${map.key} ${map.value}<br>
+				              						<font style="font-size: small;">${map.key} ${map.value}</font><br>
 				              					</c:if>
 				              					<c:if test="${status.count==3}">
 				              						:<br>
 				              					</c:if>
 				              				</c:forEach>
-										</strong>
 					                </div>
 					            </div>
 	              			</div>
@@ -410,6 +411,7 @@ body {
 	              			</div>
 	           		</div>
 	           		<div class="pricing-option col-lg-6">
+	           			<input type="hidden" value="${pageContext.request.contextPath}/vote/"/>
 	            			<div class="card-header">
 	            				<h5><span class="ti-menu-alt"/> 최신 투표항목</h5>
 	            			</div>
@@ -417,7 +419,7 @@ body {
 	            				<div class="col-lg-11" style="margin-left: 15px">
 	            				<div class="card" style="height: 125px">
 	              				<!-- 내용을 넣을 공간 -->
-	              				<div class="well"  style="height: 40px;margin-bottom: 5px; padding:10px; vertical-align: middle;"><Strong id="well" style="vertical-align: middle;">Q. ${vote.voteTitle}</Strong></div>
+	              				<div class="well"  style="height: 40px; padding:5px; vertical-align: middle;"><Strong id="well" style="vertical-align: middle;">Q. ${vote.voteTitle}</Strong></div>
 	              				<div align="left">
 	              					<c:forEach items="${voteDetails}" var="voteDetail" varStatus="status">
 	              						<c:if test="${status.count<voteDetails.size()}">
@@ -436,6 +438,7 @@ body {
 	              			</div>
 	           		</div>
 	           		<div class="pricing-option col-lg-6">
+	           			<input type="hidden" value="${pageContext.request.contextPath}/storage/storageTable/${projectNo}"/>
 	            			<div class="card-header">
 	              				<h5><span class="ti-save"/> 자료실 수용량</h5>
 	              			</div>
@@ -481,6 +484,9 @@ body {
    <script src="${pageContext.request.contextPath }/resources/js/sockjs.js"></script>
    <script src="${pageContext.request.contextPath }/resources/js/jquery.timeago.js"></script>
    <script>
+   $(".pricing-option").dblclick(function(){
+		location.href=$(this).children().val();
+	})
    $(document).on('click', '.panel-heading span.icon_minim', function (e) {
 	    var $this = $(this);
 	    if (!$this.hasClass('panel-collapsed')) {

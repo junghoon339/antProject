@@ -255,7 +255,7 @@ public class ProjectController implements Serializable {
 	 * 하나의 팀프로젝트 메인화면
 	 */
 	@RequestMapping("/teamMain")
-	public String teamMain(ProjectDTO projectDTO, HttpServletRequest req) {
+	public String teamMain(ProjectDTO projectDTO, HttpServletRequest req) throws Exception {
 		//session에 projectNo, projectState담기
 		req.getSession().setAttribute("projectNo", projectDTO.getProjectNo());
 		req.getSession().setAttribute("projectState", projectDTO.getProjectState());
@@ -269,10 +269,28 @@ public class ProjectController implements Serializable {
 		//session에 projectUserRole(조원,조장) 담음
 		req.getSession().setAttribute("projectUserRole", projectUserRole);
 		
+		//남은일자 계산 관련
+		ProjectDTO pro = projectService.selectProject(projectDTO.getProjectNo());
+		
+		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+		Date beginDate = format.parse(pro.getProjectStartdate());
+		Date endDate = format.parse(pro.getProjectEnddate());
+		Date nowDate = new Date();
+
+		long diff = endDate.getTime() - nowDate.getTime();
+		long diffDay = diff/ (24*60*60*1000);
+		
+		long diff2 = endDate.getTime() - beginDate.getTime();
+		long diffDay2 = diff2/ (24*60*60*1000);
+		
+		
+		System.out.println("차이>>"+diffDay);
+		System.out.println("차이>>"+diffDay2);
+		
+		long result = (diffDay*100/diffDay2) - 100;
+		
 		//팀메인에 출력할 투표관련
 		List<VoteDTO> votes = voteService.selectVoteList(projectDTO.getProjectNo(), 0);
-		System.out.println("1"+votes);
-		System.out.println("2"+votes.size());
 		VoteDTO vote = null;
 		VoteDTO vote2 = null;
 		List<VoteDetailDTO> voteDetails = null;
@@ -324,6 +342,7 @@ public class ProjectController implements Serializable {
 		int ranCount= ran.nextInt(7);
 		
 		HttpSession session = req.getSession();
+		session.setAttribute("result", result);
 		session.setAttribute("vote", vote);
 		session.setAttribute("voteDetails", voteDetails);
 		session.setAttribute("totalFileSize", totalFileSize);
