@@ -281,7 +281,7 @@
 	            			</div>
 	            			<div class="card-body">
 	              				<!-- 내용을 넣을 공간 -->
-	              				<div class="well" ><Strong id="well">Q. <span class="ifEndLabel">[종료]</span> ${voteTitle}</Strong><p><font size="1"><span class="ifEndLabelDate"></span> <span class="ifEndLabel">마감</span></font></div>
+	              				<div class="well" ><Strong id="well">Q. <span class="ifEndLabel">[종료]</span> ${vote.voteTitle}</Strong><p><font size="1"><span class="ifEndLabelDate"></span> <span class="ifEndLabel">마감</span></font></div>
 	              			</div>
 	              			<div class="card-footer">
 	              				<h6 align="right"><a href="#" style="color: #00e0d9">detail</a></span></h6>
@@ -480,7 +480,7 @@
 </script>
 <script>
 <!-- add script -->
-$(function(){
+/* $(function(){
 	alert(1);
 	
 	$.ajax({
@@ -510,7 +510,7 @@ $(function(){
 	
 	$(".ifEndLabel").hide();
 	
-	if(${voteState}>1){
+	if(${vote.voteState}>1){
 		$("#well").css("color", "gray");
 		$(".ifEnd").hide();
 		$(".ifEndLabel").show();
@@ -521,7 +521,7 @@ $(function(){
 		})
 	}
 })
-
+ */
 </script>
 </body>
 </html>

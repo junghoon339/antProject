@@ -258,10 +258,14 @@ public class ProjectController implements Serializable {
 		//session에 projectUserRole(조원,조장) 담음
 		req.getSession().setAttribute("projectUserRole", projectUserRole);
 		
-		/*VoteDTO getLastVote = voteService.selectLastVote(projectDTO.getProjectNo());
+		System.out.println("--->>>>>>>>"+projectDTO.getProjectNo());
+		voteService.selectVoteList(projectDTO.getProjectNo(), 0);
+		System.out.println("1"+getLastVote);
+		System.out.println("2"+getLastVote.getVoteNo());
+		System.out.println("3"+getLastVote.getVoteTitle());
 		VoteDTO vote = voteService.selectVote(getLastVote.getVoteNo());
-		
-		HttpSession session = req.getSession();
+		System.out.println(vote.getVoteTitle());
+		/*HttpSession session = req.getSession();
 		session.setAttribute("vote", vote);*/
 		
 		return "/project/teamMain_ch";
