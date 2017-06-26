@@ -291,3 +291,9 @@ create table notice(
       notice_writeday date default sysdate
 )
 create sequence seq_notice_no;
+
+SELECT sd.survey_detail_username, avg(sd.survey_detail_userscore)
+FROM survey_user su JOIN survey_detail sd
+ON su.survey_user_no = sd.survey_user_no
+AND su.survey_no = 1 group by sd.survey_detail_username ;
+

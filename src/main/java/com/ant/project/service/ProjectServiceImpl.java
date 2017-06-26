@@ -33,8 +33,11 @@ public class ProjectServiceImpl implements ProjectService {
 		//3.조장 삽입
 		ProjectUserDTO projectUserDTO = new ProjectUserDTO(projectNo, userNo);
 		int resultInsLeader = insertProjectLeader(projectUserDTO);
+
+		//3-1. 팀 캘린더에 일정삽입
+		int re=projectDAO.insertProjectCalendar(projectDTO,userNo);
 		
-		//4.초대된 조원 삽입
+		//4.조원 삽입
 		for(String userId:invitedUser){
 			projectUserDTO.setUserId(userId);
 			projectDAO.insertProjectMember(projectUserDTO);

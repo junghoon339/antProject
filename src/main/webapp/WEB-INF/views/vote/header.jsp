@@ -7,6 +7,10 @@
 </head>
 <script>
 $(function(){
+	if(${projectState==2}){
+		$("button").prop('disabled', true);
+	}
+	
 	$("#create").click(function(){
 		location.href="${pageContext.request.contextPath}/vote/CreateForm?"+$("#securityInfo").attr("name")+"="+$("#securityInfo").val();
 	})
@@ -20,9 +24,10 @@ $(function(){
 <input type=hidden id="securityInfo" name="${_csrf.parameterName}" value="${_csrf.token}"> <input type=hidden id="voteNo" value="${voteNo}" />
 <br>
 <div align="right">
-<button type="submit" class="btn btn-warning" id="create" title="투표 생성하기" ><span class="glyphicon glyphicon-pencil"></span></button> 
-<button type="submit" class="btn btn-warning" id="list" title="투표 목록보기" ><span class="glyphicon glyphicon-align-justify"></span></button> 
-<span id="blank">　</span>
+<button type="submit" class="btn btn-default" id="create" title="투표 생성하기" ><span class="glyphicon glyphicon-pencil"></span></button> 
+<button type="submit" class="btn btn-default" id="list" title="투표 목록보기" ><span class="glyphicon glyphicon-align-justify"></span></button> 
+<span id="blank"></span>
+<hr>
 </div>
 <p>
 </body>
