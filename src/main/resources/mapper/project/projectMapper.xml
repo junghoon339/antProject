@@ -59,6 +59,13 @@
 			#{invitedUserId}
 		</foreach>
 	</select>
+	
+	<!-- 조원 초대시 이미 속해있는 조원인지 검색 -->
+	<select id="selectChkProjectMember" parameterType="projectUserDTO" resultType="String">
+		SELECT user_id
+		FROM project_user pu, ant_user au
+		WHERE pu.user_no=au.user_no and pu.project_no=#{projectNo} and user_id=#{userId}	
+	</select>
 		
 	<!-- 팀플방에 조원등록 -->
 	<insert id="insertProjectMember" parameterType="projectUserDTO">

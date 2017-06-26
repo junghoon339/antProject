@@ -12,7 +12,6 @@ public interface ProjectService {
 	/**
 	 * ���ο����ù����
 	 */
-//	public int insertProject(ProjectDTO projectDTO,List<Integer> invitedUserNoList,int userNo);
 	public int insertProject(ProjectDTO projectDTO, String[] invitedUser, int userNo);
 	
 	
@@ -85,5 +84,9 @@ public interface ProjectService {
 	 * 안읽은 쪽지갯수 header에 표시
 	 */
 	public int selectUnchkMessage(int userNo);
-
+	
+	/**
+	 * 조원 초대시 이미 속해있는 조원인지 검색
+	 */
+	public String selectChkProjectMember(ProjectUserDTO projectUserDTO);
 }
