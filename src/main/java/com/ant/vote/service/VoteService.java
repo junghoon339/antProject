@@ -102,4 +102,6 @@ public interface VoteService {
 	 * vote 정보검색하기
 	 */
 	public VoteDTO selectVote(int voteNo);
+	
+	VoteDTO selectLastVote(int projectNo);
 }

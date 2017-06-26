@@ -11,6 +11,7 @@ import com.ant.survey.dto.SurveyDTO;
 import com.ant.survey.dto.SurveyDetailDTO;
 import com.ant.survey.dto.SurveyUserDTO;
 import com.ant.user.dto.UserDTO;
+import com.ant.vote.dto.VoteDTO;
 
 @Service
 public class SurveyServiceImpl implements SurveyService{
@@ -103,5 +104,5 @@ public class SurveyServiceImpl implements SurveyService{
 	public int updateXXX(int surveyNo, String userName) {
 		return surveyDAO.updateXXX(surveyNo, userName);
 	}
-	
+
 }

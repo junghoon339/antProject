@@ -46,6 +46,8 @@ import com.ant.survey.dto.SurveyDetailDTO;
 import com.ant.survey.dto.SurveyUserDTO;
 import com.ant.survey.service.SurveyService;
 import com.ant.user.dto.UserDTO;
+import com.ant.vote.dto.VoteDTO;
+import com.ant.vote.service.VoteService;
 import com.dhtmlx.planner.DHXEv;
 import com.dhtmlx.planner.DHXEvent;
 import com.dhtmlx.planner.DHXPlanner;
@@ -72,6 +74,9 @@ public class ProjectController implements Serializable {
 	
 	@Autowired
 	private SurveyService surveyService;
+	
+	@Autowired
+	private VoteService voteService;
 	
 	public static String date_format = "MM/dd/yyyy HH:mm";
 	public static String filter_format = "yyyy-MM-dd";
@@ -252,6 +257,12 @@ public class ProjectController implements Serializable {
 		
 		//session에 projectUserRole(조원,조장) 담음
 		req.getSession().setAttribute("projectUserRole", projectUserRole);
+		
+		/*VoteDTO getLastVote = voteService.selectLastVote(projectDTO.getProjectNo());
+		VoteDTO vote = voteService.selectVote(getLastVote.getVoteNo());
+		
+		HttpSession session = req.getSession();
+		session.setAttribute("vote", vote);*/
 		
 		return "/project/teamMain_ch";
 	}

@@ -195,4 +195,10 @@
 		WHERE vote_no = #{_parameter}
 	</select>
 	
+	<select id="selectLastVote" parameterType="int" resultMap="voteDTOMap">
+		SELECT MAX(vote_no)
+		FROM vote
+		WHERE project_no = #{_parameter}
+	</select>
+	
 </mapper>

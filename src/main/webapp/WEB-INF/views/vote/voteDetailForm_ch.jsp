@@ -271,7 +271,7 @@ td {
 	<div class="wrapper">
 		<jsp:include page="/WEB-INF/views/project/sidebar_ch.jsp" />
 		<div class="main-panel">
-			<jsp:include page="header_ch.jsp" flush="false" />
+			<jsp:include page="/WEB-INF/views/project/header_ch.jsp" flush="false" />
 
 			<div class="content">
 				<div class="container-fluid">
@@ -365,7 +365,7 @@ td {
 				</div>
 			</div>
 
-			<jsp:include page="footer_ch.jsp" flush="false" />
+			<jsp:include page="/WEB-INF/views/project/footer_ch.jsp" flush="false" />
 		</div>
 	</div>
 	

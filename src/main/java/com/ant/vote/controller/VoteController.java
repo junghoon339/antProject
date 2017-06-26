@@ -315,4 +315,5 @@ public class VoteController {
 //		request.setAttribute("userCount", voteService.selectVoteDetailCall(voteNo));
 		return "redirect:/vote/";
 	}
+	
 }

@@ -142,5 +142,10 @@ public class VoteDAOImpl implements VoteDAO {
 		return session.selectOne("voteMapper.selectVote", voteNo);
 				
 	}
+
+	@Override
+	public VoteDTO selectLastVote(int projectNo) {
+		return session.selectOne("voteMapper.selectLastVote", projectNo);
+	}
 	
 }

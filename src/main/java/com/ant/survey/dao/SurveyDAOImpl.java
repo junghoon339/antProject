@@ -14,6 +14,7 @@ import com.ant.survey.dto.SurveyDTO;
 import com.ant.survey.dto.SurveyDetailDTO;
 import com.ant.survey.dto.SurveyUserDTO;
 import com.ant.user.dto.UserDTO;
+import com.ant.vote.dto.VoteDTO;
 
 @Repository
 public class SurveyDAOImpl implements SurveyDAO{
@@ -121,5 +122,5 @@ public class SurveyDAOImpl implements SurveyDAO{
 		map.put("userName", userName);
 		return session.update("surveyMapper.updateXXX", map);
 	}
-	
+
 }

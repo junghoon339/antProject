@@ -7,6 +7,7 @@ import com.ant.survey.dto.SurveyDTO;
 import com.ant.survey.dto.SurveyDetailDTO;
 import com.ant.survey.dto.SurveyUserDTO;
 import com.ant.user.dto.UserDTO;
+import com.ant.vote.dto.VoteDTO;
 
 public interface SurveyDAO {
 
@@ -57,4 +58,5 @@ public interface SurveyDAO {
 	UserDTO selectUser(int userNo);
 	
 	int updateXXX(int surveyNo, String userName);
+	
 }
