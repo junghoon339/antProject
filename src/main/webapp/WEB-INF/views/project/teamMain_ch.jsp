@@ -195,7 +195,6 @@
 body {
   font-family: "Josefin Sans", sans-serif;
   line-height: 1;
-  padding: 20px;
   height: 100%;
   background: #eee;
 }
@@ -640,13 +639,13 @@ body {
 </script>
 <script>
 <!-- add script -->
-$(function(){
+/* $(function(){
 	$(".pricing-option").mouseover(function(){
-		$(this).click(function){
+		$(this).click(function(){
 			
 		}
 	})
-})
+}) */
 </script>
 </body>
 </html>
