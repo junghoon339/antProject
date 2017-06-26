@@ -65,7 +65,7 @@
 											<th>학교</th>
 											<th>학과</th>
 											<th>역할</th>
-											<c:if test="${projectUserRole=='조장'}">
+											<c:if test="${projectUserRole=='조장'} && ${projectState=='0'}">
 												<th>Edit & Delete</th>
 											</c:if>
 
@@ -79,10 +79,10 @@
 															<td>${projectUserDTO.userSchool}</td>
 															<td>${projectUserDTO.userMajor}</td>
 															<td>${projectUserDTO.projectuserRole.projectUserTask}</td>
-															<c:if test="${projectUserRole=='조장'}">
+															<c:if test="${projectUserRole=='조장'} && ${projectState=='0'}">
 																<td><span data-placement="top"
 																	data-toggle="tooltip" title="Edit">
-																		<button class="btn btn-primary btn-xs"
+																		<button class="btn btn-primary btn-xs editBtn"
 																			data-title="Edit" id="editBtn" data-toggle="modal"
 																			data-target="#edit"
 																			name="${projectUserDTO.userNo}/${projectUserDTO.userName}/${projectUserDTO.projectuserRole.projectUserTask}">
@@ -90,7 +90,7 @@
 																		</button>
 																</span> <span data-placement="top" data-toggle="tooltip"
 																	title="Delete">
-																		<button class="btn btn-danger btn-xs"
+																		<button class="btn btn-danger btn-xs delBtn"
 																			data-title="Delete" id="delBtn" data-toggle="modal"
 																			data-target="#delete" name="${projectUserDTO.userNo}">
 																			<span class="glyphicon glyphicon-trash"></span>
@@ -109,7 +109,7 @@
 										</tbody>
 									</table>
 									<c:if test="${projectUserRole=='조장'}">
-										　<button class="btn btn-primary btn-xs" data-title="Edit" id="editBtn" data-toggle="modal" data-target="#add"
+										　<button class="btn btn-primary btn-xs" data-title="add" id="addBtn" data-toggle="modal" data-target="#add"
 											name="${projectUserDTO.userNo}/${projectUserDTO.userName}/${projectUserDTO.projectuserRole.projectUserTask}">
 											<span class="glyphicon glyphicon-plus" data-toggle="modal">팀원추가</span>
 										</button>
@@ -165,8 +165,7 @@
 
 
 
-	<div class="modal fade" id="delete" tabindex="-1" role="dialog"
-		aria-labelledby="edit" aria-hidden="true">
+	<div class="modal fade" id="delete" tabindex="-1" role="dialog"	aria-labelledby="edit" aria-hidden="true">
 		<div class="modal-dialog">
 			<div class="modal-content">
 				<div class="modal-header">
@@ -206,8 +205,7 @@
 	</div>
 
 
-	<div class="modal fade" id="add" tabindex="-1" role="dialog"
-		aria-labelledby="add" aria-hidden="true">
+	<div class="modal fade" id="add" tabindex="-1" role="dialog" aria-labelledby="add" aria-hidden="true">
 		<div class="modal-dialog">
 			<div class="modal-content">
 				<div class="modal-header">
@@ -261,6 +259,7 @@
 		$(document).ready(function() {
 			$("[data-toggle=tooltip]").tooltip();
 
+			//팀원역할 수정
 			$(document).on("click", "#editBtn", function() {
 				var userNoNameTask = $(this).attr("name");
 
@@ -279,6 +278,19 @@
 				var delUserNo = parseInt($(this).attr("name"));
 				$("#delUserNo").attr("value", delUserNo);
 			})
+			
+			//완료대기중(1), 완료된 조별과제(2) 버튼 비활성화
+			if("${projectState}"=="1" || "${projectState}"=="2"){
+				//$("#editBtn").attr("style", "display:none");
+				//$("#delBtn").attr("style", "display:none");
+				
+				$(".btn btn-primary btn-xs editBtn").disabled=true;
+				$(".delBtn").disabled=true;
+				
+				
+				$("#addBtn").attr("style","display:none");	
+			}
+			
 		});
 		
 		

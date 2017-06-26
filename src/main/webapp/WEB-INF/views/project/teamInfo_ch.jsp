@@ -94,8 +94,13 @@ $(document).ready(function() {
 		$("#Btn").attr("disabled","disabled");
 	}
 	
-	//alert("${projectDTO.projectState}"=="1");
-
+	//완료대기중(1), 완료된 조별과제(2) 버튼 비활성화
+	if("${projectState}"=="1" || "${projectState}"=="2"){
+		$("#updateBtn").attr("style", "display:none");
+		$("#Btn").attr("style","display:none");	
+	}
+	
+	
 })
 
 	$(function() {
