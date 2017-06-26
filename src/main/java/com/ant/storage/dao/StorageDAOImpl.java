@@ -109,5 +109,15 @@ public class StorageDAOImpl implements StorageDAO {
 		List<StorageDTO> list = session.selectList("mapper.storage.storageMapper.selectAllByTitle",map);
 		return list;
 	}
+
+	@Override
+	public int selectFileSizeAll(int projectNo) {
+		System.out.println("플젝넘버 가져오기"+projectNo);
+		int totalFsize = 0;
+		if(null!=session.selectOne("mapper.storage.storageMapper.selectFileSizeAll", projectNo) ){
+			totalFsize = session.selectOne("mapper.storage.storageMapper.selectFileSizeAll", projectNo);
+		}
+		return totalFsize;
+	}
 	
 }

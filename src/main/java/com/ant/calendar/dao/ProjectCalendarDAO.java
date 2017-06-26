@@ -15,4 +15,5 @@ public interface ProjectCalendarDAO {
 
 	void deleteEvent(Integer id);
 
+	public List<ProjectCalendarDTO> selectNowCalVal(int projectNo);
 }
