@@ -42,9 +42,12 @@ import com.ant.project.dto.ProjectUserDTO;
 import com.ant.project.service.ProjectService;
 import com.ant.survey.controller.SurveyController;
 import com.ant.survey.dto.SurveyDTO;
+import com.ant.survey.dto.SurveyDetailDTO;
 import com.ant.survey.dto.SurveyUserDTO;
 import com.ant.survey.service.SurveyService;
 import com.ant.user.dto.UserDTO;
+import com.ant.vote.dto.VoteDTO;
+import com.ant.vote.service.VoteService;
 import com.dhtmlx.planner.DHXEv;
 import com.dhtmlx.planner.DHXEvent;
 import com.dhtmlx.planner.DHXPlanner;
@@ -71,6 +74,9 @@ public class ProjectController implements Serializable {
 	
 	@Autowired
 	private SurveyService surveyService;
+	
+	@Autowired
+	private VoteService voteService;
 	
 	public static String date_format = "MM/dd/yyyy HH:mm";
 	public static String filter_format = "yyyy-MM-dd";
@@ -149,6 +155,18 @@ public class ProjectController implements Serializable {
 			}// for(ProjectDTO project : projects) end
 		}// if(!projects.isEmpty()) end
 
+		//Project STATE가 2인 경우, SURVEY에 참여하지않은 유저에 대한 불이득을 주는 부분
+		/*List<ProjectDTO> pro2 = surveyService.selectProjectState2();
+		UserDTO user2 = surveyService.selectUser(userNo);
+		
+		for(ProjectDTO project : pro2){
+			SurveyDTO surveyDTO = surveyService.surveySelectByProjectNo(project.getProjectNo());
+			List<SurveyUserDTO> surveyUsers =  surveyService.selectSurveyUserState0( surveyDTO.getSurveyNo() );
+			for(SurveyUserDTO su : surveyUsers){
+				surveyService.updateXXX(surveyDTO.getSurveyNo(), user2.getUserName());
+				surveyService.surveyUserUpdate(surveyDTO.getSurveyNo(), su.getUserNo());
+			}
+		}*/
 		
 		
 		
@@ -239,6 +257,12 @@ public class ProjectController implements Serializable {
 		
 		//session에 projectUserRole(조원,조장) 담음
 		req.getSession().setAttribute("projectUserRole", projectUserRole);
+		
+		/*VoteDTO getLastVote = voteService.selectLastVote(projectDTO.getProjectNo());
+		VoteDTO vote = voteService.selectVote(getLastVote.getVoteNo());
+		
+		HttpSession session = req.getSession();
+		session.setAttribute("vote", vote);*/
 		
 		return "/project/teamMain_ch";
 	}
