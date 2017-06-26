@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
+<title>개미와 베짱이, 대학조별과제 관리시스템</title>
 <style>
 .center {
     margin-top:50px;   

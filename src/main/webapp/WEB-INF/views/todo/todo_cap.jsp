@@ -6,8 +6,7 @@
 <html>
 <head>
 <meta charset="utf-8" />
-<title>HTML5 Drag and Drop - sorting photos between albums|
-	Script Tutorials</title>
+<title>개미와 베짱이, 대학조별과제 관리시스템</title>
 <link href="${pageContext.request.contextPath }/resources/todo/css/main.css" rel="stylesheet" type="text/css" />
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>

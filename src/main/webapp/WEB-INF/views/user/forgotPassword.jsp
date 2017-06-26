@@ -15,7 +15,7 @@
 <meta http-equiv="refresh"
 	content="${pageContext.session.maxInactiveInterval}">
 <security:csrfMetaTags />
-<title>Time Lapse</title>
+<title>개미와 베짱이, 대학조별과제 관리시스템</title>
 
 <link
 	href="${pageContext.request.contextPath}/resources/css/bootstrap.css"
