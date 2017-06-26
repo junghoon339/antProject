@@ -6,7 +6,7 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="initial-scale=0, maximum-scale=0, user-scalable=no" />
 
-<title>jQuery Tab Module Horizontal Layout</title>
+<title>개미와 베짱이, 대학조별과제 관리시스템</title>
 
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">

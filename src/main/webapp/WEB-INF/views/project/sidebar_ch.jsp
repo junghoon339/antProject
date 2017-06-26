@@ -43,7 +43,7 @@
 
 				<c:otherwise>
 					<li><a
-						href="${pageContext.request.contextPath}/project/teamMain">
+						href="${pageContext.request.contextPath}/project/teamMain?projectNo=${sessionScope.projectNo}">
 							<i class="ti-home"></i>
 							<p>홈</p> 
 					</a></li>
@@ -51,12 +51,12 @@
 					<li><a
 						href="${pageContext.request.contextPath}/projectCalendar/projectCalendar">
 							<i class="ti-calendar"></i>
-							<p>프로젝트 달력</p> 
+							<p>조별과제 달력</p> 
 					</a></li>
 					
 					<li><a href="${pageContext.request.contextPath}/timetable/teamMain"> <i
 							class="ti-view-list-alt"></i>
-							<p>프로젝트 시간표</p>
+							<p>조별과제 시간표</p>
 					</a></li>
 					
 					<li><a
@@ -76,20 +76,20 @@
 					<li><a
 						href="${pageContext.request.contextPath}/project/teamInfo"> <i
 							class="ti-more"></i>
-							<p>프로젝트 정보</p>
+							<p>조별과제 정보</p>
 					</a></li>
 					
 					<li><a
 						href="${pageContext.request.contextPath}/project/projectUserInfo">
 							<i class="ti-user"></i>
-							<p>팀원 정보</p>
+							<p>조원 정보</p>
 					</a></li>
-					
-					<li><a href="${pageContext.request.contextPath}/project/report"> <i
-							class="ti-pencil-alt2"></i>
-							<p>프로젝트 요약</p>
-					</a></li>
-					
+					<c:if test="${projectState==2}">
+						<li><a href="${pageContext.request.contextPath}/projectCalendar/report"> <i
+								class="ti-pencil-alt2"></i>
+								<p>조별과제 요약</p>
+						</a></li>
+					</c:if>
 				</c:otherwise>
 			</c:choose>
 			</ul>

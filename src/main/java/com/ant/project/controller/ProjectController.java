@@ -256,9 +256,11 @@ public class ProjectController implements Serializable {
 	 */
 	@RequestMapping("/teamMain")
 	public String teamMain(ProjectDTO projectDTO, HttpServletRequest req) throws Exception {
-		//session에 projectNo, projectState담기
-		req.getSession().setAttribute("projectNo", projectDTO.getProjectNo());
-		req.getSession().setAttribute("projectState", projectDTO.getProjectState());
+		if (req.getSession().getAttribute("projectNo") == null) {
+			// session에 projectNo, projectState담기
+			req.getSession().setAttribute("projectNo", projectDTO.getProjectNo());
+			req.getSession().setAttribute("projectState", projectDTO.getProjectState());
+		}
 		
 		UserDTO userDTO = (UserDTO) req.getSession().getAttribute("userDTO");
 		int userNo = userDTO.getUserNo();
@@ -270,8 +272,9 @@ public class ProjectController implements Serializable {
 		req.getSession().setAttribute("projectUserRole", projectUserRole);
 		
 		//남은일자 계산 관련
+		System.out.println(projectDTO.getProjectNo());
 		ProjectDTO pro = projectService.selectProject(projectDTO.getProjectNo());
-		
+		System.out.println(pro);
 		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 		Date beginDate = format.parse(pro.getProjectStartdate());
 		Date endDate = format.parse(pro.getProjectEnddate());
@@ -342,6 +345,7 @@ public class ProjectController implements Serializable {
 		int ranCount= ran.nextInt(7);
 		
 		HttpSession session = req.getSession();
+		session.setAttribute("projectTitle", pro.getProjectName());
 		session.setAttribute("result", result);
 		session.setAttribute("vote", vote);
 		session.setAttribute("voteDetails", voteDetails);

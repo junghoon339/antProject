@@ -15,7 +15,7 @@
 <meta http-equiv="refresh"
 	content="${pageContext.session.maxInactiveInterval}">
 <security:csrfMetaTags />
-<title>Time Lapse</title>
+<title>개미와 베짱이, 대학조별과제 관리시스템</title>
 
 <link
 	href="${pageContext.request.contextPath}/resources/css/bootstrap.css"
@@ -36,7 +36,7 @@
 
 <body>
 	<div class="main"
-		style="background-image: url('${pageContext.request.contextPath}/resources/images/video_bg.jpg')">
+		style="background-image: url('${pageContext.request.contextPath}/resources/images/Peg Gnomes 010.JPG')">
 
 		<div class="container">
 			<h1 class="logo">The Ants and Grasshopper</h1>

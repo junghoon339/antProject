@@ -19,19 +19,19 @@
                         <span class="icon-bar bar2"></span>
                         <span class="icon-bar bar3"></span>
                     </button>
-                    <a class="navbar-brand" href="${pageContext.request.contextPath}/project/home"></a>
+                    <a class="navbar-brand"></a>
                 </div>
                 <div class="collapse navbar-collapse">
                     <ul class="nav navbar-nav navbar-right">
                         <li>
                             <a href="${pageContext.request.contextPath }/message/main?userNo=${sessionScope.userDTO.userNo}" >
-                                <i class="ti-email"></i>
+                                <i class="ti-email"></i>&nbsp;
 								<p>쪽지함<span class="badge" ></span></p>
                             </a>
                         </li>
                        	<li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                             	<i class="ti-user"></i>
+                             	<i class="ti-user"></i>&nbsp;
 								<p>${userDTO.userName}님</p>
 								<b class="caret"></b>
                             </a>

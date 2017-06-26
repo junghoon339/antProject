@@ -36,11 +36,10 @@
 
 <body>
 	<div class="main"
-		style="background-image: url('${pageContext.request.contextPath}/resources/images/video_bg.jpg')">
-
-		<div class="container">
-			<h1 class="logo">메일 보냈으니까 확인해라</h1>
-			<!--  H1 can have 2 designs: "logo" and "logo cursive"           -->
+		style="background-image: url('${pageContext.request.contextPath}/resources/images/Peg Gnomes 010.JPG')">
+		
+		<div class="container" style="opacity: 0.95; filter: alpha(opacity=95);">
+			<h1 class="logo">The Ants and Grasshopper</h1>
 			<br>
 			<div class="content">
 				<div class="row">
@@ -49,7 +48,7 @@
 							<div class="panel-heading">
 								<div class="row">
 									<div class="col-xs-6">
-										<a href="#" class="active" id="login-form-link">비번찾기</a>
+										<a href="#" class="active" id="login-form-link">비밀번호 찾기</a>
 									</div>
 								</div>
 								<hr>
@@ -58,18 +57,18 @@
 								<div class="row">
 									<div class="col-lg-12">
 										<form id="login-form"
-											action="${pageContext.request.contextPath}/login"
+											action="${pageContext.request.contextPath}/user/sendEmail"
 											method="post" role="form" style="display: block;">
 											<input type="hidden" name="${_csrf.parameterName}"
 												value="${_csrf.token}">
 											<div class="form-group">
 												<input type="text" name="emailAddr" id="userId"
-													class="form-control" placeholder="Email Address" value="">
+													class="form-control" placeholder="이메일 주소" value="">
 											</div>
 											<div class="form-group text-center">
 												<!-- <input type="checkbox"  class=""
 														name="remember" id="remember"> -->
-												<label style="color: red">${errorMessage}</label>
+												<label style="color: red">${msg}</label>
 											</div>
 											<div class="form-group">
 												<div class="row">

@@ -10,7 +10,7 @@
       <meta name="og:site_name" content="SNUTT" />
       <meta name="og:description" content="서울대학교 시간표 작성 웹서비스" />
       
-      <title>서울대학교 시간표 : SNUTT</title>
+      <title>개미와 베짱이, 대학조별과제 관리시스템</title>
       
       <!-- jQuery -->      
       <script src="http://code.jquery.com/jquery-latest.min.js"></script>

@@ -11,7 +11,7 @@
 <meta name="viewport" content="width=device-width" />
 <meta http-equiv="refresh" content="${pageContext.session.maxInactiveInterval}">
 <security:csrfMetaTags />
-<title>Time Lapse</title>
+<title>개미와 베짱이, 대학조별과제 관리시스템</title>
 
 <link
 	href="${pageContext.request.contextPath}/resources/css/bootstrap.css"
@@ -95,7 +95,7 @@
 	</nav> -->
 
 	<div class="main"
-		style="background-image: url('${pageContext.request.contextPath}/resources/images/video_bg.jpg')">
+		style="background-image: url('${pageContext.request.contextPath}/resources/images/Peg Gnomes 010.JPG')">
 		<%-- <video id="video_background" preload="auto" autoplay="true"
 			loop="loop" muted="muted" volume="0">
 			<source
@@ -112,7 +112,7 @@
  -->
 		<!--   You can change the black color for the filter with those colors: blue, green, red, orange       -->
 
-		<div class="container">
+		<div class="container" style="opacity: 0.97; filter: alpha(opacity=97);">
 			<h1 class="logo">The Ants and Grasshopper</h1>
 			<!--  H1 can have 2 designs: "logo" and "logo cursive"           -->
 			<br>

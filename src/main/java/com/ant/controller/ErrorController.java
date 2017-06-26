@@ -9,7 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping("/common/error")
+@RequestMapping("/error")
 public class ErrorController {
    private static final Logger logger = LoggerFactory.getLogger(ErrorController.class);
    
