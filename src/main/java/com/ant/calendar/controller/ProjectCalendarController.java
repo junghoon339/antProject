@@ -320,18 +320,18 @@ public class ProjectCalendarController implements Serializable {
 		schedule.setEnd_date(end_date);
 		
 		if(event.getId()!=null){
-			System.out.println("�̺�Ʈ ���̵� : "+event.getId());
+			System.out.println("event.getId() : "+event.getId());
 			schedule.setEvent_id(event.getId());			
 		}
 		 
 
 		if (status == DHXStatus.UPDATE) {
-			System.out.println("projectCalendar update ��Ʈ�ѷ�->���� ����");
+			System.out.println("projectCalendar update 컨트롤러 -> 서비스");
 			calendarService.updateEvent(schedule);
 			event.setId(schedule.getEvent_id());
 
 		} else if (status == DHXStatus.INSERT) {
-			System.out.println("projectCalendar insert ��Ʈ�ѷ�->���� ����");
+			System.out.println("projectCalendar insert 컨트롤러 -> 서비스");
 			calendarService.insertEvent(schedule);
 			event.setId(schedule.getEvent_id()-1);
 
