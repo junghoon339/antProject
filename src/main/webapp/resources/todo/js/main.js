@@ -104,7 +104,7 @@ addEvent(dropAreas, 'drop', function (event) {
     };
     
     //지우기
-    if($(oldThis).find("h2").text()=="TRASH"){
+    if($(oldThis).find("h2").text()==" "){
     	$("#todoLocation").val("3");
     };
   
@@ -216,7 +216,7 @@ function todoSelectAll(){
 		success:function(re){
 			$.each(re,function(index,todoDTO){
 				var loc=todoDTO.todoLocation;
-				document.getElementById("drop_"+loc).innerHTML+='<a href="#" id="'+todoDTO.projectNo+'p'+todoDTO.todoNo+'" draggable="true"><blockquote class="note yellow" style="font-size:15px;"><span id="postitText">'+todoDTO.todoContent+'</span><cite class="author">'+todoDTO.userDTO.userName+'</cite></blockquote></a>'
+				document.getElementById("drop_"+loc).innerHTML+='<a href="#" id="'+todoDTO.projectNo+'p'+todoDTO.todoNo+'" draggable="true"><blockquote class="note yellow" style="font-size:15px; font-family:나눔고딕코딩;"><span id="postitText">'+todoDTO.todoContent+'</span><cite class="author">'+todoDTO.userDTO.userName+'</cite></blockquote></a>'
 			});
 			updateDataTransfer();
 		},

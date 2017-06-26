@@ -553,8 +553,8 @@ hr {
 	.navbar .navbar-nav>li>a.btn:hover, .navbar .navbar-nav>li>a.btn:focus,
 	.navbar .navbar-nav>li>a.btn:active, .navbar .navbar-nav>li>a.btn.active,
 	.open>.navbar .navbar-nav>li>a.btn.dropdown-toggle {
-	background-color: #7cb679;
-	color: #fff;
+	/* background-color: #7cb679;
+	color: #fff; */
 	border-color: #7cb679;
 }
 

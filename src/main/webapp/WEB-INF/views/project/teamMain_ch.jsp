@@ -9,7 +9,7 @@
    <meta name="viewport" content="width=device-width" />
    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
    
-   <title>Insert title here</title>
+   <title>개미와 베짱이, 대학조별과제 관리시스템</title>
    <!--   Core JS Files   -->
    <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/jquery-3.2.1.min.js"></script>
    <link rel="apple-touch-icon" sizes="76x76" href="assets/img/apple-icon.png">
@@ -217,7 +217,7 @@ body {
   transition: all .3s ease-in-out;
 }
 .pricing-table .pricing-option:nth-child(even) {
-  margin: 0 2%;
+  margin: 0 8%;
 }
 .pricing-table .pricing-option:hover {
   cursor: pointer;
@@ -316,6 +316,7 @@ body {
     margin: 30px 0 !important;
   }
 }
+
  </style>
    <!-- 스크립트는 body 맨 아래쪽에 -->
 </head>
@@ -325,8 +326,8 @@ body {
       <div class="main-panel">
          <jsp:include page="header_ch.jsp" flush="false" /> <!-- </nav> -->
         
-        <h2 align="center">TEST 1 TITLE</h2>
-         <div class="content" style="padding-top: 20px" align="center">
+        <h2 align="center">${projectTitle}</h2>
+         <div class="content" style="padding-top: 20px; margin-left: 15px" align="center">
             <div class="container-fluid">
                <!-- 이곳에 내용작성!!!!!!!!!!!!!!!! -->
                <!-- 
@@ -340,8 +341,9 @@ body {
 			    </span>
 			    </span> -->
 			    
-               	<div class="pricing-table row">
+               	<div class="pricing-table row" style="margin-bottom: 10px">
                		<div class="pricing-option col-lg-6">
+               			<input type="hidden" value="${pageContext.request.contextPath}/project/teamInfo"/>
 	            			<div class="card-header">
 	            				<h5><span class="ti-time"> 조별과제 남은 일정</h5>
 	            			</div>
@@ -353,7 +355,7 @@ body {
 					                <span class="progress-right">
 					                    <span class="progress-bar"></span>
 					                </span>
-					                <div class="progress-value">45%</div>
+					                <div class="progress-value">${result*-1}%</div>
 					            </div>
 				            </div>
 				            <div class="card-footer">
@@ -362,33 +364,28 @@ body {
 	           		</div>
 	           		
 	           		<div class="pricing-option col-lg-6">
+	           			<input type="hidden" value="#"/>
 	            			<div class="card-header">
-	            				<h5><span class="ti-light-bulb"/> 알림현황</h5>
+	            				<h5><span class="ti-light-bulb"/> 오늘의 명언</h5>
 	            			</div>
-	            			<div class="card-body">
+	            			<div class="card-body" style="border-top: 1px gray solid;padding-top: 9px">
 	              				<!-- 내용을 넣을 공간 -->
-	              				
+	              				${arr1}<br><br>
+	              				<strong>${arr2}</strong>
 	              			</div>
 				            <div class="card-footer">
 	              				<h6 align="right"><a href="#" style="color: #00e0d9">detail</a></span></h6>
 	              			</div>
 	           		</div>
 	           		<div class="pricing-option col-lg-6">
-	            			<div class="card-header">
-	            				<h5><span class="ti-alarm-clock"/> 오늘자 접속현황</h5>
-	            			</div>
-	            			<div class="card-body">
-	              				<!-- 내용을 넣을 공간 -->
-	              				
-	              			</div>
-	            			<div class="card-footer">
-	              				<h6 align="right"><a href="#" style="color: #00e0d9">detail</a></span></h6>
-	              			</div>
+	           			<input type="hidden" value="#"/>
+	           				<img height="200px" src="${pageContext.request.contextPath}/resources/img/wanted.png"/>
 	           		</div>
 	          	</div>
 	          	<br>
 	            <div class="pricing-table row">
                		<div class="pricing-option col-lg-6">
+               			<input type="hidden" value="${pageContext.request.contextPath}/projectCalendar/projectCalendar"/>
 	            			<div class="card-header">
 	            				<h5><span class="ti-calendar"/> 오늘의 계획</h5>
 	            			</div>
@@ -399,16 +396,14 @@ body {
 					                    <h1 class="panel-title text-center">${todayDate}</h1>
 					                </div>
 					                <div class="panel-body text-center">                        
-					                    <strong>
 											<c:forEach items="${map}" var="map" varStatus="status">
 				              					<c:if test="${status.count<3}">
-				              						${map.key} ${map.value}<br>
+				              						<font style="font-size: small;">${map.key} ${map.value}</font><br>
 				              					</c:if>
 				              					<c:if test="${status.count==3}">
 				              						:<br>
 				              					</c:if>
 				              				</c:forEach>
-										</strong>
 					                </div>
 					            </div>
 	              			</div>
@@ -417,6 +412,7 @@ body {
 	              			</div>
 	           		</div>
 	           		<div class="pricing-option col-lg-6">
+	           			<input type="hidden" value="${pageContext.request.contextPath}/vote/"/>
 	            			<div class="card-header">
 	            				<h5><span class="ti-menu-alt"/> 최신 투표항목</h5>
 	            			</div>
@@ -424,7 +420,7 @@ body {
 	            				<div class="col-lg-11" style="margin-left: 15px">
 	            				<div class="card" style="height: 125px">
 	              				<!-- 내용을 넣을 공간 -->
-	              				<div class="well"  style="height: 40px;margin-bottom: 5px; padding:10px; vertical-align: middle;"><Strong id="well" style="vertical-align: middle;">Q. ${vote.voteTitle}</Strong></div>
+	              				<div class="well"  style="height: 40px; padding:5px; vertical-align: middle;"><Strong id="well" style="vertical-align: middle;">Q. ${vote.voteTitle}</Strong></div>
 	              				<div align="left">
 	              					<c:forEach items="${voteDetails}" var="voteDetail" varStatus="status">
 	              						<c:if test="${status.count<voteDetails.size()}">
@@ -443,16 +439,18 @@ body {
 	              			</div>
 	           		</div>
 	           		<div class="pricing-option col-lg-6">
+	           			<input type="hidden" value="${pageContext.request.contextPath}/storage/storageTable/${projectNo}"/>
 	            			<div class="card-header">
 	              				<h5><span class="ti-save"/> 자료실 수용량</h5>
 	              			</div>
 	              			<div class="card-body">
 	              			<div class="col-lg-11" style="margin-left: 15px">
 	              				<!-- 내용을 넣을 공간 -->
+	              				<br>
 	              				<table>
 	              					<tr>
 	              						<td width="35%"><div style="color:#b4aba2;width: 100%;height: 60px;"><h1 align="center"><sapn class="ti-server"/></h1></div></td>
-	              						<td width="65%" valign="bottom" align="right"><font style="font-size: xx-large;color: #5c4cf0">${totalFileSize}</font><font style="font-size: medium;color: #ecb14b ">Byte</font></td>
+	              						<td width="65%" valign="bottom" align="right"><font style="font-size: xx-large;color: #5c4cf0" id="size">${totalFileSize}</font><font style="font-size: medium;color: #ecb14b " id="byte">Byte</font></td>
 	              					</tr>
 	              				</table>
 	              			</div>
@@ -488,6 +486,22 @@ body {
    <script src="${pageContext.request.contextPath }/resources/js/sockjs.js"></script>
    <script src="${pageContext.request.contextPath }/resources/js/jquery.timeago.js"></script>
    <script>
+   var bytes = parseInt(${totalFileSize});
+   var s = ['bytes', 'KB', 'MB', 'GB', 'TB', 'PB'];
+   var e = Math.floor(Math.log(bytes)/Math.log(1024));
+  
+   if(e == "-Infinity"){
+	   $("#size").text("0 "+s[0]);
+	   $("#byte").text(" "+s[0]);
+   }
+   else{
+	   $("#size").text((bytes/Math.pow(1024, Math.floor(e))).toFixed(2));
+	   $("#byte").text(" "+s[e]);
+   }
+   
+   $(".pricing-option").dblclick(function(){
+		location.href=$(this).children().val();
+	})
    $(document).on('click', '.panel-heading span.icon_minim', function (e) {
 	    var $this = $(this);
 	    if (!$this.hasClass('panel-collapsed')) {
@@ -636,16 +650,6 @@ body {
 		$("time.timeago").timeago();
 	}
 
-</script>
-<script>
-<!-- add script -->
-/* $(function(){
-	$(".pricing-option").mouseover(function(){
-		$(this).click(function(){
-			
-		}
-	})
-}) */
 </script>
 </body>
 </html>

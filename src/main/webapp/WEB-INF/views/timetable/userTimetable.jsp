@@ -1,38 +1,33 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<html lang="ko">
-<head>
-	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-	<meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
-	<meta name="viewport" content="width=device-width" />
-	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-	
-	<title>개미와 베짱이, 대학조별과제 관리시스템</title>
-		<!--   Core JS Files   -->
-	<script src="http://code.jquery.com/jquery-latest.min.js"></script>
-	<link rel="apple-touch-icon" sizes="76x76" href="assets/img/apple-icon.png">
-	<link rel="icon" type="image/png" sizes="96x96" href="assets/img/favicon.png">
-	
-	<link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/themes/smoothness/jquery-ui.css" />
-	
-	<!-- Bootstrap core CSS     -->
-	<link href="${pageContext.request.contextPath }/resources/css/bootstrap.min.css" rel="stylesheet" />
-	<!-- Animation library for notifications   -->
-	<link href="${pageContext.request.contextPath }/resources/css/animate.min.css" rel="stylesheet" />
-	<!--  Paper Dashboard core CSS    -->
-	<link href="${pageContext.request.contextPath }/resources/css/paper-dashboard.css" rel="stylesheet" />
-	<!--  Fonts and icons     -->
-	<link href="http://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" rel="stylesheet">
-	<link href='https://fonts.googleapis.com/css?family=Muli:400,300' rel='stylesheet' type='text/css'>
-	<link href="${pageContext.request.contextPath }/resources/css/themify-icons.css" rel="stylesheet">
-	
-	<!-- 필요한 css는 이 밑에 넣어주면 됨 -->
-	<link href="${pageContext.request.contextPath}/resources/asset/stylesheets/timetable.css" media="all" rel="stylesheet" type="text/css" />
-	
-	<!-- 스크립트는 body 맨 아래쪽에 -->
-	
+<html>
+   <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+      <meta name="og:title" content="서울대학교 시간표 SNUTT" />
+      <meta name="og:type" content="timetable" />
+      <meta name="og:site_name" content="SNUTT" />
+      <meta name="og:description" content="서울대학교 시간표 작성 웹서비스" />
+      
+      <title>개미와 베짱이, 대학조별과제 관리시스템</title>
+      
+      <!-- jQuery -->      
+      <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+      <link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/themes/smoothness/jquery-ui.css" />
+      <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/jquery-ui.min.js"></script>
+
+      <!--  Bootstrap -->
+      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+
+      <link href="${pageContext.request.contextPath}/resources/asset/stylesheets/timetable.css" media="all" rel="stylesheet" type="text/css" />
+
+      <script src="${pageContext.request.contextPath}/resources/asset/javascripts/utils.js" type="text/javascript"></script>
+      <script src="${pageContext.request.contextPath}/resources/asset/javascripts/exportpng.js" type="text/javascript"></script>
+      <script src="${pageContext.request.contextPath}/resources/asset/javascripts/timetable_common.js" type="text/javascript"></script>
+      <script src="${pageContext.request.contextPath}/resources/asset/javascripts/timetable_snutt.js" type="text/javascript"></script>
       <script>
       (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
          (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
@@ -43,56 +38,22 @@
       ga('send', 'pageview');
 	  
       var commonUrl="${pageContext.request.contextPath}";
-      var projectNo="${sessionScope.projectNo }"
+      var userNo = "${sessionScope.userDTO.userNo }";
     </script>
     <style type="text/css">
-    .badgebox
-{
-    opacity: 0;
-}
-
-.badgebox + .badge
-{
-    /* Move the check mark away when unchecked */
-    text-indent: -999999px;
-    /* Makes the badge's width stay the same checked and unchecked */
-	width: 27px;
-}
-
-.badgebox:focus + .badge
-{
-    /* Set something to make the badge looks focused */
-    /* This really depends on the application, in my case it was: */
     
-    /* Adding a light border */
-    box-shadow: inset 0px 0px 5px;
-    /* Taking the difference out of the padding */
-}
-
-.badgebox:checked + .badge
-{
-    /* Move the check mark back when checked */
-	text-indent: 0;
-}
     </style>
-</head>
-<body>
-	<div class="wrapper">
-		<jsp:include page="/WEB-INF/views/project/sidebar_ch.jsp" />
-		<div class="main-panel">
-			<jsp:include page="/WEB-INF/views/project/header_ch.jsp" flush="false" /> <!-- </nav> -->
-			<div class="content">
-				<div class="container-fluid">
-				<div id="checkboxUserNo"> <!-- 체크박스 놓는곳 -->
-      	
-      			</div>
-					<div id="timetable_container">
+   </head>
+   <body>
+      
+      <div class="container">
+         <div id="content_wrapper">
+            <div id="timetable_container">
                <div id="timecells_container">
                   <div id="customcell_container">
                      <div id="customcell" style="display:none;"></div>  
                   </div>
                </div>
-               <div class="card">
                <table id="timetable" >
                      <tr>
                         <th>&nbsp;</th>
@@ -247,47 +208,24 @@
                   </tbody>
                </table>
             </div>
-					
-					
 
-
-				</div>
-			</div>
-			
-			 <div id="custom_lecture_modal" style="display:none">
+         </div>
+      </div>
+      
+      
+      <div id="custom_lecture_modal">
          <form id="custom_lecture_form">
          	<input type=hidden id="securityInfo" name="${_csrf.parameterName}" value="${_csrf.token}">
          	<input type="text" name="timetableSubject" id="custom_course_title" class="input-large" placeholder="교과목명을 입력하세요." /><br />
             <input type="text" name="timetableLocation" id="custom_location" class="input-large" placeholder="강의동을 입력하세요." /><br />
             <input type="hidden" name="timetableClassInfo" id="custom_class_time"/>
             <input type="hidden" name="timetableColor" id="timetableColor"/>
-            <input type="hidden" name="userNo" value="${sessionScope.userDTO.userNo }"/> 
+            <input type="hidden" name="userNo" value="44"/> 
             <button type="submit" id="custom_lecture_add_button" class="btn btn-inverse">추가</button>
             <a id="custom_lecture_close_button" class="btn btn-inverse">취소</a>
          </form>
       </div>
-			
-			<jsp:include page="/WEB-INF/views/project/footer_ch.jsp" flush="false" />
-		</div>
-	</div>
-	
-
-    <script src="${pageContext.request.contextPath }/resources/js/bootstrap.min.js" type="text/javascript"></script>
-	<!--  Checkbox, Radio & Switch Plugins -->
-	<script src="${pageContext.request.contextPath }/resources/js/bootstrap-checkbox-radio.js"></script>
-	<!--  Charts Plugin -->
-	<script src="${pageContext.request.contextPath }/resources/js/chartist.min.js"></script>
-	<!--  Notifications Plugin    -->
-	<script src="${pageContext.request.contextPath }/resources/js/bootstrap-notify.js"></script>
-	<!-- Paper Dashboard Core javascript and methods for Demo purpose -->
-	<script src="${pageContext.request.contextPath }/resources/js/paper-dashboard.js"></script>
-	<!-- 필요한 자바스크립트 파일은 여기에 넣어주면 됨 -->
-
-<script src="${pageContext.request.contextPath}/resources/asset/javascripts/utils.js" type="text/javascript"></script>
-      <script src="${pageContext.request.contextPath}/resources/asset/javascripts/exportpng.js" type="text/javascript"></script>
-      <script src="${pageContext.request.contextPath}/resources/asset/javascripts/team_timetable_common.js" type="text/javascript"></script>
-      <script src="${pageContext.request.contextPath}/resources/asset/javascripts/timetable_snutt.js" type="text/javascript"></script>
-      <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/jquery-ui.min.js"></script>
-      
-</body>
-</html>
+    
+   </body> 
+</html> 
+    

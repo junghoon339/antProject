@@ -12,7 +12,7 @@
 	href="assets/img/favicon.png">
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 
-<title>Paper Dashboard by Creative Tim</title>
+<title>개미와 베짱이, 대학조별과제 관리시스템</title>
 
 <meta
 	content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0'
@@ -94,8 +94,13 @@ $(document).ready(function() {
 		$("#Btn").attr("disabled","disabled");
 	}
 	
-	//alert("${projectDTO.projectState}"=="1");
-
+	//완료대기중(1), 완료된 조별과제(2) 버튼 비활성화
+	if("${projectState}"=="1" || "${projectState}"=="2"){
+		$("#updateBtn").attr("style", "display:none");
+		$("#Btn").attr("style","display:none");	
+	}
+	
+	
 })
 
 	$(function() {

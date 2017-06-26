@@ -37,9 +37,10 @@
 <body>
 	<div class="main"
 		style="background-image: url('${pageContext.request.contextPath}/resources/images/Peg Gnomes 010.JPG')">
-		
+
 		<div class="container" style="opacity: 0.95; filter: alpha(opacity=95);">
 			<h1 class="logo">The Ants and Grasshopper</h1>
+			<!--  H1 can have 2 designs: "logo" and "logo cursive"           -->
 			<br>
 			<div class="content">
 				<div class="row">
@@ -48,7 +49,7 @@
 							<div class="panel-heading">
 								<div class="row">
 									<div class="col-xs-6">
-										<a href="#" class="active" id="login-form-link">비밀번호 찾기</a>
+										<a href="#" class="active" id="login-form-link">개미와 베짱이</a>
 									</div>
 								</div>
 								<hr>
@@ -57,24 +58,21 @@
 								<div class="row">
 									<div class="col-lg-12">
 										<form id="login-form"
-											action="${pageContext.request.contextPath}/user/sendEmail"
-											method="post" role="form" style="display: block;">
+											action="${pageContext.request.contextPath}/" method="post" role="form" style="display: block;">
 											<input type="hidden" name="${_csrf.parameterName}"
 												value="${_csrf.token}">
-											<div class="form-group">
-												<input type="text" name="emailAddr" id="userId"
-													class="form-control" placeholder="이메일 주소" value="">
-											</div>
+											
 											<div class="form-group text-center">
 												<!-- <input type="checkbox"  class=""
 														name="remember" id="remember"> -->
-												<label style="color: red">${msg}</label>
+													<h4><strong style="color: #8aca86">${dto.userName}</strong>님의 메일로 임시 비밀번호를 보냈습니다.</h4><br>
+													<h5>변경된 비밀번호로 로그인 해 주세요. </h5><br>
 											</div>
 											<div class="form-group">
 												<div class="row">
 													<div class="col-sm-6 col-sm-offset-3">
 														<input type="submit" name="login-submit" id="login-submit"
-															class="form-control btn btn-login" value="메일 보내기">
+															class="form-control btn btn-login" value="로그인 하기">
 													</div>
 												</div>
 											</div>
@@ -82,8 +80,7 @@
 												<div class="row">
 													<div class="col-lg-12">
 														<div class="text-center">
-															<a href="https://phpoll.com/recover"
-																class="forgot-password">로그인 하기</a>
+															
 														</div>
 													</div>
 												</div>

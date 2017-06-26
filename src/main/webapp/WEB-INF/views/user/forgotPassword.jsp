@@ -15,7 +15,7 @@
 <meta http-equiv="refresh"
 	content="${pageContext.session.maxInactiveInterval}">
 <security:csrfMetaTags />
-<title>Time Lapse</title>
+<title>개미와 베짱이, 대학조별과제 관리시스템</title>
 
 <link
 	href="${pageContext.request.contextPath}/resources/css/bootstrap.css"
@@ -36,9 +36,9 @@
 
 <body>
 	<div class="main"
-		style="background-image: url('${pageContext.request.contextPath}/resources/images/video_bg.jpg')">
+		style="background-image: url('${pageContext.request.contextPath}/resources/images/Peg Gnomes 010.JPG')">
 
-		<div class="container">
+		<div class="container" style="opacity: 0.95; filter: alpha(opacity=95);">
 			<h1 class="logo">The Ants and Grasshopper</h1>
 			<!--  H1 can have 2 designs: "logo" and "logo cursive"           -->
 			<br>
@@ -49,7 +49,7 @@
 							<div class="panel-heading">
 								<div class="row">
 									<div class="col-xs-6">
-										<a href="#" class="active" id="login-form-link">비번찾기</a>
+										<a href="#" class="active" id="login-form-link">비밀번호 찾기</a>
 									</div>
 								</div>
 								<hr>
@@ -64,7 +64,7 @@
 												value="${_csrf.token}">
 											<div class="form-group">
 												<input type="text" name="emailAddr" id="emailAddr"
-													class="form-control" placeholder="Email Address" value="">
+													class="form-control" placeholder="이메일 주소" value="">
 											</div>
 											<div class="form-group text-center">
 												<!-- <input type="checkbox"  class=""
@@ -83,7 +83,7 @@
 												<div class="row">
 													<div class="col-lg-12">
 														<div class="text-center">
-															<a href="https://phpoll.com/recover"
+															<a href="${pageContext.request.contextPath}/"
 																class="forgot-password" style="text-decoration: none">로그인 하기</a>
 														</div>
 													</div>
