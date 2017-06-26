@@ -7,39 +7,41 @@ import com.ant.user.dto.UserDTO;
 
 public interface StorageDAO {
 	
-	// ÀÌ¸§À¸·Î ÀÚ·á °Ë»ö
+	// ï¿½Ì¸ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ú·ï¿½ ï¿½Ë»ï¿½
 	public List<StorageDTO> selectByNameSearch(int projectNo, int startRow, int endRow, int categoryNo, String searchText);
 	
-	// ÀÌ¸§À¸·Î ÀÚ·á °Ë»ö
+	// ï¿½Ì¸ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ú·ï¿½ ï¿½Ë»ï¿½
 	public List<StorageDTO> selectByTitleSearch(int projectNo, int startRow, int endRow, int categoryNo, String searchText);
 	
-	// ÀüÃ¼ ÀÚ·á »Ñ·ÁÁÖ±â
+	// ï¿½ï¿½Ã¼ ï¿½Ú·ï¿½ ï¿½Ñ·ï¿½ï¿½Ö±ï¿½
 	public List<StorageDTO> selectAll(int projectNo, int startRow, int endRow);
 	
-	// °Ô½Ã±Û ¹øÈ£¿¡ µû¸¥ »ó¼¼º¸±â
+	// ï¿½Ô½Ã±ï¿½ ï¿½ï¿½È£ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ó¼¼ºï¿½ï¿½ï¿½
 	public StorageDTO selectByStorageNum(int strageNo);
 	
-	// Á¶È¸¼ö 1++
+	// ï¿½ï¿½È¸ï¿½ï¿½ 1++
 	public int readNumUpdate(int storageNo);
 	
-	// ÀÚ·á½Ç¿¡ ÀÚ·á ¿Ã¸®±â
+	// ï¿½Ú·ï¿½Ç¿ï¿½ ï¿½Ú·ï¿½ ï¿½Ã¸ï¿½ï¿½ï¿½
 	public int insert(StorageDTO storageDTO);
 	
-	//ÀÚ·á½Ç¿¡ ¿Ã¸°»ç¶÷¸¸ ÀÚ·á Áö¿ì±â
+	//ï¿½Ú·ï¿½Ç¿ï¿½ ï¿½Ã¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ú·ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½
 	public int delete(int storageNo,int userNo);
 	
-	//ÀÚ·á½Ç¿¡ ÀÚ·á ¿Ã¸°»ç¶÷¸¸ ÀÚ·á¼öÁ¤
+	//ï¿½Ú·ï¿½Ç¿ï¿½ ï¿½Ú·ï¿½ ï¿½Ã¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ú·ï¿½ï¿½ï¿½ï¿½
 	public int update(StorageDTO storageDTO);
 	
-	//ÀÌ¸§ °¡Á®¿À±â
+	//ï¿½Ì¸ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	public UserDTO selectUserByUserNo(int userNo);
 	
-	//ÃÑ row °¹¼ö
+	//ï¿½ï¿½ row ï¿½ï¿½ï¿½ï¿½
 	public int totalCount(int projectNo);
 	
-	//ÃÑ row °¹¼ö by Name
+	//ï¿½ï¿½ row ï¿½ï¿½ï¿½ï¿½ by Name
 	public int totalCountByName(String searchText, int projectNo);
 	
-	//ÃÑ row °¹¼ö by Title
+	//ï¿½ï¿½ row ï¿½ï¿½ï¿½ï¿½ by Title
 	public int totalCountByTitle(String searchText, int projectNo);
+	
+	public int selectFileSizeAll(int projectNo);
 }

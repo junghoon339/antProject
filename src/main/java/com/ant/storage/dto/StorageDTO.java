@@ -2,6 +2,7 @@ package com.ant.storage.dto;
 
 import org.springframework.web.multipart.MultipartFile;
 
+import com.ant.calendar.dto.ProjectCalendarDTO;
 import com.ant.user.dto.UserDTO;
 
 public class StorageDTO {
@@ -120,7 +121,5 @@ public class StorageDTO {
 	public void setWriteDay(String writeDay) {
 		this.writeDay = writeDay;
 	}
-	
-	
 	
 }

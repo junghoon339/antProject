@@ -17,26 +17,31 @@ public class ProjectCalendarServiceImpl implements ProjectCalendarService {
 	
 	@Override
 	public List<DHXEv> getEvent(int projectNo) {
-		System.out.println("ProjectCalendar select ¼­ºñ½º->´Ù¿À Á¢±Ù "+projectNo);
+		System.out.println("ProjectCalendar select ï¿½ï¿½ï¿½ï¿½->ï¿½Ù¿ï¿½ ï¿½ï¿½ï¿½ï¿½ "+projectNo);
 		return calendarDAO.getEvent(projectNo);
 	}
 
 	@Override
 	public void updateEvent(ProjectCalendarDTO schedule) {
-		System.out.println("ProjectCalendar updateEvent ¼­ºñ½º->´Ù¿À Á¢±Ù "+schedule);
+		System.out.println("ProjectCalendar updateEvent ï¿½ï¿½ï¿½ï¿½->ï¿½Ù¿ï¿½ ï¿½ï¿½ï¿½ï¿½ "+schedule);
 		calendarDAO.updateEvent(schedule);
 	}
 
 	@Override
 	public void insertEvent(ProjectCalendarDTO schedule) {
-		System.out.println("ProjectCalendar insertEvent ¼­ºñ½º->´Ù¿À Á¢±Ù"+schedule);
+		System.out.println("ProjectCalendar insertEvent ï¿½ï¿½ï¿½ï¿½->ï¿½Ù¿ï¿½ ï¿½ï¿½ï¿½ï¿½"+schedule);
 		calendarDAO.insertEvent(schedule);
 	}
 
 	@Override
 	public void deleteEvent(Integer id) {
-		System.out.println("deleteEvent ¼­ºñ½º->´Ù¿À Á¢±Ù"+id);
+		System.out.println("deleteEvent ï¿½ï¿½ï¿½ï¿½->ï¿½Ù¿ï¿½ ï¿½ï¿½ï¿½ï¿½"+id);
 		calendarDAO.deleteEvent(id);
+	}
+
+	@Override
+	public List<ProjectCalendarDTO> selectNowCalVal(int projectNo) {
+		return calendarDAO.selectNowCalVal(projectNo);
 	}
 
 }

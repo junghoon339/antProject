@@ -7,35 +7,36 @@ import com.ant.storage.dto.StorageDTO;
 import com.ant.user.dto.UserDTO;
 
 public interface StorageService{
-		// ÀüÃ¼ ÀÚ·á »Ñ·ÁÁÖ±â
+		// ï¿½ï¿½Ã¼ ï¿½Ú·ï¿½ ï¿½Ñ·ï¿½ï¿½Ö±ï¿½
 		public List<StorageDTO> selectAll(int projectNo, int startRow, int endRow);
 		
-		// ÀÚ·á °Ë»ö
+		// ï¿½Ú·ï¿½ ï¿½Ë»ï¿½
 		public List<StorageDTO> selectBySearch(int projectNo, int startRow, int endRow, int categoryNo, String searchText);
 
 		
-		// °Ô½Ã±Û ¹øÈ£¿¡ µû¸¥ »ó¼¼º¸±â
+		// ï¿½Ô½Ã±ï¿½ ï¿½ï¿½È£ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ó¼¼ºï¿½ï¿½ï¿½
 		public StorageDTO selectByStorageNum(int storageNo, boolean state) throws Exception;
 		
-		// Á¶È¸¼ö 1++
+		// ï¿½ï¿½È¸ï¿½ï¿½ 1++
 		/*public int readNumUpdate(int storageNo);*/
 		
-		// ÀÚ·á½Ç¿¡ ÀÚ·á ¿Ã¸®±â
+		// ï¿½Ú·ï¿½Ç¿ï¿½ ï¿½Ú·ï¿½ ï¿½Ã¸ï¿½ï¿½ï¿½
 		public int insert(StorageDTO storageDTO) throws Exception;
 		
-		//ÀÚ·á½Ç¿¡ ¿Ã¸°»ç¶÷¸¸ ÀÚ·á Áö¿ì±â
+		//ï¿½Ú·ï¿½Ç¿ï¿½ ï¿½Ã¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ú·ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½
 		public int delete(int storageNo,int userNo) throws Exception;
 		
-		//ÀÚ·á½Ç¿¡ ÀÚ·á ¿Ã¸°»ç¶÷¸¸ ÀÚ·á¼öÁ¤
+		//ï¿½Ú·ï¿½Ç¿ï¿½ ï¿½Ú·ï¿½ ï¿½Ã¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ú·ï¿½ï¿½ï¿½ï¿½
 		public int update(StorageDTO storageDTO) throws Exception;
 		
-		//ÀÌ¸§ °¡Á®¿À±â
+		//ï¿½Ì¸ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 		public UserDTO selectUserByUserNo(int userNo);
 		
-		//ÃÑ row °¹¼ö
+		//ï¿½ï¿½ row ï¿½ï¿½ï¿½ï¿½
 		public int totalCount(int projectNo);
 		
-		//ÃÑ row °¹¼ö by search
+		//ï¿½ï¿½ row ï¿½ï¿½ï¿½ï¿½ by search
 		public int totalCountBySearch(int categoryNo, String searchText, int projectNo);
 
+		public int selectFileSizeAll(int projectNo);
 }

@@ -113,4 +113,10 @@
     where s.project_no=#{projectNo} and s.storage_title like'%'||#{searchText}||'%'
 	</select>
 	
+	<!-- 해당하는 조별과제방에 담긴 파일사이즈들의 합검색 -->
+	<select id="selectFileSizeAll" parameterType="int" resultType="int">
+		SELECT sum(storage_filesize)
+		FROM storage
+		WHERE project_no = #{_parameter}
+	</select>
 </mapper>
