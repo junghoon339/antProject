@@ -135,7 +135,9 @@ public class AdminDAOImpl implements AdminDAO {
 
 	@Override
 	public int updateNotice(NoticeDTO noticeDTO) throws Exception {
-		System.out.println("dao noticeDTO.no = "+noticeDTO.getNoticeNo());
+		System.out.println("dao noticeDTO.getNoticeNo = "+noticeDTO.getNoticeNo());
+		System.out.println("dao noticeDTO.getNoticeContent = "+noticeDTO.getNoticeContent());
+		System.out.println("dao noticeDTO.getNoticeTitle = "+noticeDTO.getNoticeTitle());
 		return session.update("mapper.admin.adminMapper.updateNotice", noticeDTO);
 	}
 

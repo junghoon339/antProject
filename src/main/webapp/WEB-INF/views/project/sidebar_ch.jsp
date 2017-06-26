@@ -35,7 +35,7 @@
 					<li><a href="${pageContext.request.contextPath}/userCalendar/userCalendar"> <i class="ti-calendar"></i>
 							<p>달력</p>
 					</a></li>
-					<li><a href="${pageContext.request.contextPath}/admin/adminNotice"> <i class="ti-bell"></i>
+					<li><a href="${pageContext.request.contextPath}/user/adminNotice"> <i class="ti-bell"></i>
 							<p>공지사항</p>
 					</a></li>
 				</c:when>

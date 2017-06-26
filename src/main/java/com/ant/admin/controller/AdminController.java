@@ -161,73 +161,7 @@ public class AdminController {
 		return mv;
 	}
 	
-	@RequestMapping("/adminNotice")
-	public ModelAndView NoticeMain(String pageNumber, String searchText){
-		System.out.println("여기 안들어온다");
-		System.out.println(pageNumber);
-		if(pageNumber==null){
-			pageNumber = "1";
-		}
-		
-		int curPage = Integer.parseInt(pageNumber);
-		int rowCount = 7;
-		int startRow = (curPage-1)*rowCount+1;
-		int endRow = curPage*rowCount;
-		List<NoticeDTO> list = null;
-		int totalRow = 0;
-		if(searchText==null){
-			list = service.noticeSelectAll(startRow, endRow);
-			totalRow = service.noticeTotalCount();
-		}else{
-			list = service.noticeSelectBySearch(startRow, endRow, searchText);
-			totalRow = service.noticeTotalCountBySearch(searchText); 
-		}
-		int pageSu = 5;
-		int startPage = ((curPage-1)/pageSu)*pageSu+1;
-		int endPage = startPage+pageSu-1;
-		
-		boolean flag = false;
-		int lastPageNum = totalRow%rowCount==0 ? totalRow/rowCount : totalRow/rowCount+1;
-		if(lastPageNum<=endPage){
-			endPage=lastPageNum;
-			flag=true;
-		}
-		
-		ModelAndView mv = new ModelAndView();
-		mv.addObject("list",list);
-		mv.addObject("totalRow",totalRow);
-		mv.addObject("startPage",startPage);
-		mv.addObject("endPage",endPage);
-		mv.addObject("flag",flag);
-		mv.addObject("pageSu",pageSu);	
-		mv.addObject("curPage",curPage);
-		mv.addObject("rowCount",rowCount);
-		mv.addObject("searchText",searchText);
-		
-		mv.setViewName("admin/adminNotice");
-		return mv;
-	}
-	
-	@RequestMapping("/noticeInsert")
-	public String noticeInsert(NoticeDTO noticeDTO) throws Exception{
-		service.insertNotice(noticeDTO);
-		return "redirect:/admin/adminNotice";
-	}
-	
-	@RequestMapping("/noticeDetail/{noticeNo}")
-	public ModelAndView noticeDetail(@PathVariable int noticeNo){
-		ModelAndView mv = new ModelAndView();
-		NoticeDTO dto = service.selectByNoticeNum(noticeNo);
-		mv.addObject("noticeDTO", dto);
-		mv.setViewName("admin/noticeDetailNew");
-		return mv;
-	}
-	
-	@RequestMapping("/delete/{noticeNo}")
-	public String noticeDelete(@PathVariable int noticeNo) throws Exception{
-		service.deleteNotice(noticeNo);
-		return "redirect:/admin/adminNotice";
-	}
+
 	
 	@RequestMapping("/updateForm")
 	public ModelAndView noticeUpdateForm(NoticeDTO noticeDTO){
