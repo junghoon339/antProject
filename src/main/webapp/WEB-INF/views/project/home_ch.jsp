@@ -108,11 +108,8 @@
 						});
 						
 						
-						$(".surveySuc").click(function(){
-
-						})
-								.click(
-										function() {
+						$(".survey").click(function(){
+											var pn = $(this).parent().prev().val();
 											$
 													.ajax({
 														url : "${pageContext.request.contextPath}/survey/",
@@ -125,11 +122,7 @@
 																			token);
 														},
 														dataType : "json",
-														data : "projectNo="
-																+ $(this)
-																		.parent()
-																		.next()
-																		.val(),
+														data : "projectNo="+pn,
 														success : function( result) {
 															
 															if ($(result)
@@ -139,23 +132,15 @@
 															}
 															var str = "";
 															$.each(result, function( index, item) {
-																
-																				str += '<tr width="100%">';
-																				str += '<td name="nameTd" width="50%"><center>'
-																						+ item.userName
-																						+ '</center></td>';
-																				str += '<input type="hidden" name="userName" value="'+item.userName+'" />';
-																				str += '<input type="hidden" name="projectNo" value="'
-																						+ $(
-																								".survey")
-																								.parent()
-																								.next()
-																								.val()
-																						+ '" />';
-																				str += '<td name="scoreTd" width="15%"><input type="text" name="userScore" placeholder="점수를 입력해주세요." value=""/></td>';
-																				str += '<td name="updateTd" width="35%"><a href="#"><center>완료</center></a></td>';
-																				str += '</tr>';
-																			})
+																str += '<tr width="100%">';
+																str += '<td name="nameTd" width="35%"><center>'
+																		+ item.userName
+																		+ '</center></td>';
+																str += '<input type="hidden" name="userName" value="'+item.userName+'" />';
+																str += '<input type="hidden" name="projectNo" value="'+pn+ '" />';
+																str += '<td name="scoreTd" width="50%" style="padding-right:10px;"><input type="text" class="form-control" name="userScore" placeholder="점수를 입력해주세요." value=""/></td>';
+																str += '</tr><tr><td>　</td></tr>';
+															})
 															$("#print").html(
 																	str);
 															$("#myModal2")
@@ -171,7 +156,6 @@
 										})
 
 						$("#okayBtn").click(function() {
-							$("input")
 							$("#ffform").submit();
 							alert("설문조사를 완료하였습니다.");
 						})
@@ -197,6 +181,10 @@
 			return false;
 		} else if (fr.projectEnddate.value == "") {
 			alert("조별과제 종료날짜를 입력해 주세요.");
+			fr.projectEnddate.focus();
+			return false;
+		} else if (fr.projectStartdate.value > fr.projectEnddate.value) {
+			alert("시작날짜와 종료날짜를 확인해주세요");
 			fr.projectEnddate.focus();
 			return false;
 		} else
@@ -256,10 +244,9 @@
 															<span class="label label-success "><a href="#" style="color: #FFFFFF;" class="surveySuc">설문조사 참여완료</a></span>
 														</c:if>
 														<c:if test="${(ssl.key==projectDTO.projectNo)&&(ssl.value==false)}">
-															<span class="label label-warning "><a href="#" style="color: #FFFFFF;" class="survey">설문조사 참여하기</a></span>														
+															<input type="hidden" value="${projectDTO.projectNo}"><span class="label label-warning "><a href="#" style="color: #FFFFFF;" class="survey">설문조사 참여하기</a></span>														
 														</c:if>
 													</c:forEach>	
-													<input type="hidden" value="${projectDTO.projectNo}">
 													</div>
 													<div class="col-md-2">
 														<form id="enterForm" action="${pageContext.request.contextPath}/project/teamMain" method="post">
@@ -349,12 +336,22 @@
 					<input type="hidden" name="${_csrf.parameterName}"
 						value="${_csrf.token}">
 					<div class="modal-body">
+					<div align="center">
+						<span class="ti-help-alt"/> <font style="font-size:small;color: #6b69f2">조별과제를 진행하면서 혹시 '베짱이'가 있었나요?<br>
+						조원들의 참여도에 대한 점수를 매겨주세요!</font><br>
+						<font style="font-size: xx-small;">(투표는 익명으로 반영되며 미참여시 본인이 불이익을 당할 수 있습니다.)</font><br>
+					</div>
+					<br>
 						<table>
+							<hr>
+							　　　　NAME　　　　　　　　SCORE
+							<hr>
 							<div id="print"></div>
 						</table>
+						<p><br><br>
 					</div>
 					<div class="modal-footer">
-						<button type="button" class="btn btn-default" data-dismiss="modal"
+						<button type="button" class="btn btn-warning" data-dismiss="modal"
 							id="okayBtn">확인</button>
 						<button type="button" class="btn btn-default" data-dismiss="modal">취소</button>
 					</div>
