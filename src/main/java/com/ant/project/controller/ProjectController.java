@@ -384,6 +384,7 @@ public class ProjectController implements Serializable {
 	@RequestMapping("/selectChkProjectMember")
 	@ResponseBody
 	public String selectChkProjectMember(HttpServletRequest req, String userId){
+		//여기다
 		ProjectUserDTO projectUserDTO = new ProjectUserDTO();
 		projectUserDTO.setUserId(userId);
 		projectUserDTO.setProjectNo((int) req.getSession().getAttribute("projectNo"));
