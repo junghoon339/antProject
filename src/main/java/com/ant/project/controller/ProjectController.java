@@ -337,7 +337,6 @@ public class ProjectController implements Serializable {
 			String messageReceiver ="";
 			for(String userId : invitedUser){
 				messageReceiver += userId+";";
-
 			}
 
 			MessageDTO messageDTO = new MessageDTO();

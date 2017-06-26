@@ -260,6 +260,7 @@ public class VoteController {
 		ProjectDTO pro = projectService.selectProject(projectNo);
 		VoteDTO vote = voteService.selectVote(voteNo);
 		
+		
 		//투표마감시 투표등록마감 알림을 전송해주는 쪽
 		for(UserDTO u : users){
 			MessageDTO messageDTO = new MessageDTO();
