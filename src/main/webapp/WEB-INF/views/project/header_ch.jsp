@@ -25,13 +25,13 @@
                     <ul class="nav navbar-nav navbar-right">
                         <li>
                             <a href="${pageContext.request.contextPath }/message/main?userNo=${sessionScope.userDTO.userNo}" >
-                                <i class="ti-email"></i>
+                                <i class="ti-email"></i>&nbsp;
 								<p>쪽지함<span class="badge" ></span></p>
                             </a>
                         </li>
                        	<li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                             	<i class="ti-user"></i>
+                             	<i class="ti-user"></i>&nbsp;
 								<p>${userDTO.userName}님</p>
 								<b class="caret"></b>
                             </a>

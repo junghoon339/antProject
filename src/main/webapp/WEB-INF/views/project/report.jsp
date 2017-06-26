@@ -246,8 +246,7 @@
 							</div>
 						</div>
 					</div>
-
-					<button id="pdfdown">다운</button>
+					&nbsp;&nbsp;&nbsp;<button type="button" class="btn btn-danger" onclick="window.print()">다운</button>
 				</div>
 			</div>
 		</div>

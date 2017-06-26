@@ -28,7 +28,7 @@ alter session set nls_language='AMERICAN';
 
 select * from tab;
 
-SELECT event_id, event_name, start_date, end_date FROM user_calendar
+SELECT event_id, event_name, start_date, end_date FROM user_calendar;
 
 CREATE TABLE ant_user
 (
@@ -209,6 +209,7 @@ CREATE TABLE message
    message_state number default 0,
    user_no_message_sender number constraint message_user_no_sender_fk references ant_user(user_no) on delete cascade not null
 );
+
 create sequence seq_message_no; 
 commit
 select * from message;
@@ -224,7 +225,7 @@ CREATE TABLE storage
    storage_content varchar2(200) not null,
    storage_filename varchar2(20),
    storage_filepath varchar2(500),
-   storage_filesize varchar2(50),
+   storage_filesize varchar2(50),	
    storage_readnum number default 0,
    storage_writeday date default sysdate,
    user_no number constraint storage_user_no_fk references ant_user(user_no) on delete cascade 

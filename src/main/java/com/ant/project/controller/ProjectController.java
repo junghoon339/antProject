@@ -270,7 +270,6 @@ public class ProjectController implements Serializable {
 			// 조별과제방에 초대된 회원들의 id invitedUser배열을 list로 변환
 			List<String> invitedUserIdList = new ArrayList<>();
 			Collections.addAll(invitedUserIdList, invitedUser);
-				
 			String messageReceiver ="";
 			for(String userId : invitedUser){
 				messageReceiver += userId+";";

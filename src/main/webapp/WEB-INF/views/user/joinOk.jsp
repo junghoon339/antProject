@@ -36,7 +36,7 @@
 
 <body>
 	<div class="main"
-		style="background-image: url('${pageContext.request.contextPath}/resources/images/video_bg.jpg')">
+		style="background-image: url('${pageContext.request.contextPath}/resources/images/Peg Gnomes 010.JPG')">
 
 		<div class="container">
 			<h1 class="logo">The Ants and Grasshopper</h1>
