@@ -97,4 +97,11 @@ public interface VoteService {
 	 * voteSelector 삭제하기
 	 */
 	public int voteSelectorDelete(int voteSelectNo);
+	
+	/**
+	 * vote 정보검색하기
+	 */
+	public VoteDTO selectVote(int voteNo);
+	
+	VoteDTO selectLastVote(int projectNo);
 }

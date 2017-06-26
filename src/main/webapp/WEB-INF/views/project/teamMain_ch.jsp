@@ -27,6 +27,170 @@
    <link href="${pageContext.request.contextPath }/resources/css/chat.css" rel="stylesheet">
    
    <!-- 필요한 css는 이 밑에 넣어주면 됨 -->
+ <style>
+ .progress{
+    width: 150px;
+    height: 150px;
+    line-height: 150px;
+    background: none;
+    margin: 0 auto;
+    box-shadow: none;
+    position: relative;
+}
+.progress:after{
+    content: "";
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    border: 12px solid #fff;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+.progress > span{
+    width: 50%;
+    height: 100%;
+    overflow: hidden;
+    position: absolute;
+    top: 0;
+    z-index: 1;
+}
+.progress .progress-left{
+    left: 0;
+}
+.progress .progress-bar{
+    width: 100%;
+    height: 100%;
+    background: none;
+    border-width: 12px;
+    border-style: solid;
+    position: absolute;
+    top: 0;
+}
+.progress .progress-left .progress-bar{
+    left: 100%;
+    border-top-right-radius: 80px;
+    border-bottom-right-radius: 80px;
+    border-left: 0;
+    -webkit-transform-origin: center left;
+    transform-origin: center left;
+}
+.progress .progress-right{
+    right: 0;
+}
+.progress .progress-right .progress-bar{
+    left: -100%;
+    border-top-left-radius: 80px;
+    border-bottom-left-radius: 80px;
+    border-right: 0;
+    -webkit-transform-origin: center right;
+    transform-origin: center right;
+    animation: loading-1 1.8s linear forwards;
+}
+.progress .progress-value{
+    width: 90%;
+    height: 90%;
+    border-radius: 50%;
+    background: #44484b;
+    font-size: 24px;
+    color: #fff;
+    line-height: 135px;
+    text-align: center;
+    position: absolute;
+    top: 5%;
+    left: 5%;
+}
+.progress.blue .progress-bar{
+    border-color: #049dff;
+}
+.progress.blue .progress-left .progress-bar{
+    animation: loading-2 1.5s linear forwards 1.8s;
+}
+.progress.yellow .progress-bar{
+    border-color: #fdba04;
+}
+.progress.yellow .progress-left .progress-bar{
+    animation: loading-3 1s linear forwards 1.8s;
+}
+.progress.pink .progress-bar{
+    border-color: #ed687c;
+}
+.progress.pink .progress-left .progress-bar{
+    animation: loading-4 0.4s linear forwards 1.8s;
+}
+.progress.green .progress-bar{
+    border-color: #1abc9c;
+}
+.progress.green .progress-left .progress-bar{
+    animation: loading-5 1.2s linear forwards 1.8s;
+}
+ @keyframes loading-1{
+    0%{
+        -webkit-transform: rotate(0deg);
+        transform: rotate(0deg);
+    }
+    100%{
+        -webkit-transform: rotate(180deg);
+        transform: rotate(180deg);
+    }
+} 
+@keyframes loading-2{
+    0%{
+        -webkit-transform: rotate(0deg);
+        transform: rotate(0deg);
+    }
+    100%{
+        -webkit-transform: rotate(180deg);
+        transform: rotate(180deg);
+    }
+}
+@keyframes loading-3{
+    0%{
+        -webkit-transform: rotate(0deg);
+        transform: rotate(0deg);
+    }
+    100%{
+        -webkit-transform: rotate(90deg);
+        transform: rotate(90deg);
+    }
+}
+@keyframes loading-4{
+    0%{
+        -webkit-transform: rotate(0deg);
+        transform: rotate(0deg);
+    }
+    100%{
+        -webkit-transform: rotate(36deg);
+        transform: rotate(36deg);
+    }
+}
+@keyframes loading-5{
+    0%{
+        -webkit-transform: rotate(0deg);
+        transform: rotate(0deg);
+    }
+    100%{
+        -webkit-transform: rotate(126deg);
+        transform: rotate(126deg);
+    }
+}
+@media only screen and (max-width: 990px){
+    .progress{ margin-bottom: 20px; }
+}
+.card{
+	height: 240px;
+	padding: 10px;
+}
+.card-header{
+	height: 20%;
+}
+.card-body{
+	height: 65%;
+}
+.card-footer{
+	height: 15%;
+}
+ </style>
    <!-- 스크립트는 body 맨 아래쪽에 -->
 </head>
 <body>
@@ -35,17 +199,110 @@
       <div class="main-panel">
          <jsp:include page="header_ch.jsp" flush="false" /> <!-- </nav> -->
         
-        
-         <div class="content">
+        <h2 align="center">TEST 1 TITLE</h2>
+         <div class="content" style="padding-top: 20px">
             <div class="container-fluid">
                <!-- 이곳에 내용작성!!!!!!!!!!!!!!!! -->
                <!-- 
                   작성할때 template.html 에서
                   <div class="row">부터 참고하면서 작성하면 됨
                -->
+               	<div class="row">
+               		<div class=col-lg-4>
+	            		<div class="card">
+	            			<div class="card-header">
+	            				<h5><span class="ti-time"> 조별과제 남은 일정</h5>
+	            			</div>
+	            			<div class="card-body"> 
+		            			<div class="progress yellow">
+					                <span class="progress-left">
+					                    <span class="progress-bar"></span>
+					                </span>
+					                <span class="progress-right">
+					                    <span class="progress-bar"></span>
+					                </span>
+					                <div class="progress-value">45%</div>
+					            </div>
+				            </div>
+				            <div class="card-footer">
+	              			<h6 align="right"><a href="#" style="color: #00e0d9">detail</a></span></h6>
+	              			</div>
+	              		</div>
+	           		</div>
+	           		<div class=col-lg-4>
+	            		<div class="card">
+	            			<div class="card-header">
+	            				<h5><span class="ti-light-bulb"/> 알림현황</h5>
+	            			</div>
+	            			<div class="card-body">
+	              				<!-- 내용을 넣을 공간 -->
+	              				
+	              			</div>
+				            <div class="card-footer">
+	              				<h6 align="right"><a href="#" style="color: #00e0d9">detail</a></span></h6>
+	              			</div>
+	              		</div>
+	           		</div>
+	           		<div class=col-lg-4>
+	            		<div class="card">
+	            			<div class="card-header">
+	            				<h5><span class="ti-alarm-clock"/> 오늘자 접속현황</h5>
+	            			</div>
+	            			<div class="card-body">
+	              				<!-- 내용을 넣을 공간 -->
+	              				
+	              			</div>
+	            			<div class="card-footer">
+	              				<h6 align="right"><a href="#" style="color: #00e0d9">detail</a></span></h6>
+	              			</div>
+	              		</div>
+	           		</div>
+	          	</div>
+	            <div class="row">
+               		<div class=col-lg-4>
+	            		<div class="card">
+	            			<div class="card-header">
+	            				<h5><span class="ti-calendar"/> 오늘의 계획</h5>
+	            			</div>
+	              			<div class="card-body">
+	              				<!-- 내용을 넣을 공간 -->
+	              				
+	              			</div>
+	              			<div class="card-footer">
+	              				<h6 align="right"><a href="#" style="color: #00e0d9">detail</a></span></h6>
+	              			</div>
+	              		</div>
+	           		</div>
+	           		<div class=col-lg-4>
+	            		<div class="card">
+	            			<div class="card-header">
+	            				<h5><span class="ti-menu-alt"/> 최신 투표항목</h5>
+	            			</div>
+	            			<div class="card-body">
+	              				<!-- 내용을 넣을 공간 -->
+	              				<div class="well" ><Strong id="well">Q. <span class="ifEndLabel">[종료]</span> ${voteTitle}</Strong><p><font size="1"><span class="ifEndLabelDate"></span> <span class="ifEndLabel">마감</span></font></div>
+	              			</div>
+	              			<div class="card-footer">
+	              				<h6 align="right"><a href="#" style="color: #00e0d9">detail</a></span></h6>
+	              			</div>
+	              		</div>
+	           		</div>
+	           		<div class=col-lg-4>
+	            		<div class="card">
+	            			<div class="card-header">
+	              				<h5><span class="ti-save"/> 자료실 자료 갯수</h5>
+	              			</div>
+	              			<div class="card-body">
+	              				<!-- 내용을 넣을 공간 -->
+	              				150GBss
+	              			</div>
+	              			<div class="card-footer">
+	              				<h6 align="right"><a href="#" style="color: #00e0d9">detail</a></span></h6>
+	              			</div>
+	              		</div>
+	           		</div>
+	          	</div>
               
-               
-
             </div>
          </div>
          
@@ -220,6 +477,50 @@
 	}
 
 </script>
+<script>
+<!-- add script -->
+$(function(){
+	alert(1);
+	
+	$.ajax({
+		url : "${pageContext.request.contextPath}/vote/Detail/Initialized",
+		type : "post",
+		dataType : "json",
+		data : $("#securityInfo").attr("name")+"="+$("#securityInfo").val() , // $("#voteNo").val()
+		success : function(result) {
+			if(result!='0'){
+				alert("투표가 마감되었습니다.");
+			}
+			$(".ifEnd").hide();
+			$(".ifEndLabel").show();
+			$(".ifEndLabelDate").html(dateToYYYYMMDD(new Date()));
+			console.log("라디오클래스 접근");
+			$(".regular-radio").each(function(index,item){
+				console.log(index+","+item);
+				$(item).hide();
+			})
+			console.log("well아이디 접근");
+			$("#well").css("color", "gray");
+		},
+		error : function(err) {
+			alert("ERROR010 : " + err);
+		}
+	});
+	
+	$(".ifEndLabel").hide();
+	
+	if(${voteState}>1){
+		$("#well").css("color", "gray");
+		$(".ifEnd").hide();
+		$(".ifEndLabel").show();
+		$(".ifEndLabelDate").html("${voteEndDate}");
+		$(".regular-radio").each(function(index,item){
+			console.log(index+","+item);
+			$(item).hide();
+		})
+	}
+})
 
+</script>
 </body>
 </html>

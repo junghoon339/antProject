@@ -22,20 +22,20 @@ public class ProjectServiceImpl implements ProjectService {
 	private ProjectDAO projectDAO;
 	
 	@Override
-//	public int insertProject(ProjectDTO projectDTO, List<Integer> invitedUserNoList, int userNo) {
 	public int insertProject(ProjectDTO projectDTO, String[] invitedUser, int userNo) {
 		int result=0;
-		//1.占쏙옙占쏙옙占쏙옙占쏙옙占쏙옙 占쏙옙占쏙옙
+		//1.새로운 조별과제 삽입
 		int resultInsPro = projectDAO.insertProject(projectDTO);
 		
-		//2.占쏙옙占� 占쏙옙占쌉듸옙 占쏙옙占쏙옙占쏙옙占쏙옙占쏙옙 占쏙옙호 占싯삼옙
+		//2.방금 생성된 조별과제 projectNo검색
 		int projectNo = projectDAO.selectProjectNo();
 		
-		//3.占쏙옙占쏙옙 占쏙옙占쏙옙
-		//占쏙옙占쏙옙占쏙옙 占쏙옙占쏙옙占쏙옙占쏙옙占썸에 占쏙옙占쏙옙
+		//3.조장 삽입
 		ProjectUserDTO projectUserDTO = new ProjectUserDTO(projectNo, userNo);
-		//System.out.println("占쏙옙占쏙옙占쏙옙트占쏙옙호"+projectUserDTO.getProjectNo()+" / 占쏙옙占쏙옙userNo : "+projectUserDTO.getUserNo());
 		int resultInsLeader = insertProjectLeader(projectUserDTO);
+
+		//3-1. 팀 캘린더에 일정삽입
+		int re=projectDAO.insertProjectCalendar(projectDTO,userNo);
 		
 		//4.조원 삽입
 		for(String userId:invitedUser){
@@ -58,7 +58,6 @@ public class ProjectServiceImpl implements ProjectService {
 		return invitedUserNolist;
 	}
 
-	//조원삽입
 	@Override
 	public int insertProjectMember(ProjectUserDTO projectUserDTO) {
 		return projectDAO.insertProjectMember(projectUserDTO);
@@ -120,6 +119,12 @@ public class ProjectServiceImpl implements ProjectService {
 	@Override
 	public int selectUnchkMessage(int userNo) {
 		return projectDAO.selectUnchkMessage(userNo);
+	}
+
+	@Override
+	public String selectChkProjectMember(ProjectUserDTO projectUserDTO) {
+		
+		return projectDAO.selectChkProjectMember(projectUserDTO);
 	}
 	
 	

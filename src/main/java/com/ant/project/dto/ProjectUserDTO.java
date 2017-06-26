@@ -1,15 +1,15 @@
 package com.ant.project.dto;
 
 public class ProjectUserDTO {
-	private int projectUserNo; //ÇÁ·ÎÁ§Æ®ÆÀ¿ø¹øÈ£
-	private int projectNo;	//ÇÁ·ÎÁ§Æ®¹øÈ£
-	private int userNo;	//È¸¿ø¹øÈ£
-	private String projectUserRole;	//ÆÀ¿ø¿ªÇÒ(Á¶¿ø,Á¶Àå)
-	private String projectUserTask;
+	private int projectUserNo; 
+	private int projectNo;	
+	private int userNo;	
+	private String projectUserRole;	//ì¡°ì¥,ì¡°ì›
+	private String projectUserTask; //ë§¡ì€ ì—­í• 
 	private String userId;
 
 
-	private ProjectDTO projectDTO; //°ü¸®ÀÚÀÇ È¸¿ø°ü¸®¿¡¼­ »ç¿ë
+	private ProjectDTO projectDTO; 
 	
 	public ProjectUserDTO() {}
 	public ProjectUserDTO(int projectNo, int userNo) {

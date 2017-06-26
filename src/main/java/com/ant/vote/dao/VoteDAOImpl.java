@@ -136,5 +136,16 @@ public class VoteDAOImpl implements VoteDAO {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	@Override
+	public VoteDTO selectVote(int voteNo) {
+		return session.selectOne("voteMapper.selectVote", voteNo);
+				
+	}
+
+	@Override
+	public VoteDTO selectLastVote(int projectNo) {
+		return session.selectOne("voteMapper.selectLastVote", projectNo);
+	}
 	
 }

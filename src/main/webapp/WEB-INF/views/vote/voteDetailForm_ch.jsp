@@ -48,17 +48,20 @@ var getchoice = 0; //선택했던 라디오가 무엇인지 DB에서 가져온 �
 var columns = new Array();
 
 $(function() {
+	if(${projectState==2}){
+		$(".ifEnd").hide();
+	}
+	
 	$(".ifEndLabel").hide();
 		
 	$(".regular-radio").each(function(index,item){
 		columns[index] = $(item).val();
 	})
 	
-	$('[data-toggle="tooltip"]').tooltip();
-	
 	//초기설정 함수 init()호출
 	init();
-	if(${voteState}==1){
+	if(${voteState}>1){
+		$("#well").css("color", "gray");
 		$(".ifEnd").hide();
 		$(".ifEndLabel").show();
 		$(".ifEndLabelDate").html("${voteEndDate}");
@@ -66,11 +69,10 @@ $(function() {
 			console.log(index+","+item);
 			$(item).hide();
 		})
-		$("#well").css("color", "gray");
 	}
 	
 	$("#vote").on('click', function() {
-		console.log('여기..1');
+		console.log('여기..');
 		btnEvent(this);
 	})
 	
@@ -126,6 +128,7 @@ $(function() {
 			}
 		});
 	})
+	
 })
 	
 function init(){
@@ -135,7 +138,7 @@ function init(){
 		dataType : "json",
 		data : "voteNo="+${voteNo}+"&columns="+columns+"&"+$("#securityInfo").attr("name")+"="+$("#securityInfo").val() , // $("#voteNo").val()
 		success : function(result) {
-			console.log("성공햇지롱1   리턴값 --->: " + result);
+			console.log("성공햇지롱   리턴값 --->: " + result);
 			
 			getchoice = result.choice;
 			selectChk = result.participated;
@@ -147,7 +150,7 @@ function init(){
 					if(item.value==index2){
 						$(item).parent().parent().next().children().children().children().css("width",(item2+"%"));
 						$(item).parent().parent().next().children().next().text("　"+item2+"%");
-						$(item).parent().next().next().children().next().children().text(Math.round(item2*${userCount})/100);
+						$(item).parent().next().next().children().next().children().text( Math.round(item2*${userCount}/100) );
 					}
 				})
 			})
@@ -248,10 +251,10 @@ td {
 					        <div class="modal-dialog modal-sm">
 					            <div class="modal-content">
 					                <div class="modal-header">
-					                    <h4 class="modal-title">Modal Heading</h4>
+					                    <h4 class="modal-title"><span class="ti-light-bulb"/>투표 삭제</h4>
 					                </div>
 					                <div class="modal-body">
-					                    <h4>글을 삭제하시겠습니까?</h4>
+					                    <h6>해당 투표를 정말 삭제하시겠습니까?</h6>
 					                </div>
 					                <div class="modal-footer">
 					                	<input type=hidden id="securityInfo" name="${_csrf.parameterName}" value="${_csrf.token}">	
@@ -268,7 +271,7 @@ td {
 	<div class="wrapper">
 		<jsp:include page="/WEB-INF/views/project/sidebar_ch.jsp" />
 		<div class="main-panel">
-			<jsp:include page="header_ch.jsp" flush="false" />
+			<jsp:include page="/WEB-INF/views/project/header_ch.jsp" flush="false" />
 
 			<div class="content">
 				<div class="container-fluid">
@@ -279,8 +282,8 @@ td {
 						<div class="container">
 							<div class="row">
 						
-						<div class="col-lg-9 col-lg-offset-1">
-						<div class="card">
+						<div class="col-md-11">
+						<div class="card" style="padding-left : 20px;padding-right: 20px;">
 							<span><%@include file="header.jsp"%>
 							<input type=hidden id="securityInfo" name="${_csrf.parameterName}" value="${_csrf.token}"> <input type=hidden id="voteNo" value="${voteNo}" />
 									<div align="right" style="vertical-align: middle;">
@@ -290,7 +293,9 @@ td {
 											<ul class="dropdown-menu">
 												<c:choose>
 							                		<c:when test="${voteWriter==sessionScope.userDTO.userNo}">
+							                			<c:if test="${voteState==0}">
 							                    		<li><a href='${pageContext.request.contextPath}/vote/updateForm?voteNo=${voteNo}'>수정하기</a></li>
+							                    		</c:if>
 														<li><a data-toggle="modal" href="#myModal">삭제하기</a></li>
 							                    	</c:when>
 							                    	<c:otherwise>
@@ -303,7 +308,7 @@ td {
 										<p>
 									</div>
 									</span>
-									<div class="well" id="well"><Strong>Q. <span class="ifEndLabel">[종료]</span> ${voteTitle}</Strong><p><font size="1"><span class="ifEndLabelDate"></span> <span class="ifEndLabel">마감</span></font></div>
+									<div class="well" ><Strong id="well">Q. <span class="ifEndLabel">[종료]</span> ${voteTitle}</Strong><p><font size="1"><span class="ifEndLabelDate"></span> <span class="ifEndLabel">마감</span></font></div>
 							<p>
 							<div>
 								<hr>
@@ -352,6 +357,7 @@ td {
 											<span class="glyphicon glyphicon-minus-sign"> </span>투표종료</a>
 										</span>
 									</div>
+									<p><br>
 						</div>
 						</div>
 						</div></div></section>
@@ -359,7 +365,7 @@ td {
 				</div>
 			</div>
 
-			<jsp:include page="footer_ch.jsp" flush="false" />
+			<jsp:include page="/WEB-INF/views/project/footer_ch.jsp" flush="false" />
 		</div>
 	</div>
 	

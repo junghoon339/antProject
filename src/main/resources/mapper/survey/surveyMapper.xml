@@ -126,4 +126,24 @@
 		WHERE project_no=#{_parameter}
 	</update>
 	
+	<select id="selectTotalScore" resultMap="surveyDetailDTOMap">
+		SELECT sd.survey_detail_username, sum(sd.survey_detail_userscore)
+		FROM survey_user su JOIN survey_detail sd
+		ON su.survey_user_no = sd.survey_user_no
+		AND su.survey_no = #{_parameter} group by sd.survey_detail_username ;
+	</select>
+	
+	<select id="selectSurveyUserState0" resultMap="surveyUserDTOMap">
+		SELECT *
+		FROM survey_user
+		WHERE survey_user_state = 0 AND survey_no = #{_parameter}
+	</select>
+	
+	<update id="updateXXX" parameterType="map">
+		UPDATE survey_detail
+		SET survey_detail_userscore = 0;
+		WHERE survey_detail_username = #{userName}
+		AND survey_no = #{surveyNo}
+	</update>
+	
 </mapper>

@@ -175,12 +175,15 @@
                         
                             <div class="header">
                             <div class="col-sm-6">
-                                <h3 class="title">자료실${sessionScope.projectState}</h3>
+                                <h3 class="title">자료실</h3>
                             </div>
 								<div class="col-sm-6" align="right">
+								
+								<c:if test="${sessionScope.projectState==0}">
 								 <div class="icon-container">
                         				<span class="ti-pencil" href="#danger" data-toggle="modal"></span><span class="icon-name" href="#danger" data-toggle="modal"><a href="#">글쓰기</a></span>
                         		</div>
+                        		</c:if>
                             </div>
                            </div>
                             
