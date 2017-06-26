@@ -188,13 +188,6 @@ create sequence seq_timetable_no ;
 
 
 
-CREATE TABLE chat
-(
-   chat_no      NUMBER CONSTRAINT chat_no_pk PRIMARY KEY,
-   project_no   NUMBER CONSTRAINT project_no_fk REFERENCES project(project_no) ON DELETE CASCADE,
-   chat_path   varchar2(500)
-);
-CREATE SEQUENCE seq_chat_no;
 
 
 
