@@ -210,6 +210,7 @@
 										<c:when test="${projectList.size()!=0}">
 											<div style="text-align: center">
 												<ul class="pagination">
+
 													<c:choose>
 														<c:when test="${startPage==1 }">
 
