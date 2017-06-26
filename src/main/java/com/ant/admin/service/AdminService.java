@@ -22,7 +22,7 @@ public interface AdminService {
 	/**
 	 * ȸ������
 	 * */
-	public int userDelete(int userNo);
+	public int userDelete(int userNo) throws Exception;
 	
 	/**
 	 * ������ȸ(������,�Ϸ�)
@@ -47,32 +47,7 @@ public interface AdminService {
 	/**
 	 * ���û���(������, �Ϸ�) 
 	 * */
-	public int projectDelete(int projectNo);
-	
-	/**
-	 * �������� ��ü ��������
-	 * */
-	public List<MessageDTO> receiveMessageSelectAll();
-	
-	/**
-	 * �������� ��ü ��������
-	 * */
-	public List<MessageDTO> sendMessageSelectAll();
-	
-	/**
-	 *��������,�������� �� 
-	 * */
-	public MessageDTO messageDetail(int messageNo);
-	
-	/**
-	 * �����ϱ�(message ���ڵ����)
-	 * */
-	public int messageInsert(MessageDTO messageDTO);
-	
-	/**
-	 * ��������,�������� ����
-	 * */
-	public int messageDelete(int messageNo);
+	public int projectDelete(int projectNo) throws Exception;
 	
 	/**
 	 * 	�������� ���

@@ -35,9 +35,6 @@
 	href="${pageContext.request.contextPath }/resources/css/paper-dashboard.css"
 	rel="stylesheet" />
 
-<%--     <!--  CSS for Demo Purpose, don't include it in your project     -->
-    <link href="${pageContext.request.contextPath }/resources/css/demo.css" rel="stylesheet" />
- --%>
 <!--  Fonts and icons     -->
 <link
 	href="http://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css"
@@ -136,247 +133,214 @@
 </head>
 <body>
 	<div class="wrapper">
-		<jsp:include page="/WEB-INF/views/admin/admin-sidebar_ch.jsp" />
-
+		<jsp:include page="/WEB-INF/views/project/sidebar_ch.jsp" />
 
 		<div class="main-panel">
-			<jsp:include page="/WEB-INF/views/project/header_ch.jsp" flush="false" />
-
-
-
+			<jsp:include page="/WEB-INF/views/project/header_ch.jsp"
+				flush="false" />
 			<div class="content">
 				<div class="container-fluid">
 					<div class="row">
 						<div class="col-md-12">
-						<div class="card">
-						<div class="content table-responsive table-full-width">
-						<div style="text-align: right; margin-right:20px; margin-bottom:35px;">
-							<button type="button" class="btn btn-Info" id="done">완료된프로젝트</button>
-							<button type="button" class="btn btn-Info"
-								id="doing">진행중프로젝트</button>
-						</div>
-							<table id="mytable" class="table table-hover">
+							<div class="card">
+								<div class="content table-responsive table-full-width">
+									<div
+										style="text-align: right; margin-right: 20px; margin-bottom: 35px;">
+										<button type="button" class="btn btn-Info" id="done">완료된프로젝트</button>
+										<button type="button" class="btn btn-Info" id="doing">진행중프로젝트</button>
+									</div>
+									<table id="mytable" class="table table-hover">
 
-								<thead>
+										<thead>
 
-									<th>프로젝트명</th>
-									<th>시작날짜</th>
-									<th>종료날짜</th>
-									<th>과목명</th>
-									<th>프로젝트 상태</th>
-									<th>&nbsp;</th>
+											<th>프로젝트명</th>
+											<th>시작날짜</th>
+											<th>종료날짜</th>
+											<th>과목명</th>
+											<th>프로젝트 상태</th>
+											<th>&nbsp;</th>
 
 
-								</thead>
-								<tbody>
+										</thead>
+										<tbody>
 
+											<c:choose>
+												<c:when test="${projectList.size()!=0 }">
+													<c:forEach items="${projectList}" var="projectDTO">
+														<tr>
+															<td>${projectDTO.projectName }</td>
+															<td>${projectDTO.projectStartdate }</td>
+															<td>${projectDTO.projectEnddate }</td>
+															<td>${projectDTO.projectSubject }</td>
+															<c:choose>
+																<c:when test="${projectDTO.projectState==0 }">
+																	<td>진행중</td>
+																</c:when>
+																<c:otherwise>
+																	<td>완료</td>
+																</c:otherwise>
+															</c:choose>
+															<td><p data-placement="top" data-toggle="tooltip"
+																	title="Delete">
+																	<button class="btn btn-Info" data-title="Delete"
+																		id="deleteBtn" data-toggle="modal"
+																		data-target="#delete" name="${projectDTO.projectNo}"
+																		style="padding: 5px 9px;">
+																		<span class="ti-close"></span>
+																	</button>
+																</p></td>
+														</tr>
+													</c:forEach>
+
+												</c:when>
+												<c:otherwise>
+													<tr>
+														<th colspan="6" style="text-align: center">데이터가 없습니다.<span
+															class="ti-face-sad"></span>
+														</th>
+													</tr>
+												</c:otherwise>
+											</c:choose>
+										</tbody>
+									</table>
 									<c:choose>
-										<c:when test="${projectList.size()!=0 }">
-											<c:forEach items="${projectList}" var="projectDTO">
-												<tr>
-													<td>${projectDTO.projectName }</td>
-													<td>${projectDTO.projectStartdate }</td>
-													<td>${projectDTO.projectEnddate }</td>
-													<td>${projectDTO.projectSubject }</td>
+										<c:when test="${projectList.size()!=0}">
+											<div style="text-align: center">
+												<ul class="pagination">
 													<c:choose>
-														<c:when test="${projectDTO.projectState==0 }">
-															<td>진행중</td>
+														<c:when test="${startPage==1 }">
+
+															<li class="disabled"><a href="#"><div
+																		class="icon-container">
+																		<span class="ti-angle-double-left"></span>
+																	</div>
+																	</span></a></li>
 														</c:when>
 														<c:otherwise>
-															<td>완료</td>
+															<li><a
+																href="${pageContext.request.contextPath }/admin/adminProject?pageNumber=${startPage-pageSu }&projectState=${projectState}&categoryNo=${categoryNo}&searchText=${searchText}"><div
+																		class="icon-container">
+																		<span class="ti-angle-double-left"></span>
+																	</div></a></li>
 														</c:otherwise>
 													</c:choose>
-													<td><p data-placement="top" data-toggle="tooltip"
-															title="Delete">
-															<button class="btn btn-Info" data-title="Delete"
-																id="deleteBtn" data-toggle="modal" data-target="#delete"
-																name="${projectDTO.projectNo}">
-                        											<span class="ti-close"></span>
+													<c:forEach begin="${startPage }" end="${endPage }"
+														var="pageNum" step="1">
+														<li><a
+															href="${pageContext.request.contextPath }/admin/adminProject?pageNumber=${pageNum}&projectState=${projectState}&categoryNo=${categoryNo}&searchText=${searchText}">${pageNum }</a></li>
+													</c:forEach>
+
+													<c:choose>
+														<c:when test="${flag==true }">
+
+															<li class="disabled"><a href="#"><div
+																		class="icon-container">
+																		<span class="ti-angle-double-right"></span>
+																	</div></a></li>
+														</c:when>
+														<c:otherwise>
+															<li><a
+																href="${pageContext.request.contextPath }/admin/adminProject?pageNumber=${startPage+pageSu }&projectState=${projectState}&categoryNo=${categoryNo}&searchText=${searchText}"><div
+																		class="icon-container">
+																		<span class="ti-angle-double-right"></span>
+																	</div></a></li>
+														</c:otherwise>
+													</c:choose>
+
+												</ul>
+											</div>
+										</c:when>
+									</c:choose>
+									<input type="hidden" id="flag" value="${flag }" /> <input
+										type="hidden" id="curPage" value="${curPage }" /> <input
+										type="hidden" id="endPage" value="${endPage }" /> <input
+										type="hidden" id="totalRow" value="${totalRow }" /> <input
+										type="hidden" id="rowCount" value="${rowCount }" /> <input
+										type="hidden" id="projectState" value=${projectState } />
+
+									<div>
+										<c:if test="${projectList.size()!=0}">
+											<!-- 검색 -->
+											<div class="container" style="width: 400px;">
+												<div class="row">
+
+													<div class="input-group">
+														<div class="input-group-btn search-panel">
+
+															<select class="btn btn-Info dropdown-toggle"
+																data-toggle="dropdown" style="width: 90px" id="category">
+																<option value="-1">선택</option>
+																<option value="0">프로젝트명</option>
+																<option value="1">과목명</option>
+															</select>
+														</div>
+
+														<input type="hidden" name="search_param" value="all"
+															id="search_param"> <input type="text"
+															class="form-control" name="x" placeholder="검색어를 입력하세요."
+															id="searchText" style="border: 1px solid #7cb679">
+														<span class="input-group-btn">
+
+															<button class="btn btn-Info" type="button" id="searchBtn">
+
+																<div class="icon-container">
+																	<span class="ti-search"></span>
+																</div>
+
 															</button>
-														</p></td>
-												</tr>
-											</c:forEach>
+														</span>
 
-										</c:when>
-										<c:otherwise>
-												<tr>
-													<th colspan="6" style="text-align: center">
-													데이터가 없습니다.<span class="ti-face-sad"></span>
-                        							</th>
-												</tr>
-										</c:otherwise>
-									</c:choose>
-								</tbody>
-							</table>
-
-
-
-
-
-
-
-
-
-
-
-
-
-					<c:choose>
-						<c:when test="${projectList.size()!=0}">
-							<div style="text-align: center">
-								<ul class="pagination">
-									<c:choose>
-										<c:when test="${startPage==1 }">
-
-											<li class="disabled"><a href="#"><div class="icon-container">
-							                        				<span class="ti-angle-double-left"></span>
-							                        			</div></span></a></li>
-										</c:when>
-										<c:otherwise>
-											<li><a
-												href="${pageContext.request.contextPath }/admin/adminProject?pageNumber=${startPage-pageSu }&projectState=${projectState}&categoryNo=${categoryNo}&searchText=${searchText}"><div class="icon-container">
-							                        				<span class="ti-angle-double-left"></span>
-							                        			</div></a></li>
-										</c:otherwise>
-									</c:choose>
-									<c:forEach begin="${startPage }" end="${endPage }"
-										var="pageNum" step="1">
-										<li ><a
-											href="${pageContext.request.contextPath }/admin/adminProject?pageNumber=${pageNum}&projectState=${projectState}&categoryNo=${categoryNo}&searchText=${searchText}">${pageNum }</a></li>
-									</c:forEach>
-
-									<c:choose>
-										<c:when test="${flag==true }">
-
-											<li class="disabled"><a href="#"><div class="icon-container">
-		                        								<span class="ti-angle-double-right"></span></div></a></li>
-										</c:when>
-										<c:otherwise>
-											<li><a
-												href="${pageContext.request.contextPath }/admin/adminProject?pageNumber=${startPage+pageSu }&projectState=${projectState}&categoryNo=${categoryNo}&searchText=${searchText}"><div class="icon-container">
-		                        								<span class="ti-angle-double-right"></span>
-		                        							</div></a></li>
-										</c:otherwise>
-									</c:choose>
-
-								</ul>
-							</div>
-						</c:when>
-					</c:choose>
-							<input type="hidden" id="flag" value="${flag }" /> <input
-								type="hidden" id="curPage" value="${curPage }" /> <input
-								type="hidden" id="endPage" value="${endPage }" /> <input
-								type="hidden" id="totalRow" value="${totalRow }" /> <input
-								type="hidden" id="rowCount" value="${rowCount }" /> <input
-								type="hidden" id="projectState" value=${projectState } />
-
-
-
-
-
-							<div>
-							
-							
-							<c:if test="${projectList.size()!=0}">
-							 <!-- 검색 -->
-									<div class="container" style="width: 400px;">
-										<div class="row">
-											
-												<div class="input-group">
-													<div class="input-group-btn search-panel">
-														
-														<select class="btn btn-Info dropdown-toggle"
-															data-toggle="dropdown" style="width: 90px" id="category">
-															<option value="-1">선택</option>
-															<option value="0">프로젝트명</option>
-															<option value="1">과목명</option>
-														</select>
 													</div>
-													
-													<input type="hidden" name="search_param" value="all"
-														id="search_param"> <input type="text"
-														class="form-control" name="x" placeholder="검색어를 입력하세요."
-														id="searchText" style="border:1px solid #7cb679"> <span class="input-group-btn">
-														
-														<button class="btn btn-Info" type="button"
-															id="searchBtn">
-															
-															<div class="icon-container">
-                        										<span class="ti-search"></span>
-                        									</div>
-                        									
-														</button>
-													</span>
-												
+
 												</div>
-											
-										</div>
+											</div>
+										</c:if>
 									</div>
-									<!-- 검색 -->
-								</c:if>	
-							
-								<!-- <select class="form-control" id="category">
-									<option value="-1">선택</option>
-									<option value="0">프로젝트명</option>
-									<option value="1">과목명</option>
-								</select>
-								
-								
-								<div class="col-sm-6 col-sm-offset-3">
-									<div id="imaginary_container">
-										<div class="input-group stylish-input-group input-append">
-											<input type="text" class="form-control" id="searchText"
-												placeholder="Search"> <span
-												class="input-group-addon">
-												<button id="searchBtn">
-													<span class="glyphicon glyphicon-search"></span>
-												</button>
-											</span>
-										</div>
-									</div>
-								</div> -->
+								</div><!-- content table-responsive table-full-width -->
+
 							</div>
 						</div>
-						
-						</div>
 					</div>
 				</div>
-			</div>
-			</div>
+			</div> <!-- content -->
+			
 			<div class="modal fade" id="delete" tabindex="-1" role="dialog"
-			aria-labelledby="edit" aria-hidden="true">
-			<div class="modal-dialog">
-				<div class="modal-content">
-					<div class="modal-header">
-						<button type="button" class="close" data-dismiss="modal"
-							aria-hidden="true">
-							<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
-						</button>
-						<h4 class="modal-title custom_align" id="Heading">Delete this
-							entry</h4>
-					</div>
-					<div class="modal-body">
+				aria-labelledby="edit" aria-hidden="true">
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal"
+								aria-hidden="true">
+								<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+							</button>
+							<h4 class="modal-title custom_align" id="Heading">Delete
+								this entry</h4>
+						</div>
+						<div class="modal-body">
 
-						<div class="alert alert-danger">
-							<span class="glyphicon glyphicon-warning-sign"></span> Are you
-							sure you want to delete this Record?
+							<div class="alert alert-danger">
+								<span class="glyphicon glyphicon-warning-sign"></span> Are you
+								sure you want to delete this Record?
+							</div>
+
+						</div>
+						<div class="modal-footer ">
+							<button type="button" class="btn btn-success"
+								data-dismiss="modal" id="deleteYesBtn">
+								<span class="glyphicon glyphicon-ok-sign"></span> Yes
+							</button>
+							<button type="button" class="btn btn-default"
+								data-dismiss="modal">
+								<span class="glyphicon glyphicon-remove"></span> No
+							</button>
 						</div>
 
 					</div>
-					<div class="modal-footer ">
-						<button type="button" class="btn btn-success" data-dismiss="modal" id="deleteYesBtn">
-							<span class="glyphicon glyphicon-ok-sign"></span> Yes
-						</button>
-						<button type="button" class="btn btn-default" data-dismiss="modal">
-							<span class="glyphicon glyphicon-remove"></span> No
-						</button>
-					</div>
-
 				</div>
 			</div>
-		</div>
 
-			<jsp:include page="/WEB-INF/views/project/footer_ch.jsp" flush="false" />
+			<jsp:include page="/WEB-INF/views/project/footer_ch.jsp"
+				flush="false" />
 		</div>
 	</div>
 
@@ -408,6 +372,4 @@
 <script
 	src="${pageContext.request.contextPath }/resources/js/paper-dashboard.js"></script>
 
-<!-- Paper Dashboard DEMO methods, don't include it in your project! -->
-<%-- <script src="${pageContext.request.contextPath }/resources/js/demo.js"></script> --%>
 </html>

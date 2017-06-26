@@ -50,36 +50,6 @@ public class AdminDAOImpl implements AdminDAO {
 	}
 
 	@Override
-	public List<MessageDTO> receiveMessageSelectAll() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public List<MessageDTO> sendMessageSelectAll() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public MessageDTO messageDetail(int messageNo) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public int messageInsert(MessageDTO messageDTO) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public int messageDelete(int messageNo) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
 	public int userTotalCount() {
 		return session.selectOne("mapper.admin.adminMapper.userTotalCount");
 	}
