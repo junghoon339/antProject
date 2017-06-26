@@ -182,7 +182,7 @@
 									<a href="#" id="0" draggable="true"> <!--  <i class="pin"></i> -->
 
 										<blockquote class="note yellow"
-											style="font-size: 17px; width: 180px; height: 120px;">
+											style="font-size: 17px; width: 180px; height: 120px; font-family: 나눔고딕코딩">
 
 											<span id="postitText">메모를 작성해서<br /> 옮겨주세요
 											</span> <cite class="author" style="margin-top: 90px"></cite>
@@ -194,24 +194,24 @@
 							</c:if>
 
 							<div class="album" id="drop_trash" droppable="true"
-								style="float: right; width: 150px; height: 120px">
-								<h2 style="text-align: center; color: #778899">TRASH</h2>
-
+								style="float: right; width: 150px; height: 120px; border-radius: 100px">
+								<!-- <h2 style="text-align: center; color: #778899">TRASH</h2> -->
+								<h2 style="text-align: center; color: #778899"><i class="ti-trash"></i> </h2>
 							</div>
 
 							<div class="albums">
 								<div class="album" id="drop_0" droppable="true"
-									style="border: 3px solid gray;">
-									<h2 style="text-align: center; color: #9ACD32">TO DO</h2>
+									style="border: 3px solid gray; border-radius: 130px;">
+									<h2 style="text-align: center; color: #141514; font-family: 나눔고딕코딩">TO DO</h2>
 
 								</div>
 								<div class="album" id="drop_1" droppable="true"
-									style="border: 3px solid gray;">
-									<h2 style="text-align: center; color: #9ACD32">DOING</h2>
+									style="border: 3px solid gray; border-radius: 130px;">
+									<h2 style="text-align: center; color: #141514; font-family: 나눔고딕코딩">DOING</h2>
 								</div>
 								<div class="album" id="drop_2" droppable="true"
-									style="border: 3px solid gray;">
-									<h2 style="text-align: center; color: #9ACD32">DONE</h2>
+									style="border: 3px solid gray; border-radius: 130px;">
+									<h2 style="text-align: center; color: #141514; font-family: 나눔고딕코딩">DONE</h2>
 								</div>
 							</div>
 							<div style="clear: both"></div>

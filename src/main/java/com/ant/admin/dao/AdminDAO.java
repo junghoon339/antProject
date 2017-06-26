@@ -60,31 +60,6 @@ public interface AdminDAO {
 	public int projectTotalCountBySubject(int projectState,String projectSubject);
 	
 	/**
-	 * �������� ��ü ��������
-	 * */
-	public List<MessageDTO> receiveMessageSelectAll();
-	
-	/**
-	 * �������� ��ü ��������
-	 * */
-	public List<MessageDTO> sendMessageSelectAll();
-	
-	/**
-	 *��������,�������� �� 
-	 * */
-	public MessageDTO messageDetail(int messageNo);
-	
-	/**
-	 * �����ϱ�(message ���ڵ����)
-	 * */
-	public int messageInsert(MessageDTO messageDTO);
-	
-	/**
-	 * ��������,�������� ����
-	 * */
-	public int messageDelete(int messageNo);
-	
-	/**
 	 * 	�������� ���
 	 * */
 	public int insertNotice(NoticeDTO noticeDTO) throws Exception;

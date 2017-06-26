@@ -17,6 +17,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Random;
 import java.util.Set;
 import java.util.TreeMap;
 
@@ -299,13 +300,37 @@ public class ProjectController implements Serializable {
 			map.put(projectCal.getStart_date().substring(11), projectCal.getEvent_name());
 		}
 		
+		//오늘의 명언
+		ArrayList<Map<String, String>> list = new ArrayList<>();
+		String[] arr = {
+				"배움은 우연히 얻어지는 것이 아니라 열성을 다해 갈구하고 부지런히 집중해야 얻을 수 있는 것이다.",
+				"배우기만 하고 생각하지 않으면 얻는 것이 없고, 생각만 하고 배우지 않으면 위태롭다.",
+				"실천이 말보다 낫다.",
+				"학생이 되기를 멈춘 자는 한 번도 학생인 적이 없었던 자이다.",
+				"교육 없는 천재는 광산 속의 은이나 마찬가지이다.",
+				"함께 있는 사람들보다 학식이 높아 보이지 말라. 당신의 학식을 회중시계마냥 주머니 속에 감춰라. 단지 시간을 세기 위해 시계를 꺼내지 말되 누군가가 시간을 물어보면 알려줘라.",
+				"배우고 때로 익히면 또한 기쁘지 아니한가 (學而時習之 不亦說乎 / 학이시습지 불역열호)"
+		};
+		String[] arr2 = {
+				"애비게일 애덤스",
+				"공자",
+				"벤자민 프랭클린",
+				"조르지오 일리스",
+				"벤자민 프랭클린",
+				"체스터필드 경",
+				"공자"
+		};
+		Random ran = new Random();
+		int ranCount= ran.nextInt(7);
+		
 		HttpSession session = req.getSession();
 		session.setAttribute("vote", vote);
 		session.setAttribute("voteDetails", voteDetails);
 		session.setAttribute("totalFileSize", totalFileSize);
 		session.setAttribute("map", map);
 		session.setAttribute("todayDate", new Date().getDate());
-		
+		session.setAttribute("arr1", arr[ranCount]);
+		session.setAttribute("arr2", arr2[ranCount]);
 		return "/project/teamMain_ch";
 	}
 

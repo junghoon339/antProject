@@ -28,19 +28,12 @@ public class TodoServiceImpl implements TodoService {
 	@Override
 	public int todoUpdate(TodoDTO todoDTO) {
 		int result=0;
-		System.out.println("위치여..:"+todoDTO.getTodoLocation());
-		System.out.println("내용이여..:"+todoDTO.getTodoContent());
 		if(todoDTO.getTodoLocation()==-1){
-			System.out.println("안안 내용이여..:"+todoDTO.getTodoContent());
 			result=todoDAO.todoUpdateText(todoDTO);
 		}else{
-			// ��ġ�̵� ������Ʈ
+			// 위치변경
 			result=todoDAO.todoUpdate(todoDTO);
 		}
-		
-		
-		
-		 
 		return result;
 	}
 

@@ -325,6 +325,7 @@ body {
       <div class="main-panel">
          <jsp:include page="header_ch.jsp" flush="false" /> <!-- </nav> -->
         
+        <h2 align="center">TEST 1 TITLE</h2>
          <div class="content" style="padding-top: 20px" align="center">
             <div class="container-fluid">
                <!-- 이곳에 내용작성!!!!!!!!!!!!!!!! -->
@@ -362,27 +363,20 @@ body {
 	           		
 	           		<div class="pricing-option col-lg-6">
 	            			<div class="card-header">
-	            				<h5><span class="ti-light-bulb"/> 알림현황</h5>
+	            				<h5><span class="ti-light-bulb"/> 오늘의 명언</h5>
 	            			</div>
 	            			<div class="card-body">
 	              				<!-- 내용을 넣을 공간 -->
-	              				
+	              				<hr>
+	              				${arr1}<br><br>
+	              				${arr2}
 	              			</div>
 				            <div class="card-footer">
 	              				<h6 align="right"><a href="#" style="color: #00e0d9">detail</a></span></h6>
 	              			</div>
 	           		</div>
 	           		<div class="pricing-option col-lg-6">
-	            			<div class="card-header">
-	            				<h5><span class="ti-alarm-clock"/> 오늘자 접속현황</h5>
-	            			</div>
-	            			<div class="card-body">
-	              				<!-- 내용을 넣을 공간 -->
-	              				
-	              			</div>
-	            			<div class="card-footer">
-	              				<h6 align="right"><a href="#" style="color: #00e0d9">detail</a></span></h6>
-	              			</div>
+	           				<img height="200px" src="${pageContext.request.contextPath}/resources/img/wanted.png"/>
 	           		</div>
 	          	</div>
 	          	<br>
@@ -635,16 +629,6 @@ body {
 		$("time.timeago").timeago();
 	}
 
-</script>
-<script>
-<!-- add script -->
-$(function(){
-	$(".pricing-option").mouseover(function(){
-		$(this).click(function){
-			
-		}
-	})
-})
 </script>
 </body>
 </html>
