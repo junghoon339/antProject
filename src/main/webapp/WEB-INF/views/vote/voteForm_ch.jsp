@@ -183,7 +183,7 @@ td {
 											</c:choose>명 참여</td>
 											<td id="attribute">
 											<c:choose>
-														<c:when test="${doneList	.state==false}">미참여</c:when>
+														<c:when test="${doneList.state==false}">미참여</c:when>
 														<c:otherwise>참여완료</c:otherwise>
 											</c:choose>
 											</td>

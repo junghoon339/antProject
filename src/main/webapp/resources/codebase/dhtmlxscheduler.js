@@ -2246,9 +2246,6 @@ scheduler.addEventNow=function(start,end,e){
 	base.start_date = base.start_date||start_date;
 	base.end_date =  base.end_date||end_date;
 	
-	alert("base.text:" + base.text)
-	alert("this.locale.labels.new_event:" + this.locale.labels.new_event)
-	
 	
 	base.text =  base.text || this.locale.labels.new_event;
 	base.id = this._drag_id = this.uid();

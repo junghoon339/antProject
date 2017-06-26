@@ -110,20 +110,22 @@ $(function() {
 					<div class="row">
 						
 						<!-- 이곳에 내용작성!!!!!!!!!!!!!!!! -->
-						<section>
 						<div class="container">
 							<div class="row">
 							<div class="col-md-11">
-							<div class="card" style="padding-left : 20px;padding-right: 20px;">
-							<%@include file="header.jsp"%>
+							<div class="card" style="padding-left : 20px;padding-right: 20px; width:836.578px;">
+						<section>
+							
 									<div class="form-group" style="padding: 12px;">
 										<form action="${pageContext.request.contextPath}/vote/Create" id="createForm" method="post">
 											<input type=hidden id="securityInfo" name="${_csrf.parameterName}" value="${_csrf.token}">
 											<input type="hidden" name="projectUserNo" value="1" />
 											<input type="hidden" name="userNo" value="${sessionScope.userDTO.userNo}" />
 											<input type="hidden" name="projectNo" value="${sessionScope.projectNo}" />
-											<font size="4">투표 제목</font><p>
+											<br><p>
+											<font size="4">투표 제목</font>
 											<input type="text" class="form-control" name="voteTitle" value="" placeholder="제목을 입력하세요." /><p>
+											<br>
 											<font size="4">항목 입력</font></p>
 											<div id="addArticle"><p>
 												<input type="text" class="form-control" name="chk" placeholder="항목을 입력하세요." /><p>
@@ -134,12 +136,13 @@ $(function() {
 												<span class="glyphicon glyphicon-plus"></span> 
 											</a> 
 											<font size="2" color="#b5bab8">항목 추가</font><br><br>
-											<font size="4">마감시간 설정</font><p>
+											<p><font size="4">마감시간 설정</font>
 											<input type="checkbox" id="dateCheck"> <input type="text" id="datepicker" name="voteEndDate" disabled="disabled"><br><p>
 											<br><font size="4">기타옵션</font><p>
 											<input type="checkbox" name="" /> 복수선택<p>
 											<input type="checkbox" name="" /> 익명투표<p>
 											<input type="checkbox" name="" /> 선택항목 추가 허용<p>
+										
 											<br><br>
 											<a href="#" class="btn btn-lg btn-warning" id="insert">등록</a> 
 											<a href="${pageContext.request.contextPath}/vote/" class="btn btn-lg btn-danger" id="cancel">취소</a>
@@ -147,7 +150,8 @@ $(function() {
 									</div>
 							</div>
 							</div>
-						</div></div></section>
+							</section>
+						</div></div>
 					</div>
 				</div>
 			</div>
