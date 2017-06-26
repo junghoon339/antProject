@@ -491,7 +491,7 @@ body {
    var e = Math.floor(Math.log(bytes)/Math.log(1024));
   
    if(e == "-Infinity"){
-	   $("#size").text("0 "+s[0]);
+	   $("#size").text("0");
 	   $("#byte").text(" "+s[0]);
    }
    else{
