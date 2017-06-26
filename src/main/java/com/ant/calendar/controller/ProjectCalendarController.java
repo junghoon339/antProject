@@ -24,7 +24,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.ant.calendar.dto.ProjectCalendarDTO;
 import com.ant.calendar.service.ProjectCalendarService;
-import com.ant.calendar.service.UserCalendarService;
 import com.ant.project.dto.ProjectDTO;
 import com.ant.project.service.ProjectService;
 import com.ant.user.dto.UserDTO;
@@ -150,6 +149,7 @@ public class ProjectCalendarController implements Serializable {
 		planner.config.setMonthDate("%Y년 %M월");
 		planner.config.setDefaultDate("%Y년%M월 %j일");
 		planner.config.setDayDate("%D");
+		System.out.println();
 
 		CsrfToken token = (CsrfToken) req.getAttribute(CsrfToken.class.getName());
 		System.out.println("token:" + token);
