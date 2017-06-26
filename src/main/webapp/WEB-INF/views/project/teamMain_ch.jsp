@@ -195,7 +195,6 @@
 body {
   font-family: "Josefin Sans", sans-serif;
   line-height: 1;
-  padding: 20px;
   height: 100%;
   background: #eee;
 }
@@ -326,7 +325,6 @@ body {
       <div class="main-panel">
          <jsp:include page="header_ch.jsp" flush="false" /> <!-- </nav> -->
         
-        <h2 align="center">TEST 1 TITLE</h2>
          <div class="content" style="padding-top: 20px" align="center">
             <div class="container-fluid">
                <!-- 이곳에 내용작성!!!!!!!!!!!!!!!! -->
