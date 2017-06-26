@@ -328,9 +328,9 @@ public class ProjectController implements Serializable {
 		int userNo = userDTO.getUserNo();
 
 		List<Integer> invitedUserNolist = null;
-		
+
 		// 초대할 회원들이 존재한다면
-		if (invitedUser.length!=0) {
+		if (invitedUser.length != 0) {
 			// 조별과제방에 초대된 회원들의 id invitedUser배열을 list로 변환
 			List<String> invitedUserIdList = new ArrayList<>();
 			Collections.addAll(invitedUserIdList, invitedUser);
