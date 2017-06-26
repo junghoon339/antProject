@@ -397,7 +397,7 @@ body {
 					                </div>
 					                <div class="panel-body text-center">                        
 											<c:forEach items="${map}" var="map" varStatus="status">
-				              					<c:if test="${status.count<3}">
+				              					<c:if test="${status.count<3 && status.count>1}">
 				              						<font style="font-size: small;">${map.key} ${map.value}</font><br>
 				              					</c:if>
 				              					<c:if test="${status.count==3}">
