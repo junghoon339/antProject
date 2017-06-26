@@ -13,4 +13,6 @@ public interface ProjectCalendarService {
 	void insertEvent(ProjectCalendarDTO schedule);
 
 	void deleteEvent(Integer id);
+	
+	public List<ProjectCalendarDTO> selectNowCalVal(int projectNo);
 }

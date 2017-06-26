@@ -57,4 +57,9 @@ public class ProjectCalendarDAOImpl implements ProjectCalendarDAO {
 		sqlSession.delete("projectCalendarMapper.deleteEvent", id);
 	}
 
+	@Override
+	public List<ProjectCalendarDTO> selectNowCalVal(int projectNo) {
+		return sqlSession.selectList("projectCalendarMapper.selectNowCalVal", projectNo);
+	}
+
 }

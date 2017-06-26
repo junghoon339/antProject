@@ -56,6 +56,13 @@
 	DELETE FROM project_calendar WHERE event_id=#{event_id}
 </delete>
 
-
+<select id="selectNowCalVal" parameterType="int" resultMap="projectCalender">
+select project_no,user_no,event_name,start_date,end_date
+from project_calendar
+where project_no= #{_parameter} 
+and sysdate between start_date and end_date 
+or project_no= #{_parameter} 
+and to_date(sysdate, 'yyyy-mm-ss') = to_date(start_date, 'yyyy-mm-ss')
+</select>
 
 </mapper>

@@ -177,8 +177,9 @@
 @media only screen and (max-width: 990px){
     .progress{ margin-bottom: 20px; }
 }
-.card{
+.pricing-option{
 	height: 240px;
+	
 	padding: 10px;
 }
 .card-header{
@@ -189,6 +190,133 @@
 }
 .card-footer{
 	height: 15%;
+}
+
+@import url(https://fonts.googleapis.com/css?family=Josefin+Sans:400,300,300italic,400italic,600,700,600italic,700italic);
+body {
+  font-family: "Josefin Sans", sans-serif;
+  line-height: 1;
+  padding: 20px;
+  height: 100%;
+  background: #eee;
+}
+
+.demo-title {
+  font-size: 3rem;
+  margin-bottom: 50px;
+}
+
+.pricing-table {
+  display: table;
+  width: 100%;
+}
+.pricing-table .pricing-option {
+  width: 28%;
+  background: white;
+  float: left;
+  padding: 2%;
+  -webkit-transition: all .3s ease-in-out;
+  transition: all .3s ease-in-out;
+}
+.pricing-table .pricing-option:nth-child(even) {
+  margin: 0 2%;
+}
+.pricing-table .pricing-option:hover {
+  cursor: pointer;
+  box-shadow: 0px 2px 30px rgba(0, 0, 0, 0.3);
+  -webkit-transform: scale(1.04);
+          transform: scale(1.04);
+}
+.pricing-table .pricing-option:hover i, .pricing-table .pricing-option:hover h1, .pricing-table .pricing-option:hover span, .pricing-table .pricing-option:hover b {
+  color: #F85E6A;
+}
+.pricing-table .pricing-option:hover .front {
+  opacity: 0;
+  visibility: hidden;
+}
+.pricing-table .pricing-option:hover .back {
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+.pricing-table .pricing-option:hover .back a.button {
+  -webkit-transform: translateY(0px) !important;
+          transform: translateY(0px) !important;
+}
+.pricing-table .pricing-option hr {
+  border: none;
+  border-bottom: 1px solid #F0F0F0;
+}
+.pricing-table .pricing-option i {
+  font-size: 3rem;
+  color: #D8D8D8;
+  -webkit-transition: all .3s ease-in-out;
+  transition: all .3s ease-in-out;
+}
+.pricing-table .pricing-option h1 {
+  margin: 10px 0;
+  color: #212121;
+  -webkit-transition: all .3s ease-in-out;
+  transition: all .3s ease-in-out;
+}
+.pricing-table .pricing-option p {
+  color: #999;
+  padding: 0 10px;
+  line-height: 1.3;
+}
+.pricing-table .pricing-option .price {
+  position: relative;
+}
+.pricing-table .pricing-option .price .front span.price {
+  font-size: 2rem;
+  text-transform: uppercase;
+  margin-top: 20px;
+  display: block;
+  font-weight: 700;
+  position: relative;
+}
+.pricing-table .pricing-option .price .front span.price b {
+  position: absolute;
+  font-size: 1rem;
+  margin-left: 2px;
+  font-weight: 600;
+}
+.pricing-table .pricing-option .price .back {
+  opacity: 0;
+  visibility: hidden;
+  -webkit-transition: all .3s ease-in-out;
+  transition: all .3s ease-in-out;
+}
+.pricing-table .pricing-option .price .back a.button {
+  background: #F85E6A;
+  padding: 15px 20px;
+  display: inline-block;
+  text-decoration: none;
+  color: white;
+  position: absolute;
+  font-size: 13px;
+  top: -5px;
+  left: 0;
+  right: 0;
+  width: 150px;
+  margin: auto;
+  text-transform: uppercase;
+  -webkit-transform: translateY(20px);
+          transform: translateY(20px);
+  -webkit-transition: all .3s ease-in-out;
+  transition: all .3s ease-in-out;
+}
+.pricing-table .pricing-option .price .back a.button:hover {
+  background: #f62d3d;
+}
+
+@media screen and (max-width: 600px) {
+  .pricing-table .pricing-option {
+    padding: 5%;
+    width: 90%;
+  }
+  .pricing-table .pricing-option:nth-child(even) {
+    margin: 30px 0 !important;
+  }
 }
  </style>
    <!-- 스크립트는 body 맨 아래쪽에 -->
@@ -207,9 +335,15 @@
                   작성할때 template.html 에서
                   <div class="row">부터 참고하면서 작성하면 됨
                -->
-               	<div class="row">
-               		<div class=col-lg-4>
-	            		<div class="card">
+				
+				<!-- <span class="pricing-table">
+				<span class="pricing-option">
+			        d
+			    </span>
+			    </span> -->
+			    
+               	<div class="pricing-table row">
+               		<div class="pricing-option col-lg-6">
 	            			<div class="card-header">
 	            				<h5><span class="ti-time"> 조별과제 남은 일정</h5>
 	            			</div>
@@ -227,10 +361,9 @@
 				            <div class="card-footer">
 	              			<h6 align="right"><a href="#" style="color: #00e0d9">detail</a></span></h6>
 	              			</div>
-	              		</div>
 	           		</div>
-	           		<div class=col-lg-4>
-	            		<div class="card">
+	           		
+	           		<div class="pricing-option col-lg-6">
 	            			<div class="card-header">
 	            				<h5><span class="ti-light-bulb"/> 알림현황</h5>
 	            			</div>
@@ -241,10 +374,8 @@
 				            <div class="card-footer">
 	              				<h6 align="right"><a href="#" style="color: #00e0d9">detail</a></span></h6>
 	              			</div>
-	              		</div>
 	           		</div>
-	           		<div class=col-lg-4>
-	            		<div class="card">
+	           		<div class="pricing-option col-lg-6">
 	            			<div class="card-header">
 	            				<h5><span class="ti-alarm-clock"/> 오늘자 접속현황</h5>
 	            			</div>
@@ -255,51 +386,79 @@
 	            			<div class="card-footer">
 	              				<h6 align="right"><a href="#" style="color: #00e0d9">detail</a></span></h6>
 	              			</div>
-	              		</div>
 	           		</div>
 	          	</div>
-	            <div class="row">
-               		<div class=col-lg-4>
-	            		<div class="card">
+	          	<br>
+	            <div class="pricing-table row">
+               		<div class="pricing-option col-lg-6">
 	            			<div class="card-header">
 	            				<h5><span class="ti-calendar"/> 오늘의 계획</h5>
 	            			</div>
 	              			<div class="card-body">
 	              				<!-- 내용을 넣을 공간 -->
-	              				
+	              				<div class="panel status panel-success" style="margin-top: 5px">
+					                <div class="panel-heading">
+					                    <h1 class="panel-title text-center">${todayDate}</h1>
+					                </div>
+					                <div class="panel-body text-center">                        
+					                    <strong>
+											<c:forEach items="${map}" var="map" varStatus="status">
+				              					<c:if test="${status.count<3}">
+				              						${map.key} ${map.value}<br>
+				              					</c:if>
+				              					<c:if test="${status.count==3}">
+				              						:<br>
+				              					</c:if>
+				              				</c:forEach>
+										</strong>
+					                </div>
+					            </div>
 	              			</div>
 	              			<div class="card-footer">
 	              				<h6 align="right"><a href="#" style="color: #00e0d9">detail</a></span></h6>
 	              			</div>
-	              		</div>
 	           		</div>
-	           		<div class=col-lg-4>
-	            		<div class="card">
+	           		<div class="pricing-option col-lg-6">
 	            			<div class="card-header">
 	            				<h5><span class="ti-menu-alt"/> 최신 투표항목</h5>
 	            			</div>
 	            			<div class="card-body">
+	            				<div class="col-lg-11" style="margin-left: 15px">
+	            				<div class="card" style="height: 125px">
 	              				<!-- 내용을 넣을 공간 -->
-	              				<div class="well" ><Strong id="well">Q. <span class="ifEndLabel">[종료]</span> ${vote.voteTitle}</Strong><p><font size="1"><span class="ifEndLabelDate"></span> <span class="ifEndLabel">마감</span></font></div>
+	              				<div class="well"  style="height: 40px;margin-bottom: 5px; padding:10px; vertical-align: middle;"><Strong id="well" style="vertical-align: middle;">Q. ${vote.voteTitle}</Strong></div>
+	              				<div>
+	              					<c:forEach items="${voteDetails}" var="voteDetail" varStatus="status">
+	              						<c:if test="${status.count<4}">
+	              						<font style="font-size: small;vertical-align: middle;"><span class="ti-control-record"/>　${voteDetail.voteDetailColumn}</font><br>
+	              						</c:if>
+	              					</c:forEach>
+	              				</div>
+	              				</div>
+	              				</div>
 	              			</div>
 	              			<div class="card-footer">
 	              				<h6 align="right"><a href="#" style="color: #00e0d9">detail</a></span></h6>
 	              			</div>
-	              		</div>
 	           		</div>
-	           		<div class=col-lg-4>
-	            		<div class="card">
+	           		<div class="pricing-option col-lg-6">
 	            			<div class="card-header">
-	              				<h5><span class="ti-save"/> 자료실 자료 갯수</h5>
+	              				<h5><span class="ti-save"/> 자료실 수용량</h5>
 	              			</div>
 	              			<div class="card-body">
+	              			<div class="col-lg-11" style="margin-left: 15px">
 	              				<!-- 내용을 넣을 공간 -->
-	              				150GBss
+	              				<table>
+	              					<tr>
+	              						<td width="35%"><div style="color:#b4aba2;width: 100%;height: 60px;"><h1 align="center"><sapn class="ti-server"/></h1></div></td>
+	              						<td width="65%" valign="bottom" align="right"><font style="font-size: xx-large;color: #5c4cf0">${totalFileSize}</font><font style="font-size: medium;color: #ecb14b ">Byte</font></td>
+	              					</tr>
+	              				</table>
+	              			</div>
 	              			</div>
 	              			<div class="card-footer">
 	              				<h6 align="right"><a href="#" style="color: #00e0d9">detail</a></span></h6>
 	              			</div>
-	              		</div>
 	           		</div>
 	          	</div>
               
@@ -479,48 +638,11 @@
 </script>
 <script>
 <!-- add script -->
-/* $(function(){
-	alert(1);
-	
-	$.ajax({
-		url : "${pageContext.request.contextPath}/vote/Detail/Initialized",
-		type : "post",
-		dataType : "json",
-		data : $("#securityInfo").attr("name")+"="+$("#securityInfo").val() , // $("#voteNo").val()
-		success : function(result) {
-			if(result!='0'){
-				alert("투표가 마감되었습니다.");
-			}
-			$(".ifEnd").hide();
-			$(".ifEndLabel").show();
-			$(".ifEndLabelDate").html(dateToYYYYMMDD(new Date()));
-			console.log("라디오클래스 접근");
-			$(".regular-radio").each(function(index,item){
-				console.log(index+","+item);
-				$(item).hide();
-			})
-			console.log("well아이디 접근");
-			$("#well").css("color", "gray");
-		},
-		error : function(err) {
-			alert("ERROR010 : " + err);
-		}
-	});
-	
-	$(".ifEndLabel").hide();
-	
-	if(${vote.voteState}>1){
-		$("#well").css("color", "gray");
-		$(".ifEnd").hide();
-		$(".ifEndLabel").show();
-		$(".ifEndLabelDate").html("${voteEndDate}");
-		$(".regular-radio").each(function(index,item){
-			console.log(index+","+item);
-			$(item).hide();
-		})
-	}
+$(function(){
+	$(".card").mouseover(function(){
+		//$(this).css("border", "2px red solid");
+	})
 })
- */
 </script>
 </body>
 </html>

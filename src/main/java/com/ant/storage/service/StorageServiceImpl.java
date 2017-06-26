@@ -31,7 +31,7 @@ public class StorageServiceImpl implements StorageService {
 		if(state){
 			int result = dao.readNumUpdate(storageNo);
 			if(result==0){
-				throw new Exception("Á¶È¸¼ö ¿À·ùÀÔ´Ï´Ù.");
+				throw new Exception("ï¿½ï¿½È¸ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ô´Ï´ï¿½.");
 			}
 		}
 		StorageDTO dto = dao.selectByStorageNum(storageNo);
@@ -42,7 +42,7 @@ public class StorageServiceImpl implements StorageService {
 	public int insert(StorageDTO storageDTO) throws Exception{
 		int result = dao.insert(storageDTO);
 		if(result==0){
-			throw new Exception("ÀÔ·ÂµÇÁö ¾Ê¾Ò½À´Ï´Ù.");
+			throw new Exception("ï¿½Ô·Âµï¿½ï¿½ï¿½ ï¿½Ê¾Ò½ï¿½ï¿½Ï´ï¿½.");
 		}
 		return result;
 	}
@@ -51,7 +51,7 @@ public class StorageServiceImpl implements StorageService {
 	public int delete(int storageNo, int userNo) throws Exception{
 		int result = dao.delete(storageNo, userNo);
 		if(result==0){
-			throw new Exception("»èÁ¦µÇÁö ¾Ê¾Ò½À´Ï´Ù.");
+			throw new Exception("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ê¾Ò½ï¿½ï¿½Ï´ï¿½.");
 		}
 		return result;
 	}
@@ -67,7 +67,7 @@ public class StorageServiceImpl implements StorageService {
 	public int update(StorageDTO storageDTO) throws Exception {
 			int result = dao.update(storageDTO);
 			if(result==0){
-				throw new Exception("¼öÁ¤µÇÁö ¾Ê¾Ò½À´Ï´Ù.");
+				throw new Exception("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ê¾Ò½ï¿½ï¿½Ï´ï¿½.");
 			}
 		return 0;
 	}
@@ -91,12 +91,17 @@ public class StorageServiceImpl implements StorageService {
 	@Override
 	public int totalCountBySearch(int categoryNo, String searchText, int projectNo) {
 		int result = 0;
-		if(categoryNo==0){//ÀÌ¸§À¸·Î °Ë»ö
+		if(categoryNo==0){//ï¿½Ì¸ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ë»ï¿½
 			 result = dao.totalCountByName(searchText,projectNo);
 		}else{
 			result = dao.totalCountByTitle(searchText,projectNo);
 		}
 		return result;
+	}
+
+	@Override
+	public int selectFileSizeAll(int projectNo) {
+		return dao.selectFileSizeAll(projectNo);
 	}
 
 }
