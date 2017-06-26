@@ -137,7 +137,7 @@
                         					 
                         					 
                         					 
-                        					 
+       <c:if test="${sessionScope.projectState==0}"> 
       <ul class="nav navbar-nav" style="float:right">
         <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="ti-settings"></span></a>
@@ -147,7 +147,7 @@
           </ul>
         </li>
       </ul>          					 
-                        					 
+       </c:if>                 					 
                         					 
                         					 
                         					 <!-- <span class="ti-marker-alt" href="#danger" data-toggle="modal"></span><span class="icon-name" href="#danger" data-toggle="modal"><a href="#"></a></span> -->
