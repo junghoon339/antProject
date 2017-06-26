@@ -24,7 +24,7 @@ DROP TABLE ant_user CASCADE CONSTRAINTS;
 
 alter session set nls_language='AMERICAN';
 
-
+commit
 
 select * from tab;
 
