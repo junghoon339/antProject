@@ -2,6 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="security" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -169,11 +170,11 @@ body{
 										<a class="btn btn-danger" href="#danger" data-toggle="modal">공지등록</a>
 								</div> -->
 								<div class="col-sm-6" align="right">
-								<c:if test="${sessionScope.userDTO.userNo==27}"> 								
+								<security:authorize access="hasRole('ROLE_ADMIN')">
 								 <div class="icon-container">
                         				<span class="ti-pencil" href="#danger" data-toggle="modal"></span><span class="icon-name" href="#danger" data-toggle="modal"><a href="#">공지등록</a></span>
                         		</div>
-                            	</c:if>
+                        		</security:authorize>
                             </div>
                             
                             <div class="header">

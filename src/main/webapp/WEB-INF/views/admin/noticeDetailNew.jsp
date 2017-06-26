@@ -2,6 +2,8 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="security" %>
+
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -121,14 +123,14 @@
 		                        		</div>
 	                        		</h5>
 								</div>
-								<c:if test="${sessionScope.userDTO.userNo==27}">
+								<security:authorize access="hasRole('ROLE_ADMIN')">
 								<div align="right" >
 										<h3>
                         					<a href="${pageContext.request.contextPath}/user/delete/${noticeDTO.noticeNo}"><span class="ti-trash"></span></a>
                         					<a href="#"><span class="ti-pencil" href="#danger" data-toggle="modal"></span><span class="icon-name" href="#danger" data-toggle="modal"></a>
                         				</h3> 
 								</div>
-								</c:if>
+								</security:authorize>
 										<form id="submitForm" method="post" action="">
 											<input type="hidden" id="securityInfo" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 											<input type="hidden" id="noticeNo" name="noticeNo" value="${noticeDTO.noticeNo}">  
