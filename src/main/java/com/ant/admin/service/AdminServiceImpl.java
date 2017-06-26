@@ -25,11 +25,11 @@ public class AdminServiceImpl implements AdminService {
 	}
 
 	@Override
-	public int userDelete(int userNo) {
+	public int userDelete(int userNo) throws Exception {
 		
 		int result=adminDAO.userDelete(userNo);
 		if(result==0){
-			//�����߻�!! ����������!
+			throw new Exception("삭제실패");
 		}
 		return result;
 	}
@@ -41,43 +41,13 @@ public class AdminServiceImpl implements AdminService {
 	}
 
 	@Override
-	public int projectDelete(int projectNo) {
+	public int projectDelete(int projectNo) throws Exception  {
 		// TODO Auto-generated method stub
 		int result=adminDAO.projectDelete(projectNo);
 		if(result==0){
-			//�����߻�! ����������!
+			throw new Exception("삭제실패");
 		}
 		return result;
-	}
-
-	@Override
-	public List<MessageDTO> receiveMessageSelectAll() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public List<MessageDTO> sendMessageSelectAll() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public MessageDTO messageDetail(int messageNo) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public int messageInsert(MessageDTO messageDTO) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public int messageDelete(int messageNo) {
-		// TODO Auto-generated method stub
-		return 0;
 	}
 
 	@Override

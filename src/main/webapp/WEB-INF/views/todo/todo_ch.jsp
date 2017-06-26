@@ -35,9 +35,6 @@
 	href="${pageContext.request.contextPath }/resources/css/paper-dashboard.css"
 	rel="stylesheet" />
 
-<%--     <!--  CSS for Demo Purpose, don't include it in your project     -->
-    <link href="${pageContext.request.contextPath }/resources/css/demo.css" rel="stylesheet" />
- --%>
 <!--  Fonts and icons     -->
 <link
 	href="http://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css"
@@ -82,8 +79,7 @@
 													+ $("#securityInfo").val(),
 											dataType : "json",
 											success : function(re) {
-												//re.userNo == 현재 userNo같으면! else{alert('메모변경은 메모를 등록한사람만 가능합니다.')}
-												if ("${sessionScope.userDTO.userNo}" == re.userNo) {
+												if ("${sessionScope.userDTO.userNo}" == re.userNo) { //포스트잇 올린사람만 변동가능
 													if (re != null) {
 														var updateVal = prompt(
 																"포스트잇에 적을 내용을 입력해주세요",
@@ -133,25 +129,9 @@
 												alert("에러발생 : " + err);
 											}
 										});
-								//content와 사용자no도 불러올것!
 							}
-
-							//id에 p가 붙어있는지 확인한다->해당 값을 불러온다-> 다르면 바꿔준다. ->수정되면 todoSelectAll() 불러온다. 끝. 
-
 						});
-		/* $("#postit").click(function(){
-		   
-		}); */
 		
-		/* if("${sessionScope.projectState}"!="0"){
-			alert("aa");
-			$(".album").each(function(){
-				$(this).disabled=true;
-				
-				//alert($(this).attr("droppable"));
-			});
-		} */
- 
 	});
 
 	var url = "${pageContext.request.contextPath}";
@@ -177,43 +157,68 @@
 						<div class="card">
 
 							<c:if test="${sessionScope.projectState==0 }">
+							<!-- 포스트잇 -->
 								<div id="gallery" class="gallery" style="display: inline;">
 									<!-- <div class="quote-container"> -->
-									<a href="#" id="0" draggable="true"> <!--  <i class="pin"></i> -->
-
+									<a href="#" id="0" draggable="true"> 
 										<blockquote class="note yellow"
 											style="font-size: 17px; width: 180px; height: 120px;">
-
 											<span id="postitText">메모를 작성해서<br /> 옮겨주세요
 											</span> <cite class="author" style="margin-top: 90px"></cite>
-
 										</blockquote>
-
 									</a>
 								</div>
 							</c:if>
 
-							<div class="album" id="drop_trash" droppable="true"
-								style="float: right; width: 150px; height: 120px">
-								<h2 style="text-align: center; color: #778899">TRASH</h2>
+							<c:choose>
+								<c:when test="${sessionScope.projectState==0 }">
+									<div class="album" id="drop_trash" droppable="true"
+										style="float: right; width: 150px; height: 120px">
+										<h2 style="text-align: center; color: #778899">TRASH</h2>
 
-							</div>
+									</div>
 
-							<div class="albums">
-								<div class="album" id="drop_0" droppable="true"
-									style="border: 3px solid gray;">
-									<h2 style="text-align: center; color: #9ACD32">TO DO</h2>
+									<div class="albums">
+										<div class="album" id="drop_0" droppable="true"
+											style="border: 3px solid gray;">
+											<h2 style="text-align: center; color: #9ACD32">TO DO</h2>
 
-								</div>
-								<div class="album" id="drop_1" droppable="true"
-									style="border: 3px solid gray;">
-									<h2 style="text-align: center; color: #9ACD32">DOING</h2>
-								</div>
-								<div class="album" id="drop_2" droppable="true"
-									style="border: 3px solid gray;">
-									<h2 style="text-align: center; color: #9ACD32">DONE</h2>
-								</div>
-							</div>
+										</div>
+										<div class="album" id="drop_1" droppable="true"
+											style="border: 3px solid gray;">
+											<h2 style="text-align: center; color: #9ACD32">DOING</h2>
+										</div>
+										<div class="album" id="drop_2" droppable="true"
+											style="border: 3px solid gray;">
+											<h2 style="text-align: center; color: #9ACD32">DONE</h2>
+										</div>
+									</div>
+								</c:when>
+								<c:otherwise><!-- proejct종료시 비활성화처리 -->
+									<div class="album" id="drop_trash" droppable="false"
+										style="float: right; width: 150px; height: 120px">
+										<h2 style="text-align: center; color: #778899">TRASH</h2>
+
+									</div>
+
+									<div class="albums">
+										<div class="album" id="drop_0" droppable="false"
+											style="border: 3px solid gray;">
+											<h2 style="text-align: center; color: #9ACD32">TO DO</h2>
+
+										</div>
+										<div class="album" id="drop_1" droppable="false"
+											style="border: 3px solid gray;">
+											<h2 style="text-align: center; color: #9ACD32">DOING</h2>
+										</div>
+										<div class="album" id="drop_2" droppable="false"
+											style="border: 3px solid gray;">
+											<h2 style="text-align: center; color: #9ACD32">DONE</h2>
+										</div>
+									</div>
+								</c:otherwise>
+							</c:choose>
+
 							<div style="clear: both"></div>
 						</div>
 						<form id="todoForm" method=post action="">
@@ -245,9 +250,6 @@
 
 <!--   Core JS Files   -->
 <script
-	src="${pageContext.request.contextPath }/resources/js/jquery-1.10.2.js"
-	type="text/javascript"></script>
-<script
 	src="${pageContext.request.contextPath }/resources/js/bootstrap.min.js"
 	type="text/javascript"></script>
 
@@ -263,11 +265,8 @@
 <script
 	src="${pageContext.request.contextPath }/resources/js/bootstrap-notify.js"></script>
 
-
 <!-- Paper Dashboard Core javascript and methods for Demo purpose -->
 <script
 	src="${pageContext.request.contextPath }/resources/js/paper-dashboard.js"></script>
 
-<!-- Paper Dashboard DEMO methods, don't include it in your project! -->
-<%-- <script src="${pageContext.request.contextPath }/resources/js/demo.js"></script> --%>
 </html>

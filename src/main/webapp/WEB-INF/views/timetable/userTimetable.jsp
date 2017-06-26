@@ -38,6 +38,7 @@
       ga('send', 'pageview');
 	  
       var commonUrl="${pageContext.request.contextPath}";
+      var userNo = "${sessionScope.userDTO.userNo }";
     </script>
     <style type="text/css">
     

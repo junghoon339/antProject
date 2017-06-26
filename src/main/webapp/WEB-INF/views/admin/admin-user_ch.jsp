@@ -29,7 +29,6 @@
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
 
-
 <!-- Animation library for notifications   -->
 <link
 	href="${pageContext.request.contextPath }/resources/css/animate.min.css"
@@ -39,10 +38,6 @@
 <link
 	href="${pageContext.request.contextPath }/resources/css/paper-dashboard.css"
 	rel="stylesheet" />
-
-<%--     <!--  CSS for Demo Purpose, don't include it in your project     -->
-    <link href="${pageContext.request.contextPath }/resources/css/demo.css" rel="stylesheet" />
- --%>
 <!--  Fonts and icons     -->
 <link
 	href="http://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css"
@@ -54,204 +49,219 @@
 	rel="stylesheet">
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 <script type="text/javascript">
-	$(document).ready(function() {
-		$("#mytable #checkall").click(function() {
-			if ($("#mytable #checkall").is(':checked')) {
-				$("#mytable input[type=checkbox]").each(function() {
-					$(this).prop("checked", true);
-				});
+	$(document)
+			.ready(
+					function() {
+						$("#mytable #checkall")
+								.click(
+										function() {
+											if ($("#mytable #checkall").is(
+													':checked')) {
+												$(
+														"#mytable input[type=checkbox]")
+														.each(
+																function() {
+																	$(this)
+																			.prop(
+																					"checked",
+																					true);
+																});
 
-			} else {
-				$("#mytable input[type=checkbox]").each(function() {
-					$(this).prop("checked", false);
-				});
-			}
-		});
+											} else {
+												$(
+														"#mytable input[type=checkbox]")
+														.each(
+																function() {
+																	$(this)
+																			.prop(
+																					"checked",
+																					false);
+																});
+											}
+										});
 
-		$("[data-toggle=tooltip]").tooltip();
-		
-		var userNo="";
-		$(document).on("click","#deleteBtn",function(){
-			userNo=$(this).attr("name")
-			
-		});
-		
-		$(document).on("click","#deleteYesBtn",function(){
-			var flag=$("#flag").val();
-			var endPage=$("#endPage").val();
-			var curPage=$("#curPage").val();
-			var totalRow=$("#totalRow").val();
-			var rowCount=$("#rowCount").val();
-			
-			if(flag=="true"&&curPage==endPage){	
-				if(totalRow%rowCount==1){
-					curPage=curPage-1;
-				}	
-			}
-			location.href="${pageContext.request.contextPath}/admin/user/delete?userNo="+userNo+"&pageNumber="+curPage;
-			
-			
-		});
-		
-	});
+						$("[data-toggle=tooltip]").tooltip();
+
+						var userNo = "";
+						$(document).on("click", "#deleteBtn", function() {
+							userNo = $(this).attr("name")
+
+						});
+
+						$(document)
+								.on(
+										"click",
+										"#deleteYesBtn",
+										function() {
+											var flag = $("#flag").val();
+											var endPage = $("#endPage").val();
+											var curPage = $("#curPage").val();
+											var totalRow = $("#totalRow").val();
+											var rowCount = $("#rowCount").val();
+
+											if (flag == "true"
+													&& curPage == endPage) {
+												if (totalRow % rowCount == 1) {
+													curPage = curPage - 1;
+												}
+											}
+											location.href = "${pageContext.request.contextPath}/admin/user/delete?userNo="
+													+ userNo
+													+ "&pageNumber="
+													+ curPage;
+										});
+					});
 </script>
 </head>
 <body>
 	<div class="wrapper">
-		<jsp:include page="/WEB-INF/views/admin/admin-sidebar_ch.jsp" />
-
+		<jsp:include page="/WEB-INF/views/project/sidebar_ch.jsp" />
 
 		<div class="main-panel">
-			<jsp:include page="/WEB-INF/views/project/header_ch.jsp" flush="false" />
-
-
+			<jsp:include page="/WEB-INF/views/project/header_ch.jsp"
+				flush="false" />
 
 			<div class="content">
 				<div class="container-fluid">
 					<div class="row">
-					 <div class="card">
-						<div class="table-responsive">
+						<div class="card">
+							<div class="table-responsive">
+								<table id="mytable" class="table table-bordred table-striped">
+									<thead>
+										<th>ID</th>
+										<th>이름</th>
+										<th>학교</th>
+										<th>전공</th>
+										<th>진행중 프로젝트</th>
+										<th>완료된 프로젝트</th>
+										<th>&nbsp;</th>
+									</thead>
+									<tbody>
+										<c:choose>
+											<c:when test="${userList.size()!=0 }">
+												<c:forEach items="${userList}" var="userDTO">
+													<tr>
+														<td>${userDTO.userId }</td>
+														<td>${userDTO.userName }</td>
+														<td>${userDTO.userSchool }</td>
+														<td>${userDTO.userMajor }</td>
+														<td>${userDTO.doingProject }</td>
+														<td>${userDTO.doneProject }</td>
+														<td><p data-placement="top" data-toggle="tooltip"
+																title="Delete">
+																<button class="btn btn-Info" data-title="Delete"
+																	id="deleteBtn" data-toggle="modal"
+																	data-target="#delete" name="${userDTO.userNo}"
+																	style="padding: 5px 9px;">
+																	<span class="ti-close"></span>
+																</button>
+															</p></td>
+													</tr>
+												</c:forEach>
+											</c:when>
+											<c:otherwise>
+												<tr>
+													<th colspan="7">데이터가 없습니다.</th>
+												</tr>
+											</c:otherwise>
+										</c:choose>
+									</tbody>
+								</table>
 
-
-						<table id="mytable" class="table table-bordred table-striped">
-
-							<thead>
-
-								<th>ID</th>
-								<th>이름</th>
-								<th>학교</th>
-								<th>전공</th>
-								<th>진행중 프로젝트</th>
-								<th>완료된 프로젝트</th>
-								<th>&nbsp;</th>
-
-
-							</thead>
-							<tbody>
-
-								<c:choose>
-									<c:when test="${userList.size()!=0 }">
-										<c:forEach items="${userList}" var="userDTO">
-											<tr>
-												<td>${userDTO.userId }</td>
-												<td>${userDTO.userName }</td>
-												<td>${userDTO.userSchool }</td>
-												<td>${userDTO.userMajor }</td>
-												<td>${userDTO.doingProject }</td>
-												<td>${userDTO.doneProject }</td>
-												<td><p data-placement="top" data-toggle="tooltip"
-														title="Delete">
-														<button class="btn btn-Info" data-title="Delete" id="deleteBtn"
-															data-toggle="modal" data-target="#delete" name="${userDTO.userNo}">
-                        									<span class="ti-close"></span>
-														</button>
-													</p></td>
-											</tr>
+								<div style="text-align: center">
+									<ul class="pagination">
+										<c:choose>
+											<c:when test="${startPage==1 }">
+												<li class="disabled"><a href="#"><div
+															class="icon-container">
+															<span class="ti-angle-double-left"></span>
+														</div></a></li>
+											</c:when>
+											<c:otherwise>
+												<li><a
+													href="${pageContext.request.contextPath }/admin/user?pageNumber=${startPage-pageSu }"><div
+															class="icon-container">
+															<span class="ti-angle-double-left"></span>
+														</div></a></li>
+											</c:otherwise>
+										</c:choose>
+										<c:forEach begin="${startPage }" end="${endPage }"
+											var="pageNumber" step="1">
+											<li><a
+												href="${pageContext.request.contextPath }/admin/user?pageNumber=${pageNumber}">${pageNumber }</a></li>
 										</c:forEach>
-										
-									</c:when>
-									<c:otherwise>
-										
-									</c:otherwise>
-								</c:choose>
-							</tbody>
-						</table>
 
-						<div style="text-align:center">
-						<ul class="pagination" >
-							<c:choose>
-								<c:when test="${startPage==1 }">
+										<c:choose>
+											<c:when test="${flag==true }">
 
-									<li class="disabled"><a href="#"><div class="icon-container">
-							                        				<span class="ti-angle-double-left"></span>
-							                        			</div></a></li>
-								</c:when>
-								<c:otherwise>
-									<li><a href="${pageContext.request.contextPath }/admin/user?pageNumber=${startPage-pageSu }"><div class="icon-container">
-							                        				<span class="ti-angle-double-left"></span>
-							                        			</div></a></li>
-								</c:otherwise>
-							</c:choose>
-							<c:forEach begin="${startPage }" end="${endPage }" var="pageNumber" step="1">
-								<li><a href="${pageContext.request.contextPath }/admin/user?pageNumber=${pageNumber}">${pageNumber }</a></li>
-							</c:forEach>
-							
-							<c:choose>
-								<c:when test="${flag==true }">
+												<li class="disabled"><a href="#"><div
+															class="icon-container">
+															<span class="ti-angle-double-right"></span>
+														</div></a></li>
+											</c:when>
+											<c:otherwise>
+												<li><a
+													href="${pageContext.request.contextPath }/admin/user?pageNumber=${startPage+pageSu }"><div
+															class="icon-container">
+															<span class="ti-angle-double-right"></span>
+														</div></a></li>
+											</c:otherwise>
+										</c:choose>
 
-									<li class="disabled"><a href="#"><div class="icon-container">
-		                        								<span class="ti-angle-double-right"></span>
-		                        							</div></a></li>
-								</c:when>
-								<c:otherwise>
-									<li><a href="${pageContext.request.contextPath }/admin/user?pageNumber=${startPage+pageSu }"><div class="icon-container">
-		                        								<span class="ti-angle-double-right"></span>
-		                        							</div></a></li>
-								</c:otherwise>
-							</c:choose>
-							
-						</ul>
+									</ul>
+								</div>
+								<input type="hidden" id="flag" value="${flag }" /> <input
+									type="hidden" id="curPage" value="${curPage }" /> <input
+									type="hidden" id="endPage" value="${endPage }" /> <input
+									type="hidden" id="totalRow" value="${totalRow }" /> <input
+									type="hidden" id="rowCount" value="${rowCount }" />
+							</div>
 						</div>
-						<input type="hidden" id="flag" value="${flag }"/>
-						<input type="hidden" id="curPage" value="${curPage }"/>
-						<input type="hidden" id="endPage" value="${endPage }"/>
-						<input type="hidden" id="totalRow" value="${totalRow }"/>
-						<input type="hidden" id="rowCount" value="${rowCount }"/>
-					</div>
 					</div>
 				</div>
 			</div>
-			</div>
-			
-			
-			
+
 			<!-- modal -->
-					<div class="modal fade" id="delete" tabindex="-1" role="dialog"
-								aria-labelledby="edit" aria-hidden="true">
-							<div class="modal-dialog">
-								<div class="modal-content">
-									<div class="modal-header">
-										<button type="button" class="close" data-dismiss="modal"
-											aria-hidden="true">
-											<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
-										</button>
-										<h4 class="modal-title custom_align" id="Heading">Delete this
-											entry</h4>
-									</div>
-									<div class="modal-body">
-				
-										<div class="alert alert-danger">
-											<span class="glyphicon glyphicon-warning-sign"></span> Are you
-											sure you want to delete this Record?
-										</div>
-				
-									</div>
-									<div class="modal-footer ">
-										<button type="button" class="btn btn-success" data-dismiss="modal" id="deleteYesBtn">
-											<span class="glyphicon glyphicon-ok-sign"></span> Yes
-										</button>
-										<button type="button" class="btn btn-default" data-dismiss="modal">
-											<span class="glyphicon glyphicon-remove"></span> No
-										</button>
-									</div>
-				
-								</div>
-							</div>
+			<div class="modal fade" id="delete" tabindex="-1" role="dialog"
+				aria-labelledby="edit" aria-hidden="true">
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal"
+								aria-hidden="true">
+								<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+							</button>
+							<h4 class="modal-title custom_align" id="Heading">Delete
+								this entry</h4>
 						</div>
-		
-		<!-- modal -->
-		
-		
-		
-		
-		
-		
-		
-		
-			<jsp:include page="/WEB-INF/views/project/footer_ch.jsp" flush="false" />
+						<div class="modal-body">
+
+							<div class="alert alert-danger">
+								<span class="glyphicon glyphicon-warning-sign"></span> Are you
+								sure you want to delete this Record?
+							</div>
+
+						</div>
+						<div class="modal-footer ">
+							<button type="button" class="btn btn-success"
+								data-dismiss="modal" id="deleteYesBtn">
+								<span class="glyphicon glyphicon-ok-sign"></span> Yes
+							</button>
+							<button type="button" class="btn btn-default"
+								data-dismiss="modal">
+								<span class="glyphicon glyphicon-remove"></span> No
+							</button>
+						</div>
+
+					</div>
+				</div>
+			</div>
+
+			<jsp:include page="/WEB-INF/views/project/footer_ch.jsp"
+				flush="false" />
 		</div>
 	</div>
-	
+
 	<%-- <c:import url="/project/chat"/> --%>
 </body>
 
@@ -275,11 +285,8 @@
 <script
 	src="${pageContext.request.contextPath }/resources/js/bootstrap-notify.js"></script>
 
-
 <!-- Paper Dashboard Core javascript and methods for Demo purpose -->
 <script
 	src="${pageContext.request.contextPath }/resources/js/paper-dashboard.js"></script>
 
-<!-- Paper Dashboard DEMO methods, don't include it in your project! -->
-<%-- <script src="${pageContext.request.contextPath }/resources/js/demo.js"></script> --%>
 </html>

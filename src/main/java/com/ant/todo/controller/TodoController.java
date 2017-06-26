@@ -27,8 +27,6 @@ public class TodoController {
 	@RequestMapping("/todoInsert")
 	@ResponseBody
 	public int todoInsert(TodoDTO todoDTO){
-		System.out.println("11111111111111");
-		System.out.println(todoDTO.getTodoLocation());
 		return service.todoInsert(todoDTO);
 	}
 	
