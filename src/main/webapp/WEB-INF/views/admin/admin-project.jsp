@@ -174,7 +174,7 @@
 										<c:when test="${projectList.size()!=0 }">
 											<c:forEach items="${projectList}" var="projectDTO">
 												<tr>
-													<td>${projectDTO.projectName }</td>
+													<td><a href="${pageContext.request.contextPath}/project/teamMain?projectNo=${projectDTO.projectNo}">${projectDTO.projectName }</a></td>
 													<td>${projectDTO.projectStartdate }</td>
 													<td>${projectDTO.projectEnddate }</td>
 													<td>${projectDTO.projectSubject }</td>

@@ -91,6 +91,8 @@
 		
 		<sec:authorize access="hasRole('ROLE_ADMIN')">
 			<ul class="nav">
+				<c:choose>
+				<c:when test="${sessionScope.projectNo == null}">
 		         <li><a href="${pageContext.request.contextPath }/admin/user"> <i
 		               class="ti-user"></i>
 		               <p>회원관리</p>
@@ -98,10 +100,55 @@
 		         <li><a href="${pageContext.request.contextPath }/admin/adminProject"> <i class="ti-pie-chart"></i>
 		               <p>프로젝트관리</p>
 		         </a></li>
-		         <li><a href="${pageContext.request.contextPath }/admin/adminNotice"> <i
+		         <li><a href="${pageContext.request.contextPath }/user/adminNotice"> <i
 		               class="ti-view-list-alt"></i>
 		               <p>공지사항관리</p>
 		         </a></li>
+		         </c:when>
+		         <c:otherwise>
+		         	<li><a
+						href="${pageContext.request.contextPath}/projectCalendar/projectCalendar">
+							<i class="ti-calendar"></i>
+							<p>프로젝트 달력</p> 
+					</a></li>
+					
+					<li><a href="${pageContext.request.contextPath}/timetable/teamMain"> <i
+							class="ti-view-list-alt"></i>
+							<p>프로젝트 시간표</p>
+					</a></li>
+					
+					<li><a
+						href="${pageContext.request.contextPath}/storage/storageTable/${projectNo}">
+							<i class="ti-save"></i>
+							<p>자료실</p>
+					</a></li>
+					<li><a href="${pageContext.request.contextPath}/vote/"> <i
+							class="ti-widget-alt"></i>
+							<p>투표함</p>
+					</a></li>
+					
+					<li><a href="${pageContext.request.contextPath}/todo/list"> <i
+							class="ti-pencil-alt"></i>
+							<p>To Do Board</p>
+					</a></li>
+					<li><a
+						href="${pageContext.request.contextPath}/project/teamInfo"> <i
+							class="ti-more"></i>
+							<p>프로젝트 정보</p>
+					</a></li>
+					
+					<li><a
+						href="${pageContext.request.contextPath}/project/projectUserInfo">
+							<i class="ti-user"></i>
+							<p>팀원 정보</p>
+					</a></li>
+					
+					<li><a href="${pageContext.request.contextPath}/project/report"> <i
+							class="ti-pencil-alt2"></i>
+							<p>프로젝트 요약</p>
+					</a></li>
+		         </c:otherwise>
+		         </c:choose>
         	 </ul>
 		</sec:authorize>
 			<!--  <li>
