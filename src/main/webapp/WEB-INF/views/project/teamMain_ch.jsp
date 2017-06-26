@@ -432,7 +432,7 @@ body {
 	              						<font style="font-size: small;vertical-align: middle;"><span class="ti-control-record"/>　${voteDetail.voteDetailColumn}</font><br>
 	              						</c:if>
 	              						<c:if test="${status.count==voteDetails.size()}">
-	              						<font style="font-size: small;vertical-align: middle;"><span class="ti-control-record"/>　${voteDetail.voteDetailColumn}</font>
+	              						　　　:
 	              						</c:if>
 	              					</c:forEach>
 	              				</div>
@@ -641,8 +641,10 @@ body {
 <script>
 <!-- add script -->
 $(function(){
-	$(".card").mouseover(function(){
-		//$(this).css("border", "2px red solid");
+	$(".pricing-option").mouseover(function(){
+		$(this).click(function){
+			
+		}
 	})
 })
 </script>
