@@ -203,6 +203,8 @@ CREATE TABLE message
    user_no_message_sender number constraint message_user_no_sender_fk references ant_user(user_no) on delete cascade not null
 );
 
+alter table message drop constraint message_user_no_sender_fk
+
 create sequence seq_message_no; 
 commit
 select * from message;
