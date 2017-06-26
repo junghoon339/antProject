@@ -447,6 +447,18 @@ public class ProjectController implements Serializable {
 	}
 
 	/**
+	 * 이미 속해있는 조원인지 확인
+	 */
+	@RequestMapping("/selectChkProjectMember")
+	@ResponseBody
+	public String selectChkProjectMember(HttpServletRequest req, String userId){
+		ProjectUserDTO projectUserDTO = new ProjectUserDTO();
+		projectUserDTO.setUserId(userId);
+		projectUserDTO.setProjectNo((int) req.getSession().getAttribute("projectNo"));
+		return projectService.selectChkProjectMember(projectUserDTO);
+	}
+	
+	/**
 	 * 팀원 초대-팀원정보 페이지에서
 	 */
 	@RequestMapping("/addProjectUser")
