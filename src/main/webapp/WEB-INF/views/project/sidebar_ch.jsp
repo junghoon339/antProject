@@ -43,6 +43,12 @@
 
 				<c:otherwise>
 					<li><a
+						href="${pageContext.request.contextPath}/project/teamMain">
+							<i class="ti-home"></i>
+							<p>홈</p> 
+					</a></li>
+					
+					<li><a
 						href="${pageContext.request.contextPath}/projectCalendar/projectCalendar">
 							<i class="ti-calendar"></i>
 							<p>프로젝트 달력</p> 

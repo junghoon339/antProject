@@ -195,7 +195,7 @@
 body {
   font-family: "Josefin Sans", sans-serif;
   line-height: 1;
-  padding: 20px;
+ 
   height: 100%;
   background: #eee;
 }

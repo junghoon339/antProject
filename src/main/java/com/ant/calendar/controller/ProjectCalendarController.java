@@ -125,7 +125,7 @@ public class ProjectCalendarController implements Serializable {
 		int projectNo = (int) session.getAttribute("projectNo");
 		ProjectDTO projectDTO = projectService.selectProject(projectNo);
 		int nono = projectDTO.getProjectNo();
-		System.out.println("project_no : " +nono);
+		System.out.println("project_no 를 가지고 올까요 못가지고 올까요? : " +nono);
 		/*int projectNo = projectDTO.getProjectNo();*/
 		
 		// calendar����
