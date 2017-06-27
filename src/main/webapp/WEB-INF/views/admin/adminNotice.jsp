@@ -381,13 +381,10 @@ body{
 										<!-- Button (Double) -->
 										<div class="form-group">
 											<label class="col-md-4 control-label" for="anmelden"></label>
-											<div class="col-md-8" align="right">
-												<input type="submit" id="anmelden" name="anmelden"
-													class="btn btn-success" value="등록">
-											</div>
+											
 										</div>
 									</fieldset>
-								</form>
+							
 								
 							</div>
 							<!-- 인설트 폼 -->
@@ -407,8 +404,17 @@ body{
 								});
 							</script>
 							<div class="modal-footer">
-								<button type="button" class="btn btn-default pull-left"
+							<div class="form-group">
+							<div class="col-md-8">
+								<button type="button" class="btn btn-Info btn-filter"
 									data-dismiss="modal">닫기</button>
+									<div class="col-md-8" align="right">
+												<input type="submit" id="anmelden" name="anmelden"
+													class="btn btn-success" value="등록">
+											</div>
+							</div>
+							</div>
+								</form>
 							</div>
 						</div>
 						<!-- /.modal-content -->
