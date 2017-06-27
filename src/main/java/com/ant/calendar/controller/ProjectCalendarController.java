@@ -26,6 +26,9 @@ import com.ant.calendar.dto.ProjectCalendarDTO;
 import com.ant.calendar.service.ProjectCalendarService;
 import com.ant.project.dto.ProjectDTO;
 import com.ant.project.service.ProjectService;
+import com.ant.survey.dto.SurveyDTO;
+import com.ant.survey.dto.SurveyDetailDTO;
+import com.ant.survey.service.SurveyService;
 import com.ant.user.dto.UserDTO;
 import com.dhtmlx.planner.DHXEv;
 import com.dhtmlx.planner.DHXEvent;
@@ -44,6 +47,9 @@ public class ProjectCalendarController implements Serializable {
 	@Autowired
 	private ProjectService projectService;
 
+	@Autowired
+	private SurveyService surveyService;
+	
 	public static String date_format = "MM/dd/yyyy HH:mm";
 	public static String filter_format = "yyyy-MM-dd";
 	public DHXSecurity security;
@@ -55,14 +61,11 @@ public class ProjectCalendarController implements Serializable {
 	
 	@RequestMapping("/report")
 	public ModelAndView report(HttpServletRequest req) throws Exception {
-		
+
 		ModelAndView mv = new ModelAndView("project/report");
 		int projectNo = (int) req.getSession().getAttribute("projectNo");
 		ProjectDTO projectDTO = projectService.selectProject(projectNo);
 		List<UserDTO> projectUserList = projectService.selectProjectUsers(projectNo);
-		
-		
-		
 		
 		String contextPath = req.getContextPath();
 		HttpSession session = req.getSession();
@@ -98,6 +101,12 @@ public class ProjectCalendarController implements Serializable {
 		planner.data.dataprocessor
 				.setURL(contextPath + "/projectCalendar/events?" + token.getParameterName() + "=" + token.getToken());
 		planner.parse(calendarService.getEvent(projectNo));
+		
+		SurveyDTO surveyDTO = surveyService.surveySelectByProjectNo(projectNo);
+		int surveyNo = surveyDTO.getSurveyNo();
+		
+		List<SurveyDetailDTO> sdList = surveyService.selectTotalScore(surveyNo);
+		mv.addObject("sdList", sdList);
 
 		mv.addObject("schedule", planner.render());
 		// mv.addObject("currentProList",currentProList);

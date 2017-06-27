@@ -226,6 +226,11 @@ CREATE TABLE survey_user
 );
 create sequence seq_survey_user_no;
 
+		SELECT sd.survey_detail_username, sum(sd.survey_detail_userscore)
+		FROM survey_user su JOIN survey_detail sd
+		ON su.survey_user_no = sd.survey_user_no
+		AND su.survey_no = 25 group by sd.survey_detail_username
+SELECT * FROM survey_detail
 CREATE TABLE survey_detail
 (
    survey_detail_no      NUMBER  CONSTRAINT survey_detail_no_pk PRIMARY KEY,

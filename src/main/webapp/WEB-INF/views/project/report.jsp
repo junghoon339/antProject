@@ -41,6 +41,54 @@
 	src="${pageContext.request.contextPath}/resources/js/jquery-3.2.1.min.js"></script>
 <!-- 필요한 css는 이 밑에 넣어주면 됨 -->
 <!-- 스크립트는 body 맨 아래쪽에 -->
+<script>
+$(document).ready(function() {
+	
+	var startDate = dateToYYYYMMDD(new Date("${projectDTO.projectStartdate}"));
+	var endDate = dateToYYYYMMDD(new Date("${projectDTO.projectEnddate}"));
+
+	$("#start-date").attr("value", startDate);
+	$("#end-date").attr("value", endDate);
+
+	
+	//조장일경우 팀플정보 수정,마감하기 버튼 보이기
+  	if ("${projectUserRole}" == "조장") {
+		$("#updateBtn").attr("style", "display:display");
+		$("#Btn").attr("style","display:display");
+	}
+	
+	//projectState=1일 경우 마감하기 버튼 비활성화
+	if("${projectDTO.projectState}"=="1"){
+		$("#Btn").attr("disabled","disabled");
+	}
+	
+	//완료대기중(1), 완료된 조별과제(2) 버튼 비활성화
+	if("${projectState}"=="1" || "${projectState}"=="2"){
+		$("#updateBtn").attr("style", "display:none");
+		$("#Btn").attr("style","display:none");	
+	}
+	
+	
+})
+
+	$(function() {
+		$("#Btn").click(function() {
+			$("#myModal").modal("show");							
+		})
+	})
+
+
+	//데이트 포멧 
+	function dateToYYYYMMDD(date) {
+		function pad(num) {
+			num = num + '';
+			return num.length < 2 ? '0' + num : num;
+		}
+		return date.getFullYear() + '-' + pad(date.getMonth() + 1) + '-'
+				+ pad(date.getDate());
+	}
+</script>
+
 </head>
 <body id="body">
 	<div class="wrapper">
@@ -158,7 +206,12 @@
 												${user.userName}<br /> <a href="#"><small>${user.userId}</small></a>
 											</h4>
 										</div>
-										<p class="description text-center">★★★★★★★★★★</p>
+										
+											<c:forEach var="sd" items="${sdList}">
+												<c:if test="${sd.surveyDetailUserName==user.userName}">
+													<p class="description text-center">평점 : ${sd.surveyDetailUserScore}</p>
+												</c:if>
+											</c:forEach>
 									</div>
 									<hr>
 									<div class="text-center">

@@ -490,7 +490,18 @@ public class ProjectController implements Serializable {
 		int projectNo = (int) req.getSession().getAttribute("projectNo");
 		ProjectDTO projectDTO = projectService.selectProject(projectNo);
 		List<UserDTO> projectUserList = projectService.selectProjectUsers(projectNo);
-
+		
+		SurveyDTO surveyDTO = surveyService.surveySelectByProjectNo(projectNo);
+		int surveyNo = surveyDTO.getSurveyNo();
+		System.out.println("ㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋ");
+		System.out.println(projectNo);
+		System.out.println(surveyNo);
+		System.out.println("zzzzzzzzzzzzzzzzzz");
+		List<SurveyDetailDTO> sdList = surveyService.selectTotalScore(surveyNo);
+		for(SurveyDetailDTO dto : sdList){
+			System.out.println("용빠 싀방"+dto.getSurveyDetailUserName());
+		}
+		mv.addObject("sdList", sdList);
 		mv.addObject("projectUserList", projectUserList);
 		mv.addObject("projectDTO", projectDTO);
 
