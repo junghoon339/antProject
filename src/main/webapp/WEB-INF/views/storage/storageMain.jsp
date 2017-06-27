@@ -363,7 +363,7 @@
 	</div>
 	</div>
 </div>
-					<!-- Modal -->
+							<!-- Modal -->
 									<div class="modal fade" id="danger" tabindex="-1" role="dialog"
 										aria-labelledby="myModalLabel" aria-hidden="true" >
 										<div class="modal-dialog" style="z-index: 1050;">
@@ -417,7 +417,7 @@
 																<label class="col-md-4 control-label" for="anschrift" style="width:63px">내용</label>
 																
 																	<textarea class="form-control" id="anschrift"
-																		name="storageContent" rows="5" style="width:465px%"
+																		name="storageContent" rows="5" style="width:465px;"
 																		placeholder="내용을 입력하세요"></textarea>
 																
 															</div> 

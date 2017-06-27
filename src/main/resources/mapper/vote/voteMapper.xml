@@ -186,7 +186,7 @@
 	-->
 	<insert id="voteAddColumn" parameterType="voteDetailDTO">
 		INSERT INTO vote_detail
-		VALUES(seq_vote_detail_no.nextval, #{vote_no}, #{vote_detail_column});
+		VALUES(seq_vote_detail_no.nextval, #{vote_no}, #{vote_detail_column})
 	</insert>
 	
 	<select id="selectVote" resultMap="voteDTOMap">
