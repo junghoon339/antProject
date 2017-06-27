@@ -397,7 +397,7 @@ body {
 					                </div>
 					                <div class="panel-body text-center">                        
 											<c:forEach items="${map}" var="map" varStatus="status">
-				              					<c:if test="${status.count<3}">
+				              					<c:if test="${status.count<3 && status.count>1}">
 				              						<font style="font-size: small;">${map.key} ${map.value}</font><br>
 				              					</c:if>
 				              					<c:if test="${status.count==3}">
@@ -423,11 +423,8 @@ body {
 	              				<div class="well"  style="height: 40px; padding:5px; vertical-align: middle;"><Strong id="well" style="vertical-align: middle;">Q. ${vote.voteTitle}</Strong></div>
 	              				<div align="left">
 	              					<c:forEach items="${voteDetails}" var="voteDetail" varStatus="status">
-	              						<c:if test="${status.count<voteDetails.size()}">
+	              						<c:if test="${status.count<4}">
 	              						<font style="font-size: small;vertical-align: middle;"><span class="ti-control-record"/>　${voteDetail.voteDetailColumn}</font><br>
-	              						</c:if>
-	              						<c:if test="${status.count==voteDetails.size()}">
-	              						　　　:
 	              						</c:if>
 	              					</c:forEach>
 	              				</div>
@@ -491,7 +488,7 @@ body {
    var e = Math.floor(Math.log(bytes)/Math.log(1024));
   
    if(e == "-Infinity"){
-	   $("#size").text("0 "+s[0]);
+	   $("#size").text("0");
 	   $("#byte").text(" "+s[0]);
    }
    else{
