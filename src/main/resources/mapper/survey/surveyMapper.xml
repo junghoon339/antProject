@@ -130,7 +130,7 @@
 		SELECT sd.survey_detail_username, sum(sd.survey_detail_userscore)
 		FROM survey_user su JOIN survey_detail sd
 		ON su.survey_user_no = sd.survey_user_no
-		AND su.survey_no = #{_parameter} group by sd.survey_detail_username ;
+		AND su.survey_no = #{_parameter} group by sd.survey_detail_username
 	</select>
 	
 	<select id="selectSurveyUserState0" resultMap="surveyUserDTOMap">

@@ -423,11 +423,8 @@ body {
 	              				<div class="well"  style="height: 40px; padding:5px; vertical-align: middle;"><Strong id="well" style="vertical-align: middle;">Q. ${vote.voteTitle}</Strong></div>
 	              				<div align="left">
 	              					<c:forEach items="${voteDetails}" var="voteDetail" varStatus="status">
-	              						<c:if test="${status.count<voteDetails.size()}">
+	              						<c:if test="${status.count<4}">
 	              						<font style="font-size: small;vertical-align: middle;"><span class="ti-control-record"/>　${voteDetail.voteDetailColumn}</font><br>
-	              						</c:if>
-	              						<c:if test="${status.count==voteDetails.size()}">
-	              						　　　:
 	              						</c:if>
 	              					</c:forEach>
 	              				</div>

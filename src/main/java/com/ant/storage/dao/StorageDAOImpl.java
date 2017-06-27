@@ -28,7 +28,9 @@ public class StorageDAOImpl implements StorageDAO {
 
 	@Override
 	public StorageDTO selectByStorageNum(int storageNo) {
-		return session.selectOne("mapper.storage.storageMapper.selectByStorageNum",storageNo);
+		StorageDTO dto = session.selectOne("mapper.storage.storageMapper.selectByStorageNum",storageNo);
+		System.out.println(dto.getUserDTO().getUserName());
+		return dto;
 	}
 
 	@Override

@@ -63,11 +63,27 @@
 	</delete>
 	
 	<select id="projectSelectAll" parameterType="map" resultMap="projectDTOMap">
-		select * from (select rownum as rnum, a.* from(select * from project where project_state=#{projectState})a)b where b.rnum>=#{startRow} and b.rnum&lt;=#{endRow}
+		<choose>
+			<when test="projectState==0">
+				select * from (select rownum as rnum, a.* from(select * from project where project_state=0 or project_state=1)a)b where b.rnum>=#{startRow} and b.rnum&lt;=#{endRow}
+			</when>
+			<otherwise>
+				select * from (select rownum as rnum, a.* from(select * from project where project_state=2)a)b where b.rnum>=#{startRow} and b.rnum&lt;=#{endRow}
+			</otherwise>
+		</choose>
+		
 	</select>
 	
 	<select id="projectTotalCount" parameterType="int" resultType="int">
-		select count(project_no) from project where project_state=#{_paramter}
+		<choose>
+			<when test="_parameter==0">
+				select count(project_no) from project where project_state=0 or project_state=1
+			</when>
+			<otherwise>
+				select count(project_no) from project where project_state=2
+			</otherwise>
+		</choose>
+		
 	</select>
 	
 	<delete id="projectDelete" parameterType="int">
@@ -75,19 +91,50 @@
 	</delete>
 	
 	<select id="projectSelectAllByProjectName" parameterType="map" resultMap="projectDTOMap">
-		select * from (select rownum as rnum, a.* from(select * from project where project_state=#{projectState} and project_name like '%'||#{searchText}||'%')a)b where b.rnum>=#{startRow} and b.rnum&lt;=#{endRow}
+		<choose>
+			<when test="projectState==0">
+				select * from (select rownum as rnum, a.* from(select * from project where project_state=0 and project_name like '%'||#{searchText}||'%' or project_state=1 and project_name like '%'||#{searchText}||'%')a)b where b.rnum>=#{startRow} and b.rnum&lt;=#{endRow}
+			</when>
+			<otherwise>
+				select * from (select rownum as rnum, a.* from(select * from project where project_state=2 and project_name like '%'||#{searchText}||'%')a)b where b.rnum>=#{startRow} and b.rnum&lt;=#{endRow}
+			</otherwise>
+		</choose>
+		
 	</select>
 	
 	<select id="projectTotalCountByProjectName" parameterType="map" resultType="int">
-		select count(project_no) from project where project_state=#{projectState} and project_name like '%'||#{projectName}||'%'
+		<choose>
+			<when test="projectState==0">
+				select count(project_no) from project where project_state=0 and project_name like '%'||#{projectName}||'%' or project_state=1 and project_name like '%'||#{projectName}||'%'
+			</when>
+			<otherwise>
+				select count(project_no) from project where project_state=2 and project_name like '%'||#{projectName}||'%'
+			</otherwise>
+		</choose>
 	</select>
 	
 	<select id="projectSelectAllBySubject" parameterType="map" resultMap="projectDTOMap">
-		select * from (select rownum as rnum, a.* from(select * from project where project_state=#{projectState} and project_subject like '%'||#{searchText}||'%')a)b where b.rnum>=#{startRow} and b.rnum&lt;=#{endRow}
+		<choose>
+			<when test="projectState==0">
+				select * from (select rownum as rnum, a.* from(select * from project where (project_state=0 or or project_state=1) and project_subject like '%'||#{searchText}||'%')a)b where b.rnum>=#{startRow} and b.rnum&lt;=#{endRow}
+			</when>
+			<otherwise>
+				select * from (select rownum as rnum, a.* from(select * from project where project_state=2 and project_subject like '%'||#{searchText}||'%')a)b where b.rnum>=#{startRow} and b.rnum&lt;=#{endRow}
+			</otherwise>
+		</choose>
+		
 	</select>
 	
 	<select id="projectTotalCountBySubject" parameterType="map" resultType="int">
-		select count(project_no) from project where project_state=#{projectState} and project_subject like '%'||#{projectSubject}||'%'
+		<choose>
+			<when test="projectState==0">
+				select count(project_no) from project where (project_state=0 or project_state=1) and project_subject like '%'||#{projectSubject}||'%'
+			</when>
+			<otherwise>
+				select count(project_no) from project where project_state=2 and project_subject like '%'||#{projectSubject}||'%'
+			</otherwise>
+		</choose>
+		
 	</select>
 	
 	<!-- 공지사항~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~```` -->

@@ -176,6 +176,9 @@
 																<c:when test="${projectDTO.projectState==0 }">
 																	<td>진행중</td>
 																</c:when>
+																<c:when test="${projectDTO.projectState==1 }">
+																	<td>완료대기중</td>
+																</c:when>
 																<c:otherwise>
 																	<td>완료</td>
 																</c:otherwise>
@@ -207,6 +210,7 @@
 										<c:when test="${projectList.size()!=0}">
 											<div style="text-align: center">
 												<ul class="pagination">
+
 													<c:choose>
 														<c:when test="${startPage==1 }">
 
