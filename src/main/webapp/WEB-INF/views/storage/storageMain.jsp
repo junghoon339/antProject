@@ -451,7 +451,7 @@
 																	
 																</span>
 															</div>
-															<small class="pull-right">파일을 등록하세요</small>
+															<small class="pull-right">파일을 등록해보세요</small>
 															<!-- Button (Double) -->
 															<div class="form-group">
 																<label class="col-md-4 control-label" for="anmelden"></label>
