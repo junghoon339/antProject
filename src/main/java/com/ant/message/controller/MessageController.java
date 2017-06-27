@@ -19,7 +19,7 @@ public class MessageController {
 	private MessageService service;
 	
 	@RequestMapping("/main")
-	public ModelAndView message(@RequestParam(defaultValue="13")int userNo,String pageNumber, String searchText,@RequestParam(defaultValue="false")boolean flag, @RequestParam(defaultValue="-1") int categoryNo){
+	public ModelAndView message(int userNo,String pageNumber, String searchText,@RequestParam(defaultValue="false")boolean flag, @RequestParam(defaultValue="-1") int categoryNo){
 		System.out.println("dao searchText = "+searchText);
 		System.out.println("dao categoryNo = "+categoryNo);
 		if(pageNumber==null){
@@ -27,7 +27,7 @@ public class MessageController {
 		}
 		
 		int curPage = Integer.parseInt(pageNumber);
-		int rowCount = 2;
+		int rowCount = 7;
 		int startRow = (curPage-1)*rowCount+1;
 		int endRow = curPage*rowCount;
 
@@ -61,7 +61,7 @@ public class MessageController {
 				totalRow = service.countReceiveMessageTotalBySearch(userNo, categoryNo, searchText);
 			}
 		}
-		int pageSu = 5;
+		int pageSu = 10;
 		int startPage = ((curPage-1)/pageSu)*pageSu+1;
 		int endPage = startPage+pageSu-1;
 		

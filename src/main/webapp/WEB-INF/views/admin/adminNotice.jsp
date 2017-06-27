@@ -2,6 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="security" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -169,14 +170,12 @@ body{
 										<a class="btn btn-danger" href="#danger" data-toggle="modal">공지등록</a>
 								</div> -->
 								<div class="col-sm-6" align="right">
+								<security:authorize access="hasRole('ROLE_ADMIN')">
 								 <div class="icon-container">
                         				<span class="ti-pencil" href="#danger" data-toggle="modal"></span><span class="icon-name" href="#danger" data-toggle="modal"><a href="#">공지등록</a></span>
                         		</div>
+                        		</security:authorize>
                             </div>
-                            
-                            
-                            
-                            
                             
                             <div class="header">
                             <!-- 검색 -->
@@ -239,7 +238,7 @@ body{
 											<tr>
 												<td>${state.count}</td>
 												<td><a
-													href="${pageContext.request.contextPath}/admin/noticeDetail/${item.noticeNo}">${item.noticeTitle}</a></td>
+													href="${pageContext.request.contextPath}/user/noticeDetail/${item.noticeNo}">${item.noticeTitle}</a></td>
 												<td>${item.writeDay}</td>
 												<td>${item.readNum}</td>
 			
@@ -346,7 +345,7 @@ body{
 							<!-- 인설트 폼 -->
 							<div class="modal-body">
 								<form class="form-horizontal"
-									action="${pageContext.request.contextPath}/admin/noticeInsert"
+									action="${pageContext.request.contextPath}/user/noticeInsert"
 									method="post" enctype="multipart/form-data">
 									
 									<input type="hidden" id="securityInfo" name="${_csrf.parameterName}" value="${_csrf.token}"/>

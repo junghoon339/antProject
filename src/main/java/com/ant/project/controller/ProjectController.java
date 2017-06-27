@@ -17,6 +17,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Random;
 import java.util.Set;
 import java.util.TreeMap;
 
@@ -66,28 +67,28 @@ import com.sun.org.apache.bcel.internal.generic.NEW;
 public class ProjectController implements Serializable {
 	@Autowired
 	private ProjectService projectService;
-
+	
 	@Autowired
 	private UserCalendarService calendarService;
-
+	
 	@Autowired
 	private MessageService messageService;
-
+	
 	@Autowired
 	private SurveyController surveyController;
-
+	
 	@Autowired
 	private SurveyService surveyService;
-
+	
 	@Autowired
 	private VoteService voteService;
-
+	
 	@Autowired
 	private StorageService storageService;
-
+	
 	@Autowired
 	private ProjectCalendarService projectCalendarService;
-
+	
 	public static String date_format = "MM/dd/yyyy HH:mm";
 	public static String filter_format = "yyyy-MM-dd";
 	public DHXSecurity security;
@@ -96,160 +97,157 @@ public class ProjectController implements Serializable {
 	private Date to;
 	private Boolean dynFilter;
 	private List<String> chatList;
-
 	/**
 	 * 진행중인 조별과제 홈화면(로그인하면 나오는 페이지)
-	 * 
-	 * @throws ParseException
+	 * @throws ParseException 
 	 * @throws Exception
 	 */
 	@RequestMapping("/home")
-	public ModelAndView home(HttpServletRequest req) throws ParseException {
-
-		// NA-DRAGON-TIGER 지역변수 선언
-		String surveyStartDate;
-		String surveyEndDate;
-
+	public ModelAndView home(HttpServletRequest req) throws ParseException{
+		
+		//NA-DRAGON-TIGER 지역변수 선언
+		String surveyStartDate ;
+		String surveyEndDate ;
+		
 		SimpleDateFormat sd = new SimpleDateFormat("MM/dd/yyyy", Locale.KOREA);
 		Date now = new Date();
 		Calendar surveyStartCal = Calendar.getInstance();
 		Calendar surveyEndCal = Calendar.getInstance();
-
+		
 		surveyStartCal.setTime(now);
 		surveyEndCal.setTime(now);
 		surveyEndCal.add(Calendar.DATE, 1);
-
+		
 		surveyStartDate = sd.format(surveyStartCal.getTime());
 		surveyEndDate = sd.format(surveyEndCal.getTime());
-
-		// 홈화면 진입시 projectNo에 null을 담음
+		
+		//홈화면 진입시 projectNo에 null을 담음
 		req.getSession().setAttribute("projectNo", null);
-
+		
 		// 현재 로그인된 userNo
 		UserDTO userDTO = (UserDTO) req.getSession().getAttribute("userDTO");
 		int userNo = userDTO.getUserNo();
 
-		// 현재시간=enddate가 된 조별과제를 진행중->완료대기중으로 자동수정
+		//현재시간=enddate가 된 조별과제를 진행중->완료대기중으로 자동수정
 		int updateProState = projectService.updateProjectState(userNo);
+		
 
-		// Project STATE가 1인 경우, SURVEY를 생성하는 구문
+		//Project STATE가 1인 경우, SURVEY를 생성하는 구문
 		List<ProjectDTO> projects = projectService.selectIfProjectState1(userNo);
 		Map<Integer, Boolean> surveySuccessList = new TreeMap<>();
-		if (projects.size() != 0) {
-			for (ProjectDTO project : projects) {
+		if(projects.size()!=0){
+			for(ProjectDTO project : projects){
 				int projectNo = project.getProjectNo();
 				SurveyDTO survey = surveyService.surveySelectByProjectNo(projectNo);
-				if (survey == null) {
+				if(survey==null){
 					// Project STATE가 1임에도 survey가 없는 경우 생성
 					surveyService.surveyCreate(new SurveyDTO(0, projectNo, surveyStartDate, surveyEndDate, 0));
 					SurveyDTO getSurvey = surveyService.surveySelectByProjectNo(projectNo);
 					int surveyNo = getSurvey.getSurveyNo();
-
+					
 					List<UserDTO> projectUserList = projectService.selectProjectUsers(projectNo);
-
-					for (UserDTO u : projectUserList) {
+					
+					for(UserDTO u : projectUserList){
 						int getUserNo = u.getUserNo();
 						surveyService.surveyUserCreate(new SurveyUserDTO(0, surveyNo, getUserNo, 0));
 					}
-
-				} // if(survey != null) end
-				else {
+					
+				}// if(survey != null) end
+				else{
 					SurveyDTO getSurvey = surveyService.surveySelectByProjectNo(projectNo);
 					int surveyNo = getSurvey.getSurveyNo();
-
-					SurveyUserDTO surveyUserDTO = surveyService.surveyUserSelect(surveyNo, userNo);
+					
+					SurveyUserDTO surveyUserDTO =  surveyService.surveyUserSelect(surveyNo, userNo);
 					int state = surveyUserDTO.getSurveyUserState();
-
-					// 이미 투표에 참여했다면, true를 통해 home_ch에서 설문조사 참여완료를 표시
-					surveySuccessList.put(projectNo, state == 1 ? true : false);
+					
+					//이미 투표에 참여했다면, true를 통해 home_ch에서 설문조사 참여완료를 표시
+					surveySuccessList.put(projectNo, state==1? true : false);
 				}
-			} // for(ProjectDTO project : projects) end
-		} // if(!projects.isEmpty()) end
+			}// for(ProjectDTO project : projects) end
+		}// if(!projects.isEmpty()) end
 
-		// Project STATE가 2인 경우, SURVEY에 참여하지않은 유저에 대한 불이득을 주는 부분
-		/*
-		 * List<ProjectDTO> pro2 = surveyService.selectProjectState2(); UserDTO
-		 * user2 = surveyService.selectUser(userNo);
-		 * 
-		 * for(ProjectDTO project : pro2){ SurveyDTO surveyDTO =
-		 * surveyService.surveySelectByProjectNo(project.getProjectNo());
-		 * List<SurveyUserDTO> surveyUsers =
-		 * surveyService.selectSurveyUserState0( surveyDTO.getSurveyNo() );
-		 * for(SurveyUserDTO su : surveyUsers){
-		 * surveyService.updateXXX(surveyDTO.getSurveyNo(),
-		 * user2.getUserName());
-		 * surveyService.surveyUserUpdate(surveyDTO.getSurveyNo(),
-		 * su.getUserNo()); } }
-		 */
-
+		//Project STATE가 2인 경우, SURVEY에 참여하지않은 유저에 대한 불이득을 주는 부분
+		/*List<ProjectDTO> pro2 = surveyService.selectProjectState2();
+		UserDTO user2 = surveyService.selectUser(userNo);
+		
+		for(ProjectDTO project : pro2){
+			SurveyDTO surveyDTO = surveyService.surveySelectByProjectNo(project.getProjectNo());
+			List<SurveyUserDTO> surveyUsers =  surveyService.selectSurveyUserState0( surveyDTO.getSurveyNo() );
+			for(SurveyUserDTO su : surveyUsers){
+				surveyService.updateXXX(surveyDTO.getSurveyNo(), user2.getUserName());
+				surveyService.surveyUserUpdate(surveyDTO.getSurveyNo(), su.getUserNo());
+			}
+		}*/
+		
+		
+		
 		// 현재진행중, 완료대기중 조별과제를 담은 map
 		Map<String, List<ProjectDTO>> projectMap = projectService.selectProjectById(userNo);
 		List<ProjectDTO> currentProList = projectMap.get("currentProList");
 		List<ProjectDTO> surveyingProList = projectMap.get("surveyingProList");
-		// List<ProjectDTO> completedProList =
-		// projectMap.get("completedProList");
-
-		for (ProjectDTO dto : currentProList) {
+		//List<ProjectDTO> completedProList = projectMap.get("completedProList");
+		
+		for(ProjectDTO dto:currentProList){
 			Calendar startCal = Calendar.getInstance();
-
+			
 			startCal.setTime(new Date());
 			long startTime = startCal.getTimeInMillis();
-
+			
 			SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 			Date to = format.parse(dto.getProjectEnddate());
-
+			
 			startCal.setTime(to);
-			long goalTime = startCal.getTimeInMillis();
-
-			long dday = (goalTime - startTime);
-			dday = dday / 1000 / 60 / 60 / 24;
-
-			dto.setDday((int) dday + 1);
+			long goalTime =startCal.getTimeInMillis();
+			
+			long dday = (goalTime-startTime);
+			dday = dday/1000/60/60/24;
+			
+			dto.setDday((int)dday+1);
 		}
-		for (ProjectDTO dto : surveyingProList) {
+		for(ProjectDTO dto:surveyingProList){
 			Calendar startCal = Calendar.getInstance();
-
+			
 			startCal.setTime(new Date());
 			long startTime = startCal.getTimeInMillis();
-
+			
 			SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 			Date to = format.parse(dto.getProjectEnddate());
-
+			
 			startCal.setTime(to);
-			long goalTime = startCal.getTimeInMillis();
-
-			long dday = (goalTime - startTime);
-			dday = dday / 1000 / 60 / 60 / 24;
-
-			dto.setDday((int) dday + 1);
-			// System.out.println("디데이: " + dto.getDday());
+			long goalTime =startCal.getTimeInMillis();
+			
+			long dday = (goalTime-startTime);
+			dday = dday/1000/60/60/24;
+			
+			dto.setDday((int)dday+1);
+			//System.out.println("디데이: " + dto.getDday());
 		}
-
+		
 		ModelAndView mv = new ModelAndView();
 		mv.setViewName("project/home_ch");
-		mv.addObject("currentProList", currentProList);
-		mv.addObject("surveyingProList", surveyingProList);
+		mv.addObject("currentProList",currentProList);
+		mv.addObject("surveyingProList",surveyingProList);
 		mv.addObject("surveySuccessList", surveySuccessList);
 		return mv;
 	}
-
+	
 	/**
-	 * 완료된 조별과제
+	 * 완료된 조별과제 
 	 */
 	@RequestMapping("/completedProject")
-	public ModelAndView completedProject(HttpServletRequest req) {
-
+	public ModelAndView completedProject(HttpServletRequest req){
+				
 		// 현재 로그인된 userNo
 		UserDTO userDTO = (UserDTO) req.getSession().getAttribute("userDTO");
 		int userNo = userDTO.getUserNo();
-
-		// 완료된 조별과제를 담은 map
+		
+		//완료된 조별과제를 담은 map
 		Map<String, List<ProjectDTO>> projectMap = projectService.selectProjectById(userNo);
 		List<ProjectDTO> completedProList = projectMap.get("completedProList");
-
+		
 		ModelAndView mv = new ModelAndView();
 		mv.setViewName("project/completedProject_ch");
-		mv.addObject("completedProList", completedProList);
+		mv.addObject("completedProList",completedProList);
 		return mv;
 	}
 
@@ -257,67 +255,110 @@ public class ProjectController implements Serializable {
 	 * 하나의 팀프로젝트 메인화면
 	 */
 	@RequestMapping("/teamMain")
-	public String teamMain(ProjectDTO projectDTO, HttpServletRequest req) {
-		
+	public String teamMain(ProjectDTO projectDTO, HttpServletRequest req) throws Exception {
 		if (req.getSession().getAttribute("projectNo") == null) {
 			// session에 projectNo, projectState담기
 			req.getSession().setAttribute("projectNo", projectDTO.getProjectNo());
 			req.getSession().setAttribute("projectState", projectDTO.getProjectState());
 		}
-
+		
 		UserDTO userDTO = (UserDTO) req.getSession().getAttribute("userDTO");
 		int userNo = userDTO.getUserNo();
-
+		
 		ProjectUserDTO projectUserDTO = new ProjectUserDTO(projectDTO.getProjectNo(), userNo);
 		String projectUserRole = projectService.selectProjectUserRole(projectUserDTO);
-
-		// session에 projectUserRole(조원,조장) 담음
+		
+		//session에 projectUserRole(조원,조장) 담음
 		req.getSession().setAttribute("projectUserRole", projectUserRole);
+		
+		//남은일자 계산 관련
+		System.out.println(projectDTO.getProjectNo());
+		ProjectDTO pro = projectService.selectProject(projectDTO.getProjectNo());
+		System.out.println(pro);
+		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+		Date beginDate = format.parse(pro.getProjectStartdate());
+		Date endDate = format.parse(pro.getProjectEnddate());
+		Date nowDate = new Date();
 
-		// 팀메인에 출력할 투표관련
+		long diff = endDate.getTime() - nowDate.getTime();
+		long diffDay = diff/ (24*60*60*1000);
+		
+		long diff2 = endDate.getTime() - beginDate.getTime();
+		long diffDay2 = diff2/ (24*60*60*1000);
+		
+		
+		System.out.println("차이>>"+diffDay);
+		System.out.println("차이>>"+diffDay2);
+		
+		long result = (diffDay*100/diffDay2) - 100;
+		
+		//팀메인에 출력할 투표관련
 		List<VoteDTO> votes = voteService.selectVoteList(projectDTO.getProjectNo(), 0);
-		System.out.println("1" + votes);
-		System.out.println("2" + votes.size());
 		VoteDTO vote = null;
 		VoteDTO vote2 = null;
 		List<VoteDetailDTO> voteDetails = null;
-		if (votes.size() != 0) {
-			vote = votes.get(votes.size() - 1);
+		if(votes.size()!=0){
+			vote = votes.get(votes.size()-1);
 			System.out.println(vote);
-			if (vote != null) {
+			if(vote!=null){
 				vote2 = voteService.selectVoteListByVoteNo(vote.getVoteNo());
 				voteDetails = new ArrayList<>();
-
-				for (VoteDetailDTO detail : vote2.getDetails()) {
+				
+				for(VoteDetailDTO detail :vote2.getDetails()){
 					voteDetails.add(detail);
 				}
 			}
 		}
-
-		// 팀메인에 출력할 파일사이즈관련
+		
+		//팀메인에 출력할 파일사이즈관련
 		int totalFileSize = storageService.selectFileSizeAll(projectDTO.getProjectNo());
-
-		// 팀메인에 출력할 오늘의 캘린더내용
+		
+		//팀메인에 출력할 오늘의 캘린더내용
 		List<ProjectCalendarDTO> projectCals = projectCalendarService.selectNowCalVal(projectDTO.getProjectNo());
 		Map<String, String> map = new TreeMap<>();
-
-		for (ProjectCalendarDTO projectCal : projectCals) {
+		
+		for(ProjectCalendarDTO projectCal : projectCals){
 			map.put(projectCal.getStart_date().substring(11), projectCal.getEvent_name());
 		}
-
+		
+		//오늘의 명언
+		ArrayList<Map<String, String>> list = new ArrayList<>();
+		String[] arr = {
+				"배움은 우연히 얻어지는 것이 아니라 열성을 다해 갈구하고 부지런히 집중해야 얻을 수 있는 것이다.",
+				"배우기만 하고 생각하지 않으면 얻는 것이 없고, 생각만 하고 배우지 않으면 위태롭다.",
+				"실천이 말보다 낫다.",
+				"학생이 되기를 멈춘 자는 한 번도 학생인 적이 없었던 자이다.",
+				"교육 없는 천재는 광산 속의 은이나 마찬가지이다.",
+				"함께 있는 사람들보다 학식이 높아 보이지 말라. 당신의 학식을 회중시계마냥 주머니 속에 감춰라. 단지 시간을 세기 위해 시계를 꺼내지 말되 누군가가 시간을 물어보면 알려줘라.",
+				"배우고 때로 익히면 또한 기쁘지 아니한가 (學而時習之 不亦說乎 / 학이시습지 불역열호)"
+		};
+		String[] arr2 = {
+				"애비게일 애덤스",
+				"공자",
+				"벤자민 프랭클린",
+				"조르지오 일리스",
+				"벤자민 프랭클린",
+				"체스터필드 경",
+				"공자"
+		};
+		Random ran = new Random();
+		int ranCount= ran.nextInt(7);
+		
 		HttpSession session = req.getSession();
+		session.setAttribute("projectTitle", pro.getProjectName());
+		session.setAttribute("result", result);
 		session.setAttribute("vote", vote);
 		session.setAttribute("voteDetails", voteDetails);
 		session.setAttribute("totalFileSize", totalFileSize);
 		session.setAttribute("map", map);
 		session.setAttribute("todayDate", new Date().getDate());
-
+		session.setAttribute("arr1", arr[ranCount]);
+		session.setAttribute("arr2", arr2[ranCount]);
 		return "/project/teamMain_ch";
 	}
 
 	/**
 	 * 새로운 조별과제방 생성
-	 * 
 	 * @param:projectDTO
 	 */
 	@RequestMapping("/insertProject")
@@ -334,22 +375,25 @@ public class ProjectController implements Serializable {
 			// 조별과제방에 초대된 회원들의 id invitedUser배열을 list로 변환
 			List<String> invitedUserIdList = new ArrayList<>();
 			Collections.addAll(invitedUserIdList, invitedUser);
+				
 			String messageReceiver ="";
 			for(String userId : invitedUser){
 				messageReceiver += userId+";";
 			}
+			System.out.println("최종 messageReceiver : " + messageReceiver);
+			
+			//초대장에 담을 projectNo
+			//int projectNo = (int) req.getSession().getAttribute("projectNo");
 
 			MessageDTO messageDTO = new MessageDTO();
-			messageDTO.setMessageContent(
-					userDTO.getUserName() + "님이 [" + projectDTO.getProjectName() + "] 조별과제방으로 초대함-생성시 초대"); // 쪽지내용
-			messageDTO.setUserNoMessageSender(userDTO.getUserNo()); // 보내는사람userNo
-			messageDTO.setMessageReceiver(messageReceiver); // 받는사람ID
-			// 조원들에게 초대쪽지보내기
+			messageDTO.setMessageContent(userDTO.getUserName()+"님이 ["+projectDTO.getProjectName()+"] 조별과제방으로 초대함-생성시 초대"); //쪽지내용
+			messageDTO.setUserNoMessageSender(userDTO.getUserNo()); //보내는사람userNo
+			messageDTO.setMessageReceiver(messageReceiver); //받는사람ID
+			//조원들에게 초대쪽지보내기
 			messageService.messageInsert(messageDTO);
-
+			
 			// 초대된 회원의 번호를 담은 리스트
-			// invitedUserNolist =
-			// projectService.selectUserNoById(invitedUserIdList);
+			//invitedUserNolist = projectService.selectUserNoById(invitedUserIdList);
 		}
 
 		// 조별과제방 삽입 service
@@ -359,59 +403,59 @@ public class ProjectController implements Serializable {
 	}
 
 	/**
-	 * 조별과제 정보 조회
+	 * 조별과제 정보 조회 
 	 */
 	@RequestMapping("/teamInfo")
-	public ModelAndView teamInfo(HttpServletRequest req) {
+	public ModelAndView teamInfo(HttpServletRequest req){
 		int projectNo = (int) req.getSession().getAttribute("projectNo");
-
+		
 		ProjectDTO projectDTO = projectService.selectProject(projectNo);
-
+		
 		ModelAndView mv = new ModelAndView();
 		mv.addObject("projectDTO", projectDTO);
 		mv.setViewName("project/teamInfo_ch");
-
+		
 		return mv;
 	}
-
+	
 	/**
 	 * 조별과제 정보 수정
 	 */
 	@RequestMapping("/updateTeamInfo")
-	public String updateTeamInfo(ProjectDTO projectDTO, HttpServletRequest req) {
+	public String updateTeamInfo(ProjectDTO projectDTO,HttpServletRequest req){
 		System.out.println("업데이트 컨트롤러 실행됬다!!!!");
-		int projectNo = (int) req.getSession().getAttribute("projectNo");
+		int projectNo = (int) req.getSession().getAttribute("projectNo");	
 		projectDTO.setProjectNo(projectNo);
-		System.out.println("수정하려고하는 프로젝트 상태 : " + projectDTO.getProjectState());
+		System.out.println("수정하려고하는 프로젝트 상태 : "+projectDTO.getProjectState());
 		int result = projectService.updateTeamInfo(projectDTO);
 		return "redirect:/project/teamInfo";
 	}
-
+	
 	/**
 	 * 조별과제 팀원 조회
 	 */
 	@RequestMapping("/projectUserInfo")
-	public ModelAndView projectUserInfo(HttpServletRequest req) {
+	public ModelAndView projectUserInfo(HttpServletRequest req){
 		int projectNo = (int) req.getSession().getAttribute("projectNo");
 		List<UserDTO> projectUserList = projectService.selectProjectUsers(projectNo);
-
+		
 		ModelAndView mv = new ModelAndView();
-		mv.addObject("projectUserList", projectUserList);
+		mv.addObject("projectUserList",projectUserList);
 		mv.setViewName("project/projectUserInfo_ch");
 		return mv;
 	}
-
+	
 	@RequestMapping("/chat")
-	public ModelAndView chat(HttpSession session) {
+	public ModelAndView chat(HttpSession session){
 		int projectNo = (int) session.getAttribute("projectNo");
 		ModelAndView mv = new ModelAndView("chat/chatBackUp");
-
+		
 		try {
 			File file = new File("/chat/chat_room_no_" + projectNo + ".txt");
-			if (!file.exists()) {
+			if (!file.exists()){
 				file.createNewFile();
 			}
-			chatList = FileUtils.readLines(file, "utf-8");
+			chatList = FileUtils.readLines(file,"utf-8");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -419,33 +463,33 @@ public class ProjectController implements Serializable {
 		mv.addObject("chatList", chatList);
 		return mv;
 	}
-
+	
 	/**
 	 * 조별과제 팀원별 역할 수정
 	 */
 	@RequestMapping("/updateProjectUserTask")
-	public String updateProjectUserTask(ProjectUserDTO projectUserDTO, HttpServletRequest req) {
+	public String updateProjectUserTask(ProjectUserDTO projectUserDTO, HttpServletRequest req){
 		int projectNo = (int) req.getSession().getAttribute("projectNo");
 		projectUserDTO.setProjectNo(projectNo);
-
+		
 		int result = projectService.updateProjectUserTask(projectUserDTO);
-
+		
 		return "redirect:/project/projectUserInfo";
 	}
-
+	
 	/**
 	 * 조별과제 팀원 삭제
 	 */
 	@RequestMapping("/deleteProjectUser")
-	public String deleteProjectUser(ProjectUserDTO projectUserDTO, HttpServletRequest req) {
+	public String deleteProjectUser(ProjectUserDTO projectUserDTO, HttpServletRequest req){
 		int projectNo = (int) req.getSession().getAttribute("projectNo");
 		projectUserDTO.setProjectNo(projectNo);
-
+		
 		int result = projectService.deleteProjectUser(projectUserDTO);
-
+		
 		return "redirect:/project/projectUserInfo";
 	}
-
+	
 	/**
 	 * 이미 속해있는 조원인지 확인
 	 */
@@ -462,30 +506,29 @@ public class ProjectController implements Serializable {
 	 * 팀원 초대-팀원정보 페이지에서
 	 */
 	@RequestMapping("/addProjectUser")
-	public String addProjectUser(String userId, HttpServletRequest req) {
+	public String addProjectUser(String userId, HttpServletRequest req){
 		int projectNo = (int) req.getSession().getAttribute("projectNo");
 		UserDTO userDTO = (UserDTO) req.getSession().getAttribute("userDTO");
 
-		ProjectDTO projectDto = projectService.selectProject(projectNo);
-
+		ProjectDTO projectDto=projectService.selectProject(projectNo);
+		
 		MessageDTO messageDTO = new MessageDTO();
-		messageDTO.setMessageContent(
-				userDTO.getUserName() + "님이 [" + projectDto.getProjectName() + "] 조별과제방으로 초대했습니다.-추가초대"); // 쪽지내용
-		messageDTO.setUserNoMessageSender(userDTO.getUserNo()); // 보내는사람userNo
-		messageDTO.setMessageReceiver(userId); // 받는사람ID
-
+		messageDTO.setMessageContent(userDTO.getUserName()+"님이 [" +projectDto.getProjectName()+ "] 조별과제방으로 초대했습니다.-추가초대"); //쪽지내용
+		messageDTO.setUserNoMessageSender(userDTO.getUserNo()); //보내는사람userNo
+		messageDTO.setMessageReceiver(userId); //받는사람ID
+		
 		messageService.messageInsert(messageDTO);
 
 		ProjectUserDTO projectUserDTO = new ProjectUserDTO();
 		projectUserDTO.setProjectNo(projectNo);
 		projectUserDTO.setUserId(userId);
 		projectService.insertProjectMember(projectUserDTO);
-
+		
 		return "redirect:/project/projectUserInfo";
 	}
-
-	@RequestMapping("/report")
-	public ModelAndView report(HttpServletRequest req) {
+	
+/*	@RequestMapping("/report")
+	public ModelAndView report(HttpServletRequest req){
 		ModelAndView mv = new ModelAndView("project/report");
 		int projectNo = (int) req.getSession().getAttribute("projectNo");
 		ProjectDTO projectDTO = projectService.selectProject(projectNo);
@@ -506,14 +549,14 @@ public class ProjectController implements Serializable {
 		mv.addObject("projectDTO", projectDTO);
 
 		return mv;
-	}
+	}*/
 
 	/**
 	 * 안읽은 쪽지갯수 header에 표시 패배
 	 */
 	@RequestMapping("selectUnchkMessage")
 	@ResponseBody
-	public int selectUnchkMessage(HttpServletRequest req) {
+	public int selectUnchkMessage(HttpServletRequest req){
 		UserDTO userDTO = (UserDTO) req.getSession().getAttribute("userDTO");
 		return projectService.selectUnchkMessage(userDTO.getUserNo());
 	}

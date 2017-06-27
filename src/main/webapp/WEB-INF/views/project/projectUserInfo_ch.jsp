@@ -65,7 +65,7 @@
 											<th>학교</th>
 											<th>학과</th>
 											<th>역할</th>
-											<c:if test="${projectUserRole=='조장'} && ${projectState=='0'}">
+											<c:if test="${projectUserRole=='조장' && projectState=='0'}">
 												<th>Edit & Delete</th>
 											</c:if>
 
@@ -79,7 +79,7 @@
 															<td>${projectUserDTO.userSchool}</td>
 															<td>${projectUserDTO.userMajor}</td>
 															<td>${projectUserDTO.projectuserRole.projectUserTask}</td>
-															<c:if test="${projectUserRole=='조장'} && ${projectState=='0'}">
+															<c:if test="${projectUserRole=='조장' && projectState=='0'}">
 																<td><span data-placement="top"
 																	data-toggle="tooltip" title="Edit">
 																		<button class="btn btn-primary btn-xs editBtn"
@@ -108,7 +108,7 @@
 
 										</tbody>
 									</table>
-									<c:if test="${projectUserRole=='조장'}">
+									<c:if test="${projectUserRole=='조장' && projectState=='0'}">
 										　<button class="btn btn-primary btn-xs" data-title="add" id="addBtn" data-toggle="modal" data-target="#add"
 											name="${projectUserDTO.userNo}/${projectUserDTO.userName}/${projectUserDTO.projectuserRole.projectUserTask}">
 											<span class="glyphicon glyphicon-plus" data-toggle="modal">팀원추가</span>

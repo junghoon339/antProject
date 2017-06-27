@@ -9,10 +9,13 @@ import javax.servlet.http.HttpSession;
 import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.ant.admin.dto.NoticeDTO;
+import com.ant.admin.service.AdminService;
 import com.ant.user.dto.UserDTO;
 import com.ant.user.service.UserService;
 import com.ant.util.Email;
@@ -28,6 +31,9 @@ public class UserController {
 
 	@Autowired
 	private EmailSender emailSender;
+	
+	@Autowired
+	private AdminService adminService;
 
 	@Autowired
 	private Email email;
@@ -140,5 +146,82 @@ public class UserController {
 		emailSender.SendEmail(email);
 		
 		return mv;
+	}
+	
+	@RequestMapping("/adminNotice")
+	public ModelAndView NoticeMain(String pageNumber, String searchText){
+		if(pageNumber==null){
+			pageNumber = "1";
+		}
+		
+		int curPage = Integer.parseInt(pageNumber);
+		int rowCount = 7;
+		int startRow = (curPage-1)*rowCount+1;
+		int endRow = curPage*rowCount;
+		List<NoticeDTO> list = null;
+		int totalRow = 0;
+		if(searchText==null){
+			list = adminService.noticeSelectAll(startRow, endRow);
+			totalRow = adminService.noticeTotalCount();
+		}else{
+			list = adminService.noticeSelectBySearch(startRow, endRow, searchText);
+			totalRow = adminService.noticeTotalCountBySearch(searchText); 
+		}
+		int pageSu = 5;
+		int startPage = ((curPage-1)/pageSu)*pageSu+1;
+		int endPage = startPage+pageSu-1;
+		
+		boolean flag = false;
+		int lastPageNum = totalRow%rowCount==0 ? totalRow/rowCount : totalRow/rowCount+1;
+		if(lastPageNum<=endPage){
+			endPage=lastPageNum;
+			flag=true;
+		}
+		
+		ModelAndView mv = new ModelAndView();
+		mv.addObject("list",list);
+		mv.addObject("totalRow",totalRow);
+		mv.addObject("startPage",startPage);
+		mv.addObject("endPage",endPage);
+		mv.addObject("flag",flag);
+		mv.addObject("pageSu",pageSu);
+		mv.addObject("curPage",curPage);
+		mv.addObject("rowCount",rowCount);
+		mv.addObject("searchText",searchText);
+		
+		mv.setViewName("admin/adminNotice");
+		return mv;
+	}
+	
+
+	@RequestMapping("/noticeInsert")
+	public String noticeInsert(NoticeDTO noticeDTO) throws Exception{
+		System.out.println("noticeDTO.getNoticeContent"+noticeDTO.getNoticeContent());
+		adminService.insertNotice(noticeDTO);
+		return "redirect:/user/adminNotice";
+	}
+	
+	@RequestMapping("/noticeDetail/{noticeNo}")
+	public ModelAndView noticeDetail(@PathVariable int noticeNo){
+		ModelAndView mv = new ModelAndView();
+		NoticeDTO dto = adminService.selectByNoticeNum(noticeNo);
+		mv.addObject("noticeDTO", dto);
+		mv.setViewName("admin/noticeDetailNew");
+		return mv;
+	}
+	
+	@RequestMapping("/delete/{noticeNo}")
+	public String noticeDelete(@PathVariable int noticeNo) throws Exception{
+		adminService.deleteNotice(noticeNo);
+		return "redirect:/user/adminNotice";
+	}
+	
+	@RequestMapping("/noticeUpdate")
+	public String noticeUpdate(NoticeDTO noticeDTO) throws Exception{
+		System.out.println("여기오긴하냐");
+		System.out.println("update = "+noticeDTO.getNoticeNo());
+		int result = adminService.updateNotice(noticeDTO);
+		System.out.println("result = "+result);
+		return "redirect:/user/adminNotice";
 	}
 }
