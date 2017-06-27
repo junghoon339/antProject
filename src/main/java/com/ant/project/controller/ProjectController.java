@@ -284,6 +284,8 @@ public class ProjectController implements Serializable {
 		long diffDay = diff/ (24*60*60*1000);
 		
 		long diff2 = endDate.getTime() - beginDate.getTime();
+		System.out.println(" dasdsa"+ endDate.getTime() );
+		System.out.println(" dasdsa"+ beginDate.getTime() );
 		long diffDay2 = diff2/ (24*60*60*1000);
 		
 		
@@ -386,7 +388,7 @@ public class ProjectController implements Serializable {
 			//int projectNo = (int) req.getSession().getAttribute("projectNo");
 
 			MessageDTO messageDTO = new MessageDTO();
-			messageDTO.setMessageContent(userDTO.getUserName()+"님이 ["+projectDTO.getProjectName()+"] 조별과제방으로 초대함-생성시 초대"); //쪽지내용
+			messageDTO.setMessageContent(userDTO.getUserName()+"님이 ["+projectDTO.getProjectName()+"] 조별과제방으로 초대함. "); //쪽지내용
 			messageDTO.setUserNoMessageSender(userDTO.getUserNo()); //보내는사람userNo
 			messageDTO.setMessageReceiver(messageReceiver); //받는사람ID
 			//조원들에게 초대쪽지보내기

@@ -299,7 +299,7 @@ $(document).ready(function() {
 							</div>
 						</div>
 					</div>
-					&nbsp;&nbsp;&nbsp;<button type="button" class="btn btn-danger" onclick="window.print()">다운</button>
+					&nbsp;&nbsp;&nbsp;<button type="button" class="btn btn-danger" id="pdfdown">다운</button>
 				</div>
 			</div>
 		</div>
@@ -400,10 +400,11 @@ $(document).ready(function() {
 						onrendered : function(canvas) {
 							var img = canvas.toDataURL("image/png");
 							var doc = new jsPDF('landscape');
-							doc.text(20, 20, 'Hello world!')
-							doc
-									.text(20, 30,
-											'This is client-side Javascript, pumping out a PDF.')
+							doc.setFontSize(30)
+							doc.text(100, 100, 'Ants and Grasshopper');
+							doc.setFontSize(10)
+							doc.text(200, 200, 'team - name: ')
+							doc.text(200, 220, 'team - people: ')
 							doc.addPage()
 							doc.addImage(img, 'JPEG', 20, 20);
 							doc.save('test.pdf');
