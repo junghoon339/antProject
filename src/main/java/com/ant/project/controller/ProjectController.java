@@ -502,6 +502,9 @@ public class ProjectController implements Serializable {
 		return projectService.selectChkProjectMember(projectUserDTO);
 	}
 	
+	
+	
+	
 	/**
 	 * 팀원 초대-팀원정보 페이지에서
 	 */
